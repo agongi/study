@@ -2,17 +2,17 @@
 각 주제별 세부항목 확인 할 수 있습니다.
 
 #### WEB/WAS/Proxy
- - [Apache](https://github.com/agongi/web/tree/master/apache/)
+ - [Apache](https://github.com/agongi/study/tree/master/apache/)
  - Nginx
  - HAProxy
- - [Tomcat](https://github.com/agongi/web/tree/master/tomcat/)
+ - [Tomcat](https://github.com/agongi/study/tree/master/tomcat/)
 
 #### Framework
- - [Spring Boot](https://github.com/agongi/web/tree/master/spring-boot/)
+ - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
  - Spring Batch
  - Spring Integration
  - Spring Security
- - [Spring Common](https://github.com/agongi/web/tree/master/spring-common/)
+ - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
  - Netty
 
 #### DEV (back-end)
@@ -66,14 +66,14 @@
  - Spark
 
 #### Architect Design
- - [Server Architect](https://github.com/agongi/web/tree/master/server-architect/)
+ - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)
 
 #### Cloud
  - Docker
 
 #### Seminar / Interview / etc,
- - [Seminar](https://github.com/agongi/web/tree/master/seminar/)
- - [Article](https://github.com/agongi/web/tree/master/article/)
- - [Book](https://github.com/agongi/web/tree/master/book/)
- - [Interview](https://github.com/agongi/web/tree/master/interview/)
- - [ETC](https://github.com/agongi/web/tree/master/etc/)
+ - [Seminar](https://github.com/agongi/study/tree/master/seminar/)
+ - [Article](https://github.com/agongi/study/tree/master/article/)
+ - [Book](https://github.com/agongi/study/tree/master/book/)
+ - [Interview](https://github.com/agongi/study/tree/master/interview/)
+ - [ETC](https://github.com/agongi/study/tree/master/etc/)
