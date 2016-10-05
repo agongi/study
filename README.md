@@ -57,10 +57,12 @@
  - [NIO](https://github.com/agongi/study/tree/master/nio/)
 
 #### RDB/NoSQL
- - [MariaDB/MySQL](https://github.com/agongi/study/tree/master/mariadb-mysql/)
- - [Ehcache](https://github.com/agongi/study/tree/master/ehcache/)
- - Redis
- - Zookeeper
+ - [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/jdbc-dbcp/)
+ - [Replication vs Cluster](http://hanbiro.com/management/mysql-cluster.html)
+ - [Clustering vs Replication/Mirroring vs Sharding](https://github.com/agongi/study/tree/master/clustering-mirroring-replication-sharding/)
+ - [Execution Plan](https://github.com/agongi/study/tree/master/execution-plan/)
+ - [Locks](https://github.com/agongi/study/tree/master/locks/)
+
 
 #### Distributed
  - Hadoop
