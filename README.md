@@ -62,7 +62,7 @@
  - [Clustering vs Replication/Mirroring vs Sharding](https://github.com/agongi/study/tree/master/clustering-mirroring-replication-sharding/)
  - [Execution Plan](https://github.com/agongi/study/tree/master/execution-plan/)
  - [Locks](https://github.com/agongi/study/tree/master/locks/)
-
+ - [Indexing](http://choko11.tistory.com/entry/%EC%9D%B8%EB%8D%B1%EC%8A%A4-1-%EA%B0%9C%EB%85%90%EC%A2%85%EB%A5%98%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD)
 
 #### Distributed
  - Hadoop
