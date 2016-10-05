@@ -14,7 +14,7 @@ TBD
  - https://social.msdn.microsoft.com/Forums/sqlserver/en-US/d943a6a8-234e-4534-8691-db90c4937c83/clustering-vs-replication?forum=sqlreplication
 ```
 
-<img src="https://github.com/agongi/study/master/clustering-mirroring-replication-sharding/images/Capture.PNG" width="75%">
+<img src="https://github.com/agongi/study/blob/master/clustering-mirroring-replication-sharding/images/Capture.PNG" width="75%">
 
 1. Clustering (Fail-Over)
 Two physical machines can share some resources. At any one time one physical node will host the DB Server. If the physical node fails, or if the operator initiates a failover, the SQL Server will go offline and restart on the other physical node. But the SQL Server is only hosted on one node at any one time.<br><br>
