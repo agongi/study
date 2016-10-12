@@ -107,10 +107,18 @@ public enum Color {
 }
 
 public class Color {
-    private Color() {} // Prevent others from making colors.
+    // Prevent others from making colors.
+    private Color(String value) {
+      this.value = value;
+    }
     public static final Color RED = new Color("aaa");
     public static final Color AMBER = new Color("bbb");
     public static final Color GREEN = new Color("ccc");
+
+    private final String value;
+    public String value() {
+      return this.value;
+    }
 
     public static void main() {
       assertTrue(Color.RED.value(), "aaa");  // succeed
