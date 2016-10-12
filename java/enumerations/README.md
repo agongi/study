@@ -5,17 +5,17 @@ Java fundamental of Enumerations.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.25
+ㅁ Date: 2016.10.12
 ㅁ References:
  - http://stackoverflow.com/questions/11575376/why-use-enums-instead-of-constants
  - http://stackoverflow.com/questions/2229297/java-enumerations-vs-static-constants
  - http://www.nextree.co.kr/p11686/
  - http://www.mkyong.com/java/java-enum-example/
  - https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
+ - http://stackoverflow.com/questions/4709175/what-are-enums-and-why-are-they-useful
 ```
 
-### Each enum constant with values
-
+### Enums with value
 ```java
 public enum Planet {
     MERCURY (3.303e+23, 2.4397e6),
@@ -29,7 +29,7 @@ public enum Planet {
 
     private final double mass;   // in kilograms
     private final double radius; // in meters
-    /* These values are passed to the constructor when the constant is created */
+
     Planet(double mass, double radius) {
         this.mass = mass;
         this.radius = radius;
@@ -41,9 +41,7 @@ public enum Planet {
 
 > **The constructor** for an enum type must be package-private or **private access**. It automatically creates the constants that are defined at the beginning of the enum body. You cannot invoke an enum constructor yourself.
 
-
 ### Type Safety
-
 ```java
 public enum Fruit {
   APPLE, MELON
@@ -70,4 +68,52 @@ Person person = Fruit.APPLE;
 /* Incorrect - Potentially-Runtime error: incompatible types! */
 String fruit = Constants.MALE;
 String person = Constants.APPLE;
+```
+
+### equivalent
+```java
+public enum Color {
+  RED,
+  AMBER,
+  GREEN
+}
+
+public class Color {
+    private Color() {} // Prevent others from making colors.
+    public static final Color RED = new Color();
+    public static final Color AMBER = new Color();
+    public static final Color GREEN = new Color();
+
+    public static void main() {
+      assertTrue(Color.RED, Color.GREEN); // fail
+    }
+}
+```
+
+```java
+public enum Color {
+  RED("aaa"),
+  AMBER("bbb"),
+  GREEN("ccc"),
+  ;
+
+  private String value;
+  private Color(String value) {
+    this.value = value;
+  }
+  public String value() {
+    return this.value;
+  }
+}
+
+public class Color {
+    private Color() {} // Prevent others from making colors.
+    public static final Color RED = new Color("aaa");
+    public static final Color AMBER = new Color("bbb");
+    public static final Color GREEN = new Color("ccc");
+
+    public static void main() {
+      assertTrue(Color.RED.value(), "aaa");  // succeed
+    }
+}
 ```
