@@ -1,7 +1,7 @@
 ## Java final
 Java fundamental of final keyword.
 
->###### keyword final has miscellaneous meaning in each locations. e.g. primitive, object, class and method.
+> keyword final has miscellaneous meaning in each locations. e.g. primitive, object, class and method.
 
 ```
 ㅁ Author: suktae.choi
@@ -16,6 +16,11 @@ Java fundamental of final keyword.
 can be set only once. (memory and performance gain [immutable])
 ```
 
+#### Method
+```
+can't be @overriden
+```
+
 #### Object
 ```
 can be modified.
@@ -28,11 +33,6 @@ obj.setA("aa"); // okay
 
 Object obj2 = new Object();
 obj = obj2; // fail
-```
-
-#### Method
-```
-can't be @Overriden
 ```
 
 #### Class
