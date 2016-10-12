@@ -12,17 +12,14 @@ Java conceptual comparison between Interface and Abstract class.
 ```
 
 ### 1. Interface
- - Supported field type
+ - Field type<br>
+ : public<br>
+ : static<br>
+ : final
 
- : public, protected, private
-
- : static, non-static
-
- : final, non-final
-
- - Supported method type
-
- : only declaration
+ - Method type<br>
+ : declaration<br>
+ : implementation
 
  - implements (1-1)
 
@@ -50,20 +47,13 @@ class Rectangle implements GraphicObject {
 ```
 
 ### 2. Abstract
+  - Field type<br>
+  : public, protected, private<br>
+  : static, non-static<br>
+  : final, non-final
 
- - Supported field type
-
- : public
-
- : static
-
- : final
-
- - Supported method type
-
- : declaration
-
- : implementation
+  - Method type<br>
+  : declaration
 
  - extends (1-N)
 
@@ -88,7 +78,7 @@ class Rectangle extends GraphicObject {
 }
 ```
 
-### 3. When an Abstract Class Implements an Interface
+### 3. When an Abstract Class implements an Interface
 
 ```java
 /* A class with declared abstract doesn't need to implement all of methods in interface not like normal class */
@@ -100,3 +90,5 @@ class XX extends X {
   // implements the remaining method in Y
 }
 ```
+
+> Abstract and Interface both could **not be created stand-alone using new keyword**. interface needs to be implemented and abstract being extends.
