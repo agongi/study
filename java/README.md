@@ -52,5 +52,6 @@ Java design pattern or fundamental topic.
  - [Cloneable](https://github.com/agongi/study/tree/master/java/cloneable/)
  - [Comparable and/or Comparator](https://github.com/agongi/study/tree/master/java/comparable-comparator/)
  - [Final](https://github.com/agongi/study/tree/master/java/final/)
+ - [Jackson](https://github.com/agongi/study/tree/master/java/jackson/)
 
 #### Lecture
