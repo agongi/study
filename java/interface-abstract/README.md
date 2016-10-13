@@ -12,16 +12,16 @@ Java conceptual comparison between Interface and Abstract class.
 ```
 
 ### 1. Interface
- - Field type<br>
- : public<br>
- : static<br>
- : final
+  - Field type<br>
+  : public<br>
+  : static<br>
+  : final
 
- - Method type<br>
- : declaration<br>
- : implementation
+  - Method type<br>
+  : declaration<br>
+  : implementation
 
- - implements (1-1)
+  - implements (1-1)
 
 ```java
 interface GraphicObject {
@@ -55,7 +55,7 @@ class Rectangle implements GraphicObject {
   - Method type<br>
   : declaration
 
- - extends (1-N)
+  - extends (1-N)
 
 ```java
 abstract class GraphicObject {
