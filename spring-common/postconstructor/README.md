@@ -1,7 +1,7 @@
 ## @PostConstruct
 This section will describe why @PostConstruct is necessary to initialize a spring bean instead of regular constructor
 
->###### @PostConstruct has been performed after the bean is fully instantiated. Container guarantees @PostConstruct will be invoked only once.
+> @PostConstruct has been performed after the bean is fully instantiated. Container guarantees @PostConstruct will be invoked only once.
 
 ```
 ㅁ Author: suktae.choi
@@ -10,14 +10,13 @@ This section will describe why @PostConstruct is necessary to initialize a sprin
  - http://stackoverflow.com/questions/3406555/why-use-postconstruct
 ```
 
-1) Constructor
+- Constructor
  - The bean has not yet initialized
  - Maybe a bean is instantiated multiple times
 
-2) @PostConstruct
+- @PostConstruct
  - The bean has been initialized fully
  - Only once invoked in bean's lifecycle
-
 
 ```java
 public class Foo {
@@ -36,4 +35,4 @@ public class Foo {
 }
 ```
 
->###### The injection of the dependencies has not yet occurred in a constructor.
+> The injection of the dependencies has not yet occurred in a constructor.
