@@ -1,7 +1,7 @@
 ## Java ByteBuffer
 Java quick-reference of handling ByteBuffer.
 
-> String can be converted to Byte[] in java.nio package; ByteBuffer is the wrapper of byte[] for easy using, providing better method for handling I/O operations.
+> **String** `can be converted to Byte[]` provided in java.nio package; **ByteBuffer** `is the wrapper of byte[]` for easy using, providing better method for handling I/O operations.
 
 ```
 ㅁ Author: suktae.choi
