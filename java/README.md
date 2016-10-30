@@ -45,7 +45,7 @@ Java design pattern or fundamental topic.
  - [Garbage Collection](https://github.com/agongi/study/tree/master/java/garbage-collection/)
  - [Collections](https://github.com/agongi/study/tree/master/java/collections/)
  - [Generics](https://github.com/agongi/study/tree/master/java/generics/)
- - [Enumerations](https://github.com/agongi/study/tree/master/java/enumerations/)
+ - [Enumerations](https://github.com/agongi/study/tree/master/java/enum/)
  - [Exception](https://github.com/agongi/study/tree/master/java/exception/)
  - [Varargs](https://github.com/agongi/study/tree/master/java/varargs/)
  - [Serializable](https://github.com/agongi/study/tree/master/java/serializable/)
