@@ -12,6 +12,7 @@ Java quick-reference of handling ByteBuffer.
  - http://aoruqjfu.fun25.co.kr/index.php/post/567
  - https://www.mkyong.com/java/how-do-convert-byte-array-to-string-in-java/
  - http://a07274.tistory.com/281
+ - http://darksilber.tistory.com/entry/ByteBuffer-%EB%B0%94%EC%9D%B4%ED%8A%B8%EB%B2%84%ED%8D%BC
 ```
 
 ### Flow that could be transformed
@@ -19,19 +20,31 @@ Java quick-reference of handling ByteBuffer.
 String <===> byte[] <===> ByteBuffer
 ```
 
+### terms
 - capacity
+ - physical(actual) buffer size
 - limit
+ - limitation(logical) of buffer size
 - position
+ - current starting point of read/write
+ - mark
+  - set specific position for
 
-- mark()
+```
+2016-10-30 23:33:27 [main] [DEBUG] com.games.io.ByteBufferTest - java.nio.HeapByteBuffer [pos=0 lim=6 cap=6]
+```
+- put()/get()
+ - basic in/out I/O commands
 - flip()
- - 위치(position)는 0으로 limit와 position값과 같게 설정한다. 마크값은 파기된다. 이 메서드는 read 조작 (put)뒤, write()나 get()하기전에 이 메소드를 호출한다.
+ - limit = pos, pot = 0
+ > use case: put data and ready to get
 - clear()
- - 버퍼의 위치(position)는 0으로 limit와 capacity값과 같게 설정한다
+ - pos = 0, limit = capacity
+ > It doesn't delete data in buffer, just set position to 0. (clear all meta-data)
 - reset()
- - 버퍼의 위치를 이전에 마크 한 위치에 되돌린다.
-
+ - jump pos to mark (pos = mark)
 - remaining()
+ - position에서 limit까지의 공간
 
 #### String to byte[]
 ```java
