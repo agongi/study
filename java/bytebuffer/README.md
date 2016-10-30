@@ -37,10 +37,14 @@ String <===> byte[] <===> ByteBuffer
  - basic in/out I/O commands
 - flip()
  - limit = pos, pot = 0
+
  > use case: put data and ready to get
+
 - clear()
  - pos = 0, limit = capacity
+
  > It doesn't delete data in buffer, just set position to 0. (clear all meta-data)
+
 - reset()
  - jump pos to mark (pos = mark)
 - remaining()
