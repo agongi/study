@@ -47,7 +47,6 @@ public final class Mode {
 
   private Mode() {}
 }
-
 ```
 
 ### Enum with values 3. (recommended)
@@ -64,6 +63,14 @@ String name = Mode.MODE_1.name();
 Mode mode = Mode.valueOf(name);
 ```
 > every single enum has **name()**, **valueOf()** method in default.
+
+### Enum Integration
+```java
+for (Direction dir : Direction.values()) {
+  // do what you want
+}
+```
+> **.values()** returns an array containing the constants of this enum type
 
 ### Type Safety
 ```java
