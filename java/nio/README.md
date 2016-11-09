@@ -11,7 +11,7 @@ TBD
  - http://palpit.tistory.com/645
  - http://palpit.tistory.com/646
 ```
- 
+
 #### 1. Channel vs Stream
 stream is directional (1-way)
  : read Stream
@@ -61,9 +61,9 @@ one thread per request -> any thread in `threadPool` per request with `queue`.
 
 > Server resource issues
 
-<img src="https://github.com/agongi/study/blob/master/nio/images/Screen%20Shot%202016-05-15%20at%2016.43.17.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/java/nio/images/Screen%20Shot%202016-05-15%20at%2016.43.17.png" width="75%">
 
-<img src="https://github.com/agongi/study/blob/master/nio/images/Screen%20Shot%202016-05-15%20at%2016.43.12.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/java/nio/images/Screen%20Shot%202016-05-15%20at%2016.43.12.png" width="75%">
 
 #### 5. TCP (Connection-Oriented) Non-Blocking Channel
 selector
