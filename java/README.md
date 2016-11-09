@@ -34,7 +34,6 @@ Java design pattern or fundamental topic.
  - [Nested static class vs Inner class](https://github.com/agongi/study/tree/master/java/nested-inner/)
  - [equals() and/or hashCode()](https://github.com/agongi/study/tree/master/java/equals-hashcode/)
  - [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/java/synchronized-concurrent/)
- - Array vs List
  - [Iterator vs foreach vs for](https://github.com/agongi/study/tree/master/java/iterator-foreach-for/)
  - [Overriding vs Overloading](https://github.com/agongi/study/tree/master/java/overriding-overloading/)
  - [Heap vs Direct allocation](https://github.com/agongi/study/tree/master/java/heap-direct-allocation/)
@@ -53,6 +52,7 @@ Java design pattern or fundamental topic.
  - [Comparable and/or Comparator](https://github.com/agongi/study/tree/master/java/comparable-comparator/)
  - [Final](https://github.com/agongi/study/tree/master/java/final/)
  - [Jackson](https://github.com/agongi/study/tree/master/java/jackson/)
+ - [NIO](https://github.com/agongi/study/tree/master/java/nio/)
  - [ByteBuffer](https://github.com/agongi/study/tree/master/java/bytebuffer/)
 
 #### Lecture

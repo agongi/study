@@ -7,7 +7,6 @@ Java quick-reference of handling ByteBuffer.
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.10.25
 ㅁ References:
- - http://zhe-thoughts.github.io/2016/01/05/Java-array-ByteBuffer/
  - http://eincs.com/2009/08/java-nio-bytebuffer-channel/
  - http://aoruqjfu.fun25.co.kr/index.php/post/567
  - https://www.mkyong.com/java/how-do-convert-byte-array-to-string-in-java/
@@ -17,7 +16,7 @@ Java quick-reference of handling ByteBuffer.
 
 ### Flow that could be transformed
 ```
-String <===> byte[] <===> ByteBuffer
+String <===> byte[] <===> ByteBuffer (non-direct)
 ```
 
 ### terms

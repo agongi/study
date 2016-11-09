@@ -53,7 +53,6 @@
  - [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp-head-of-line/)
  - [Proxy Protocol](http://www.haproxy.org/download/1.6/doc/proxy-protocol.txt)
  - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
- - [NIO](https://github.com/agongi/study/tree/master/nio/)
 
 #### RDB/NoSQL
  - [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/jdbc-dbcp/)
