@@ -11,9 +11,6 @@ Java design pattern or fundamental topic.
  - https://docs.oracle.com/javase/tutorial/index.html
 ㅁ References:
  - http://javarevisited.blogspot.com
- - http://javarevisited.blogspot.kr/2012/12/how-classloader-works-in-java.html
- - http://www.developer.com/java/other/article.php/2248831/Java-Class-Loading-The-Basics.htm
- - http://www.javaworld.com/article/2077260/learn-java/learn-java-the-basics-of-java-class-loaders.html
 ```
 
 #### Design Pattern
@@ -39,7 +36,7 @@ Java design pattern or fundamental topic.
  - [Heap vs Direct allocation](https://github.com/agongi/study/tree/master/java/heap-direct-allocation/)
  - Why String is Immutable or Final
  - [How HashMap works](https://github.com/agongi/study/tree/master/java/hashmap/)
- - How ClassLoader Works
+ - [How ClassLoader Works](https://github.com/agongi/study/tree/master/java/classloader/)
  - [try-with-resources](https://github.com/agongi/study/tree/master/java/try-with-resources/)
  - [Garbage Collection](https://github.com/agongi/study/tree/master/java/garbage-collection/)
  - [Collections](https://github.com/agongi/study/tree/master/java/collections/)
