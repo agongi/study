@@ -8,6 +8,7 @@ Java design pattern or fundamental topic.
 ㅁ Date: 2016.02.04
 ㅁ Origin:
  - Effective Java 2nd edition
+ - Java 8 in Action
  - https://docs.oracle.com/javase/tutorial/index.html
 ㅁ References:
  - http://javarevisited.blogspot.com
@@ -51,6 +52,6 @@ Java design pattern or fundamental topic.
  - [Jackson](https://github.com/agongi/study/tree/master/java/jackson/)
  - [NIO](https://github.com/agongi/study/tree/master/java/nio/)
  - [ByteBuffer](https://github.com/agongi/study/tree/master/java/bytebuffer/)
- - [Java 8](https://github.com/agongi/study/tree/master/java/java-8/)
 
-#### Lecture
+#### Java 8
+ - [Stream](https://github.com/agongi/study/tree/master/java/stream/)
