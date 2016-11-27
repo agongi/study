@@ -1,4 +1,4 @@
-## Java 8
+## Stream() API
 TDB
 
 > ddd
@@ -6,11 +6,9 @@ TDB
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.11.12
-ㅁ Origin:
- - Functional Programming in Java 8
 ㅁ References:
  - http://d2.naver.com/helloworld/4911107
- -
+ - http://www.slideshare.net/madvirus/8-35205661
 ```
 
 ### terms
