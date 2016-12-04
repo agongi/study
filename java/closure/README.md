@@ -5,17 +5,36 @@ TDB
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.11.28
+ㅁ Date: 2016.12.05
 ㅁ References:
  - http://d2.naver.com/helloworld/4911107
 ```
 
-### terms
-클로저는 어휘적(lexical) 클로저 또는 함수(function) 클로저를 간단하게 부르는 말이다.
-단순하게 말하면 자신을 감싼 영역에 있는 외부 변수에 접근하는 함수다. 클로저에서 접근하는 함수 밖의 변수를 자유 변수(free variable)라 한다.
-이 정의에 따르면 람다 표현식으로 정의한 익명 함수 가운데 일부는 클로저고 일부는 클로저가 아니다.
+### Terms
+#### Closure
+A function that can access external variable enclosing itself.
 
-메서드가 한 개인 인터페이스가 있고 파라미터와 반환 타입만 맞다면 인터페이스의 타입이나 메서드 이름과는 상관없이 람다 표현식으로 인스턴스를 할당할 수 있다.
-이렇게 보면 람다 표현식은 추상 메서드가 한 개인 인터페이스의 인스턴스를 생성해서 할당하는 유연하고 암묵적인 캐스팅으로도 보이고
-Java 5부터 도입된 오토 박싱(auto boxing)과 닮은 문법으로 이해할 수도 있다.
-추상 메서드가 한 개인 인터페이스는 모두 람다 표현식의 수혜자가 되므로 Java를 업그레이드하기만 해도 예전 라이브러리를 새로운 방식으로 사용할 수 있다.
+A variable that is accessible from closure called **free variable**.
+
+Some anonymous function can be closure or not defined lambda expression in this principal.
+
+```java
+private final List<String> friends = Arrays.asList("aaa", "bbb", "ccc", "ddd");
+
+
+@Test
+public void test00_closure() {
+    String value = "hello ";  // free variable
+
+    friends.forEach(friend -> { // It is a closure have references out of lambda scope
+        log.info(value + friend); // free variable will be treated final implicitly or should be declared final explicitly in definition
+    });
+}
+```
+
+#### Lambda
+A Interface or abstract class that has **only one** method can be used in lambda expression.
+
+They can be declared @FunctionalInterface annotation.
+
+All collections are the good members of lambda.
