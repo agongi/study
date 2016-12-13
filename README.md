@@ -51,7 +51,7 @@
  - [TLS Session Tickets](https://github.com/agongi/study/tree/master/tls-session-ticket/)
  - [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp-forward-error-correction/)
  - [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp-head-of-line/)
- - [Proxy Protocol](http://www.haproxy.org/download/1.6/doc/proxy-protocol.txt)
+ - [Proxy Protocol](https://github.com/agongi/study/tree/master/proxy-protocol/)
  - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
  - [NPN](#)
  - [ALPN](#)
