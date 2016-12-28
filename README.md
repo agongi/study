@@ -48,13 +48,10 @@
 #### Network
  - [TCP Fast Open](https://github.com/agongi/study/tree/master/tcp-fast-open/)
  - [TCP Connection Migration](https://github.com/agongi/study/tree/master/tcp-connection-migration/)
- - [TLS Session Tickets](https://github.com/agongi/study/tree/master/tls-session-ticket/)
  - [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp-forward-error-correction/)
  - [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp-head-of-line/)
  - [Proxy Protocol](https://github.com/agongi/study/tree/master/proxy-protocol/)
  - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
- - [NPN](#)
- - [ALPN](#)
 
 #### RDB/NoSQL
  - [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/jdbc-dbcp/)
