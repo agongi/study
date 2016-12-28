@@ -36,7 +36,7 @@ Java design pattern or fundamental topic.
  - [Overriding vs Overloading](https://github.com/agongi/study/tree/master/java/overriding-overloading/)
  - [Heap vs Direct allocation](https://github.com/agongi/study/tree/master/java/heap-direct-allocation/)
  - Why String is Immutable or Final
- - [How HashMap works](https://github.com/agongi/study/tree/master/java/hashmap/)
+ - [How HashMap works](https://github.com/agongi/study/tree/master/java/how-hashmap-works/)
  - [How ClassLoader Works](https://github.com/agongi/study/tree/master/java/classloader/)
  - [try-with-resources](https://github.com/agongi/study/tree/master/java/try-with-resources/)
  - [Garbage Collection](https://github.com/agongi/study/tree/master/java/garbage-collection/)
