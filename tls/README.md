@@ -5,7 +5,7 @@ The Transport Layer Security (TLS) Handshake Protocol is responsible for the aut
  - Authentication of the server and optionally, the client
  - Session key information exchange.
 
-> Simply SSL is out-dated name of TLS.
+> Simply SSL is the out-dated name of TLS.
 
 ```
 ㅁ Author: suktae.choi
@@ -19,15 +19,13 @@ The Transport Layer Security (TLS) Handshake Protocol is responsible for the aut
  - https://tools.ietf.org/html/rfc7301
 ```
 
-#### Extensions
+### Extensions
 - [TLS Session Tickets](https://github.com/agongi/study/tree/master/tls/tls-session-ticket/)
 - [TLS ALPN (Application-Layer Protocol Negotiation)](#)
+- [TLS 1.3](#)
 
-
-### The TLS Handshaking Protocols
-2 entirely round-trip in new connection establish
-
-1 round-trip is required using existing connection
+#### The TLS Handshaking Protocols
+2 entirely round-trip is done in new connection establishment. But 1 round-trip is required using existing connection.
 
 <img src="https://github.com/agongi/study/blob/master/tls/images/Screen%20Shot%202016-12-29%20at%2001.19.05.png" width="75%">
 
