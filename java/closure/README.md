@@ -33,7 +33,7 @@ public void test00_closure() {
 ```
 
 #### Lambda
-A Interface or abstract class that has **only one** method can be used in lambda expression.
+A Interface or abstract class that has **only one abstract method** can be used in lambda expression.
 
 They can be declared @FunctionalInterface annotation.
 
