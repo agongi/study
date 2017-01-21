@@ -10,7 +10,6 @@
 #### Framework
  - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
  - Spring Batch
- - Spring Integration
  - Spring Security
  - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
  - Netty
@@ -24,7 +23,7 @@
 #### DEV (front-end)
  - React and Flux
  - Angular.js
- - [JavaScript](https://github.com/agongi/study/tree/master/javascript/) 
+ - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
 
 #### Protocol
  - [HTTP](https://github.com/agongi/study/tree/master/http/)
@@ -36,6 +35,7 @@
  - [P2P](https://github.com/agongi/study/tree/master/p2p/)
  - [P4P](https://github.com/agongi/study/tree/master/p4p/)
  - [BitTorrent](https://github.com/agongi/study/tree/master/bittorrent/)
+ - [Proxy Protocol](https://github.com/agongi/study/tree/master/proxy-protocol/)
 
 #### Security
  - [TLS (Transport Layer Security)](https://github.com/agongi/study/tree/master/tls/)
@@ -50,7 +50,6 @@
  - [TCP Connection Migration](https://github.com/agongi/study/tree/master/tcp-connection-migration/)
  - [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp-forward-error-correction/)
  - [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp-head-of-line/)
- - [Proxy Protocol](https://github.com/agongi/study/tree/master/proxy-protocol/)
  - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
 
 #### RDB/NoSQL
@@ -64,9 +63,6 @@
 
 #### Architect Design
  - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)
-
-#### Cloud
- - Docker
 
 #### Seminar / Interview / etc,
  - [Seminar](https://github.com/agongi/study/tree/master/seminar/)
