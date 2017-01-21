@@ -24,7 +24,7 @@
 #### DEV (front-end)
  - React and Flux
  - Angular.js
- - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
+ - [JavaScript](https://github.com/agongi/study/tree/master/javascript/) 
 
 #### Protocol
  - [HTTP](https://github.com/agongi/study/tree/master/http/)
