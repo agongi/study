@@ -57,7 +57,7 @@
  - [Replication vs Cluster](http://hanbiro.com/management/mysql-cluster.html)
  - [Clustering vs Replication/Mirroring vs Sharding](https://github.com/agongi/study/tree/master/clustering-mirroring-replication-sharding/)
  - [Execution Plan](https://github.com/agongi/study/tree/master/execution-plan/)
- - [Locks](https://github.com/agongi/study/tree/master/locks/)
+ - [Isolation](https://github.com/agongi/study/tree/master/isolation/)
  - [Indexing](https://goo.gl/K03Zyj)
  - [Duplicated P.K](https://github.com/agongi/study/tree/master/duplicated-pk/)
 
