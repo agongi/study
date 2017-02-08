@@ -16,7 +16,8 @@ Java fundamental of Enumerations.
  - http://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
 ```
 
-### Enums with value 1.
+### Enum types
+#### Type 1
 ```java
 public enum Planet {
     MERCURY (3.303e+23, 2.4397e6),
@@ -30,14 +31,14 @@ public enum Planet {
         this.mass = mass;
         this.radius = radius;
     }
-    private double mass() { return mass; }
-    private double radius() { return radius; }
+    public double mass() { return mass; }
+    public double radius() { return radius; }
 }
 ```
 
 > **The constructor** for an enum type must be package-private or **private access**. It automatically creates the constants that are defined at the beginning of the enum body. You cannot invoke an enum constructor yourself.
 
-### Enum with values 2.
+#### Type 2
 ```java
 public final class Mode {
   // public static final fields
@@ -49,20 +50,24 @@ public final class Mode {
 }
 ```
 
-### Enum with values 3. (recommended)
+#### Type 3
 ```java
 public enum Mode {
   MODE_1, // equals to MODE_1("MODE_1")
   MODE_2, // equals to MODE_2("MODE_2")
   ;
 }
+```
 
+### Enum Usage
+```java
 // enum to string
 String name = Mode.MODE_1.name();
 // string to enum
 Mode mode = Mode.valueOf(name);
 ```
-> every single enum has **name()**, **valueOf()** method in default.
+> Every single enum has **name()**, **valueOf()** method in default.
+
 
 ### Enum Integration
 ```java
