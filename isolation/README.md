@@ -9,6 +9,7 @@ This section describes lock types used by InnoDB.
 ㅁ References:
  - https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html
  - http://ktdsoss.tistory.com/382
+ - http://notemusic.tistory.com/49
 ```
 
 ### 1. Factors
