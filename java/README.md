@@ -38,6 +38,7 @@ Java design pattern or fundamental topic.
  - Why String is Immutable or Final
  - [How HashMap works](https://github.com/agongi/study/tree/master/java/how-hashmap-works/)
  - [How ClassLoader Works](https://github.com/agongi/study/tree/master/java/classloader/)
+ - [How to iterate Map](https://github.com/agongi/study/tree/master/java/how-to-iterate-map/)
  - [try-with-resources](https://github.com/agongi/study/tree/master/java/try-with-resources/)
  - [Garbage Collection](https://github.com/agongi/study/tree/master/java/garbage-collection/)
  - [Collections](https://github.com/agongi/study/tree/master/java/collections/)
