@@ -19,4 +19,3 @@ MIGRATION_WAIT - state machine
 
 rejected -> new negotiation on-going
 accepted -> TCP_CLOSE
- 

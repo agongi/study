@@ -24,4 +24,4 @@ Further, some applications may not even need either reliable delivery or in-orde
 
 Applications that can deal with out-of-order delivery or packet loss and that are latency or jitter sensitive are likely better served with an alternate transport, such as UDP.
 
-<img src="https://github.com/agongi/study/blob/master/tcp-head-of-line/images/Screen%20Shot%202016-08-20%20at%2019.54.48.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/tcp/tcp-head-of-line/images/Screen%20Shot%202016-08-20%20at%2019.54.48.png" width="75%">
