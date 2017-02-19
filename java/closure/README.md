@@ -1,7 +1,4 @@
 ## Closure
-TDB
-
-> ddd
 
 ```
 ㅁ Author: suktae.choi
@@ -12,15 +9,12 @@ TDB
 
 ### Terms
 #### Closure
-A function that can access external variable enclosing itself.
+A function that can access external variables enclosing itself.
 
 A variable that is accessible from closure called **free variable**.
 
-Some anonymous function can be closure or not defined lambda expression in this principal.
-
 ```java
 private final List<String> friends = Arrays.asList("aaa", "bbb", "ccc", "ddd");
-
 
 @Test
 public void test00_closure() {
@@ -35,6 +29,4 @@ public void test00_closure() {
 #### Lambda
 A Interface or abstract class that has **only one abstract method** can be used in lambda expression.
 
-They can be declared @FunctionalInterface annotation.
-
-All collections are the good members of lambda.
+They can be declared `@FunctionalInterface` annotation. All collections are the good members of lambda.
