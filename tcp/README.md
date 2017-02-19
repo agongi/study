@@ -5,7 +5,7 @@ TCP provides an effective abstraction of a reliable network running over an unre
  - Congestion control and avoidance
  - Data integrity
 
->###### TCP guarantee packet is transferred and arrive in the same order to the client with following technics.
+> TCP guarantee packet is transferred and arrive in the same order to the client with following technics.
 
 ```
 ㅁ Author: suktae.choi
@@ -17,7 +17,13 @@ TCP provides an effective abstraction of a reliable network running over an unre
  - http://d2.naver.com/helloworld/47667
 ```
 
-#### 1. 3-way-handshake
+#### Series
+- [TCP Fast Open](https://github.com/agongi/study/tree/master/tcp/tcp-fast-open/)
+- [TCP Connection Migration](https://github.com/agongi/study/tree/master/tcp/tcp-connection-migration/)
+- [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp/tcp-forward-error-correction/)
+- [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp/tcp-head-of-line/)
+
+### 3-way-handshake
 Origin 3-way-handshaking in TCP connection.
 
 <img src="https://github.com/agongi/study/blob/master/tcp/images/18338404268_f693b065d4_o.png">
@@ -31,10 +37,10 @@ accept() 이후 서버는 listen() 중인 소켓과 별도로 accept() 소켓을
  - 쓰레드풀을 구성해 각각의 쓰레드가 여러 커넥션을 asynchronous I/O 방식으로 담당합니다.
  - 쓰레드풀을 구성해 각각의 쓰레드가 여러 커넥션을 select(), poll(), nonblocking I/O 같은 이벤트 기반 방식으로 담당합니다.
 
-#### 2. Flow Control (Host-To-Host)
+### Flow Control (Host-To-Host)
  - rwnd (window size)
 
-#### 3. Congestion Control (Host-To-Network)
+### Congestion Control (Host-To-Network)
  - Slow Start
  - Congestion Avoidance
  - Fast Retransmission

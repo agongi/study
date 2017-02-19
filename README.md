@@ -36,6 +36,7 @@
  - [P4P](https://github.com/agongi/study/tree/master/p4p/)
  - [BitTorrent](https://github.com/agongi/study/tree/master/bittorrent/)
  - [Proxy Protocol](https://github.com/agongi/study/tree/master/proxy-protocol/)
+ - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
 
 #### Security
  - [TLS (Transport Layer Security)](https://github.com/agongi/study/tree/master/tls/)
@@ -44,13 +45,6 @@
  - [PFS (Perfect Forward Secrecy)](https://github.com/agongi/study/tree/master/pfs/)
  - [E2EE (End-to-End Encryption)](https://github.com/agongi/study/tree/master/e2ee/)
  - OCSP Stapling
-
-#### Network
- - [TCP Fast Open](https://github.com/agongi/study/tree/master/tcp-fast-open/)
- - [TCP Connection Migration](https://github.com/agongi/study/tree/master/tcp-connection-migration/)
- - [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp-forward-error-correction/)
- - [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp-head-of-line/)
- - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
 
 #### RDB/NoSQL
  - [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/jdbc-dbcp/)
