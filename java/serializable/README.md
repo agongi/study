@@ -8,6 +8,7 @@ An object can be represented as a `sequence of bytes` that includes the object's
 ㅁ References:
  - http://www.tutorialspoint.com/java/java_serialization.htm
  - http://javarevisited.blogspot.kr/2011/04/top-10-java-serialization-interview.html
+ - http://blog.naver.com/PostView.nhn?blogId=kkson50&logNo=220564273220&categoryNo=0&parentCategoryNo=18&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView
 ```
 
 <img src="https://github.com/agongi/study/blob/master/java/serializable/images/20151210_130446.png" width="75%">
