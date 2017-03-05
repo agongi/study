@@ -10,7 +10,7 @@ An object can be represented as a `sequence of bytes` that includes the object's
  - http://javarevisited.blogspot.kr/2011/04/top-10-java-serialization-interview.html
 ```
 
-<img src="https://github.com/agongi/study/blob/master/java/serializable/images/Serialization%20in%20Java.JPG" width="75%">
+<img src="https://github.com/agongi/study/blob/master/java/serializable/images/20151210_130446.png" width="75%">
 
 ### 1. Serialization
 Simply, `Convert object to array of bytes` to store in disk or transfer in network.
@@ -23,104 +23,11 @@ Simply, `Convert object to array of bytes` to store in disk or transfer in netwo
 ### 2. serialVersionUID
 SerialVersionUID is included in serialization of object and being checked in deserialization with declared value. If it doesn't match, java will throw `java.io.InvalidClassException`.
 
-#### Serializable vs Externalization
-Serializable JVM has full control for serializing object while Externalizable, application gets control for persisting objects.
+> Serializable `JVM has full control for serializing` object while Externalizable, Application gets control for persisting objects.
 
-### Best Practice
-- Use `custom binary format`
- - Serialized binary format becomes part of Class's exported API and it can potentially break Encapsulation in Java provided by private and package-private fields
-- Define `private static final long serialVersionUID` explicitly
- - Implicitly generated value is very sensitive of modification of object
+### 3. Why declare serialVersionUDI explicitly
+serialVersionUID is checked while deserialization in store in file system or transfer to network. JVM automatically generate UID value based on its algorithm and might be vary each JVM's version.
 
-#### VO
-```java
-package com.sec.serialization;
+It causes unexpected `InvalidClassException` once It tries to read stored data after upgrading JVM version or different client with its own JVM's.
 
-import java.io.Serializable;
-
-@Getter
-@Setter
-@ToString
-public class Employee implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private String name;
-  private String address;
-  private int SSN;
-  private int number;
-}
-```
-
-**Serialization**
-```java
-import java.io.*;
-
-public class SerializeDemo
-{
-   public static void main(String [] args)
-   {
-      Employee e = new Employee();
-      e.name = "Reyan Ali";
-      e.address = "Phokka Kuan, Ambehta Peer";
-      e.SSN = 11122333;
-      e.number = 101;
-
-      try
-      {
-         FileOutputStream fileOut =
-         new FileOutputStream("/tmp/employee.ser");
-         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-         out.writeObject(e);
-         out.close();
-         fileOut.close();
-         System.out.printf("Serialized data is saved in /tmp/employee.ser");
-      } catch(IOException i)
-      {
-          i.printStackTrace();
-      }
-   }
-}
-```
-
-**Deserialization**
-```java
-import java.io.*;
-public class DeserializeDemo
-{
-   public static void main(String [] args)
-   {
-      Employee e = null;
-      try
-      {
-         FileInputStream fileIn = new FileInputStream("/tmp/employee.ser");
-         ObjectInputStream in = new ObjectInputStream(fileIn);
-         e = (Employee) in.readObject();
-         in.close();
-         fileIn.close();
-      } catch(IOException i)
-      {
-         i.printStackTrace();
-         return;
-      } catch(ClassNotFoundException c)
-      {
-         System.out.println("Employee class not found");
-         c.printStackTrace();
-         return;
-      }
-      System.out.println("Deserialized Employee...");
-      System.out.println("Name: " + e.name);
-      System.out.println("Address: " + e.address);
-      System.out.println("SSN: " + e.SSN);
-      System.out.println("Number: " + e.number);
-    }
-}
-```
-
-**Output**
-```java
-Deserialized Employee...
-Name: Reyan Ali
-Address:Phokka Kuan, Ambehta Peer
-SSN: 0
-Number:101
-```
+So Don't forget to declare **private static final long serialVersionUID** in DAO.
