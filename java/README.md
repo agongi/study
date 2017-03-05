@@ -1,7 +1,4 @@
 ## JAVA
-Java design pattern or fundamental topic.
-
-> Simply brief all of java relatives.
 
 ```
 ㅁ Author: suktae.choi
@@ -29,7 +26,7 @@ Java design pattern or fundamental topic.
  - [String vs StringBuilder vs StringBuffer](https://github.com/agongi/study/tree/master/java/string-stringbuilder-stringbuffer/)
  - [Primitive type vs Boxed type](https://github.com/agongi/study/tree/master/java/primitive-boxed/)
  - [Interface vs Abstract](https://github.com/agongi/study/tree/master/java/interface-abstract/)
- - [Nested static class vs Inner class](https://github.com/agongi/study/tree/master/java/nested-inner/)
+ - [Static Nested Class vs Non-Static Nested Class (Inner Class)](https://github.com/agongi/study/tree/master/java/static-non-static-inner-class/)
  - [equals() and/or hashCode()](https://github.com/agongi/study/tree/master/java/equals-hashcode/)
  - [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/java/synchronized-concurrent/)
  - [Iterator vs foreach vs for](https://github.com/agongi/study/tree/master/java/iterator-foreach-for/)
