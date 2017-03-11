@@ -16,4 +16,4 @@
 - [Execution Plan](https://github.com/agongi/study/tree/master/rdbms/execution-plan/)
 - [Isolation](https://github.com/agongi/study/tree/master/rdbms/isolation/)
 - [Indexing](https://goo.gl/K03Zyj)
-- [Duplicated P.K](https://github.com/agongi/study/tree/master/rdbms/duplicated-pk/)
+- [Duplicated Primary Key](https://github.com/agongi/study/tree/master/rdbms/duplicated-primary-key/)
