@@ -5,11 +5,12 @@
 ㅁ Date: 2017.03.11
 ㅁ Origin:
  - Real MySQL
+ - Real MariaDB
 ㅁ References:
  - https://dev.mysql.com/doc/refman/5.7/en
 ```
 
-#### Design Pattern
+#### Index
 - [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/rdbms/jdbc-dbcp/)
 - [Clustering vs Replication/Mirroring vs Sharding](https://github.com/agongi/study/tree/master/rdbms/clustering-mirroring-replication-sharding/)
 - [Execution Plan](https://github.com/agongi/study/tree/master/rdbms/execution-plan/)
