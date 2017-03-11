@@ -11,7 +11,7 @@
 ```
 
 #### Index
-- [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/rdbms/jdbc-dbcp/)
+- [JDBC vs DBCP](https://github.com/agongi/study/tree/master/rdbms/jdbc-dbcp/)
 - [Clustering vs Replication/Mirroring vs Sharding](https://github.com/agongi/study/tree/master/rdbms/clustering-mirroring-replication-sharding/)
 - [Execution Plan](https://github.com/agongi/study/tree/master/rdbms/execution-plan/)
 - [Isolation](https://github.com/agongi/study/tree/master/rdbms/isolation/)
