@@ -1,0 +1,18 @@
+## RDBMS
+
+```
+ㅁ Author: suktae.choi
+ㅁ Date: 2017.03.11
+ㅁ Origin:
+ - Real MySQL
+ㅁ References:
+ - https://dev.mysql.com/doc/refman/5.7/en
+```
+
+#### Design Pattern
+- [JDBC and/or DBCP](https://github.com/agongi/study/tree/master/rdbms/jdbc-dbcp/)
+- [Clustering vs Replication/Mirroring vs Sharding](https://github.com/agongi/study/tree/master/rdbms/clustering-mirroring-replication-sharding/)
+- [Execution Plan](https://github.com/agongi/study/tree/master/rdbms/execution-plan/)
+- [Isolation](https://github.com/agongi/study/tree/master/rdbms/isolation/)
+- [Indexing](https://goo.gl/K03Zyj)
+- [Duplicated P.K](https://github.com/agongi/study/tree/master/rdbms/duplicated-pk/)
