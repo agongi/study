@@ -1,5 +1,4 @@
 ## Duplicated Primary Key
-INSERT **IGNORE** INTO holds old, **REPLACE** INTO replace to new and INSERT INTO VALUES **ON DUPLICATE KEY UPDATE** only updates user specified values while with holding other fields.
 
 ```
 ㅁ Author: suktae.choi
