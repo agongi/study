@@ -1,7 +1,7 @@
 ## Multi Module Project
 Most of java based project is flat layout but sometimes you need to configure it hierarchically for avoiding duplicated logic, management etc,.
 
->###### Multi module project is consisted of root, module and common projects.
+> Multi module project is consisted of root, module and common projects.
 
 ```
 ㅁ Author: suktae.choi
@@ -23,7 +23,7 @@ Module-1  Module-2  Module-common
 
 #### Overview
 
-<img src="https://github.com/agongi/study/blob/master/maven-gradle/multi-module-project/images/Screen%20Shot%202016-06-08%20at%2002.27.47.png" width="50%">
+<img src="https://github.com/agongi/study/blob/master/maven/multi-module-project/images/Screen%20Shot%202016-06-08%20at%2002.27.47.png" width="50%">
 
 #### 1. Root Project (multiModules)
 
