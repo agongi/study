@@ -7,4 +7,4 @@ Maven is a build automation tool used primarily for Java projects.
 ```
 
 #### Index
- - [Multi Module Project](https://github.com/agongi/study/tree/master/maven-gradle/multi-module-project/)
+ - [Multi Module Project](https://github.com/agongi/study/tree/master/maven/multi-module-project/)
