@@ -1,8 +1,6 @@
 ## HTTP - SDPY
 HTTP is world-wide web protocol that is used all browser and web-relatived client and server. Recently new spec of HTTP/2 has published so this section will cover what is main differences among each of HTTP versions and SPDY.
 
->###### Simply let me compare each of HTTP and SPDY .
-
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.02.01
@@ -16,10 +14,10 @@ HTTP is world-wide web protocol that is used all browser and web-relatived clien
  - http://d2.naver.com/helloworld/140351
 ```
 
-#### 1. HTTP/1.0 (TCP - TLS - HTTP/1.0)
+### 1. HTTP/1.0 (TCP - TLS - HTTP/1.0)
 The First official protocol in 1996. (RFC 1945) It supports almost current HTTP features.
 
-#### 2. HTTP/1.1 (TCP - TLS - HTTP/1.1)
+### 2. HTTP/1.1 (TCP - TLS - HTTP/1.1)
 HTTP/1.1 is updated version of HTTP/1.0 in 1999. (RFC 2068) It has some improvement.
 
 **Host field**<br>
@@ -59,7 +57,7 @@ HTTP/1.1 supports `Pipelining` to enable fast resource response but not in HTTP/
 **CORS (Cross Origin Resource Sharing)**<br>
 HTTP/1.1 introduces the `OPTIONS method`.
 
-#### 3. SPDY (TCP - TLS - SPDY - HTTP)
+### 3. SPDY (TCP - TLS - SPDY - HTTP)
 SPDY is invented by Google to improve HTTP/1.1 flaws. The core developers of SPDY have been involved in the development of HTTP/2, including both Mike Belshe and Roberto Peon. As of February 2015, Google has announced that following the recent final ratification of the HTTP/2 standard, support for `SPDY would be deprecated`, and that support for SPDY would be withdrawn completely in 2016.
 
 **HTTPS only**<br>
@@ -95,7 +93,7 @@ Binary protocols are more `efficient` to parse compared to textual protocols lik
 
 For example, HTTP/1.1 defines four different ways to parse a message; in HTTP/2 and/or SPDY, there’s just one code path.
 
-#### 4. HTTP/2 (TCP - TLS - HTTP/2)
+### 4. HTTP/2 (TCP - TLS - HTTP/2)
 The development of HTTP/2 used SPDY as a jumping-off point. Among the many detailed differences between the protocols, the most notable is that HTTP/2 uses a `fixed Huffman code-based header compression algorithm`, instead of SPDY's dynamic stream-based compression. This helps to reduce the potential for compression oracle attacks on the protocol, such as the CRIME attack.
 
 On February 9, 2015, Google announced plans to remove support for SPDY in Chrome by early 2016, in favor of support for HTTP/2, starting with Chrome 40.
