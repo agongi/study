@@ -1,24 +1,18 @@
 ## SLF4J
-SLF4J is a `Logging facade` as an interface for various logging frameworks (e.g. logback, log4j) allowing the end user to plug in the desired logging framework at deployment time.
 
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2017.03.13
 ㅁ References:
  - https://lalwr.blogspot.kr/2016/03/logback.html
- - http://m.blog.naver.com/writer0713/220733443205
 ```
 
+<img src="https://github.com/agongi/study/blob/master/logger/slf4j/images/bindings.png" width="75%">
+
 ### Concept
+SLF4J is a `Logging facade` as an interface for various logging frameworks (e.g. logback, log4j) allowing the end user to plug in the desired logging framework at deployment time.
 
+### Migration
+If your application uses 3rd-party libraries in dependency, It is hard to control to force them to use desired logging framework you choose. SLF4J allows you easily override existing logging-legacy `xxx-over-slf4j` xxx stands for legacy logging system such as log4j, apache common loggings.
 
-
-### d
-
-
-
-https://beyondj2ee.wordpress.com/2013/11/05/log4j%EC%97%90%EC%84%9C-logback%EC%9C%BC%EB%A1%9C-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%ED%95%98%EA%B8%B0-migrate-from-log4j-to-logback/
-
-https://sonegy.wordpress.com/category/logback/
-
-https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/
+The concept is very simple. `xxx-over-slf4j` series uses the same package name what legacy logging used, it makes 3rd-party's log flow to SLF4J.
