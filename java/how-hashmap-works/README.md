@@ -1,7 +1,5 @@
 ## HashMap
-Java fundamental of HashMap.
-
-> It is a kind of `{key - value}` data structure which insert and/or select values based on **hashCode of key**
+It is a `{key - value}` data structure which insert and/or select values based on **hashCode of key**
 
 ```
 ㅁ Author: suktae.choi
@@ -13,14 +11,75 @@ Java fundamental of HashMap.
  - http://starplatina.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%BB%AC%EB%A0%89%EC%85%98-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%9D%B8%ED%84%B0%EB%B7%B0-%EC%A7%88%EB%AC%B8-40%EA%B0%9C
 ```
 
-### Syllabus of hashMap collision
+### Principle
+### get() operation
+<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202017-03-25%20at%2000.44.56.png" width="75%">
+
+- call map.get(key)
+- invoked key.hashCode()
+- calculate index = key.hashCode() & buckets.length
+- goto index of buckets
+- iteration -> key.equals(next) until matched key
+
+> map.get(key) is **heavy** operation
+
+### containsKey() vs get()
+```java
+// anti-pattern
+if (map.containsKey(key)) {
+    map.get(key);
+    // ... do something
+}
+
+// common use case
+Object value = map.get(key);
+if (value != null) {
+    // ... do something
+}
+```
+`.containsKey()` and `.get()` use **the same method** that looks up the whole buckets to find corresponding entry. Using .containsKey() before calling .get() is redundant.
+
+### entrySet() vs keySet()
+Most common use of iteration of Map<> is to use entrySet(). It would cover all cases whether extract key or value. **map.get()** is a heavy-operation to look up all buckets to pick up specific value.
+
+```java
+@Getter
+@Setter
+@Builder
+private static class Data {
+    int a;
+    int b;
+    String c;
+    String d;
+}
+// full-iteration, get entries
+for (Map.Entry<String, Data> entry : map.entrySet()) {
+    // Map stored data in a form of ENTRY in buckets. It retrieves each of entries.
+    String key = entry.getKey();
+    Data values = entry.getValue();
+}
+
+// full-iteration, extract key only from entries
+for (String key : map.keySet()) {
+    // anti-pattern
+    // get() method will use hashCode() and equals() method again to search value in buckets
+    Data values = map.get(key);
+}
+
+// full-iteration, extract value only from entries
+for (Data value : map.values()) {    
+    value ...
+}
+```
+
+### Collision
 <img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202016-02-26%20at%2022.07.22.png" width="50%">
 
 HashCode collision could happen because a number of object can be defined is larger than 2^32 and the same hash can be generated in each different key.
 
 Take a look at this formulation :
 ```
-index = hash_function(KEY) % SIZE_OF_ARRAY;
+index = hashCode(KEY) % SIZE_OF_ARRAY;
 ```
 If size is 10 and keys are 1 or 11 or 21, index (hash) is equal to 1.
 
@@ -29,7 +88,7 @@ If size is 10 and keys are 1 or 11 or 21, index (hash) is equal to 1.
 
 Here is the way how to avoid collision.
 
-### 1. Separate chaining
+#### 1. Separate chaining
 LinkedList<br>
 Additional heap is required in each insert<br>
 Dynamic array
@@ -42,8 +101,8 @@ Dynamic array
 
 > About JDK 1.8 uses LinkedList when the number of nodes is less than 8, otherwise Tree (red-black) for performance.
 
-### 2. Open addressing
-#### 2.1. Linear probing
+#### 2. Open addressing
+##### 2.1. Linear probing
 Use empty space<br>
 No more additional heap is required<br>
 Fixed array<br>
