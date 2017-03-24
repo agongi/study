@@ -12,8 +12,8 @@ It is a `{key - value}` data structure which insert and/or select values based o
 ```
 
 ### Principle
-### get() operation
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202017-03-25%20at%2000.44.56.png" width="75%">
+#### get() operation
+<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202017-03-25%20at%2000.44.56.png">
 
 - call map.get(key)
 - invoked key.hashCode()
@@ -23,7 +23,7 @@ It is a `{key - value}` data structure which insert and/or select values based o
 
 > map.get(key) is **heavy** operation
 
-### containsKey() vs get()
+#### containsKey() vs get()
 ```java
 // anti-pattern
 if (map.containsKey(key)) {
@@ -39,7 +39,7 @@ if (value != null) {
 ```
 `.containsKey()` and `.get()` use **the same method** that looks up the whole buckets to find corresponding entry. Using .containsKey() before calling .get() is redundant.
 
-### entrySet() vs keySet()
+#### entrySet() vs keySet()
 Most common use of iteration of Map<> is to use entrySet(). It would cover all cases whether extract key or value. **map.get()** is a heavy-operation to look up all buckets to pick up specific value.
 
 ```java
@@ -102,7 +102,7 @@ Dynamic array
 > About JDK 1.8 uses LinkedList when the number of nodes is less than 8, otherwise Tree (red-black) for performance.
 
 #### 2. Open addressing
-##### 2.1. Linear probing
+#### 2.1. Linear probing
 Use empty space<br>
 No more additional heap is required<br>
 Fixed array<br>
