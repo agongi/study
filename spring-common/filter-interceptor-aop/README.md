@@ -47,3 +47,12 @@ You can control request in below :
  - afterCompletion() : After view
 
 #### 3. AOP
+PointCut 대상에게, Aspect 를 Advice 한다.
+- Pointcut
+  - @Pointcut("execution(public * com.abc.service.*.*())")
+- Aspect
+  - @Aspect public class ABC {...}
+- Advice
+  - before
+  - after
+  - around
