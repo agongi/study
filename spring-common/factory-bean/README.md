@@ -15,9 +15,9 @@ Using FactoryBeans to create the `uncreatable`.
 - Directly define `target instance` as bean will miss those configuration settings
 - Any way to define factory generated instance as a bean?
 - Factory class can't fulfill this condition
- - It is responsible for creating other java instance in easy
- - It only has static methods to provide
- - It doesn't have constructor itself
+  - It is responsible for creating other java instance in easy
+  - It only has static methods to provide
+  - It doesn't have constructor itself
 
 ### Code
 #### JacksonBean
