@@ -18,6 +18,7 @@ Spring-Common lets you learn fundamental concepts of spring related
  - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
  - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
  - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
+ - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
 
 #### Spring Story
  - [Web Request Flow](https://github.com/agongi/study/tree/master/spring-common/web-request-flow/)
