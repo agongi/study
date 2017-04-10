@@ -22,3 +22,6 @@ Reading status
 - **[16.08.15 ~ ]** 톰 페로타, The Leftovers
 - **[17.03.14 ~ ]** 시오노 나나미, 로마인 이야기 2
 - 암호혁명
+
+#### Blog
+- **[2017-04-11]** Steve Jobs, [Thoughts on Flash](http://www.apple.com/hotnews/thoughts-on-flash/)
