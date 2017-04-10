@@ -34,8 +34,6 @@ Host: www.google.com
 HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default but header `Connection: keep-alive` should be declared explicitly in HTTP/1.0.
 > TCP session needs to be negotiated in 3-way-handshake. That is expensive.
 
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202016-02-01%20at%2023.30.21.png" width="50%">
-
 #### N-TCP-Connection
 Modern browser (e.g. Firefox, Chrome, Edge ..) is able to create 2-TCP-Connections per domain to get over performance limitation. The total number of connections is 4 to 8 based on browser type/version.
 
@@ -60,7 +58,7 @@ With HTTP/1.x, browsers open between 4 and 8 connections per origin. This may im
 
 One TCP Connection means that client need to negotiate 3-way-handshake once and use it multiply.
 
-![alt-tcp-connection](https://github.com/agongi/study/blob/master/http/images/http2-multiplexing.png)
+![alt-tcp-connection](https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.39.28.png)
 
 #### Priority
 Client could `set priority` in request so when server receives it, It can set up priority in processing and response it rather than others.
@@ -86,4 +84,6 @@ HTTP header is compressed using `HPACK`. It significantly reduces HTTP response 
 #### Binary packet
 Binary protocols are more `efficient` to parse compared to textual protocols like HTTP/1.x, because they often have a number of affordances to “help” with things like whitespace handling, capitalization, line endings, blank links and so on.
 
-<img src="#" width="75%">
+<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.37.08.png" width="75%">
+
+<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.37.17.png" width="75%">
