@@ -40,6 +40,8 @@ Modern browser (e.g. Firefox, Chrome, Edge ..) is able to create 2-TCP-Connectio
 
 Browser makes a trick to expand maximum number of connection to separate subdomain e.g. 2-Connections per image.google.com, 2-Connections per video.google.com.
 
+<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.39.28.png" width="75%">
+
 #### Pipelining
 HTTP/1.1 supports `Pipelining` to enable fast resource response but not in HTTP/1.0.
 > Pipelining enables client to send all request in parallel before receives response. Server responses packet `in the same order` that the requests were received.
@@ -79,8 +81,6 @@ The relation of these terms can be summarized as follows:
 With HTTP/1.x, browsers open between 4 and 8 connections per origin. This may improve performance in parallel situation but each of connections need to be negotiated called `3-way-handshake` that cause `RTT (Round-Trip-Time)` and reduce performance.
 
 One TCP Connection means that client need to negotiate 3-way-handshake once and use it multiply.
-
-![alt-tcp-connection](https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.39.28.png)
 
 #### Multiplexing
 The new binary framing layer in HTTP/2 resolves the head-of-line blocking problem found in HTTP/1.x and eliminates the need for multiple connections to enable parallel processing and delivery of requests and responses.
