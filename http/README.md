@@ -72,7 +72,7 @@ As a result, both client and server must use the new binary encoding mechanism t
 The relation of these terms can be summarized as follows:
 
 - All communication is performed over a single TCP connection that can carry any number of bidirectional streams.
-- Each stream has a unique identifier and optional priority information that is used to carry bidirectional messages.
+- Each stream has a unique identifier and `optional priority information` that is used to carry bidirectional messages.
 - Each message is a logical HTTP message, such as a request, or response, which consists of one or more frames.
 - The frame is the smallest unit of communication that carries a specific type of data—e.g., HTTP headers, message payload, and so on. Frames from different streams may be interleaved and then reassembled via the embedded stream identifier in the header of each frame.
 
@@ -85,15 +85,17 @@ One TCP Connection means that client need to negotiate 3-way-handshake once and 
 #### Multiplexing
 The new binary framing layer in HTTP/2 resolves the head-of-line blocking problem found in HTTP/1.x and eliminates the need for multiple connections to enable parallel processing and delivery of requests and responses.
 
+<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.37.08.png" width="75%">
+
+The snapshot captures multiple streams in flight within the same connection. The client is transmitting a DATA frame (stream 5) to the server, while the server is transmitting an interleaved sequence of frames to the client for streams 1 and 3. As a result, there are three parallel streams in flight.
+
+The ability to break down an HTTP message into independent frames, interleave them, and then reassemble them on the other end is the single most important enhancement of HTTP/2. In fact, it introduces a ripple effect of numerous performance benefits across the entire stack of all web technologies, enabling us to:
+
 - Interleave multiple requests in parallel without blocking on any one.
 - Interleave multiple responses in parallel without blocking on any one.
 - Use a single connection to deliver multiple requests and responses in parallel.
 
 > Multiplexing enables client to send all request in parallel before receives response. Server responses packet `out-of-order` that the requests were received.
-
-> Priority bit can be sent in request is able to send response `out-of-order` based on request priority too.
-
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.37.08.png" width="75%">
 
 #### Header Compression
 HTTP header is compressed using `HPACK`. It significantly reduces HTTP response size by compression and improves performance almost 30%.
