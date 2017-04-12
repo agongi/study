@@ -49,7 +49,7 @@
 
 #### RDB/NoSQL
  - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
- - [Mybatis](http://www.mybatis.org/mybatis-3/sqlmap-xml.html/)
+ - [Mybatis](https://github.com/agongi/study/tree/master/mybatis/)
  - [Redis](#)
 
 #### Architect Design
