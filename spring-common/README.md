@@ -12,7 +12,6 @@ Spring-Common lets you learn fundamental concepts of spring related
 #### Index
  - [@Autowired vs @Inject vs @Resource](https://github.com/agongi/study/tree/master/spring-common/autowired-inject-resource/)
  - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
- - [@PostConstruct](https://github.com/agongi/study/tree/master/spring-common/post-construct)
  - [How @Transactional works](https://github.com/agongi/study/tree/master/spring-common/how-transactional-works/)
  - [Filter vs Interceptor vs AOP](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor-aop/)
  - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
