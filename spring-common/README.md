@@ -9,7 +9,7 @@ Spring-Common lets you learn fundamental concepts of spring related
  - http://docs.spring.io/spring/docs/current/javadoc-api/
 ```
 
-#### Spring Fundamental
+#### Index
  - [@Autowired vs @Inject vs @Resource](https://github.com/agongi/study/tree/master/spring-common/autowired-inject-resource/)
  - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
  - [@PostConstruct](https://github.com/agongi/study/tree/master/spring-common/post-construct)

@@ -21,7 +21,7 @@
  - Adapter Pattern
  - State Pattern
 
-#### Fundamental
+#### Index
  - [String vs StringBuilder vs StringBuffer](https://github.com/agongi/study/tree/master/java/string-stringbuilder-stringbuffer/)
  - [Primitive type vs Boxed type](https://github.com/agongi/study/tree/master/java/primitive-boxed/)
  - [Interface vs Abstract](https://github.com/agongi/study/tree/master/java/interface-abstract/)
