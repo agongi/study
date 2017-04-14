@@ -1,7 +1,4 @@
 ## Classpath
-Spring would understand classpath configuration in different ways. There are some comparison of absolute, relative and recursive, flat and current, referenced.
-
-> Take a look at some tiny syntax differences to configure classpath in spring.
 
 ```
 ㅁ Author: suktae.choi
@@ -12,18 +9,18 @@ Spring would understand classpath configuration in different ways. There are som
 
 ### classpath: vs classpath\*:
 - classpath:
- - load only from current project resources
+  - load only from current project resources
 - classpath*:
- - load from current and referenced \*.jar resources
+  - load from current and referenced \*.jar resources
 
 ### classpath: vs classpath:/
 - classpath:
- - relative path
+  - relative path
 - classpath:/
- - absolute path
+  - absolute path
 
 ### classpath:\*\*/\*.properties vs classpath:\*.properties
 - classpath:\*\*/\*.properties
- - read \*.properties files in all depth of directory hierarchy (recursively)
+  - read \*.properties files in all depth of directory hierarchy (recursively)
 - classpath:\*.properties
- - read \*.properties files in the root of classpath only (flat)
+  - read \*.properties files in the root of classpath only (flat)

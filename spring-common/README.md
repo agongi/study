@@ -11,13 +11,14 @@ Spring-Common lets you learn fundamental concepts of spring related
 
 #### Index
  - [@Autowired vs @Inject vs @Resource](https://github.com/agongi/study/tree/master/spring-common/autowired-inject-resource/)
- - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
+- [Filter vs Interceptor vs AOP](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor-aop/)
  - [How @Transactional works](https://github.com/agongi/study/tree/master/spring-common/how-transactional-works/)
- - [Filter vs Interceptor vs AOP](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor-aop/)
+ - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
  - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
  - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
  - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
  - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
+ - [Dependency Injection](https://github.com/agongi/study/tree/master/spring-common/dependency-injection/)
 
 #### Spring Story
  - [Web Request Flow](https://github.com/agongi/study/tree/master/spring-common/web-request-flow/)
