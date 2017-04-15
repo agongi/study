@@ -38,8 +38,9 @@ public DI(DependencyA dependencyA, DependencyB dependencyB, DependencyC dependen
 }
 ```
 
-- Mandatory
+- Mandatory dependencies are recommended to use constructor injection
 - Implicit constructor injection is available since 4.3+
+  - Don't need to declare default constructor explicitly
 
 ### By setter
 ```java
@@ -63,4 +64,4 @@ public void setDependencyC(DependencyC dependencyC) {
 }
 ```
 
-Optional
+- Optional dependencies are recommended to use setter injection
