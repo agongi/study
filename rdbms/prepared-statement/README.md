@@ -34,4 +34,4 @@
 #### Additional: How to avoid SQL Injection?
 PreparedStatment is already compiled and stored in cache with unique execution plan. The placeholders are only replaced with input data.
 
-Any input data can't affect SQL statement itself. It is only replaced as input in ``?`` phase.
+Any input data can't affect SQL statement itself. It is only replaced as input in ``?``.
