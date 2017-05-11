@@ -1,12 +1,11 @@
 ## Spring Security
-Reference of fundamental concept in spring security.
-
-> Use pointcut to determine which URI pattern will be applied spring-security based on AOP concept. 
 
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.02.16 ~
-ㅁ Book: Spring in Action
 ㅁ References:
- - http://springmvc.egloos.com/category/Spring%20Security
+  - http://springmvc.egloos.com/category/Spring%20Security
+  - http://springsource.tistory.com/80
+  - https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/
+  - https://spring.io/guides/topicals/spring-security-architecture/
 ```
