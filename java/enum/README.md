@@ -59,7 +59,7 @@ public enum Mode {
 }
 ```
 
-### Enum Usage
+### Usage
 ```java
 // enum to string
 String name = Mode.MODE_1.name();
@@ -68,14 +68,30 @@ Mode mode = Mode.valueOf(name);
 ```
 > Every single enum has **name()**, **valueOf()** method in default.
 
-
-### Enum Integration
+### Iteration
 ```java
 for (Direction dir : Direction.values()) {
   // do what you want
 }
 ```
 > **.values()** returns an array containing the constants of this enum type
+
+### Boolean field
+```java
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public enum Direction {
+  YES(true),
+  NO(false),
+  ;
+
+  boolean used;
+}
+
+// isXXX is auto-generated in case of boolean field
+YES.isUsed() == true;
+NO.isUsed() == false;
+```
 
 ### Type Safety
 ```java
