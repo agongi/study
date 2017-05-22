@@ -146,8 +146,6 @@ List<? super Custom>
 
 - ? is supertypes of Custom
 
-### Type Erasure
-
 ### Restrictions on Generics
 #### Cannot Instantiate Generic Types with Primitive Types
 ```java
