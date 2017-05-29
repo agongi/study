@@ -76,7 +76,7 @@ for (Direction dir : Direction.values()) {
 ```
 > **.values()** returns an array containing the constants of this enum type
 
-### Boolean field
+### Boolean Field
 ```java
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -91,6 +91,27 @@ public enum Direction {
 // isXXX is auto-generated in case of boolean field
 YES.isUsed() == true;
 NO.isUsed() == false;
+```
+
+### Default Value
+```java
+@Getter
+public enum Direction {
+  YES("name_yes", true),
+  NO("name_no"),  // default value in field is assigned
+  ;
+
+  String name;  // mandatory
+  boolean used = true;  // optional, default true
+
+  private Direction(String name) {
+    this.name = name;
+  }
+  private Direction(String name, boolean used) {
+    this.name = name;
+    this.used = used;
+  }
+}
 ```
 
 ### Type Safety
