@@ -14,6 +14,7 @@ Java fundamental of Enumerations.
  - https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
  - http://stackoverflow.com/questions/4709175/what-are-enums-and-why-are-they-useful
  - http://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
+ - https://stackoverflow.com/questions/443980/why-cant-enums-constructor-access-static-fields
 ```
 
 ### Enum types
