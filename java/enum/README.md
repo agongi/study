@@ -114,6 +114,63 @@ public enum Direction {
 }
 ```
 
+### Holder Pattern
+```java
+/**
+ * @author suktae.choi
+ */
+@Slf4j
+public class EnumTest extends BaseTest {
+    private static final HashMap<Integer, CardClassType> CARD_ID_MAP = new HashMap<>();
+
+    @Getter
+    public enum CardClassType {
+        NORMAL("normal", 1),
+        RARE("rare", 2),
+        HERO("hero", 3),
+        ;
+
+        private String name;
+        private Integer id;
+
+        CardClassType(String name, Integer id) {
+            this.name = name;
+            this.id = id;
+            CardClassTypeHolder.cardIdMap.put(id, this);
+            CARD_ID_MAP.put(id, this);
+        }
+
+        private static class CardClassTypeHolder {
+            private static Map<Integer, CardClassType> cardIdMap = new HashMap<>();
+        }
+
+        public static CardClassType findById(Integer id) {
+            return Arrays.stream(values()).filter(o -> o.getId().equals(id)).findFirst().get();
+        }
+
+        public static CardClassType findByIdHolder(Integer id) {
+            return CardClassTypeHolder.cardIdMap.get(id);
+        }
+
+        public static CardClassType findByStaticField(Integer id) {
+            return CARD_ID_MAP.get(id);
+        }
+    }
+
+    @Test
+    public void test00_findById() {
+        CardClassType type1 = CardClassType.findById(1);
+        log.info("type1: {}", type1);
+
+        CardClassType type2 = CardClassType.findByIdHolder(2);
+        log.info("type2: {}", type2);
+
+        CardClassType type3 = CardClassType.findByStaticField(3);
+        log.info("type3: {}", type3);
+    }
+}
+```
+
 ### Type Safety
 ```java
 public enum Fruit {
@@ -143,7 +200,7 @@ String fruit = Constants.MALE;
 String person = Constants.APPLE;
 ```
 
-### equivalent
+### Equivalent
 ```java
 public enum Color {
   RED,
