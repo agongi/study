@@ -1,5 +1,4 @@
 ## Java Enumerations
-Java fundamental of Enumerations.
 
 ```
 ㅁ Author: suktae.choi
