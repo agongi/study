@@ -13,11 +13,7 @@
  - https://stackoverflow.com/questions/1953530/why-does-java-prohibit-static-fields-in-inner-classes
 ```
 
-<img>
-
-top-level static class is not exist in java
-
-
+<img src="https://github.com/agongi/study/blob/master/java/nested-class/images/Screen%20Shot%202017-06-09%20at%2001.22.27.png">
 
 ### Purpose
 - The class that is only used in one place
@@ -30,6 +26,8 @@ static X (only through an object reference just like any other top-level class)
 inner O
 
 > Static Nested-class is behaviorally a top-level class that has been nested in another top-level class for packaging convenience
+
+> Top-level static class is not exist in java
 
 define static method or field itself
 static O
