@@ -9,4 +9,6 @@
 
 #### Index
 - [#{...} vs ${...}](https://github.com/agongi/study/tree/master/mybatis/%23-%24)
-- [ResultMap](https://github.com/agongi/study/tree/master/mybatis/resultMap/)
+- [ResultMap](#)
+- [Selectkey](https://github.com/agongi/study/tree/master/mybatis/selectkey/)
+- [TypeHandler](#)
