@@ -1,8 +1,6 @@
 ## Java Enumerations
 Java fundamental of Enumerations.
 
-> It gives you `type safety` and `self-documenting`.
-
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.10.12

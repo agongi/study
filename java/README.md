@@ -54,3 +54,4 @@
 - [Stream](https://github.com/agongi/study/tree/master/java/stream/)
 - [CompletableFuture](https://github.com/agongi/study/tree/master/java/completable-future/)
 - [Closure](https://github.com/agongi/study/tree/master/java/closure/)
+- [Optional](https://github.com/agongi/study/tree/master/java/optional/)
