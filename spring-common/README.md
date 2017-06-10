@@ -17,7 +17,6 @@
 - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
 - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
-- [Dependency Injection](https://github.com/agongi/study/tree/master/spring-common/dependency-injection/)
 - [Spring IoC Container](https://github.com/agongi/study/tree/master/spring-common/spring-ioc-container/)
 - [Spring Bean Life-Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
 - [Web Request Flow](https://github.com/agongi/study/tree/master/spring-common/web-request-flow/)

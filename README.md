@@ -31,7 +31,6 @@
  - [TCP](https://github.com/agongi/study/tree/master/tcp/)
  - [UDP](https://github.com/agongi/study/tree/master/udp/)
  - [QUIC](https://github.com/agongi/study/tree/master/quic/)
- - [MQTT and/or AMQP](https://github.com/agongi/study/tree/master/mqtt-amqp/)
  - [WebSocket](https://github.com/agongi/study/tree/master/websocket/)
  - [P2P](https://github.com/agongi/study/tree/master/p2p/)
  - [P4P](https://github.com/agongi/study/tree/master/p4p/)
