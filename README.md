@@ -57,6 +57,5 @@
 #### Seminar / Interview / etc,
  - [Book](https://github.com/agongi/study/tree/master/book/)
  - [Article](https://github.com/agongi/study/tree/master/article/)
- - [Seminar](https://github.com/agongi/study/tree/master/seminar/)
  - [Interview](https://github.com/agongi/study/tree/master/interview/)
  - [ETC](https://github.com/agongi/study/tree/master/etc/)
