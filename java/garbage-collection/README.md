@@ -1,7 +1,7 @@
 ## Garbage Collection
-Java fundamental of Garbage Collection(GC).
+Java fundamental of Garbage Collection (GC)
 
->###### GC finds garbage in heap and removes it for returning memory into heap again.
+> GC finds garbage in heap and removes it for returning memory into heap again.
 
 ```
 ㅁ Author: suktae.choi
@@ -22,10 +22,10 @@ Java fundamental of Garbage Collection(GC).
  - https://prezi.com/bwba2m2xhive/java-garbage-collection_/
 ```
 
-#### [1. How Garbage Collection works](http://d2.naver.com/helloworld/1329)
+### [1. How Garbage Collection works](http://d2.naver.com/helloworld/1329)
 <img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/Screen%20Shot%202016-02-28%20at%2016.51.10.png" width="50%">
 
-###### 1.1. Young Generation
+#### 1.1. Young Generation
 Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
 새롭게 생성한 객체는 여기에 위치한다. 대부분의 객체가 금방 접근 불가능 상태가 되기 때문에 매우 많은 객체가 Young 영역에 생성되었다가 사라진다. 이 영역에서 객체가 사라질때 `Minor GC`가 발생한다고 말한다.
 
@@ -37,16 +37,16 @@ Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
 
 > `Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다`. 만약 두 Survivor 영역에 모두 데이터가 존재하거나, 두 영역 모두 사용량이 0이라면 여러분의 시스템은 정상적인 상황이 아니라고 생각하면 된다.
 
-###### 1.2. Old Generation
+#### 1.2. Old Generation
 Young 영역에서 살아남은 객체가 여기로 복사된다. 대부분 Young 영역보다 크게 할당하며, 크기가 큰 만큼 Young 영역보다 GC는 적게 발생한다. (-XX:NewRatio=2 or 3 or 4)<br>
 이 영역에서 객체가 사라질 때 `Full GC`가 발생한다고 말한다. 그리고 Full GC가 발생하면 통상적으로 말하는, `STW(stop-the-world)`가 발생하여 application thread가 hang 멈춘다. 대개의 경우 GC 튜닝이란 이 stop-the-world 시간을 줄이는 것이다.
 
 <img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/Screen%20Shot%202016-02-28%20at%2019.30.03.png" width="50%">
 
-###### 1.3.Permanent Generation
+#### 1.3.Permanent Generation
 Since it is a separated region, it is not considered as a part of the Java Heap space. Objects in this space are relatively permanent. Class definitions are stored here, as are `static instances`, `string pool` and `meta-data`. Rarely `Full GC` also comes over here to clean up this area.
 
-#### 2. Garbage Collection tuning
+### 2. Garbage Collection tuning
 <img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/endOfThreadDump.JPG" width="75%">
 
  - New Generation (young generation)
@@ -58,7 +58,7 @@ Since it is a separated region, it is not considered as a part of the Java Heap 
  - Tenured Generation (old generation)
  - perm gen
 
-###### [2.1. GC 옵션](http://d2.naver.com/helloworld/37111)
+#### [2.1. GC 옵션](http://d2.naver.com/helloworld/37111)
 <img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/Screen%20Shot%202016-02-28%20at%2018.39.24.png" width="75%">
 
  - -server : 기본적으로 설정  
@@ -67,7 +67,7 @@ Since it is a separated region, it is not considered as a part of the Java Heap 
  - -XX:PermSize, -XX:MaxPermSize : OutOfMemoryError가 발생하고, 그 문제의 원인이 Perm 영역의 크기 때문일 때에만 설정
  - GC 로그설정 : 최대한 상세하게 (큰 성능상 이슈 없음)
 
-###### [2.2. GC 방식](http://d2.naver.com/helloworld/1329)
+#### [2.2. GC 방식](http://d2.naver.com/helloworld/1329)
  - CMS (Concurrent Mark Sweep) GC
 
  : 기본적으로 다른 Parallel GC 보다 빠르다.
@@ -96,7 +96,7 @@ Since it is a separated region, it is not considered as a part of the Java Heap 
  - Full GC performance (less than 1s)
  - Full GC frequency (once in 10m)
 
-#### [3. Monitoring](http://d2.naver.com/helloworld/6043)
+### [3. Monitoring](http://d2.naver.com/helloworld/6043)
 Stress Test
  - Apache JMeter
  - nGrinder
