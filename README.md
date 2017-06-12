@@ -55,7 +55,6 @@
  - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)
 
 #### Seminar / Interview / etc,
- - [Book](https://github.com/agongi/study/tree/master/book/)
  - [Article](https://github.com/agongi/study/tree/master/article/)
- - [Interview](https://github.com/agongi/study/tree/master/interview/)
+ - [Book](https://github.com/agongi/study/tree/master/book/)
  - [ETC](https://github.com/agongi/study/tree/master/etc/)

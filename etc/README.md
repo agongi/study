@@ -1,5 +1,5 @@
 ## ETC
-Temporary page for remembering.
+Temp Page
 
 ```
 ㅁ Author: suktae.choi
