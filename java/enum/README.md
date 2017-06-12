@@ -12,6 +12,8 @@
  - http://stackoverflow.com/questions/4709175/what-are-enums-and-why-are-they-useful
  - http://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
  - https://stackoverflow.com/questions/443980/why-cant-enums-constructor-access-static-fields
+ - https://stackoverflow.com/questions/32337555/stream-of-vs-arrays-stream-to-get-an-enum-from-a-value
+ - https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
 ```
 
 ### Enum types
@@ -112,7 +114,7 @@ public enum Direction {
 }
 ```
 
-### Holder Pattern
+### [Holder Pattern](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
 ```java
 /**
  * @author suktae.choi

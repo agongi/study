@@ -1,7 +1,7 @@
 ## Singleton Pattern
 Java design pattern of Singleton.
 
->###### The design pattern to generate `ONLY ONE` object.
+> The design pattern to generate `ONLY ONE` object.
 
 ```
 ㅁ Author: suktae.choi
@@ -13,9 +13,10 @@ Java design pattern of Singleton.
  - http://stackoverflow.com/questions/24538509/does-the-java-classloader-load-inner-classes
  - http://javarevisited.blogspot.jp/2012/07/when-class-loading-initialization-java-example.html
  - http://javarevisited.blogspot.sg/2011/03/10-interview-questions-on-singleton.html
+ - https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
 ```
 
-#### 1. Basic
+### 1. Basic
 
 ```java
 public class Demo {
@@ -32,7 +33,7 @@ public class Demo {
 ```
 > It is `NOT` thread-safe.
 
-#### 2. Lazy initialization
+### 2. Lazy initialization
 
 ```java
 public class Demo {
@@ -50,7 +51,7 @@ public class Demo {
 
 > There is critical performance disadvantage using `synchronized`.
 
-#### 3. Early initialization
+### 3. Early initialization
 
 ```java
 public class Demo {
@@ -65,7 +66,7 @@ public class Demo {
 
 > It is beyond the strategy of singleton, lazy-load, due to initializing instance in class initialized-life-cycle.
 
-#### 4. SingletonHolder
+### [4. Initialization-on-demand holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
 
 ```java
 public class Demo {
@@ -87,7 +88,7 @@ public class Demo {
 
 When class is loaded in java means that **finding binary representations (.class)** by ClassLoader.
  - class load doesn't mean that the class is ready to use (initialized) but it have to be executed before initializing
- 
+
 When class is initialized in java means that **executing its static initializers** and the **initializers for static fields (class variables)** declared in the class.
  - Generate instance `I` of class `T` using new() keyword
  - Static method `A` is invoked of class `T`
