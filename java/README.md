@@ -14,11 +14,7 @@
 - [Singleton Pattern](https://github.com/agongi/study/tree/master/java/singleton-pattern/)
 - [Builder Pattern](https://github.com/agongi/study/tree/master/java/builder-pattern/)
 - [Observer Pattern](https://github.com/agongi/study/tree/master/java/observer-pattern/)
-- Template Pattern
-- Decorator Pattern
-- Strategy Pattern
-- Adapter Pattern
-- State Pattern
+- [Initialization-on-demand_holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
 
 ### Index
 - [String vs StringBuilder vs StringBuffer](https://github.com/agongi/study/tree/master/java/string-stringbuilder-stringbuffer/)
