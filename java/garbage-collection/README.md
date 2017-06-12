@@ -19,6 +19,7 @@ Java fundamental of Garbage Collection(GC).
  - http://d2.naver.com/helloworld/184615
 
  - http://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html?m=1
+ - https://prezi.com/bwba2m2xhive/java-garbage-collection_/
 ```
 
 #### [1. How Garbage Collection works](http://d2.naver.com/helloworld/1329)
