@@ -28,7 +28,7 @@ It is invoked in servlet container(web.xml) `before dispatcher servlet`.
 ```
 
 #### 2. Interceptor
-It is invoked `after dispatcher servlet`.
+It is invoked `after dispatcher servlet` in defined order. (e.g. A > B > C)
 
 ```xml
 <mvc:interceptors>
@@ -36,15 +36,25 @@ It is invoked `after dispatcher servlet`.
       <mvc:mapping path="/api1/*" />  
       <mvc:mapping path="/api2/*" />  
       <mvc:mapping path="/api3/*" />  
-      <bean class="com.sec.interceptor.UserInterceptor" />
+      <bean class="A" />
+    </mvc:interceptor>
+
+    <mvc:interceptor>
+      <bean class="B" />
+    </mvc:interceptor>
+
+    <mvc:interceptor>
+      <bean class="C" />
     </mvc:interceptor>
 </mvc:interceptors>
 ```
 
 You can control request in below :
  - preHandle() : before @Controller
- - postHanle() : After @Controller, Before view
- - afterCompletion() : After view
+ - postHandle() : After @Controller, Before view
+ - afterCompletion() : After view (All processing are done)
+
+> If the return value is false or exception throws in preHandle(), postHandle() and afterCompletion() both are not invoked
 
 #### 3. AOP
 PointCut 대상에게, Aspect 를 Advice 한다.
