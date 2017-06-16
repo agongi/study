@@ -10,7 +10,7 @@
 
 ### Index
 - [@Autowired vs @Inject vs @Resource](https://github.com/agongi/study/tree/master/spring-common/autowired-inject-resource/)
-- [Filter vs Interceptor vs AOP](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor-aop/)
+- [Filter vs Interceptor](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor/)
 - [How @Transactional works](https://github.com/agongi/study/tree/master/spring-common/how-transactional-works/)
 - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
