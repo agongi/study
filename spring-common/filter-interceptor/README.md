@@ -1,7 +1,5 @@
 ## Filter vs Interceptor
-Simple comparison between filter and interceptor
-
-> Filter and Interceptor work almost similar, but invoked time is different.
+Filter and Interceptor work almost similar, but invoked time is different.
 
 ```
 ㅁ Author: suktae.choi
