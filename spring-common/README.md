@@ -2,7 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.16 ~
+ㅁ Date: 2016.02.16
 ㅁ References:
   - https://blog.outsider.ne.kr/search?q=spring%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4
   - http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/
@@ -17,7 +17,7 @@
 - [Spring Flow](https://github.com/agongi/study/tree/master/spring-common/spring-flow/)
 - [Spring Bean Life Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
 - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
-- [Spring IoC Container](https://github.com/agongi/study/tree/master/spring-common/spring-ioc-container/)
+- [Spring Bootstrap](https://github.com/agongi/study/tree/master/spring-common/spring-bootstrap/)
 - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)

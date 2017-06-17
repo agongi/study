@@ -1,11 +1,8 @@
-## Spring IoC Container
-Spring IoC container and is responsible for instantiating, configuring, and assembling the aforementioned beans.
-
-> Container manages life-cycle of beans, and can be bootstrapped from **servlet-container** or main function **implements WebApplicationInitializer**.
+## Spring Bootstrap
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.01 ~
+ㅁ Date: 2016.08.01
 ㅁ References:
  - http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
  - http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
@@ -15,7 +12,6 @@ Spring IoC container and is responsible for instantiating, configuring, and asse
 ```
 
 ### 1. XML-based approach
-
 SpringContext and bean definitions are declared in web.xml and each of config files.
 
  - web.xml
@@ -47,8 +43,7 @@ SpringContext and bean definitions are declared in web.xml and each of config fi
 </servlet-mapping>
 ```
 
-### 1.1 Java-based approach
-
+#### 1.1 Java-based approach
 - main or WebApplicationInitializer implementations entry-point
 - AppConfig.java
 - DispatcherConfig.java
@@ -90,7 +85,6 @@ public class AppConfig {
 ```
 
 ### 2. Bootstrapped by servlet-container
-
 **SpringServletContainerInitializer** class will be loaded and instantiated and have its onStartup() method invoked by any Servlet 3.0-compliant container during container startup.
 ```
 ServletContainerInitializer <-- SpringServletContainerInitializer
@@ -110,8 +104,7 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
 }
 ```
 
-### 2.1 Bootstrapped by itself
-
+#### 2.1 Bootstrapped by itself
 java -jar Application
 
 ```java
