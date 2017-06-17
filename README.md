@@ -19,7 +19,6 @@
  - [Parallel Programming](https://github.com/agongi/study/tree/master/parallel-programming/)
  - Node.js
  - [Maven](https://github.com/agongi/study/tree/master/maven/)
- - [Logger](https://github.com/agongi/study/tree/master/logger/)
 
 #### DEV (front-end)
  - React and Flux

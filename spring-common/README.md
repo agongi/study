@@ -14,12 +14,12 @@
 - [How @Transactional works](https://github.com/agongi/study/tree/master/spring-common/how-transactional-works/)
 - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
+- [Spring Flow](https://github.com/agongi/study/tree/master/spring-common/spring-flow/)
+- [Spring Bean Life Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
 - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
+- [Spring IoC Container](https://github.com/agongi/study/tree/master/spring-common/spring-ioc-container/)
 - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
-- ~~[Spring IoC Container](https://github.com/agongi/study/tree/master/spring-common/spring-ioc-container/)~~
-- [Bean Life Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
-- [Spring Flow](https://github.com/agongi/study/tree/master/spring-common/spring-flow/)
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
 
 ### Reference

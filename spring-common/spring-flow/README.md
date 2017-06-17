@@ -9,7 +9,7 @@
  - http://devbox.tistory.com/entry/Spring-webxml-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95
 ```
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/spring-flow/images/Screen%20Shot%202016-08-20%20at%2021.33.02.png">
+<img src="https://github.com/agongi/study/blob/master/spring-common/spring-flow/images/Screen%20Shot%202017-06-17%20at%2017.19.48.png">
 
 ### Term
 #### Servlet
