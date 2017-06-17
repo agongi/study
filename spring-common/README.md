@@ -17,10 +17,10 @@
 - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
 - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
-- [Spring IoC Container](https://github.com/agongi/study/tree/master/spring-common/spring-ioc-container/)
-- [Spring Bean Life-Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
-- [Web Request Flow](https://github.com/agongi/study/tree/master/spring-common/web-request-flow/)
-- [StaticProvider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
+- ~~[Spring IoC Container](https://github.com/agongi/study/tree/master/spring-common/spring-ioc-container/)~~
+- [Bean Life Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
+- [Spring Flow](https://github.com/agongi/study/tree/master/spring-common/spring-flow/)
+- [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
 
 ### Reference
 - [Chapter 09. Transaction](https://github.com/agongi/study/tree/master/spring-common/9)
