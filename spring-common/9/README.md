@@ -1,11 +1,8 @@
-## How @Transactional Works
-TBD
-
-> TBD
+## Spring Transaction
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.07.20 ~
+ㅁ Date: 2017.07.20
 ㅁ References:
  - http://egloos.zum.com/springmvc/v/498979
  - http://egloos.zum.com/springmvc/v/499291

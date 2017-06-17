@@ -11,14 +11,14 @@
 ### Index
 - [@Autowired vs @Inject vs @Resource](https://github.com/agongi/study/tree/master/spring-common/autowired-inject-resource/)
 - [Filter vs Interceptor](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor/)
-- [How @Transactional works](https://github.com/agongi/study/tree/master/spring-common/how-transactional-works/)
 - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
-- [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [Spring Flow](https://github.com/agongi/study/tree/master/spring-common/spring-flow/)
 - [Spring Bean Life Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
 - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
 - [Spring Bootstrap](https://github.com/agongi/study/tree/master/spring-common/spring-bootstrap/)
+- [Spring AOP](https://github.com/agongi/study/tree/master/spring-common/spring-aop/)
 - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
+- [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
 
