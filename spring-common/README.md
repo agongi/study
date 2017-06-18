@@ -11,6 +11,7 @@
 ### Index
 - [@Autowired vs @Inject vs @Resource](https://github.com/agongi/study/tree/master/spring-common/autowired-inject-resource/)
 - [Filter vs Interceptor](https://github.com/agongi/study/tree/master/spring-common/filter-interceptor/)
+- [/* vs /](https://github.com/agongi/study/tree/master/spring-common/`/*`-`/`/)
 - [@Cacheable](https://github.com/agongi/study/tree/master/spring-common/cacheable/)
 - [Spring Flow](https://github.com/agongi/study/tree/master/spring-common/spring-flow/)
 - [Spring Bean Life Cycle](https://github.com/agongi/study/tree/master/spring-common/spring-bean-life-cycle/)
