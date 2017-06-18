@@ -83,7 +83,7 @@ web.xml 은
 ### Conclusion
 / 을 재정의하면 tomcat web.xml 의 설정은 무시된다.
 
-<img src="https://github.com/agongi/study/blob/master/java/hashmap/images/Screen.Shot.2016-02-26.at.22.08.56.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/spring-common/servlet-mapping/images/Screen%20Shot%202017-06-19%20at%2002.01.16.png" width="75%">
 
 - /img/user/user.png
   - WEB (apache, nginx) 에서 처리
