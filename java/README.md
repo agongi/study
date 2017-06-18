@@ -25,12 +25,12 @@
 - [Iterator vs foreach vs for](https://github.com/agongi/study/tree/master/java/iterator-foreach-for/)
 - [Overriding vs Overloading](https://github.com/agongi/study/tree/master/java/overriding-overloading/)
 - [Heap vs Direct allocation](https://github.com/agongi/study/tree/master/java/heap-direct-allocation/)
-- Why String is Immutable or Final
 - [How HashMap works](https://github.com/agongi/study/tree/master/java/how-hashmap-works/)
 - [How ClassLoader Works](https://github.com/agongi/study/tree/master/java/classloader/)
 - [How to iterate Map](https://github.com/agongi/study/tree/master/java/how-to-iterate-map/)
 - [try-with-resources](https://github.com/agongi/study/tree/master/java/try-with-resources/)
 - [Garbage Collection](https://github.com/agongi/study/tree/master/java/garbage-collection/)
+- [JVM Memory Model](https://github.com/agongi/study/tree/master/java/jvm-memory-model/)
 - [Collections](https://github.com/agongi/study/tree/master/java/collections/)
 - [Generics](https://github.com/agongi/study/tree/master/java/generics/)
 - [Enumerations](https://github.com/agongi/study/tree/master/java/enum/)

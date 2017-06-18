@@ -7,6 +7,7 @@ ThreadLocal is used to `share variable` within **each thread's life-cycle**. It 
 ㅁ References:
  - http://javacan.tistory.com/entry/ThreadLocalUsage
  - http://tutorials.jenkov.com/java-concurrency/threadlocal.html
+ - https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html
 ```
 
 ### Code block variable

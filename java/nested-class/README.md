@@ -21,50 +21,50 @@
   - Nesting small class within top-level class can place code closer and precise
 
 ### Static-Nested & Non-Static-Nested Class
-Access fields of enclosing class even private
-- static-nested: X
-- non-static-nested: O
+- Access fields of enclosing class even private
+  - static-nested: X
+  - non-static-nested: O
 
 > Static Nested-class is behaviorally a top-level class that has been nested in another top-level class for packaging convenience
 
 > Top-level static class is not exist in java
 
-Access local variable or method parameter
-- static-nested: X
-- non-static-nested: X
+- Access local variable or method parameter
+  - static-nested: X
+  - non-static-nested: X
 
 > class-level declared class such as static, non-static-nested class can't have access to local variables
 
-Define static method or field itself
-- static-nested: O
-- non-static-nested: X
+- Define static method or field itself
+  - static-nested: O
+  - non-static-nested: X
 
 > Because an inner class is associated with an instance, it cannot define any static members itself.
 
-Declared location
-- static-nested: class-level
-- non-static-nested: class-level
+- Declared location
+  - static-nested: class-level
+  - non-static-nested: class-level
 
-#### Local & Anonymous Class
-Declared location
-- local & anonymous: in-a-block (typically method body)
+### Local & Anonymous Class
+- Declared location
+  - local & anonymous: in-a-block (typically method body)
 
-Use more than once
-- local: O
-- anonymous: X
+- Use more than once
+  - local: O
+  - anonymous: X
 
 > Local class has class definition snippet in-a-block so It is available to reuse it but anonymous
 
-Access fields of enclosing class even private
-- local & anonymous defined in static method of enclosing class: X
-- local & anonymous defined in method of enclosing class: O
+- Access fields of enclosing class even private
+  - local & anonymous defined in static method of enclosing class: X
+  - local & anonymous defined in method of enclosing class: O
 
-Access class fields of enclosing class
-- local & anonymous defined in static method of enclosing class: O
-- local & anonymous defined in method of enclosing class: X
+- Access class fields of enclosing class
+  - local & anonymous defined in static method of enclosing class: O
+  - local & anonymous defined in method of enclosing class: X
 
-Access local variable or method parameter
-- local & anonymous: O (local variable that is defined `final` or `effectively final` since java 8)
+- Access local variable or method parameter
+  - local & anonymous: O (local variable that is defined `final` or `effectively final` since java 8)
 
 > Local class is subset of Inner class, It means that It can't define static field but constant variables. Because constant typically declared `static final` will be transformed to each code snippet in compile-time.
 
