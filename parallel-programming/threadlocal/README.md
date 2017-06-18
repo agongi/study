@@ -5,82 +5,44 @@ ThreadLocal is used to `share variable` within **each thread's life-cycle**. It 
 ㅁ Author: suktae.choi
 ㅁ Date: 2017.04.17
 ㅁ References:
+ - https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html
+ - https://stackoverflow.com/questions/2784009/why-should-java-threadlocal-variables-be-static
  - http://javacan.tistory.com/entry/ThreadLocalUsage
  - http://tutorials.jenkov.com/java-concurrency/threadlocal.html
- - https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html
 ```
 
-### Code block variable
+### ThreadLocal
+These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable. ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread.
+
+#### Usage
 ```java
-{
-  // It is only valid within this code block
-  int codeBlockVariable = 10;  
-}
-```
+public class ThreadId {
+    // Atomic integer containing the next thread ID to be assigned
+    private static final AtomicInteger nextId = new AtomicInteger(0);
 
-### Threadlocal
-```java
-/**
- * @author suktae.choi
- */
-@Slf4j
-public class ThreadLocalTest {
-
-    private class ThreadLocalHolder implements Runnable {
-
-        private ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
-
-        @Override
-        public void run() {
-            threadLocal.set((int) (Math.random() * 100D));
-
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-
-            }
-
-            System.out.println(threadLocal.get());
+    // Thread local variable containing each thread's ID
+    private static final ThreadLocal<Integer> threadId =
+        new ThreadLocal<Integer>() {
+            @Override protected Integer initialValue() {
+                return nextId.getAndIncrement();
         }
-    }
+    };
 
-    @Test
-    public void test00_threadLocal() throws InterruptedException {
-        ThreadLocalHolder runnable = new ThreadLocalHolder();
-
-        Thread thread1 = new Thread(runnable);
-        Thread thread2 = new Thread(runnable);
-
-        thread1.start();
-        thread2.start();
-
-        thread1.join(); //wait for thread 1 to terminate
-        thread2.join(); //wait for thread 2 to terminate
+    // Returns the current thread's unique ID, assigning it if necessary
+    public static int get() {
+        return threadId.get();
     }
 }
 ```
 
-Each threads cannot see each other's values. Thus, they set and get different values.
+#### Why Static
+Because if it were an instance level field, then it would actually be "Per Thread - Per Instance", not just a guaranteed "Per Thread." That isn't normally the semantic you're looking for.
+
+Usually it's holding something like objects that are scoped to a User Conversation, Web Request, etc. You don't want them also sub-scoped to the instance of the class.
+
+One web request => one Persistence session.
+
+Not one web request => one persistence session per object.
 
 ### InheritableThreadLocal
-```java
-private class ThreadLocalHolder implements Runnable {
-
-    private ThreadLocal<Integer> threadLocal = new InheritableThreadLocal<>();
-
-    @Override
-    public void run() {
-        threadLocal.set((int) (Math.random() * 100D));
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-
-        }
-
-        System.out.println(threadLocal.get());
-    }
-}
-```
-
-Instead of each thread having its own value inside a ThreadLocal, the InheritableThreadLocal is bound to all child threads created by that thread.
+This class extends ThreadLocal to provide inheritance of values from parent thread to child thread: when a child thread is created, the child receives initial values for all inheritable thread-local variables for which the parent has values.
