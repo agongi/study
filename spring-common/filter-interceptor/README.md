@@ -1,5 +1,5 @@
 ## Filter vs Interceptor
-Filter and Interceptor work almost similar, but invoked time is different.
+Filter is invoked **before dispatcherServlet** but interceptor handles **after it.**
 
 ```
 ㅁ Author: suktae.choi
@@ -7,21 +7,23 @@ Filter and Interceptor work almost similar, but invoked time is different.
 ㅁ References:
  - http://changpd.blogspot.kr/2013/03/spring.html
  - http://dev-eido.tistory.com/entry/Interceptor-filter-AOP%EC%9D%98-%EC%B0%A8%EC%9D%B4
+ - http://lng1982.tistory.com/97
 ```
 
 <img src="https://github.com/agongi/study/blob/master/spring-common/filter-interceptor/images/89101625_26c5be9fd9.jpg" width="75%">
 
-### 1. Filter
+### Filter
 It is invoked in servlet container(web.xml) managed by WAS regardless spring container `before dispatcher servlet`.
 
 ```xml
 <filter>
     <filter-name>FILTER_NAME</filter-name>
-    <filter-class>com.sec.filter.SessionFilter</filter-class>  <!-- common usage -->
+    <filter-class>com.sec.filter.SessionFilter</filter-class>  <!-- user defined class -->
 </filter>
 <filter-mapping>
     <filter-name>FILTER_NAME</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/*</url-pattern>       <!-- url pattern -->
+    <url-pattern>*.html</url-pattern>   <!-- extension pattern -->
 </filter-mapping>
 ```
 
@@ -104,7 +106,7 @@ public class SessionFilter implements Filter {
 }
 ```
 
-### 2. Interceptor
+### Interceptor
 It is invoked `after dispatcher servlet` in defined order. (e.g. A > B > C)
 
 ```xml
