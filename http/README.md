@@ -1,5 +1,4 @@
 ## HTTP
-HTTP is world-wide web protocol that is used all browser and web-related client and server. Recently new spec of HTTP/2 has published so this section will cover what is main differences among each of HTTP versions and SPDY.
 
 ```
 ㅁ Author: suktae.choi
@@ -12,14 +11,13 @@ HTTP is world-wide web protocol that is used all browser and web-related client 
  - https://en.wikipedia.org/wiki/Head-of-line_blocking
  - https://www.nginx.com/blog/http-keepalives-and-web-performance/
  - http://d2.naver.com/helloworld/140351
+
  - https://developers.google.com/web/fundamentals/performance/http2/#design_and_technical_goals
+ - https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
 ```
 
-### 1. HTTP/1.0
-The First official protocol in 1996. (RFC 1945) It supports almost current HTTP features.
-
-### 2. HTTP/1.1
-HTTP/1.1 is updated version of HTTP/1.0 in 1999. (RFC 2068) It has some improvement.
+### HTTP/1.1
+HTTP/1.1 is updated version of HTTP/1.0 in 1999 (RFC 2068). It has some improvements.
 
 #### Host field
 HTTP header `Host` is mandatory in HTTP/1.1 but optional in 1.0.<br>
@@ -30,10 +28,14 @@ GET / HTTP/1.1
 Host: www.google.com
 ```
 
-#### Keep-alive / Persistent Connections
+#### Keep-alive
 HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default but header `Connection: keep-alive` should be declared explicitly in HTTP/1.0.
 
-> TCP session needs to be negotiated in 3-way-handshake. That is expensive.
+It has 2 options as following:
+- max: maximum request amount of keep connection
+- timeout: maximum sec of keep connection
+
+> It can reduce renegotiates flow of TCP connection known as 3-way handshaking.
 
 #### N-TCP-Connection
 Modern browser (e.g. Firefox, Chrome, Edge ..) is able to create 2-TCP-Connections per domain to get over performance limitation. The total number of connections is 4 to 8 based on browser type/version.
@@ -53,7 +55,7 @@ HTTP/1.1 supports `Pipelining` to enable fast resource response but not in HTTP/
 #### CORS (Cross Origin Resource Sharing)
 HTTP/1.1 introduces the `OPTIONS method`.
 
-### 3. HTTP/2
+### HTTP/2
 SPDY is invented by Google to improve HTTP/1.1 flaws. The core developers of SPDY have been involved in the development of HTTP/2, including both Mike Belshe and Roberto Peon. As of February 2015, Google has announced that following the recent final ratification of the HTTP/2 standard, support for `SPDY would be deprecated`, and that support for SPDY would be withdrawn completely in 2016.
 
 #### Binary framing layer

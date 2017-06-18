@@ -1,7 +1,5 @@
 ## Garbage Collection
-Java fundamental of Garbage Collection (GC)
-
-> GC finds garbage in heap and removes it for returning memory into heap again.
+GC finds garbage in heap and removes it for returning memory into heap again.
 
 ```
 ㅁ Author: suktae.choi
