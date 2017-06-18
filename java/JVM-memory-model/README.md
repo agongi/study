@@ -6,3 +6,7 @@
 ㅁ References:
  - http://www.nextree.co.kr/p3878/
 ```
+
+<img src="https://github.com/agongi/study/blob/master/java/JVM-memory-model/images/JVM-1.jpg" width="75%">
+
+### [Garbage Collection](https://github.com/agongi/study/tree/master/java/garbage-collection)
