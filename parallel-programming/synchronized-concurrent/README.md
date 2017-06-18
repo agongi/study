@@ -21,4 +21,4 @@ Java conceptual comparison between Synchronized and Concurrent Collections funct
  - thread-safe
  - segment lock
 
-<img src="https://github.com/agongi/study/blob/master/java/synchronized-concurrent/images/Internal%20implementation%20of%20ConcurrentHashMap%20in%20Java.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/parallel-programming/synchronized-concurrent/images/Internal%20implementation%20of%20ConcurrentHashMap%20in%20Java.png" width="75%">

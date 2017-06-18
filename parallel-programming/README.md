@@ -19,9 +19,8 @@ Parallel Programming fundamental in java
 #### Index
 - [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/parallel-programming/volatile-synchronized/)
 - [ThreadLocal](https://github.com/agongi/study/tree/master/parallel-programming/threadlocal/)
-- callable vs runnable
-
-
+- [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/parallel-programming/synchronized-concurrent/)
+- Callable vs Runnable
 
 
 ### To do

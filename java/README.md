@@ -22,7 +22,6 @@
 - [Interface vs Abstract](https://github.com/agongi/study/tree/master/java/interface-abstract/)
 - [Nested Class](https://github.com/agongi/study/tree/master/java/nested-class/)
 - [equals() and/or hashCode()](https://github.com/agongi/study/tree/master/java/equals-hashcode/)
-- [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/java/synchronized-concurrent/)
 - [Iterator vs foreach vs for](https://github.com/agongi/study/tree/master/java/iterator-foreach-for/)
 - [Overriding vs Overloading](https://github.com/agongi/study/tree/master/java/overriding-overloading/)
 - [Heap vs Direct allocation](https://github.com/agongi/study/tree/master/java/heap-direct-allocation/)
