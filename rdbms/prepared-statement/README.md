@@ -35,3 +35,8 @@
 PreparedStatment is already compiled and stored in cache with unique execution plan. The placeholders are only replaced with input data.
 
 Any input data can't affect SQL statement itself. It is only replaced as input in ``?``.
+
+#### Another solution to avoid SQL injection?
+Convert special characters of input to prevent it from affecting SQL statement:
+- / -> %64%
+- & -> %76%
