@@ -1,7 +1,5 @@
 ## Synchronized vs Concurrent Collections
-Java conceptual comparison between Synchronized and Concurrent Collections function.
-
->###### @Synchronized annotation locks Collection(table) widely. ConcurrentHashMap or CopyOnWriteArrayList only locks segment(column) lock.
+@Synchronized annotation locks Collection(table) widely. ConcurrentHashMap or CopyOnWriteArrayList only locks segment(column) lock.
 
 ```
 ㅁ Author: suktae.choi
@@ -10,14 +8,11 @@ Java conceptual comparison between Synchronized and Concurrent Collections funct
  - http://javarevisited.blogspot.kr/2016/05/what-is-difference-between-synchronized.html
 ```
 
-#### Synchronized
-
+### Synchronized
  - thread-safe
  - collection-wide lock
 
-
-#### Concurrent Collections
-
+### Concurrent Collections
  - thread-safe
  - segment lock
 
