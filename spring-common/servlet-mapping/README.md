@@ -15,7 +15,7 @@
 - All other strings are used for exact matches only.
 
 ### /*
-/\* 는 요청 받는 모든 URL을 처리한다는 의미다. (아래와 같은 유형의 패턴 모두)
+/\* 는 요청 받은 모든 URL을 의미한다. (아래와 같은 유형의 패턴 모두)
 
 - /user
 - /user/userList.jsp
@@ -29,7 +29,7 @@
 가 존재하지 않으므로 404 NOT FOUND 가 발생한다.
 
 ### /
-/ 는 DefaultServlet 을 의미한다. url-pattern 에 걸리지 않는 나머지 케이스를 처리한다.
+/ 는 url-pattern 에 걸리지 않는 나머지 케이스들을 의미한다.
 
 web.xml 은
 - {CATALINA_HOME}/conf/web.xml
