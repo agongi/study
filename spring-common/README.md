@@ -22,6 +22,7 @@
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
+- [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/threadlocal-in-spring-bean/)
 
 ### Reference
 - [Chapter 09. Transaction](https://github.com/agongi/study/tree/master/spring-common/9)
