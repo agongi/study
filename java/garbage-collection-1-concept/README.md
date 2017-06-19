@@ -1,4 +1,4 @@
-## Garbage Collection
+## Garbage Collection - Concept
 GC finds garbage in heap and removes it for returning memory into heap again.
 
 ```
@@ -18,10 +18,11 @@ GC finds garbage in heap and removes it for returning memory into heap again.
 
  - http://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html?m=1
  - https://prezi.com/bwba2m2xhive/java-garbage-collection_/
+ - https://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html
 ```
 
 ### [1. How Garbage Collection works](http://d2.naver.com/helloworld/1329)
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/Screen%20Shot%202016-02-28%20at%2016.51.10.png" width="50%">
+<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/Screen%20Shot%202016-02-28%20at%2016.51.10.png" width="50%">
 
 #### 1.1. Young Generation
 Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
@@ -45,7 +46,7 @@ Young 영역에서 살아남은 객체가 여기로 복사된다. 대부분 Youn
 Since it is a separated region, it is not considered as a part of the Java Heap space. Objects in this space are relatively permanent. Class definitions are stored here, as are `static instances`, `string pool` and `meta-data`. Rarely `Full GC` also comes over here to clean up this area.
 
 ### 2. Garbage Collection tuning
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/endOfThreadDump.JPG" width="75%">
+<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/endOfThreadDump.JPG" width="75%">
 
  - New Generation (young generation)
 
@@ -57,7 +58,7 @@ Since it is a separated region, it is not considered as a part of the Java Heap 
  - perm gen
 
 #### [2.1. GC 옵션](http://d2.naver.com/helloworld/37111)
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/Screen%20Shot%202016-02-28%20at%2018.39.24.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/Screen%20Shot%202016-02-28%20at%2018.39.24.png" width="75%">
 
  - -server : 기본적으로 설정  
  - -Xms, -Xmx : 동일하게 설정 (Memory size가 dynamic하게 조정되는 overhead 없애려는 목적)
@@ -84,7 +85,7 @@ Since it is a separated region, it is not considered as a part of the Java Heap 
 
  > 기존의 Young, Old 영역 방식이 아닌, 바둑판 형식을 이용하여 각 영역에 객체를 할당한다. 그러다가, 해당 영역이 꽉 차면 다른 영역에서 객체를 할당하고 GC를 실행한다. 즉, 지금까지 설명한 Young의 세가지 영역에서 데이터가 Old 영역으로 이동하는 단계가 사라진 GC 방식이라고 이해하면 된다
 
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection/images/Screen%20Shot%202016-02-28%20at%2019.19.13.png" width="50%">
+<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/Screen%20Shot%202016-02-28%20at%2019.19.13.png" width="50%">
 
 결론적으로, 운영 중인 시스템 특성에 따라 적합한 GC 방식이 다르므로 해당 시스템에 가장 적합한 방식을 찾아야 한다. `-verbosegc` 옵션 추가 후 결과를 [분석하는 방법](https://blogs.oracle.com/poonam/entry/understanding_cms_gc_logs)을 추천한다.
 
