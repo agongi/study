@@ -16,3 +16,4 @@
 - [Indexing](https://github.com/agongi/study/tree/master/rdbms/index/)
 - [Duplicated Primary Key](https://github.com/agongi/study/tree/master/rdbms/duplicated-primary-key/)
 - [Prepared statement](https://github.com/agongi/study/tree/master/rdbms/prepared-statement/)
+- [Join](https://github.com/agongi/study/tree/master/rdbms/join/)
