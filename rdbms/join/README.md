@@ -7,7 +7,7 @@
  - http://rapapa.net/?p=311
 ```
 
-<img src="https://github.com/agongi/study/blob/master/java/hashmap/images/Screen.Shot.2016-02-26.at.22.08.56.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
 
 
 ### Tables
