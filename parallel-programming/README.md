@@ -1,10 +1,8 @@
 ## Parallel Programming in java
-Parallel Programming fundamental in java
 
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.02.19
-ㅁ Origin: https://www.coursera.org/learn/parprog1/
 ㅁ References:
  - http://javarevisited.blogspot.com
  - http://tutorials.jenkov.com/java-concurrency/index.html
@@ -20,9 +18,9 @@ Parallel Programming fundamental in java
 - [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/parallel-programming/volatile-synchronized/)
 - [ThreadLocal](https://github.com/agongi/study/tree/master/parallel-programming/threadlocal/)
 - [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/parallel-programming/synchronized-concurrent/)
+- ConcurrentSkipListMap
 - Callable vs Runnable
 
-
 ### To do
-- runnable can only return void, callable can return void or Future<?> type
 - Thread 종류들 table로 정리 / code 로 비교정리
+- Concurrent packages
