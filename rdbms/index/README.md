@@ -7,6 +7,7 @@
  - https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html
  - http://choko11.tistory.com/entry/%EC%9D%B8%EB%8D%B1%EC%8A%A4-1-%EA%B0%9C%EB%85%90%EC%A2%85%EB%A5%98%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD
  - http://www.dba-oracle.com/t_difference_between_btree_and_bitmap_index.htm
+ - http://mikyung.net/451
 ```
 
 ### Concept
@@ -15,7 +16,7 @@ Index is used to find a specific row more faster, There are two different type o
 - Bitmap
 
 #### B-Tree
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/rdbms/index/images/SQL_245.jpg" width="75%">
 
 - Data Structure: b-tree
 - 범위 검색: 첫번째 범위의 left node 로 간 후, 리프노드만을 따라가며 검색
@@ -24,9 +25,10 @@ Index is used to find a specific row more faster, There are two different type o
   - 삭제: 해당 인덱스에 flag 설정, 일정 이상되면 기존 블록과 병합 진행. 불균형 되면 인덱스 재빌딩
 
 #### Bitmap
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/rdbms/index/images/oracle_bitmap_index_structure.jpg" width="75%">
 
 - Data Structure: 2-dimensional array
+- 검색: 해당 배열을 쭉 읽는다 (e.g. array[1]\[\])
 
 #### Why B-Tree is commonly used?
 - 트리가 균형이 잡혔을다고 가정하면, 거의 대부분의 select 에서 동일한 응답 속도를 보장해 준다. (같은 Depth)
