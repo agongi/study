@@ -60,9 +60,6 @@ Spring AOP is supported in following way:
 
 <img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture3-3.png" width="75%">
 
-```xml
-```
-
 #### AspectJ
 - JVM loadtime weaving using bytecode instrument
 - self-invocation also will affect Aspect
@@ -73,8 +70,7 @@ Spring AOP is supported in following way:
   <aop:aspectj-autoproxy proxy-target-class="true"/>
 
   <!-- bean define explicitly or
-       using component-scan with <context:include-filter>
-  -->
+       using component-scan with <context:include-filter> -->
 	<bean id="logAspect" class="com.aspect.LoggingAspect" />
 ```
 
