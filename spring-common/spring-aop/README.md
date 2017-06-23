@@ -39,8 +39,8 @@ public void around(ProceedingJoinPoint jointPoint) {
 ```
 
 Spring AOP is supported in following way:
-- [Based-on Proxy](#)
-- [Based-on AspectJ - not using proxy](#)
+- [Based-on Proxy](https://github.com/agongi/study/tree/master/spring-common/spring-aop#proxy)
+- [Based-on AspectJ - not using proxy](https://github.com/agongi/study/tree/master/spring-common/spring-aop#aspectj)
 
 #### Proxy
 - runtime weaving
