@@ -16,6 +16,9 @@
  - https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
 ```
 
+#### Index
+- [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/http/http-cache-control)
+
 ### HTTP/1.1
 HTTP/1.1 is updated version of HTTP/1.0 in 1999 (RFC 2068). It has some improvements.
 
