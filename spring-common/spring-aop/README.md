@@ -46,19 +46,19 @@ Spring AOP is supported in following way:
 - runtime weaving
 - self-invocation doesn't work around because It will not come through proxy
 
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/aop-proxy-call.png" width="75%">
 
 ##### JVM Dynamic Proxy
 - Spring AOP default
 - Works in `interface`
 
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture2-4.png" width="75%">
 
 ##### CGLIB Proxy
 - Spring also supports it when this one is declared
 - Works in concrete `target class`
 
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture3-3.png" width="75%">
 
 ```xml
 ```
@@ -66,6 +66,8 @@ Spring AOP is supported in following way:
 #### AspectJ
 - JVM loadtime weaving using bytecode instrument
 - self-invocation also will affect Aspect
+
+<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture5-2.png" width="75%">
 
 ```xml
   <aop:aspectj-autoproxy proxy-target-class="true"/>
