@@ -32,3 +32,6 @@
 ### Outsider Blog
 - [Chapter 08. AOP](https://blog.outsider.ne.kr/843)
 - [Chapter 11. Transaction](https://blog.outsider.ne.kr/869)
+
+### Miscellaneous
+- [Field Dependency Injection Considered Harmful](http://vojtechruzicka.com/field-dependency-injection-considered-harmful/)
