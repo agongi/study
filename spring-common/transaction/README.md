@@ -30,9 +30,9 @@ Transaction에 여러 작업들 중 익셉션 발생 시 일부 작업은 커밋
 #### @Transactional
 - propagation
   - **REQUIRED** - join existing, create new if no
-  <img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+  <img src="https://github.com/agongi/study/blob/master/spring-common/transaction/images/x1134407086.gif.pagespeed.ic.NDodWWj_K8.png" width="75%">
   - REQUIRES_NEW - create new always, independent to existing
-  <img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+  <img src="https://github.com/agongi/study/blob/master/spring-common/transaction/images/x1025204939.gif.pagespeed.ic.qc3nIvzXgN.png" width="75%">
   - NESTED - join existing, dependent to existing
     - Outer can affect nested, nested will not affect outer (e.g. Outer - Critical, Nested - Logging)
   - SUPPORTS - join existing, no if no
