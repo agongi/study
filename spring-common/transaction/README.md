@@ -18,14 +18,9 @@ Transaction에서 익셉션 발생 시 기본적으로 롤백되는 것과 아�
 - checked 까지 롤백 하려면, @Transactional(rollbackFor = Exception.class)
 
 Transaction에 여러 작업들 중 익셉션 발생 시 일부 작업은 커밋되도록 하는 방법은?
-- NOT_SUPPORTED 로 설정해서 해당 항목은 무조건 commit 되게 한다
 - REQUIRES_NEW 로 설정해서, 다른 작업과 무관한 Transaction 으로 처리한다
 - NESTED 로 설정해서, Outer 에 영향을 끼치지 않는 트랜잭션으로 분리 (대신 Outer 은 Nested 에 영향을 끼침)
 - @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
-- 특정 Exception 만 rollback 에서 제외한다
-  ```xml
-  <tx:method name="*" rollback-for="Exception" no-rollback-for="InstrumentNotFoundException"/>
-  ```
 
 #### @Transactional
 - propagation
