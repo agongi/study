@@ -43,8 +43,12 @@ Spring AOP is supported in following way:
 - [Based-on AspectJ - not using proxy](https://github.com/agongi/study/tree/master/spring-common/spring-aop#aspectj)
 
 #### Proxy
-- runtime weaving
-- self-invocation doesn't work around because It will not come through proxy
+- Runtime weaving
+- Limitations
+  - Self-invocation doesn't work around because It will not come through proxy
+  - Public method only affected
+  - Method should not be final
+    - Proxy override target method to delegate but final keyword can't be make it
 
 <img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/aop-proxy-call.png" width="75%">
 
@@ -62,7 +66,7 @@ Spring AOP is supported in following way:
 
 #### AspectJ
 - JVM loadtime weaving using bytecode instrument
-- self-invocation also will affect Aspect
+- No limitations
 
 <img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture5-2.png" width="75%">
 
