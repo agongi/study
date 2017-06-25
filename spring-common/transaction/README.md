@@ -30,13 +30,16 @@ Transaction에 여러 작업들 중 익셉션 발생 시 일부 작업은 커밋
 #### @Transactional
 - propagation
   - **REQUIRED** - join existing, create new if no
-  - SUPPORTS - join existing, no if no
-  - MANDATORY - join existing, throw exception if no
+  <img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
   - REQUIRES_NEW - create new always, independent to existing
-  - NOT_SUPPORTED - ignore if exist
-  - NEVER - throw exception if exist
+  <img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
   - NESTED - join existing, dependent to existing
     - Outer can affect nested, nested will not affect outer (e.g. Outer - Critical, Nested - Logging)
+  - SUPPORTS - join existing, no if no
+  - MANDATORY - join existing, throw exception if no
+  - NOT_SUPPORTED - ignore if exist
+  - NEVER - throw exception if exist
+
 - isolation
   - **DEFAULT** - Use the DB setting (e.g. DB sets READ_COMMITTED then use it)
   - READ_UNCOMMITTED, READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE
