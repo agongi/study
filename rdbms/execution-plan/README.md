@@ -1,13 +1,9 @@
 ## Execution Plan
-TBD
-
->###### TBD
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.07.24
+ㅁ Date: 2017.06.25
 ㅁ References:
- - http://avatar72.tistory.com/68
- - http://zzong75.egloos.com/m/2490174
+ - http://devse.tistory.com/entry/MYSQL-%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D-%EB%B6%84%EC%84%9D-%EB%B0%A9%EB%B2%95-%EC%9A%94%EC%95%BD
+ - http://asuraiv.blogspot.kr/2015/08/mysql-query-plan.html
 ```
- 
