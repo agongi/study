@@ -5,6 +5,7 @@
 ㅁ Date: 2016.02.16
 ㅁ References:
   - https://blog.outsider.ne.kr/search?q=spring%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4
+  - http://haviyj.tistory.com/category/Back-End/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81
   - http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/
 ```
 
@@ -24,6 +25,9 @@
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
 - [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/threadlocal-in-spring-bean/)
 
-### Reference
-- [Chapter 09. Transaction](https://github.com/agongi/study/tree/master/spring-common/9)
-- [Chapter 11. AOP](https://github.com/agongi/study/tree/master/spring-common/11)
+### Spring Blog
+- [Better application events in Spring Framework 4.2](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
+
+### Outsider Blog
+- [Chapter 08. AOP](https://blog.outsider.ne.kr/843)
+- [Chapter 11. Transaction](https://blog.outsider.ne.kr/869)
