@@ -26,7 +26,8 @@
 - [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/threadlocal-in-spring-bean/)
 
 ### Spring Blog
-- [Better application events in Spring Framework 4.2](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
+- [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
+- [Creating Asynchronous Methods](https://spring.io/guides/gs/async-method/)
 
 ### Outsider Blog
 - [Chapter 08. AOP](https://blog.outsider.ne.kr/843)
