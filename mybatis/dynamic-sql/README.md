@@ -1,13 +1,14 @@
-## Foreach
+## Dynamic SQL
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.23
+ㅁ Date: 2017.06.26
 ㅁ References:
- - http://noveloper.github.io/blog/spring/2015/03/29/mybatis-foreach.html
+ - http://www.mybatis.org/mybatis-3/dynamic-sql.html
 ```
 
-Insert multiple values at once using foreach
+### Foreach
+Insert multiple values at once
 
 ```java
 public void insert(String id, List<Item> items) {
@@ -28,4 +29,19 @@ public void insert(String id, List<Item> items) {
         (#{id}, #{item.itemId}, #{item.itemType}, #{item.itemName})
     </foreach>
 </insert>
+```
+
+### If
+Use if statement in sql
+
+```sql
+<select id="selectItems" parameterType="map" resultMap="itemResult">
+  SELECT id, item_id, item_type, item_name
+  FROM mr_user_supply_box A
+  WHERE id = #{id}
+
+  <if test="itemId != null">
+    AND item_id = #{itemId}
+  </if>
+</select>
 ```

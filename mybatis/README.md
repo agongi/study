@@ -12,4 +12,4 @@
 - [ResultMap](https://github.com/agongi/study/tree/master/mybatis/resultMap/)
 - [Selectkey](https://github.com/agongi/study/tree/master/mybatis/selectkey/)
 - [TypeHandler](http://www.mybatis.org/mybatis-3/configuration.html#typeHandlers)
-- [Foreach](https://github.com/agongi/study/tree/master/mybatis/foreach/)
+- [Dynamic SQL](https://github.com/agongi/study/tree/master/mybatis/dynamic-sql/)
