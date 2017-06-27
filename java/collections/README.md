@@ -43,11 +43,4 @@ key, value structure
   - HashMap
   - LinkedHashMap
   - TreeMap
-
-### 4. queue
-TBD
-
-### 5. stack
-TBD
-
-Synchronized 컬렉션은 객체 자체에 락을 걸어 독점하게되고, Concurrent 컬렉션은 객체 자체 독점하기가 쉽지 않은 단점이 있지만, 장점이 훨씬 더 많다. Concurrent 컬렉션은 컬렉션 전체를 독점하기 위해서는 충분히 신경을 기울여야 한다.
+  - SkipListMap
