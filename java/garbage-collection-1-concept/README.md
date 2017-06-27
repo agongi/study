@@ -16,7 +16,6 @@ GC finds garbage in heap and removes it for returning memory into heap again.
  - http://d2.naver.com/helloworld/4717
  - http://d2.naver.com/helloworld/184615
 
- - http://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html?m=1
  - https://prezi.com/bwba2m2xhive/java-garbage-collection_/
  - https://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html
 ```
