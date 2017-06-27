@@ -1,7 +1,4 @@
 ## Volatile vs Synchronized
-Java conceptual comparison between volatile and synchronized keyword.
-
->###### Take a look at brief java-memory-model (JMM) and comparison between volatile and synchronized keyword.
 
 ```
 ㅁ Author: suktae.choi
@@ -14,13 +11,12 @@ Java conceptual comparison between volatile and synchronized keyword.
 
 On multiprocessor architectures, individual processors may have their own local caches that are out of sync with main memory. It is generally undesirable to require threads to remain perfectly in sync with one another because this would be too costly from a performance point of view. This means that at any given time, different threads may see different values for the same shared data.
 
-#### 1. Volatile
-
-Forces all accesses (read or write) to the volatile variable to occur to main memory, effectively keeping the volatile variable out of processors caches.
+### Volatile
+Volatile keyword guarantees that **all reads and writes** to a volatile variable are read/written **directly to main memory.**
 
 > Volatile keyword is used in variable
 
-#### 2. Synchronized
+### Synchronized
 Prevents any other thread from obtaining the monitor (or lock) for the same object.
 
 > Synchronized keyword is used in method
