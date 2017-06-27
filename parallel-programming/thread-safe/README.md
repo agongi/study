@@ -26,24 +26,28 @@ public class Counter {
 
 ### Thread-Safe
 - Use synchronized
+  - Whole method
+  - Specific operation
 - Use Concurrent packages
 
 ```java
 public class Counter {
     private int count = 0;
     private AtomicInteger atomicCount = new AtomicInteger(0);
+    private List<Integer> list = new ArrayList<>();
 
-    /*
-     * This method thread-safe now because of locking and synchronization
-     */
-    public synchronized int getAndIncrease(){
+
+    public synchronized int getCount(){
         return count++;
     }
 
-    /*
-     * This method is thread-safe because count is incremented atomically
-     */
-    public int increaseAndGet(){
+    public void updateList(Integer element) {
+        synchronized (list) {
+            list.add(element);
+        }
+    }
+
+    public int getCountAtomically(){
         return atomicCount.incrementAndGet();
     }
 }
