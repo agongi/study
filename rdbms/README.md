@@ -11,7 +11,7 @@
 
 ### Index
 - [JDBC vs DBCP](https://github.com/agongi/study/tree/master/rdbms/jdbc-dbcp/)
-- [Data Type](https://github.com/agongi/study/tree/master/datatype/)
+- [Data Type](https://github.com/agongi/study/tree/master/rdbms/datatype/)
 - [Execution Plan](https://github.com/agongi/study/tree/master/rdbms/execution-plan/)
 - [Isolation](https://github.com/agongi/study/tree/master/rdbms/isolation/)
 - [Index](https://github.com/agongi/study/tree/master/rdbms/index/)
