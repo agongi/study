@@ -17,46 +17,29 @@
 ```
 
 #### Index
-- [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/http/http-cache-control)
+- [HTTP Cache-Control](https://github.com/agongi/study/tree/master/http/http-cache-control)
 
 ### HTTP/1.1
-HTTP/1.1 is updated version of HTTP/1.0 in 1999 (RFC 2068). It has some improvements.
-
-#### Host field
-HTTP header `Host` is mandatory in HTTP/1.1 but optional in 1.0.<br>
-It is useful when proxy needs to route request to proper WAS server by referencing `Host` field.
-
-```
-GET / HTTP/1.1
-Host: www.google.com
-```
-
 #### Keep-alive
-HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default but header `Connection: keep-alive` should be declared explicitly in HTTP/1.0.
-
-It has 2 options as following:
+HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default:
 - max: maximum request amount of keep connection
 - timeout: maximum sec of keep connection
 
 > It can reduce renegotiates flow of TCP connection known as 3-way handshaking.
 
 #### N-TCP-Connection
-Modern browser (e.g. Firefox, Chrome, Edge ..) is able to create 2-TCP-Connections per domain to get over performance limitation. The total number of connections is 4 to 8 based on browser type/version.
-
-Browser makes a trick to expand maximum number of connection to separate subdomain e.g. 2-Connections per image.google.com, 2-Connections per video.google.com.
+Client is able to create 2-TCP-Connections per domain to get over performance limitation. The total number is vary.
 
 <img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.39.28.png" width="75%">
 
-#### Pipelining
-HTTP/1.1 supports `Pipelining` to enable fast resource response but not in HTTP/1.0.
-> Pipelining enables client to send all request in parallel before receives response. Server responses packet `in the same order` that the requests were received.
+> Trick: Negotiate max-connection to each sub-domain e.g. 2-Connections per image.google.com, 2-Connections per video.google.com
 
-> It causes [Head-of-line blocking](https://en.wikipedia.org/wiki/Head-of-line_blocking) problem. (Output is occupied by first packet in line.)
+#### Pipelining in connection
+Pipelining enables client to send all request in parallel before receives response. Server responses packet `in the same order` that the requests were received.
 
 <img src="https://github.com/agongi/study/blob/master/http/images/Zp2lf.png" width="75%">
 
-#### CORS (Cross Origin Resource Sharing)
-HTTP/1.1 introduces the `OPTIONS method`.
+> It causes [Head-of-line blocking](https://en.wikipedia.org/wiki/Head-of-line_blocking) problem. (Output is occupied by first packet in line.)
 
 ### HTTP/2
 SPDY is invented by Google to improve HTTP/1.1 flaws. The core developers of SPDY have been involved in the development of HTTP/2, including both Mike Belshe and Roberto Peon. As of February 2015, Google has announced that following the recent final ratification of the HTTP/2 standard, support for `SPDY would be deprecated`, and that support for SPDY would be withdrawn completely in 2016.

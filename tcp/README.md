@@ -17,7 +17,7 @@ TCP provides an effective abstraction of a reliable network running over an unre
  - http://d2.naver.com/helloworld/47667
 ```
 
-#### Series
+#### Index
 - [TCP Fast Open](https://github.com/agongi/study/tree/master/tcp/tcp-fast-open/)
 - [TCP Connection Migration](https://github.com/agongi/study/tree/master/tcp/tcp-connection-migration/)
 - [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp/tcp-forward-error-correction/)
