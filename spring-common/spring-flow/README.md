@@ -49,7 +49,7 @@ The Spring-Container is the Dispatcher Servlet that handles all spring-bean's li
     - contextInitialized() is invoked and initializes **ApplicationContext** by default in `classpath:applicationContext.xml`
     - All bean are instantiated and stored in applicationContext
   - If servlet is defined, create servlet instance and put in servletContext.
-    - **DispatcherServlet class** extends ApplicationContextAware that is notified applicationContext when it runs
+    - **DispatcherServlet class** implements ApplicationContextAware that is notified applicationContext when it runs
     - It injects applicationContext in instance field
     - It creates **WebApplicationContext** by default `{servlet-name}-servlet.xml`
     - All Spring related configuration are loading

@@ -19,11 +19,12 @@
 - [Spring Custom Annotation](https://github.com/agongi/study/tree/master/spring-common/spring-custom-annotation/)
 - [Spring Bootstrap](https://github.com/agongi/study/tree/master/spring-common/spring-bootstrap/)
 - [Spring AOP](https://github.com/agongi/study/tree/master/spring-common/spring-aop/)
+- [Transaction](https://github.com/agongi/study/tree/master/spring-common/transaction/)
 - [Classpath](https://github.com/agongi/study/tree/master/spring-common/classpath/)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [FactoryBean](https://github.com/agongi/study/tree/master/spring-common/factory-bean/)
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
-- [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/threadlocal-in-spring-bean/)
+- [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/spring-common/threadlocal-in-spring-bean/)
 
 ### Spring Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
