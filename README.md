@@ -36,6 +36,7 @@
  - [BitTorrent](https://github.com/agongi/study/tree/master/bittorrent/)
  - [Proxy Protocol](https://github.com/agongi/study/tree/master/proxy-protocol/)
  - [OAuth 2.0](https://github.com/agongi/study/tree/master/oauth/)
+ - [Protocol Buffers](http://sjava.net/2012/12/%EB%B2%88%EC%97%AD-%EC%97%90%EC%9D%B4%EB%B8%8C%EB%A1%9Cavro-%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C-%EB%B2%84%ED%8D%BCprotocol-buffers-%EC%93%B0%EB%A6%AC%ED%94%84%ED%8A%B8thrift%EC%9D%98-%EC%8A%A4/)
 
 #### Security
  - [TLS (Transport Layer Security)](https://github.com/agongi/study/tree/master/tls/)
