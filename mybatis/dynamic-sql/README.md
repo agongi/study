@@ -37,7 +37,7 @@ Use if statement in sql
 ```sql
 <select id="selectItems" parameterType="map" resultMap="itemResult">
   SELECT id, item_id, item_type, item_name
-  FROM mr_user_supply_box A
+  FROM user_item A
   WHERE id = #{id}
 
   <if test="itemId != null">
