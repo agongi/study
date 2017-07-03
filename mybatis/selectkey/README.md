@@ -7,7 +7,7 @@
  - http://www.mybatis.org/mybatis-3/sqlmap-xml.html#insert_update_and_delete
 ```
 
-You can modify row in DB and get the affected value right before/after query execution as following:
+You can modify row in DB and get the affected **ONLY ONE value** right before/after query execution as following:
 
 ```sql
 <update id="updateCoin" parameterType="map">
@@ -33,12 +33,13 @@ public Integer updateCoin(String userKey, Integer coinChange) {
     map.put("userKey", userKey);
     map.put("coinChange", coinChange);
     map.put("balance", null);
-    // update coin
+
     if (getSqlSession().update("repository.updateCoin", map) > 0) {
-      // get updated coin in one way
       return (Integer) params.get("balance");  
     }
 
     return null;
 }
 ```
+
+> selectkey doesn't support to fetch multiple rows (e.g. List, Map)
