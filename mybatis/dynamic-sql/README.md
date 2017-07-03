@@ -22,7 +22,7 @@ public void insert(String id, List<Item> items) {
 
 ```sql
 <insert id="insertItems">
-    INSERT INTO /*!99999 ItemRepository.insertItems */
+    INSERT INTO
         user_item (id, item_id, item_type, item_name)
     VALUE
     <foreach collection="items" item="item" separator=",">
@@ -37,11 +37,29 @@ Use if statement in sql
 ```sql
 <select id="selectItems" parameterType="map" resultMap="itemResult">
   SELECT id, item_id, item_type, item_name
-  FROM user_item A
+  FROM user_item
   WHERE id = #{id}
 
   <if test="itemId != null">
     AND item_id = #{itemId}
   </if>
+</select>
+```
+
+### SQL
+Refer to table columns
+
+```sql
+<sql id="itemSqlColumns">
+    id,
+    item_id,
+    item_type,
+    item_name
+</sql>
+
+<select id="selectItem" resultMap="itemResult" parameterType="map">
+    SELECT <include refid="itemSqlColumns"/>
+    FROM  user_item
+    WHERE id = #{id}
 </select>
 ```
