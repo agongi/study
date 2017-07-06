@@ -20,6 +20,8 @@
 ```
 
 ### [How does it work](http://d2.naver.com/helloworld/1329)
+<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/image2014-4-3%2011-20-1.png" width="75%">
+
 #### 1.1. Young Generation
 Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
 새롭게 생성한 객체는 여기에 위치한다. 대부분의 객체가 금방 접근 불가능 상태가 되기 때문에 매우 많은 객체가 Young 영역에 생성되었다가 사라진다. 이 영역에서 객체가 사라질때 `Minor GC`가 발생한다고 말한다.
