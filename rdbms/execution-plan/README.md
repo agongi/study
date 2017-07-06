@@ -30,3 +30,5 @@ possible_keys: NULL
 - type
   - index - index full scan
   - all - table full scan
+
+<img src="https://github.com/agongi/study/blob/master/rdbms/execution-plan/images/MySQL-%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B6%84%EC%84%9D%20%EB%B0%A9%EB%B2%95.png" width="75%">
