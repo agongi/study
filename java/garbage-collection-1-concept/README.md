@@ -31,12 +31,12 @@ Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
   - Minor GC 가 발생하면, New 영역 전체에 Mark-Sweep 이 이뤄진다
   - Reference 가 있는 객체는 현재 사용되는 Survivor 영역으로 이동한다
 - 다시 Minor GC 가 발생하면
-- 살아남은 객체는 다른 Survivor 영역으로 이동한다 -Aging
+- 살아남은 객체는 다른 Survivor 영역으로 이동한다 - Aging
   - Eden 에서 Survivor 로 이동할 객체도, 이동할 Survivor 로 할당된다
 - 이 과정을 반복
 - Threshold 이상의 Age 객체는 Old 영역으로 이동하게 된다 - Promotion
 
-> `Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.`
+> Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다
 
 > 객체의 크기가 Eden 보다 크면 바로 Old 영역으로 할당된다
 
