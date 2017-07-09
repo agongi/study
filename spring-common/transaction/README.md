@@ -41,7 +41,7 @@
 - noRollbackForClassName
 
 #### Default Rollback Plan
-- (Default) RuntimeException only causes rollback subclass of uncheked exception
+- (Default) RuntimeException only causes rollback subclass of unchecked exception
 - Customize - **@Transactional(rollbackFor = Exception.class)** to rollback all cases
 
 #### Rollback specific commit while exception thrown
