@@ -46,6 +46,7 @@
 - [ByteBuffer](https://github.com/agongi/study/tree/master/java/bytebuffer/)
 - [Datetime](https://github.com/agongi/study/tree/master/java/datetime/)
 - [Number](https://github.com/agongi/study/tree/master/java/number/)
+- [Data Type](https://github.com/agongi/study/tree/master/java/data-type/)
 
 ### Java 8
 - [Stream](https://github.com/agongi/study/tree/master/java/stream/)

@@ -13,7 +13,7 @@ TCP provides an effective abstraction of a reliable network running over an unre
 ㅁ References:
  - http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
  - https://en.wikipedia.org/wiki/Transmission_Control_Protocol
- - http://tech.kakao.com/2016/04/21/tcp-closewait-timewait/
+ - http://tech.kakao.com/2016/04/21/closewait-timewait/
  - http://d2.naver.com/helloworld/47667
 ```
 
