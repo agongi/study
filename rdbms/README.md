@@ -19,3 +19,4 @@
 - [Prepared statement](https://github.com/agongi/study/tree/master/rdbms/prepared-statement/)
 - [Join](https://github.com/agongi/study/tree/master/rdbms/join/)
 - [INSERT INTO SELECT](https://github.com/agongi/study/tree/master/rdbms/insert-into-select/)
+- [Query Optimizer](http://sungsoo.github.io/2014/05/24/query-optimizer.html)
