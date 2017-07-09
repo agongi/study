@@ -13,7 +13,7 @@
 ### Concept
 Index is used to find a specific row more faster, There are two different type of index:
 - [B-Tree](#b-tree)
-- [Bitmap](https://github.com/agongi/study/tree/master/rdbms/index/#bitmap)
+- [Bitmap](#bitmap)
 
 #### B-Tree
 <img src="https://github.com/agongi/study/blob/master/rdbms/index/images/SQL_245.jpg" width="75%">
