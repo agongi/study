@@ -1,4 +1,4 @@
-## TLS Handshake Protocol
+## TLS (Transport Layer Security)
 The Transport Layer Security (TLS) Handshake Protocol is responsible for the authentication and key exchange necessary to establish or resume secure sessions. When establishing a secure session, the Handshake Protocol manages the following:
 
  - Cipher suite negotiation
@@ -24,7 +24,7 @@ The Transport Layer Security (TLS) Handshake Protocol is responsible for the aut
 - [TLS ALPN (Application-Layer Protocol Negotiation)](https://github.com/agongi/study/tree/master/tls/tls-alpn/)
 - [TLS 1.3](#)
 
-### The TLS Handshaking Protocols
+### TLS Handshaking
 2 entirely round-trip is done in new connection establishment. But 1 round-trip is required using existing connection.
 
 <img src="https://github.com/agongi/study/blob/master/tls/images/Screen%20Shot%202016-12-29%20at%2001.19.05.png" width="75%">
