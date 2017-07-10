@@ -7,7 +7,7 @@
  - http://www.mybatis.org/mybatis-3/getting-started.html
 ```
 
-#### Index
+### Index
 - [#{...} vs ${...}](https://github.com/agongi/study/tree/master/mybatis/%23-%24)
 - [ResultMap](https://github.com/agongi/study/tree/master/mybatis/resultMap/)
 - [Selectkey](https://github.com/agongi/study/tree/master/mybatis/selectkey/)

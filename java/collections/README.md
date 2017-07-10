@@ -10,7 +10,7 @@
 
 <img src="https://github.com/agongi/study/blob/master/java/collections/images/Screen%20Shot%202016-02-14%20at%2018.31.04.png" width="75%">
 
-### Nutshell
+### In a Nutshell
 #### Read-Only Collections
 - Map<K, V> map = Collections.unmodifiableMap();
 - List<E> list = Collections.unmodifiableList();

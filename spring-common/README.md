@@ -26,13 +26,9 @@
 - [Static Provider](https://github.com/agongi/study/tree/master/spring-common/static-provider/)
 - [ThreadLocal in Spring Bean](https://github.com/agongi/study/tree/master/spring-common/threadlocal-in-spring-bean/)
 
-### Spring Blog
+### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
 - [Creating Asynchronous Methods](https://spring.io/guides/gs/async-method/)
-
-### Outsider Blog
-- [Chapter 08. AOP](https://blog.outsider.ne.kr/843)
-- [Chapter 11. Transaction](https://blog.outsider.ne.kr/869)
 
 ### Miscellaneous
 - [Field Dependency Injection Considered Harmful](http://vojtechruzicka.com/field-dependency-injection-considered-harmful/)

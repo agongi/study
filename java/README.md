@@ -53,3 +53,6 @@
 - [CompletableFuture](https://github.com/agongi/study/tree/master/java/completable-future/)
 - [Closure](https://github.com/agongi/study/tree/master/java/closure/)
 - [Optional](https://github.com/agongi/study/tree/master/java/optional/)
+
+### Blog
+- [Java Enum 활용기](http://woowabros.github.io/tools/2017/07/10/java-enum-uses.html)
