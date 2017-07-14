@@ -1,7 +1,6 @@
-### WEB/WAS/Proxy
+### WEB/WAS
 - [Apache](https://github.com/agongi/study/tree/master/apache/)
 - Nginx
-- HAProxy
 - [Tomcat](https://github.com/agongi/study/tree/master/tomcat/)
 
 ### Framework
@@ -11,16 +10,13 @@
 - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
 - Netty
 
-### DEV (back-end)
+### Dev
 - [Java](https://github.com/agongi/study/tree/master/java/)
 - [Parallel Programming](https://github.com/agongi/study/tree/master/parallel-programming/)
-- Node.js
-- [Maven](https://github.com/agongi/study/tree/master/maven/)
-
-### DEV (front-end)
+- [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
 - React and Flux
 - Angular.js
-- [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
+- Node.js
 
 ### Protocol
 - [HTTP](https://github.com/agongi/study/tree/master/http/)
