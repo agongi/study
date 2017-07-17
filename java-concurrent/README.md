@@ -15,12 +15,14 @@
 ```
 
 #### Index
-- [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/parallel-programming/volatile-synchronized/)
-- [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/parallel-programming/synchronized-concurrent/)
-- [ThreadLocal](https://github.com/agongi/study/tree/master/parallel-programming/threadlocal/)
-- [Thread-Safe Code in a Nutshell](https://github.com/agongi/study/tree/master/parallel-programming/thread-safe/)
-- Callable vs Runnable
+- [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/java-concurrent/volatile-synchronized/)
+- [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/java-concurrent/synchronized-concurrent/)
+- [ThreadLocal](https://github.com/agongi/study/tree/master/java-concurrent/threadlocal/)
+- [Thread-Safe Code in a Nutshell](https://github.com/agongi/study/tree/master/java-concurrent/thread-safe/)
+- [Synchronized](https://github.com/agongi/study/tree/master/java-concurrent/synchronized/)
 
 ### To do
 - Thread 종류들 table로 정리 / code 로 비교정리
 - Concurrent packages
+- Callable vs Runnable
+- [CountDownLatch vs Semaphore](https://stackoverflow.com/questions/184147/countdownlatch-vs-semaphore)
