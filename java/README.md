@@ -15,6 +15,7 @@
 - [Builder Pattern](https://github.com/agongi/study/tree/master/java/builder-pattern/)
 - [Observer Pattern](https://github.com/agongi/study/tree/master/java/observer-pattern/)
 - [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
+- [Double Checked Locking](https://github.com/agongi/study/tree/master/java/double-checked-locking/)
 
 ### Index
 - [String vs StringBuilder vs StringBuffer](https://github.com/agongi/study/tree/master/java/string-stringbuilder-stringbuffer/)
