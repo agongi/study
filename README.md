@@ -12,7 +12,7 @@
 
 ### Dev
 - [Java](https://github.com/agongi/study/tree/master/java/)
-- [Java Concurrent](https://github.com/agongi/study/tree/master/java-concurrent/)
+- [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
 - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
 - React and Flux
 - Angular.js

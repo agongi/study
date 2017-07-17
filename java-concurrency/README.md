@@ -1,4 +1,4 @@
-## Parallel Programming in java
+## Java Concurrency
 
 ```
 ㅁ Author: suktae.choi
@@ -15,11 +15,10 @@
 ```
 
 #### Index
-- [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/java-concurrent/volatile-synchronized/)
-- [Synchronized vs Concurrent Collections](https://github.com/agongi/study/tree/master/java-concurrent/synchronized-concurrent/)
-- [ThreadLocal](https://github.com/agongi/study/tree/master/java-concurrent/threadlocal/)
-- [Thread-Safe Code in a Nutshell](https://github.com/agongi/study/tree/master/java-concurrent/thread-safe/)
-- [Synchronized](https://github.com/agongi/study/tree/master/java-concurrent/synchronized/)
+- [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/java-concurrency/volatile-synchronized/)
+- [ThreadLocal](https://github.com/agongi/study/tree/master/java-concurrency/threadlocal/)
+- [Thread-Safe Code in a Nutshell](https://github.com/agongi/study/tree/master/java-concurrency/thread-safe/)
+- [Synchronized](https://github.com/agongi/study/tree/master/java-concurrency/synchronized/)
 
 ### To do
 - Thread 종류들 table로 정리 / code 로 비교정리
