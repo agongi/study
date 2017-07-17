@@ -1,22 +1,21 @@
 ### WEB/WAS
 - [Apache](https://github.com/agongi/study/tree/master/apache/)
-- Nginx
 - [Tomcat](https://github.com/agongi/study/tree/master/tomcat/)
+- Nginx
 
 ### Framework
+- [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
 - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
 - Spring Batch
 - Spring Security
-- [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
 - Netty
 
 ### Dev
 - [Java](https://github.com/agongi/study/tree/master/java/)
 - [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
 - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
-- React and Flux
 - Angular.js
-- Node.js
+- React
 
 ### Protocol
 - [HTTP](https://github.com/agongi/study/tree/master/http/)
