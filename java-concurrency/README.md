@@ -14,8 +14,8 @@
  - http://tutorials.jenkov.com/java-concurrency/index.html
 ```
 
-#### Index
-- [Volatile vs Synchronized](https://github.com/agongi/study/tree/master/java-concurrency/volatile-synchronized/)
+### Index
+- [Volatile](https://github.com/agongi/study/tree/master/java-concurrency/volatile/)
 - [ThreadLocal](https://github.com/agongi/study/tree/master/java-concurrency/threadlocal/)
 - [Thread-Safe Code in a Nutshell](https://github.com/agongi/study/tree/master/java-concurrency/thread-safe/)
 - [Synchronized](https://github.com/agongi/study/tree/master/java-concurrency/synchronized/)

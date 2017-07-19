@@ -1,4 +1,4 @@
-## Volatile vs Synchronized
+## Volatile
 
 ```
 ㅁ Author: suktae.choi
@@ -15,8 +15,3 @@ On multiprocessor architectures, individual processors may have their own local 
 Volatile keyword guarantees that **all reads and writes** to a volatile variable are read/written **directly to main memory.**
 
 > Volatile keyword is used in variable
-
-### Synchronized
-Prevents any other thread from obtaining the monitor (or lock) for the same object.
-
-> Synchronized keyword is used in method
