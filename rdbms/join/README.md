@@ -5,12 +5,12 @@
 ㅁ Date: 2017.06.20
 ㅁ References:
  - http://rapapa.net/?p=311
+ - http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
 ```
 
 <img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
 
-
-### Tables
+### Join Types
 ```sql
 mysql> select * from demo_people;
 
@@ -105,3 +105,13 @@ on demo_people.pid = demo_property.pid;
 | NULL | NULL | Dun Roamin |
 +———–+————–+———————-+
 ```
+
+### [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
+<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Screenshot_20170629-130141.png" width="75%">
+#### Nested Loops
+<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Screen%20Shot%202017-07-23%20at%2023.21.34.png" width="75%">
+
+#### Sort Merge
+<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Screen%20Shot%202017-07-23%20at%2023.23.40.png" width="75%">
+
+#### Hash
