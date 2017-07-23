@@ -34,4 +34,4 @@ public class DoubleCheckedTest {
 ```
 
 - Thread can **join synchronized block simultaneously**
-- Check again in block to guarantee make it instance once only
+- Check again in block to guarantee make it only once
