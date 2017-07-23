@@ -107,7 +107,8 @@ on demo_people.pid = demo_property.pid;
 ```
 
 ### [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Screenshot_20170629-130141.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Screen%20Shot%202017-07-23%20at%2023.38.04.png" width="75%">
+
 #### Nested Loops
 <img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Screen%20Shot%202017-07-23%20at%2023.21.34.png" width="75%">
 
