@@ -29,3 +29,22 @@
 #### Collectors.summingInt()
 
 #### Collectors.toMap(Function::identity(), Object::getKey())
+
+
+### Boolean Operation
+#### findAny()
+
+#### anyMatch()
+
+#### allMatch()
+
+
+#### isPresent()
+
+
+### Return Operation
+#### orElse()
+
+#### orElseThrow()
+
+#### get()
