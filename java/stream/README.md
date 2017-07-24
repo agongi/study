@@ -8,7 +8,7 @@
  - http://www.slideshare.net/madvirus/8-35205661
 ```
 
-<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/java/stream/images/figure2.jpg" width="75%">
 
 
 ### map()
