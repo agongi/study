@@ -1,36 +1,31 @@
-## Stream() API
-TDB
-
-> ddd
+## Java 8 Stream
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.11.12
+ㅁ Date: 2017.07.25
 ㅁ References:
  - http://d2.naver.com/helloworld/4911107
  - http://www.slideshare.net/madvirus/8-35205661
 ```
 
-### terms
-모든 Collection은 stream()을 가진다.
+<img src="https://github.com/agongi/study/blob/master/rdbms/join/images/Visual_SQL_JOINS_V2.png" width="75%">
 
-- map() : 변경
- - input에 대해 모두에게 동일하게 적용되는 처리를 하고, output을 return
- - size는 input collection과 같다
 
- > ex.) name -> name.toUpperCase();
+### map()
 
-- filter() : 선택
- - input에 대해 특정을 조건으로 필터링하고, output을 return
- - size는 input collection보다 작거나, 같다
 
- > ex.) name -> name.length > 3
+### filter()
 
-- reduce() : 변환
- - input에 대해 하나의 값을 설정하고, ouput을 return
- - size는 1 이다
 
- > ex.) (name1, name2) -> (name1.length >= name2.length) ? name1 : name2
+### reduce()
 
-- collect() : subset of reduce
- -
+
+### flatMap()
+
+
+### collect()
+#### Collectors.groupingBy()
+
+#### Collectors.summingInt()
+
+#### Collectors.toMap(Function::identity(), Object::getKey())
