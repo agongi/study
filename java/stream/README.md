@@ -48,3 +48,8 @@
 #### orElseThrow()
 
 #### get()
+
+### Arithmetic Operation
+#### mapToInt()
+
+#### mapToDouble()
