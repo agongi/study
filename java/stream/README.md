@@ -23,13 +23,33 @@
 ### flatMap()
 
 
+### sorted()
+```java
+List<Object> sortedList = list.stream()
+    .sorted(Comparator.comparing(Object::getId))
+    .collect(Collectors.toList());
+
+// reverse order
+List<Object> sortedList = list.stream()
+    .sorted(Comparator.comparing(o -> o.getId(), Comparator.reverseOrder()))
+    .collect(Collectors.toList());
+```
+
 ### collect()
+#### Collectors.toMap(Object::getKey, Function::identity())
+```java
+Map<Integer, Object> map = list.stream().collect(Collectors.toMap(Object::getId, Function::identity()));
+```
+
 #### Collectors.groupingBy()
+```java
+Map<Integer, List<Object>> map = list.stream().collect(Collectors.groupingBy(Object::getId));
+```
 
 #### Collectors.summingInt()
-
-#### Collectors.toMap(Function::identity(), Object::getKey())
-
+```java
+Map<Integer, Integer> map = list.stream().collect(Collectors.groupingBy(Object::getId, Collectors.summingInt(Object::getScore)));
+```
 
 ### Boolean Operation
 #### findAny()
@@ -51,5 +71,9 @@
 
 ### Arithmetic Operation
 #### mapToInt()
+```java
+int max = list.stream().mapToInt(Object::getId).max().getAsInt();
+int min = list.stream().mapToInt(Object::getId).min().getAsInt();
+```
 
 #### mapToDouble()
