@@ -20,7 +20,7 @@
 - SortedSet set = new TreeSet();
 - NavigableSet set = new TreeSet();
 - SortedMap<K, V> map = new TreeMap<>();
-- NavigableSet<K, V> map = new TreeMap<>();
+- NavigableMap<K, V> map = new TreeMap<>();
 
 ### [1. List](https://github.com/agongi/study/tree/master/java/collections/list/)
 Duplicated element is allowed
