@@ -36,6 +36,10 @@ List<Object> sortedList = list.stream()
 
 // reverse order
 List<Object> sortedList = list.stream()
+    .sorted(Comparator.comparing(o -> o.getId().reversed()))
+    .collect(Collectors.toList());
+
+List<Object> sortedList = list.stream()
     .sorted(Comparator.comparing(o -> o.getId(), Comparator.reverseOrder()))
     .collect(Collectors.toList());
 ```
