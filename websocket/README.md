@@ -1,7 +1,7 @@
 ## WebSocket
 The WebSocket Protocol is an `independent TCP-based protocol`. Its only relationship to `HTTP is that its handshake` is interpreted by HTTP servers as an `Upgrade request`. The communications are done over TCP port number 80 or 443, which is of benefit for those environments which block non-web Internet connections using a firewall.
 
->###### It is a TCP-based protocol using HTTP for handshaking to migrate into WebSocket to avoid network firewall, proxy and any other security infrastructures on the net.
+> It is a TCP-based protocol using HTTP for handshaking to migrate into WebSocket to avoid network firewall, proxy and any other security infrastructures on the net.
 
 ```
 ㅁ Author: suktae.choi
@@ -36,10 +36,10 @@ The WebSocket Protocol is an `independent TCP-based protocol`. Its only relation
  : no barrier of payload size
 
  > **Re-framing is done** in WebSocket API level
- 
+
  > whole message is transfer to remote, and event-driven mechanism calls callback to notify program to receive it
 
-#### 1. client request -> handshake to WebSocket protocol over 80 or 443 port
+### client request -> handshake to WebSocket protocol over 80 or 443 port
 
 ```
 GET ws://localhost/chat HTTP/1.1
@@ -54,7 +54,7 @@ GET ws://localhost/chat HTTP/1.1
 
 <img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.17.49.png" width="75%">
 
-#### 2. server response -> handshake done to differ to WebSocket
+### server response -> handshake done to differ to WebSocket
 
 ```
 HTTP/1.1 101 Switching Protocols
@@ -68,7 +68,7 @@ HTTP/1.1 101 Switching Protocols
 
 <img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.30.34.png" width="75%">
 
-#### 3. bidirectional communication is going on without unnecessary HTTP headers and latency of pushing event from server to client
+### bidirectional communication is going on without unnecessary HTTP headers and latency of pushing event from server to client
 
 <img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.30.49.png" width="50%">
 
@@ -76,11 +76,11 @@ HTTP/1.1 101 Switching Protocols
 
 > Network security is guaranteed over TLS. packet is encrypted in xor operation based on `Sec-WebSocket-Key` which is shared in handshake mechanism.
 
-###### Benefit of WebSocket compared to HTTP
+#### Benefit of WebSocket compared to HTTP
 
 WebSocket request & response headers:
 
-<img src="https://github.com/agongi/study/blob/master/websocket/images/WebSocketStream.png" width="75%">
+<img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.17.50.png" width="75%">
 
  - Data transfer is done within one TCP connection lifecycle.
  - `No extra headers after handshake`. You might notice that the "length" column represents each packet's size, it is less than 100 bytes by average in my case and it only depend on exact transferred data size.
