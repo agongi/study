@@ -12,7 +12,12 @@
 
 
 ### map()
-
+```java
+// convert to different object list
+List<Object> sortedList = list.stream()
+    .map(o -> new NewObject(o.getId(), o.getScore()))
+    .collect(Collectors.toList());
+```
 
 ### filter()
 
@@ -75,5 +80,3 @@ Map<Integer, Integer> map = list.stream().collect(Collectors.groupingBy(Object::
 int max = list.stream().mapToInt(Object::getId).max().getAsInt();
 int min = list.stream().mapToInt(Object::getId).min().getAsInt();
 ```
-
-#### mapToDouble()
