@@ -43,17 +43,20 @@ List<Object> sortedList = list.stream()
 ### collect()
 #### Collectors.toMap(Object::getKey, Function::identity())
 ```java
-Map<Integer, Object> map = list.stream().collect(Collectors.toMap(Object::getId, Function::identity()));
+Map<Integer, Object> map = list.stream()
+    .collect(Collectors.toMap(Object::getId, Function::identity()));
 ```
 
 #### Collectors.groupingBy()
 ```java
-Map<Integer, List<Object>> map = list.stream().collect(Collectors.groupingBy(Object::getId));
+Map<Integer, List<Object>> map = list.stream()
+    .collect(Collectors.groupingBy(Object::getId));
 ```
 
 #### Collectors.summingInt()
 ```java
-Map<Integer, Integer> map = list.stream().collect(Collectors.groupingBy(Object::getId, Collectors.summingInt(Object::getScore)));
+Map<Integer, Integer> map = list.stream()
+    .collect(Collectors.groupingBy(Object::getId, Collectors.summingInt(Object::getScore)));
 ```
 
 ### Boolean Operation
