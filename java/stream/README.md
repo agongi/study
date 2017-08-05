@@ -5,7 +5,7 @@
 ㅁ Date: 2017.07.25
 ㅁ References:
  - http://d2.naver.com/helloworld/4911107
- - http://www.slideshare.net/madvirus/8-35205661
+ - http://iloveulhj.github.io/posts/java/java-stream-api.html
 ```
 
 <img src="https://github.com/agongi/study/blob/master/java/stream/images/figure2.jpg" width="75%">
