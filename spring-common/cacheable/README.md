@@ -13,17 +13,26 @@
 ```xml
 compositeCacheManager
 
+ehCacheManager
+
+redisCacheManager
 ```
 
 ### How To Use
 ```java
-@Cacheable(value = "#key")
-public void xxx(int key, String b) {
-
+@Cacheable(value = "cacheName", key = "#key")
+public void cacheableMethod(int key, int intValue, String stringValue) {
+  // ...
 }
 
+@CacheEvict(value = "cacheName", key = "#key")
+public void cacheEvictMethod(String battleKey) {
+  // ...
+}
 ```
 
-- The same method parameters always guarantee the same return
-  - If the same input comes, immediately read result in cache
-- Cache key might be defined in annotation
+- Precondition
+  - The same parameters always guarantee the same return
+  - The result is stored in cache defined in configuration like ehCache or redis
+
+If the same key comes as parameter defined in key attribute of @Cacheable (e.g. key = "#key"), method body will not be executed and get result from cache
