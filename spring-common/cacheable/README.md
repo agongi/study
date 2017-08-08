@@ -11,11 +11,16 @@
 
 ### Configure
 ```xml
-compositeCacheManager
+<cache:annotation-driven cache-manager="compositeCacheManager" proxy-target-class="true" mode="proxy"/>
 
-ehCacheManager
-
-redisCacheManager
+<bean id="compositeCacheManager" class="org.springframework.cache.support.CompositeCacheManager">
+    <property name="cacheManagers">
+        <list>
+            <ref bean="ehCacheManager" />
+            <ref bean="springRedisCacheManager" />
+        </list>
+    </property>
+</bean>
 ```
 
 ### How To Use
