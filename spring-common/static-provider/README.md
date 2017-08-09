@@ -12,6 +12,8 @@
   - Get bean from static applicationContext field implements `ApplicationContextAware`
 - Property Provider
   - Get property from static StringValueResolver field implements `EmbeddedValueResolverAware`
+- PropertiesLoaderUtils
+  - Get values programmatically
 
 ```java
 /**
@@ -84,4 +86,10 @@ public class ApplicationTest {
         ctx.registerShutdownHook();
     }
 }
+```
+
+### [PropertiesLoaderUtils](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/support/PropertiesLoaderUtils.html)
+```java
+Resource resource = new ClassPathResource("/my.properties");
+Properties props = PropertiesLoaderUtils.loadProperties(resource);
 ```
