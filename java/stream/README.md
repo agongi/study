@@ -6,6 +6,7 @@
 ㅁ References:
  - http://d2.naver.com/helloworld/4911107
  - http://iloveulhj.github.io/posts/java/java-stream-api.html
+ - https://www.mkyong.com/java8/java-8-flatmap-example/
 ```
 
 <img src="https://github.com/agongi/study/blob/master/java/stream/images/figure2.jpg" width="75%">
@@ -20,17 +21,59 @@ List<Object> sortedList = list.stream()
 ```
 
 #### flatMap()
-스트림들을 하나의 스트림으로 합쳐서 하나의 새로운 스트림을 반환
+```java
+@Slf4j
+public class StreamTest {
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @ToString
+    private class Name {
+        private int id;
+        private String name;
+        private List<String> nicknames;
+
+        public Name() {
+
+        }
+    }
+
+    private final List<Name> list = Arrays.asList(
+        new Name(1, "suktae", Arrays.asList("haha")),
+        new Name(2, "yujung", Arrays.asList("hoho")),
+        new Name(3, "jihyeon", Arrays.asList("hehe", "haha")),
+        new Name(4, "eunho", Arrays.asList("huhu", "hihi"))
+    );
+
+    @Test
+    public void test() {
+      List<String> flatList = list.stream()
+        .map(x -> x.getNicknames()) // { {haha}, {hoho}, {hehe, haha}, {huhu, hihi} }
+        .flatMap(x -> x.stream())   // { haha, hoho, hehe, haha, huhu, hihi }
+        .distinct()
+        .collect(Collectors.toList());
+
+      log.debug("flatList: {}", flatList);
+    }
+}
+```
 
 #### filter()
-... 필터링 하는거
+```java
+// conditional statement
+list.stream()
+    .filter(o -> o.getId() > 0)
+    // ...
+```
 
 #### distinct()
-중복제거
-
-#### limit
-숫자 제한
+```java
+// remove duplicated
+list.stream()
+    .distinct()
+    // ...
+```
 
 #### reduce()
 
@@ -126,7 +169,8 @@ list.stream().filter(name -> name.getId() != 0).findFirst().get();
 
 #### orElse()
 ```java
-// instance is made whether null or not - cost inefficient
+// get if not null, return default one defined in orElse() if null
+// instance in orElse() is made in advance regardless the result of Optional<T> - cost inefficient
 list.stream().filter(name -> name.getId() != 0).findFirst().orElse(null);
 list.stream().filter(name -> name.getId() != 0).findFirst().orElse(new Name());
 
@@ -136,6 +180,7 @@ list.stream().filter(o -> o > 5).findFirst().orElse(0);
 
 #### orElseGet()
 ```java
+// get if not null, return default one defined in orElse() if null
 // lazy-loaded method if null only - cost efficient
 list.stream().filter(name -> name.getId() != 0).findFirst().orElseGet(() -> new Name());
 list.stream().filter(name -> name.getId() != 0).findFirst().orElseGet(Name::new);
@@ -152,7 +197,8 @@ list.stream().filter(name -> name.getId() != 0).findFirst().orElseThrow(IllegalA
 Optional.ofNullable(list).orElse(new Name(10, "haha"));
 ```
 
-#### Collectors.toMap(Object::getKey, Function::identity())
+### Collectors
+#### Collectors.toMap(Function::identity())
 ```java
 Map<Integer, Object> map = list.stream()
     .collect(Collectors.toMap(Object::getId, Function::identity()));
