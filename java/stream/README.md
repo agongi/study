@@ -216,6 +216,14 @@ Map<Integer, Integer> map = list.stream()
     .collect(Collectors.groupingBy(Object::getId, Collectors.summingInt(Object::getScore)));
 ```
 
+#### Collectors.joining()
+```java
+List<String> list = Arrays.asList("java", "python", "nodejs", "ruby");
+
+// java | python | nodejs | ruby
+String result = list.stream().map(x -> x).collect(Collectors.joining(" | "));
+```
+
 ### Miscellaneous
 #### mapToInt()
 ```java
