@@ -12,4 +12,18 @@
 @RequestMapping(value="/users" , method=RequestMethod.GET)
 public ModelAndView getUsers(
   @RequestParam(value = "since", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime since) {
+    // ...
+  }
+```
+
+### Timestamp in controller
+```java
+@RequestMapping(value="/users" , method=RequestMethod.GET)
+public ModelAndView getUsers(
+  @RequestParam(value = "since", required = false) Long since {
+    // ...
+  }
+
+// service
+DateTime sinceValue = new DateTime(since.longValue());
 ```

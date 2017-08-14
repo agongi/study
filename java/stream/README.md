@@ -221,7 +221,7 @@ Map<Integer, Integer> map = list.stream()
 List<String> list = Arrays.asList("java", "python", "nodejs", "ruby");
 
 // java | python | nodejs | ruby
-String result = list.stream().map(x -> x).collect(Collectors.joining(" | "));
+String result = list.stream().collect(Collectors.joining(" | "));
 ```
 
 ### Miscellaneous
