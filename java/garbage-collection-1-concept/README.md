@@ -23,7 +23,7 @@
 ```
 
 ### CMS (Serial, Parallel) GC
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/image2014-4-3%2011-20-1.png" width="75%">
+<img src="images/image2014-4-3%2011-20-1.png" width="75%">
 
 #### Young Generation
 Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
@@ -66,6 +66,8 @@ G1에는 전통적인 type(Eden, Survivor 및 Old Generation) 외 Humongous Regi
 > 객체 크기가 Region의 1/2보다 큰 경우, humongous 영역으로 관리
 
 #### Young Generation
+<img src="images/Screen%20Shot%202017-08-15%20at%2002.02.19.gif" width="75%">
+
 - Evacuation Pauses
   - 이 단계가 `Minor GC` 이다
     - 첫 Minor GC 는 Heap 이 일정 용량 이상으로 점유시 수행된다
