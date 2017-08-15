@@ -56,9 +56,9 @@ Since it is a separated region, it is not considered as a part of the Java Heap 
 Class definitions are stored here, as are `static instances`, `string pool` and `meta-data`. Rarely `Full GC` also comes over here to clean up this area.
 
 ### G1 GC
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-1-concept/images/image2014-4-3%2011-20-1.png" width="75%">
+<img src="images/Screen%20Shot%202017-08-15%20at%2001.02.19.gif" width="75%">
 
-G1에는 전통적인 type(Eden, Survivor 및 Old Generation) 외에 Humongous Region과 Available / Unused Region이 추가로 존재
+G1에는 전통적인 type(Eden, Survivor 및 Old Generation) 외 Humongous Region, Available / Unused Region 존재
 - 전체 heap을 Region이라는 영역으로 분활하여 관리하며, Region이 곧 Eden, Survivor 또는 Old일 수 있다
 - Region의 목표 수치는 2048으로 분활된다. 즉, 8G의 Heap이라면 하나의 Region의 크기는 4MB (8192MB/2048 = 4MB)
 - Young generation memory는 non-contiguous region으로 구성되며, 이는 필요 시 크기 조정을 용이하게 함
