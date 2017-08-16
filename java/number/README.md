@@ -9,7 +9,7 @@
 
 ### Classes
 
-<img src="https://github.com/agongi/study/blob/master/java/number/images/objects-numberHierarchy.gif" width="75%">
+<img src="images/objects-numberHierarchy.gif" width="75%">
 
 > BigDecimal & BigInteger are used for **high-precision** calculations. AtomicInteger & AtomicLong are used for **multi-threaded** applications
 
