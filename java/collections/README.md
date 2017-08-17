@@ -34,6 +34,8 @@ Duplicated is not allowed
 - HashSet
 - LinkedHashSet
 - TreeSet
+  - SortedSet
+  - NavigableSet
 - ConcurrentSkipListSet
 
 ### [3. Map](https://github.com/agongi/study/tree/master/java/collections/map/)
@@ -42,6 +44,8 @@ key - value pair structure
 - HashMap
 - LinkedHashMap
 - TreeMap
+  - SortedMap
+  - NavigableMap
 - ConcurrentSkipListMap
 - ConcurrentNavigableMap
 
