@@ -8,3 +8,6 @@
 ### Index
 - CommonJS
 - ECMAScript
+
+### Task
+- [Get checked values](https://github.com/agongi/study/tree/master/javascript/get-checked-values/)
