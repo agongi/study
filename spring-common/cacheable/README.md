@@ -25,7 +25,7 @@
 
 ### How To Use
 ```java
-@Cacheable(value = "cacheName", key = "#key")
+@Cacheable(value = "cacheName", key = "#key", unless= "#result == null")
 public void cacheableMethod(int key, int intValue, String stringValue) {
   // ...
 }
@@ -39,5 +39,6 @@ public void cacheEvictMethod(String battleKey) {
 - Precondition
   - The same parameters always guarantee the same return
   - The result is stored in cache defined in configuration like ehCache or redis
+  - If result is null, it is not stored in cache
 
 If the same key comes as parameter defined in key attribute of @Cacheable (e.g. key = "#key"), method body will not be executed and get result from cache

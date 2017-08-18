@@ -49,4 +49,4 @@ key - value pair structure
 - ConcurrentSkipListMap
 - ConcurrentNavigableMap
 
-> Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package.
+> Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package
