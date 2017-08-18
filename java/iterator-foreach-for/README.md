@@ -1,56 +1,62 @@
 ## Iterator vs foreach vs for
-Java conceptual comparison between Iterator(), foreach() and for() function.
-
->###### Traditional for is the best performance. Iterator() supports to remove items inside of iteration without ConcurrentModificationException but foreach doesn't allow you to do it.
 
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.05.15
 ㅁ References:
  - http://stackoverflow.com/questions/2113216/which-is-more-efficient-a-for-each-loop-or-an-iterator
+ - https://stackoverflow.com/questions/3329842/how-to-get-the-current-loop-index-when-using-iterator
 ```
 
-**Iterator**
-performance is the same with foreach.
-
-but It supports this following:
+### Iterator
+CME(ConcurrentModificationException) safe
 
 ```java
-Set<Object> set = new HashSet<Object>();
-// add some items to the set
+Set<Object> set = new HashSet<>();
 
+// modify while iteration
 Iterator<Object> setIterator = set.iterator();
-while(setIterator.hasNext()){
-     Object o = setIterator.next();
-     if(o meets some condition){
-          setIterator.remove();
-     }
+while(setIterator.hasNext()) {
+    Object o = setIterator.next();
+
+    if(true) {  // possible
+        setIterator.remove();
+    }
 }
 ```
-
-**foreach**
-performance is equal to iterator.
-
-but It doesn't support this following:
 
 ```java
-Set<Object> set = new HashSet<Object>();
-// add some items to the set
+List<String> list = Arrays.asList("zero", "one", "two", "three");
 
-for(Object o : set){
-     if(o meets some condition){
-          set.remove(o);  // ConcurrentModificationException
-     }
+for (ListIterator<String> it = list.listIterator(); it.hasNext(); ) {
+    String element = it.next();
+
+    if (it.hasNext()) {
+      System.out.println("next: " + it.next());
+      System.out.println("nextIndex: " + it.nextIndex());  
+    }
+
+    if (it.hasPrevious()) {
+      System.out.println("previous: " + it.previous());
+      System.out.println("previousIndex: " + it.previousIndex());  
+    }
 }
 ```
 
-**for**
-pros
- : performance
+### foreach
+CME not safe
 
-cons
- : a bit complicated to use compared to iterator and foreach.
- : calculates length of array gets performance down.
-  > for(int i=0; i<array.length(); i++) {...}
+```java
+Set<Object> set = new HashSet<>();
 
-  > int length = array.length(); for(int i=0; i<length; i++) {...}
+// modify while iteration
+for(Object obj : set) {
+
+    if (true) { // impossible - CME
+        set.remove(o);  
+    }
+}
+```
+
+### for
+Best performance
