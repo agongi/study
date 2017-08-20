@@ -1,6 +1,5 @@
 ## Garbage Collection - Additional
 
-
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2017.06.19
