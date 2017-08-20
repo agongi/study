@@ -12,7 +12,7 @@
 ### References
 Garbage Collector reclaims memory from objects which are eligible for garbage collection, but not many programmer knows that this eligibility is decided based upon **which kind of references are pointing to that object.**
 
-<img src="https://github.com/agongi/study/blob/master/java/garbage-collection-2-additional/images/Weak%20Strong%20Soft%20and%20Phantom%20Reference%20in%20Java.gif" width="75%">
+<img src="images/Screen%20Shot%202017-08-16%20at%2022.03.11.gif" width="75%">
 
 #### Reference Type
 - Strong Reference: Strong referenced instance never be a candidates of GC
