@@ -170,7 +170,7 @@ list.stream().filter(name -> name.getId() != 0).findFirst().get();
 #### orElse()
 ```java
 // get if not null, return default one defined in orElse() if null
-// instance in orElse() is made in advance regardless the result of Optional<T> - cost inefficient
+// instance is always made whether Optional<T> is null - cost inefficient
 list.stream().filter(name -> name.getId() != 0).findFirst().orElse(null);
 list.stream().filter(name -> name.getId() != 0).findFirst().orElse(new Name());
 
@@ -180,8 +180,8 @@ list.stream().filter(o -> o > 5).findFirst().orElse(0);
 
 #### orElseGet()
 ```java
-// get if not null, return default one defined in orElse() if null
-// lazy-loaded method if null only - cost efficient
+// get if not null, return default one defined in orElseGet() if null
+// instance is not made if Optional<T> is null - cost efficient
 list.stream().filter(name -> name.getId() != 0).findFirst().orElseGet(() -> new Name());
 list.stream().filter(name -> name.getId() != 0).findFirst().orElseGet(Name::new);
 ```
@@ -206,8 +206,19 @@ Map<Integer, Object> map = list.stream()
 
 #### Collectors.groupingBy()
 ```java
+// key - value(groupBy)
 Map<Integer, List<Object>> map = list.stream()
     .collect(Collectors.groupingBy(Object::getId));
+
+Map<String, Long> map = list.stream()
+    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+```
+
+#### Collectors.partitioningBy()
+```java
+// key(boolean) - value(groupBy)
+Map<Boolean, List<String>> map = list.stream()
+    .collect(Collectors.partitioningBy(k -> StringUtils.length(k) > 5));
 ```
 
 #### Collectors.summingInt()
