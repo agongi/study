@@ -34,6 +34,8 @@
   - record lock - update .. where, delete .. where, [locking read (select .. for update)](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html), lock in share mode
   - gap locks, next-key locks - not supported (== phantom reads occur)
 
+<img src="images/Screen%20Shot%202017-08-23%20at%2002.37.01.png" width="75%">
+
 #### REPEATABLE READ
 - This is the `default` isolation level for InnoDB
 - No dirty reads
