@@ -1,84 +1,48 @@
 ## Isolation
-This section describes lock types used by InnoDB.
-
-> Those lock mechanism is trade-off of performance and concurrency.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.07.29
+ㅁ Date: 2017.08.23
 ㅁ References:
- - https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html
- - http://ktdsoss.tistory.com/382
- - http://notemusic.tistory.com/49
+  - https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html
+  - https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html
+  - https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
+  - http://blog.sapzil.org/2017/04/01/do-not-trust-sql-transaction/
+  - http://arisu1000.tistory.com/27756
+  - http://notemusic.tistory.com/49
 ```
 
-### 1. Factors
-#### 1.1 Dirty Read
-commit; 되기전 data 를 읽는 현상
+### Read Phenomena
+#### dirty reads
+- See uncommitted data
 
-#### 1.2 Unrepeatable Read
-transaction 도중에, **[update 로 인해]** select 결과가 달라지는 현상
+#### non-repeatable reads
+- transaction 도중 다른 트랜잭션의 **[update 로]** select 결과가 달라지는 현상
 
-#### 1.3 Phantom Read
-transaction 도중에, **[insert or delete 로 인해]** select 결과가 달라지는 현상
+#### phantom reads
+- transaction 도중 다른 트랜잭션의 **[insert or delete 로]** select 결과가 달라지는 현상
 
-### 2. Locks
-#### 2.1 Record Lock
-- locks exact one record literally
-- prevent **unrepeatable read**
+### Isolation Levels
+#### READ UNCOMMITTED
+- .. All read phenomena!
 
-```
-update record [2]
+#### READ COMMITTED
+- No dirty reads
+- Inconsistent read
+  - Non locking read can the see data that is committed by another transaction after the current transaction started
+- Locks level
+  - record lock - update .. where, delete .. where, [locking read (select .. for update)](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html), lock in share mode
+  - gap locks, next-key locks - not supported (== phantom reads occur)
 
-[1]--------[2]---------[3]---------[4]
-      record-lock
-```
+#### REPEATABLE READ
+- This is the `default` isolation level for InnoDB
+- No dirty reads
+- [Consistent read](https://dev.mysql.com/doc/refman/5.7/en/glossary.html#glos_consistent_read)
+  - [Non locking read](https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html) within the same transaction read snapshot established by the first regardless of changes performed by other transactions running at the same time
+  - This can be done by reading [undo log](https://dev.mysql.com/doc/refman/5.7/en/glossary.html#glos_undo_log)
+- Locks level
+  - record locks - update .. where, delete .. where
+  - gap locks, next-key locks - locking read, lock in share mode
 
-#### 2.2 Gap Lock
-- locks before/after record
-
-```
-update record [2]
-
-[1]--------[2]---------[3]---------[4]
-               gap-lock
-or
-
-        [1]--------[2]---------[3]---------[4]
-gap-lock                                      gap-lock
-```
-
-#### 2.3 Next-key Lock
-- record lock + gap lock
-- prevent **phantom read**
-
-```
-update record [2]
-
-[1]--------[2]---------[3]---------[4]
-      record-lock
-               gap-lock
-```
-
-
-- 테이블에서 어떤 인덱스(pk포함)가 가장 큰 row를 update, delete할때 그보다 큰 값의 insert가 lock 걸린다
-- id는 증가되는 값으로 발행된다
-  - 최신에 발급된 id "A"에 대해 index (PK 포함)인 row를 update를 할 경우, 그보다 나중에 가입된 유저의("A"보다 더 큰) 데이터의 insert가 lock이 걸린다.
-
-신규유저 생성시 오래걸릴 경우 다음생성되는 유저도 lock이 걸려 확인한 건데, 유저 생성시 update도 있기 때문에 lock이 걸림
-
-### 3. Levels
-#### 3.1 READ UNCOMMITTED
-- dirty read
-- unrepeatable read
-- phantom read
-
-#### 3.2 READ COMMITTED
-- unrepeatable read
-- phantom read
-
-#### 3.3 REPEATABLE READ
-- none (with next-key lock)
-
-#### 3.4 SERIALIZABLE
-- none
+#### SERIALIZABLE
+- ... Strict!

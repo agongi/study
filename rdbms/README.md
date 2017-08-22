@@ -7,6 +7,7 @@
   - Real MySQL
 ㅁ References:
   - https://dev.mysql.com/doc/refman/5.7/en
+  - https://dev.mysql.com/doc/refman/5.7/en/glossary.html
 ```
 
 ### Index
@@ -14,6 +15,7 @@
 - [Data Type](https://github.com/agongi/study/tree/master/rdbms/datatype/)
 - [Execution Plan](https://github.com/agongi/study/tree/master/rdbms/execution-plan/)
 - [Isolation](https://github.com/agongi/study/tree/master/rdbms/isolation/)
+- [Locks](https://github.com/agongi/study/tree/master/rdbms/locks/)
 - [Index](https://github.com/agongi/study/tree/master/rdbms/index/)
 - [Prepared statement](https://github.com/agongi/study/tree/master/rdbms/prepared-statement/)
 - [Join](https://github.com/agongi/study/tree/master/rdbms/join/)
