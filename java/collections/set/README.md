@@ -10,7 +10,7 @@
 - http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html
 ```
 
-<img src="https://github.com/agongi/study/blob/master/java/collections/set/images/Screen%20Shot%202016-02-15%20at%2001.51.47.png" width="75%">
+<img src="images/Screen%20Shot%202017-08-28%20at%2022.03.11.jpg" width="75%">
 
 ### Set Implementations
 #### HashSet
