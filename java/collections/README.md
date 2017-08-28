@@ -16,19 +16,16 @@
 - List<E> list = Collections.unmodifiableList();
 - Set<E> set = Collections.unmodifiableSet();
 
-#### Sorted Collections
-- SortedSet set = new TreeSet();
-- NavigableSet set = new TreeSet();
-- SortedMap<K, V> map = new TreeMap<>();
-- NavigableMap<K, V> map = new TreeMap<>();
+#### Concurrency
+- Set<E> set = Collections.synchronizedSet(new HashSet());
 
-### [1. List](https://github.com/agongi/study/tree/master/java/collections/list/)
+### [List](https://github.com/agongi/study/tree/master/java/collections/list/)
 Duplicated element is allowed
 
 - ArrayList
 - LinkedList
 
-### [2. Set](https://github.com/agongi/study/tree/master/java/collections/set/)
+### [Set](https://github.com/agongi/study/tree/master/java/collections/set/)
 Duplicated is not allowed
 
 - HashSet
@@ -36,9 +33,11 @@ Duplicated is not allowed
 - TreeSet
   - SortedSet
   - NavigableSet
+- EnumSet
+- CopyOnWriteArraySet
 - ConcurrentSkipListSet
 
-### [3. Map](https://github.com/agongi/study/tree/master/java/collections/map/)
+### [Map](https://github.com/agongi/study/tree/master/java/collections/map/)
 key - value pair structure
 
 - HashMap

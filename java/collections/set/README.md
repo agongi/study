@@ -1,44 +1,86 @@
 ## Set
-Java conceptual comparison among HashSet, LinkedHashSet and TreeSet collections.
-
->###### TBD
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.14
+ㅁ Date: 2017.08.28
 ㅁ References:
- - http://www.programcreek.com/2013/03/hashset-vs-treeset-vs-linkedhashset/
- - http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html
+- https://docs.oracle.com/javase/tutorial/collections/implementations/set.html
+- http://tutorials.jenkov.com/java-collections/set.html
+- http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html
+- http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html
 ```
+
 <img src="https://github.com/agongi/study/blob/master/java/collections/set/images/Screen%20Shot%202016-02-15%20at%2001.51.47.png" width="75%">
 
-#### 1. HashSet
-HashSet is Implemented using a HashMap.
+### Set Implementations
+#### HashSet
+No order
 
- - Non-synchronized
- - Fast
- - Allows one null
- - `No order`
+```java
+Set set = new HashSet();
 
-> If you want to make a HashSet thread-safe, but there is no ConcurrentHashSet in current JDK. you can derive it from ConcurrentHashMap as following: <br>
-`Collections.newSetFromMap(new ConcurrentHashMap<Object,Boolean>())`
+set.add("name");
+set.remove("name");
+```
 
-#### 2. LinkedHashSet
-LinkedHashSet is Implemented using a LinkedHashMap.
+#### LinkedHashSet
+Insertion-order
 
- - Non-synchronized
- - Fast
- - Allows one null
- - `Insertion-order`
+```java
+Set set = new LinkedHashSet();
 
-> LinkedHashSet is a `subclass of HashSet`. That means it inherits the features of HashSet. In addition, the linked list preserves the `insertion-order`.
+set.add("name");
+set.remove("name");
+```
 
-#### 3. TreeSet
-TreeSet is Implemented using a TreeMap.
+#### TreeSet
+Natural-order
 
- - Non-synchronized
- - `Slower than HashSet or LinkedHashSet`
- - Doesn't allows null
- - `Natural-order (needs to implement Comparable interface)`
+```java
+SortedSet set = new TreeSet();
 
-> key comparison is required in tree features for natural-order.
+set.first();
+set.last();
+
+set.tailSet("from");  // from ........
+set.headSet("to");    // .......... to
+```
+
+```java
+// NavigableSet extends SortedSet interface providing more methods
+NavigableSet<Integer> set = new TreeSet();
+set.add(1);
+set.add(2);
+set.add(3);
+
+set.ceiling(2); // greater or equals: 2
+set.floor(2);   // less or equals: 2
+
+set.higher(2);  // greater: 3
+set.lower(2);   // less: 1
+```
+
+> Comparable is required to sort or specify Comparator
+
+> General performance for insert/delete is slower than HashSet
+
+#### EnumSet
+EnumSet is a Set contains enum instance of a specific enum type, in a more efficient way than others (like HashSet, TreeSet, etc.)
+
+```java
+EnumSet<Size> largeSize = EnumSet.of(Size.XXXL, Size.XXL, Size.XL, Size.L);
+for(Size size: largeSize) {
+    log.debug("size: {}", size);
+}
+```
+
+### Concurrent packages
+#### CopyOnWriteArraySet
+thread-safe
+
+non-sorted
+
+#### ConcurrentSkipListSet
+thread-safe
+
+sorted
