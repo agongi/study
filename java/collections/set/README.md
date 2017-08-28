@@ -8,6 +8,7 @@
 - http://tutorials.jenkov.com/java-collections/set.html
 - http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html
 - http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html
+- https://stackoverflow.com/questions/6720396/different-types-of-thread-safe-sets-in-java
 ```
 
 <img src="images/Screen%20Shot%202017-08-28%20at%2022.03.11.jpg" width="75%">
@@ -76,11 +77,21 @@ for(Size size: largeSize) {
 
 ### Concurrent packages
 #### CopyOnWriteArraySet
-thread-safe
+변경이 있으면 전체 Set 을 복사해서 새로 생성 (CopyOnWrite)
 
-non-sorted
+Iterator 는 생성 당시 snapshot 을 가지고 동작하고, 도중에 다른 쓰레드에 의해 변경되어도 origin 은 유지된다 (변경된 값은 새로운 Copy 에 적용되어 있지 - CopyOnWrite)
+
+단점은 변경될때 마다 전체 Set 을 복사한다는 점. 사이즈의 크면 복사 비용이 크다는 점
+
+CopyOnWriteArraySet is best suited as read-only collection whose size is small enough to copy if some mutative operation happens
+
+> unmodifiableSet is never changed
 
 #### ConcurrentSkipListSet
-thread-safe
-
+read no-lock
+write lock
 sorted
+
+#### Collections.synchronizedSet
+read lock
+write lock

@@ -19,11 +19,13 @@
 #### Concurrency
 - Set<E> set = Collections.synchronizedSet(new HashSet());
 
+
 ### [List](https://github.com/agongi/study/tree/master/java/collections/list/)
 Duplicated element is allowed
 
 - ArrayList
 - LinkedList
+- CopyOnWriteArrayList
 
 ### [Set](https://github.com/agongi/study/tree/master/java/collections/set/)
 Duplicated is not allowed
@@ -35,7 +37,7 @@ Duplicated is not allowed
   - NavigableSet
 - EnumSet
 - CopyOnWriteArraySet
-- ConcurrentSkipListSet
+- ConcurrentSkipListSet (TreeSet over concurrency)
 
 ### [Map](https://github.com/agongi/study/tree/master/java/collections/map/)
 key - value pair structure
@@ -45,7 +47,8 @@ key - value pair structure
 - TreeMap
   - SortedMap
   - NavigableMap
-- ConcurrentSkipListMap
-- ConcurrentNavigableMap
+- ConcurrentHashMap
+- ConcurrentSkipListMap (TreeMap over concurrency)
+- ~~ConcurrentNavigableMap~~
 
 > Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package
