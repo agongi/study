@@ -9,6 +9,7 @@
 - http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html
 - http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html
 - https://stackoverflow.com/questions/6720396/different-types-of-thread-safe-sets-in-java
+- http://minborgsjavapot.blogspot.kr/2014/12/java-8-implementing-concurrenthashset.html
 ```
 
 <img src="images/Screen%20Shot%202017-08-28%20at%2022.03.11.jpg" width="75%">
@@ -25,7 +26,7 @@ set.remove("name");
 ```
 
 #### LinkedHashSet
-Insertion-order
+Insert-order or access-order
 
 ```java
 Set set = new LinkedHashSet();
@@ -76,22 +77,23 @@ for(Size size: largeSize) {
 ```
 
 ### Concurrent packages
+Keys in map never be duplicated, Set which being derived from keySet() can be Set
+
 #### CopyOnWriteArraySet
-변경이 있으면 전체 Set 을 복사해서 새로 생성 (CopyOnWrite)
-
-Iterator 는 생성 당시 snapshot 을 가지고 동작하고, 도중에 다른 쓰레드에 의해 변경되어도 origin 은 유지된다 (변경된 값은 새로운 Copy 에 적용되어 있지 - CopyOnWrite)
-
-단점은 변경될때 마다 전체 Set 을 복사한다는 점. 사이즈의 크면 복사 비용이 크다는 점
-
-CopyOnWriteArraySet is best suited as read-only collection whose size is small enough to copy if some mutative operation happens
-
-> unmodifiableSet is never changed
+- Copy entire Set on write
+  - Iteration can keep origin snapshot while other thread changes the value of it
+- Suitable as read-only collection whose size is small enough to copy rarely if change happens
 
 #### ConcurrentSkipListSet
-read no-lock
-write lock
-sorted
+- Concurrent SortedSet
+- read no-lock / write lock
 
-#### Collections.synchronizedSet
-read lock
-write lock
+#### Collections.synchronizedSet(Set)
+- Simple wrap of origin set with wrap synchronized-block in all methods
+- read lock / write lock (entire table-lock, not row-lock)
+
+#### new ConcurrentHashMap<>().keySet()
+- Set can be derived from Map
+  - It could be ConcurrentHashSet
+
+> Prior to Java 8, Collections.newSetFromMap(new ConcurrentHashMap<>()); is used
