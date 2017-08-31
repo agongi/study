@@ -18,7 +18,8 @@
 
 #### Concurrency
 - Set<E> set = Collections.synchronizedSet(new HashSet());
-
+- Set<E> set = new ConcurrentHashMap<>().keySet();
+- Map<K,V> map = Collections.synchronizedMap(new HashMap());
 
 ### [List](https://github.com/agongi/study/tree/master/java/collections/list/)
 Duplicated element is allowed
@@ -47,8 +48,11 @@ key - value pair structure
 - TreeMap
   - SortedMap
   - NavigableMap
+- EnumMap
 - ConcurrentHashMap
 - ConcurrentSkipListMap (TreeMap over concurrency)
+- IdentityHashMap
+- WeakHashMap
 - ~~ConcurrentNavigableMap~~
 
 > Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package
