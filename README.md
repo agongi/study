@@ -42,6 +42,7 @@
 ### RDB/NoSQL
 - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
 - [Mybatis](https://github.com/agongi/study/tree/master/mybatis/)
+- JPA
 - [Redis](#)
 
 ### Architect Design
