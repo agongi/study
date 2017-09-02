@@ -1,7 +1,4 @@
 ## List
-Java conceptual comparison among Vector, ArrayList and LinkedList collections.
-
->###### TBD
 
 ```
 ㅁ Author: suktae.choi
@@ -12,34 +9,24 @@ Java conceptual comparison among Vector, ArrayList and LinkedList collections.
  - http://javarevisited.blogspot.kr/2012/02/difference-between-linkedlist-vs.html
 ```
 
-Elements have a `specific order`, and `duplicate elements are allowed`. Elements can be placed in a specific position. As such, elements can be found by `index`.
+### List Implementations
+#### ArrayList
+Good for **random access** based on index
+  - get
 
-#### ~~1. Vector (Deprecated)~~
-Thread-safe
-Slow
+Bad for re-indexing condition
+  - add/remove
 
-> The only reason to use Vector is when a legacy API (from ca. 1996) requires it.
+#### LinkedList
+Good for sequential access or insert/delete
+  - add/remove/iterator
 
-#### 2. ArrayList
-Non thread-safe
+Bad random access
+  - get
 
-- Pros :<br>
- search
+### Concurrent packages
+#### CopyOnWriteArrayList
+Copy entire List on write
+  - Iteration can keep origin snapshot while other thread changes the value of it
 
-- Cons :<br>
- add/remove
-
-> useful when it is used get() frequently condition.
-
-> `ConcurrentLinkedQueue` helps you when there is needs of thread-safe.
-
-#### 3. LinkedList
-Non thread-safe
-
-- Pros :<br>
- add/remove
-
-- Cons :<br>
- search
-
-> useful when it is used add()/remove() frequently condition.
+Good for read-only collection whose size is small enough to copy rarely if change happens
