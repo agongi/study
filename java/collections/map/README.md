@@ -44,7 +44,7 @@ The HashMap class is roughly equivalent to Hashtable, except that it is `non syn
 : WeakHashMap wraps keys as WeakReference (== keys are candidates of removed on next GC)
 
 ### Concurrent packages
-<img src="images/Screen%20Shot%202017-08-28%20at%2022.03.11.jpg" width="75%">
+<img src="images/Screen%20Shot%202017-08-19%20at%2002.05.18.png" width="75%">
 
 #### ConcurrentHashMap
 : partial-lock, half-concurrency
