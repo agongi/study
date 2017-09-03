@@ -23,7 +23,7 @@
 ```
 
 ### CMS (Serial, Parallel) GC
-<img src="images/image2014-4-3%2011-20-1.png" width="75%">
+<img src="images/Screen%20Shot%202017-08-15%20at%2003.02.19.png" width="75%">
 
 #### Young Generation
 Eden, From (Survivor-0), To (Survivor-1) 영역으로 구분된다.<br>
