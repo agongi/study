@@ -16,9 +16,21 @@
  - https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
 ```
 
-### Enum types
-#### Type 1
 ```java
+// traditional
+public final class Mode {
+  public static final String MODE_1 = "MODE_1";
+  public static final String MODE_2 = "MODE_2";
+}
+
+// plain enum
+public enum Mode {
+  MODE_1, // equals to MODE_1("MODE_1")
+  MODE_2, // equals to MODE_2("MODE_2")
+  ;
+}
+
+// reality
 public enum Planet {
     MERCURY (3.303e+23, 2.4397e6),
     VENUS   (4.869e+24, 6.0518e6),
@@ -27,39 +39,20 @@ public enum Planet {
     private final double mass;   // in kilograms
     private final double radius; // in meters
 
-    private Planet(double mass, double radius) {  // private constructor
+    // private constructor
+    private Planet(double mass, double radius) {
         this.mass = mass;
         this.radius = radius;
     }
+
+    // getters
     public double mass() { return mass; }
     public double radius() { return radius; }
 }
 ```
 
-> **The constructor** for an enum type must be package-private or **private access**. It automatically creates the constants that are defined at the beginning of the enum body. You cannot invoke an enum constructor yourself.
-
-#### Type 2
-```java
-public final class Mode {
-  // public static final fields
-  public static final String MODE_1 = "Mode 1";
-  public static final String MODE_2 = "Mode 2";
-  public static final String MODE_3 = "Mode 3";
-
-  private Mode() {}
-}
-```
-
-#### Type 3
-```java
-public enum Mode {
-  MODE_1, // equals to MODE_1("MODE_1")
-  MODE_2, // equals to MODE_2("MODE_2")
-  ;
-}
-```
-
 ### Usage
+#### From/To
 ```java
 // enum to string
 String name = Mode.MODE_1.name();
@@ -68,7 +61,7 @@ Mode mode = Mode.valueOf(name);
 ```
 > Every single enum has **name()**, **valueOf()** method in default.
 
-### Iteration
+#### Iteration
 ```java
 for (Direction dir : Direction.values()) {
   // do what you want
@@ -76,7 +69,7 @@ for (Direction dir : Direction.values()) {
 ```
 > **.values()** returns an array containing the constants of this enum type
 
-### Boolean Field
+#### Boolean Field
 ```java
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -93,7 +86,7 @@ YES.isUsed() == true;
 NO.isUsed() == false;
 ```
 
-### Default Value
+#### Default Value
 ```java
 @Getter
 public enum Direction {
@@ -114,7 +107,7 @@ public enum Direction {
 }
 ```
 
-### [Holder Pattern](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
+#### [Holder Pattern](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
 ```java
 /**
  * @author suktae.choi

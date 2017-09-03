@@ -38,7 +38,9 @@ Duplicated is not allowed
   - NavigableSet
 - EnumSet
 - CopyOnWriteArraySet
-- ConcurrentSkipListSet (TreeSet over concurrency)
+- ConcurrentSkipListSet
+  - SortedSet
+  - NavigableSet
 
 ### [Map](https://github.com/agongi/study/tree/master/java/collections/map/)
 key - value pair structure
@@ -49,10 +51,12 @@ key - value pair structure
   - SortedMap
   - NavigableMap
 - EnumMap
-- ConcurrentHashMap
-- ConcurrentSkipListMap (TreeMap over concurrency)
 - IdentityHashMap
 - WeakHashMap
-- ~~ConcurrentNavigableMap~~
+- ConcurrentHashMap
+- ConcurrentSkipListMap
+  - SortedMap
+  - NavigableMap
+  - ConcurrentNavigableMap
 
 > Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package

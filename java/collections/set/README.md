@@ -61,13 +61,14 @@ set.floor(2);   // less or equals: 2
 set.higher(2);  // greater: 3
 set.lower(2);   // less: 1
 ```
-
 > Comparable is required to sort or specify Comparator
 
 > General performance for insert/delete is slower than HashSet
 
 #### EnumSet
-EnumSet is a Set contains enum instance of a specific enum type, in a more efficient way than others (like HashSet, TreeSet, etc.)
+Special purposed set to contain enums
+
+- Natural-order
 
 ```java
 EnumSet<Size> largeSize = EnumSet.of(Size.XXXL, Size.XXL, Size.XL, Size.L);
@@ -85,7 +86,8 @@ Keys in map never be duplicated, Set which being derived from keySet() can be Se
 - Suitable as read-only collection whose size is small enough to copy rarely if change happens
 
 #### ConcurrentSkipListSet
-- Concurrent SortedSet
+Natural-order
+
 - read no-lock / write lock
 
 #### Collections.synchronizedSet(Set)

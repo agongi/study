@@ -1,8 +1,6 @@
 ## TCP Fast Open (TFO)
 TCP Fast Open (TFO) is an extension to speed up the opening of TCP three-way-handshake between two endpoints.
 
-> client stored cookie after initial connection and reuse it later along with sending SYN packet. If cookie is valid, the server may start sending data even before three-way-handshake is in progress.
-
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.06.20
@@ -12,6 +10,8 @@ TCP Fast Open (TFO) is an extension to speed up the opening of TCP three-way-han
 ```
 
 <img src="https://github.com/agongi/study/blob/master/tcp/tcp-fast-open/images/image_thumb_5.png" width="75%">
+
+Client stored cookie after initial connection and reuse it later along with sending SYN packet. If cookie is valid, the server may start sending data even before three-way-handshake is in progress.
 
 1. First TCP Connection request (called, cold request) initiates sending SYN along with **TFO cookie**
 2. Normal three-way-handshake is going on while client saves given TFO cookie for future usage
