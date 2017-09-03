@@ -16,7 +16,7 @@ Index is used to find a specific row more faster, There are two different type o
 - [Bitmap](#bitmap)
 
 #### B-Tree
-<img src="https://github.com/agongi/study/blob/master/rdbms/index/images/SQL_245.jpg" width="75%">
+<img src="images/Screen%20Shot%202017-09-02%20at%2014.55.16.jpg" width="75%">
 
 - Data Structure: b-tree
 - 범위 검색: 첫번째 범위의 left node 로 간 후, 리프노드만을 따라가며 검색
@@ -25,7 +25,7 @@ Index is used to find a specific row more faster, There are two different type o
   - 삭제: 해당 인덱스에 flag 설정, 일정 이상되면 기존 블록과 병합 진행. 불균형 되면 인덱스 재빌딩
 
 #### Bitmap
-<img src="https://github.com/agongi/study/blob/master/rdbms/index/images/oracle_bitmap_index_structure.jpg" width="75%">
+<img src="images/Screen%20Shot%202017-09-02%20at%2014.44.16.jpg" width="75%">
 
 - Data Structure: 2-dimensional array
 - 검색: 해당 배열을 쭉 읽는다 (e.g. array[1]\[\])
