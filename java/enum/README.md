@@ -107,7 +107,7 @@ public enum Direction {
 }
 ```
 
-#### [Holder Pattern](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
+#### [Nested Class Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
 ```java
 /**
  * @author suktae.choi
@@ -154,3 +154,39 @@ public class EnumTest {
     }
 }
 ```
+
+#### Static Holder
+enum constants translate to **public static final** fields. These appear textually first in the enum type definition and are therefore initialized first. Their initialization involves the constructor.
+
+The rules exists to prevent the constructor from seeing uninitialized values of other class variables that will necessarily be initialized later.
+
+```java
+// runtime error
+enum Color {
+   RED, GREEN, BLUE;
+   static final Map<String,Color> colorMap = new HashMap<String,Color>();
+
+  Color() {
+     colorMap.put(toString(), this);  // NPE
+  }
+}
+
+// *************************************************************************
+enum Color {
+  RED, GREEN, BLUE;
+  static final Map<String,Color> colorMap;
+
+  static {
+    HashMap<String, Color> map = new HashMap<>();
+    for (Color c : Color.values()) {
+      colorMap.put(c.toString(), c);
+    }
+
+    colorMap = Collections.unmodifiableMap(map); // good practice
+  }
+}
+```
+
+> Class initialization invokes static block first, and static fields in textual order
+
+> Enum should define enum values at top in class
