@@ -1,14 +1,13 @@
 ## Java Generics
-Java fundamental of Generics.
 
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2016.02.24
 ㅁ Origin: Effective Java 2nd edition
 ㅁ References:
- - https://en.wikipedia.org/wiki/Generics_in_Java
- - https://docs.oracle.com/javase/tutorial/java/generics/index.html
- - http://ohgyun.com/51
+- https://docs.oracle.com/javase/tutorial/java/generics/index.html
+- https://stackoverflow.com/questions/745756/java-generics-wildcarding-with-multiple-classes
+- http://ohgyun.com/51
 ```
 
 ### Motivation
@@ -39,7 +38,7 @@ public class Box<T> {
 - V - Value
 - N - Number
 - T - Type
-- S,U,V etc. - 2nd, 3rd, 4th types
+- S, U, V etc., - 2nd, 3rd, 4th types
 
 ### Generic Methods
 This is similar to declaring a generic type, but the type parameter's **scope is limited to the method** where it is declared
@@ -112,12 +111,39 @@ interface C { /* ... */ }
 
 > If one of the bounds is a class, it must be specified first
 
-#### Type Inference
+### Type Inference
+#### Instantiation of Generic Classes
 ```java
 Map<String, List<String>> myMap = new HashMap<String, List<String>>();
 // type inferred
 Map<String, List<String>> myMap = new HashMap<>();
 ```
+
+#### Target Types
+emptyList returns a value of type List<T>, the compiler infers that the type argument <T> must be the value String
+
+```java
+List<String> list = Collections.<String>emptyList();
+// target type inference
+List<String> list = Collections.emptyList();
+```
+
+### Generics, Inheritance, and Subtypes
+```java
+Box<Number> box = new Box<Number>();
+box.add(new Integer(10));   // OK
+box.add(new Double(10.1));  // OK
+```
+
+```java
+public void boxTest(Box<Number> n) {
+  // ...
+}
+```
+
+<img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
+
+> Given two concrete types A and B (for example, Number and Integer), MyClass<A> has no relationship to MyClass<B>, regardless of whether or not A and B are related
 
 ### Type wildcards
 The question mark (?), called the wildcard, represents an unknown type
@@ -168,7 +194,7 @@ public static <E> void append(List<E> list, Class<E> cls) throws Exception {
 }
 ```
 
-### Cannot Declare Static Fields Whose Types are Type Parameters
+#### Cannot Declare Static Fields Whose Types are Type Parameters
 ```java
 public class MobileDevice<T> {
     private static T os;
@@ -182,7 +208,7 @@ MobileDevice<TabletPC> pc = new MobileDevice<>();
 ```
 static field represents class-level variables shared by all objects of the class. It can't have different types at the same time
 
-### Cannot Use Casts or instanceof with Parameterized Types
+#### Cannot Use Casts or instanceof with Parameterized Types
 The Java compiler erases all type parameters in generic code in compile-time, you cannot verify which parameterized type for a generic type is being used at runtime:
 
 ```java
@@ -193,7 +219,7 @@ public static <E> void rtti(List<E> list) {
 }
 ```
 
-### Cannot Create Arrays of Parameterized Types
+#### Cannot Create Arrays of Parameterized Types
 ```java
 List<Integer>[] arrayOfLists = new List<Integer>[2];  // compile-time error
 ```
