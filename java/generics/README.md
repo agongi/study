@@ -143,7 +143,7 @@ public void boxTest(Box<Number> n) {
 
 <img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
 
-> Given two concrete types A and B (for example, Number and Integer), MyClass<A> has no relationship to MyClass<B>, regardless of whether or not A and B are related
+> Given two concrete types A and B (for example, Number and Integer), MyClass<A> has no relationship to MyClass<B> regardless of whether or not A and B are related
 
 ### Type wildcards
 The question mark (?), called the wildcard, represents an unknown type
