@@ -190,3 +190,56 @@ enum Color {
 > Class initialization invokes static block first, and static fields in textual order
 
 > Enum should define enum values at top in class
+
+#### Abstract Methods
+```java
+public enum GameCharacterTypes {
+
+    ARCHER {
+        @Override
+        public double attack() {
+            return new Random().nextInt(20);
+        }
+    },
+    WIZARD {
+        @Override
+        public double attack() {
+            return new Random().nextInt(30);
+        }
+    },
+    KNIGHT {
+        @Override
+        public double attack() {
+            return new Random().nextInt(40);
+        }
+    };
+
+    // calculates damage related to character type
+    public abstract double attack();
+}
+```
+
+#### Implements Interface
+```java
+public interface Price {
+    public double price();
+}
+
+public enum Books implements Price {
+    HARRY_POTTER (12.99),
+    THE_SOULFORGE (12.11),
+    GAME_OF_THRONES (10.00),
+    DRAGONLANCE (6.77);
+
+    private final double price;
+
+    Books(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public double price() {
+        return this.price;
+    }
+}
+```
