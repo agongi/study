@@ -1,7 +1,6 @@
 ### WEB/WAS
 - [Apache](https://github.com/agongi/study/tree/master/apache/)
 - [Tomcat](https://github.com/agongi/study/tree/master/tomcat/)
-- Nginx
 
 ### Framework
 - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
@@ -12,12 +11,15 @@
 - Netty
 
 ### Dev
-- [Java](https://github.com/agongi/study/tree/master/java/)
-- [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
-- [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
-- Angular.js
-- React
-- RxJava
+- BE
+  - [Java](https://github.com/agongi/study/tree/master/java/)
+  - [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
+  - JPA
+  - RxJava
+- FE
+  - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
+  - Angular.js
+  - ~~[React](https://steemit.com/kr-dev/@heejin/facebook-react) @Deprecated~~
 
 ### Protocol
 - [HTTP](https://github.com/agongi/study/tree/master/http/)
@@ -43,8 +45,7 @@
 ### RDB/NoSQL
 - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
 - [Mybatis](https://github.com/agongi/study/tree/master/mybatis/)
-- JPA
-- [Redis](#)
+- Redis
 
 ### Architect Design
 - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)

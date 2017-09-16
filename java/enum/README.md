@@ -229,7 +229,8 @@ public enum Books implements Price {
     HARRY_POTTER (12.99),
     THE_SOULFORGE (12.11),
     GAME_OF_THRONES (10.00),
-    DRAGONLANCE (6.77);
+    DRAGONLANCE (6.77),
+    ;
 
     private final double price;
 
