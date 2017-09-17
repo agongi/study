@@ -15,6 +15,7 @@
   - [Java](https://github.com/agongi/study/tree/master/java/)
   - [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
   - JPA
+  - [Mybatis](https://github.com/agongi/study/tree/master/mybatis/)
   - RxJava
 - FE
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
@@ -44,7 +45,6 @@
 
 ### RDB/NoSQL
 - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
-- [Mybatis](https://github.com/agongi/study/tree/master/mybatis/)
 - Redis
 
 ### Architect Design
