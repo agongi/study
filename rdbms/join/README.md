@@ -109,7 +109,7 @@ on demo_people.pid = demo_property.pid;
 
 ### [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
 #### Nested Loops
-<img src="images/Screen%20Shot%202017-07-23%20at%2023.21.34.png" width="75%">
+<img src=images/Screen%20Shot%202017-09-19%20at%2002.02.14.png" width="75%">
 
 - 선행 테이블을 기준으로, 후행 테이블을 랜덤 액세스 하며 조인
   - 선행(Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
@@ -125,7 +125,7 @@ and b.deptno = a.deptno
 ```
 
 #### Sort Merge
-<img src="images/Screen%20Shot%202017-07-23%20at%2023.23.40.png" width="75%">
+<img src="images/Screen%20Shot%202017-09-19%20at%2002.11.14.png" width="75%">
 
 - 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
   - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율적
