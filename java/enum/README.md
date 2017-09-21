@@ -193,36 +193,49 @@ enum Color {
 
 #### Abstract Methods
 ```java
-public enum GameCharacterTypes {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public static class AlphabetVO {
+    private String name;
+    private Integer id;
+}
 
-    ARCHER {
+
+@Getter
+public enum AlphabetType {
+    A("A", 1) {
         @Override
-        public double attack() {
-            return new Random().nextInt(20);
+        public AlphabetVO getAlphabet() {
+            return new AlphabetVO(this.name, this.id);
         }
     },
-    WIZARD {
+    B("B", 2) {
         @Override
-        public double attack() {
-            return new Random().nextInt(30);
+        public AlphabetVO getAlphabet() {
+            return new AlphabetVO(this.name, this.id);
         }
     },
-    KNIGHT {
+    C("C", 3) {
         @Override
-        public double attack() {
-            return new Random().nextInt(40);
+        public AlphabetVO getAlphabet() {
+            return new AlphabetVO(this.name, this.id);
         }
-    };
+    },
+    ;
 
-    // calculates damage related to character type
-    public abstract double attack();
+    private String name;
+    private Integer id;
+
+    abstract public AlphabetVO getAlphabet();
 }
 ```
 
 #### Implements Interface
 ```java
 public interface Price {
-    public double price();
+    public double getPrice();
 }
 
 public enum Books implements Price {
@@ -239,7 +252,7 @@ public enum Books implements Price {
     }
 
     @Override
-    public double price() {
+    public double getPrice() {
         return this.price;
     }
 }
