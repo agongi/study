@@ -8,9 +8,9 @@
 ```
 
 ### Index
-- [#{...} vs ${...}](https://github.com/agongi/study/tree/master/orm/mybatis/%23-%24)
-- [ResultMap](https://github.com/agongi/study/tree/master/orm/mybatis/resultMap/)
-- [Selectkey](https://github.com/agongi/study/tree/master/orm/mybatis/selectkey/)
+- [#{...} vs ${...}](%23-%24)
+- [ResultMap](resultMap)
+- [Selectkey](selectkey)
 - [TypeHandler](http://www.mybatis.org/mybatis-3/configuration.html#typeHandlers)
-- [Dynamic SQL](https://github.com/agongi/study/tree/master/orm/mybatis/dynamic-sql/)
-- [ON DUPLICATE KEY UPDATE](https://github.com/agongi/study/tree/master/orm/mybatis/on-duplicate-key-update/)
+- [Dynamic SQL](dynamic-sql)
+- [ON DUPLICATE KEY UPDATE](on-duplicate-key-update)
