@@ -23,6 +23,7 @@
   - ~~[React](https://steemit.com/kr-dev/@heejin/facebook-react) @Deprecated~~
 - DB
   - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
+  - [ORM](https://github.com/agongi/study/tree/master/orm/)
   - Redis
 
 ### Protocol

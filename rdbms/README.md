@@ -3,11 +3,9 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2017.03.11
-ㅁ Origin:
-  - Real MySQL
 ㅁ References:
-  - https://dev.mysql.com/doc/refman/5.7/en
-  - https://dev.mysql.com/doc/refman/5.7/en/glossary.html
+- https://dev.mysql.com/doc/refman/5.7/en
+- https://dev.mysql.com/doc/refman/5.7/en/glossary.html
 ```
 
 ### Index
