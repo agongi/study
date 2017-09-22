@@ -7,7 +7,6 @@
 - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
 - Spring Batch
 - Spring Security
-- [Spring Data](https://github.com/agongi/study/tree/master/spring-data/)
 - Netty
 
 ### Dev

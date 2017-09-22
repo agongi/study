@@ -5,16 +5,14 @@
 ㅁ Date: 2017.09.23
 ```
 
-### JPA
+### [JPA](jpa)
+Java Persistence API
 
-
-### Hibernate
+### [Hibernate](hibernate)
 
 
 ### [MyBatis](mybatis)
 SQL Mapper
-
-### QueryDSL
 
 #### Blog
 - [MyBatis vs Hibernate - JPA](https://www.javaworld.com/article/2077875/open-source-tools/ibatis--hibernate--and-jpa--which-is-right-for-you-.html)
