@@ -7,7 +7,7 @@
 - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
 - Spring Batch
 - Spring Security
-- [Spring Data JPA](https://github.com/agongi/study/tree/master/spring-data-jpa/)
+- [Spring Data](https://github.com/agongi/study/tree/master/spring-data/)
 - Netty
 
 ### Dev
@@ -21,6 +21,9 @@
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
   - Angular.js
   - ~~[React](https://steemit.com/kr-dev/@heejin/facebook-react) @Deprecated~~
+- DB
+  - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
+  - Redis
 
 ### Protocol
 - [HTTP](https://github.com/agongi/study/tree/master/http/)
@@ -42,10 +45,6 @@
 - [PFS (Perfect Forward Secrecy)](https://github.com/agongi/study/tree/master/pfs/)
 - [E2EE (End-to-End Encryption)](https://github.com/agongi/study/tree/master/e2ee/)
 - OCSP Stapling
-
-### RDB/NoSQL
-- [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
-- Redis
 
 ### Architect Design
 - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)

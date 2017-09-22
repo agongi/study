@@ -1,4 +1,4 @@
-## Spring Data JPA
+## Spring Data
 
 ```
 ㅁ Author: suktae.choi
