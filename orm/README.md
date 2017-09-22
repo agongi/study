@@ -3,8 +3,6 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ Date: 2017.09.23
-ㅁ References:
-- https://dev.mysql.com/doc/refman/5.7/en
 ```
 
 ### JPA
@@ -12,7 +10,9 @@
 
 ### Hibernate
 
-### MyBatis
+
+### [MyBatis](mybatis)
+SQL Mapper
 
 ### QueryDSL
 
