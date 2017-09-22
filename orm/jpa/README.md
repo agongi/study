@@ -8,5 +8,7 @@
 ```
 
 ### Index
+- HQL
+- JPQL
 - Spring Data JPA
 - QueryDSL
