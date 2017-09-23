@@ -18,7 +18,7 @@
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
   - Angular.js
   - ~~[React](https://steemit.com/kr-dev/@heejin/facebook-react) @Deprecated~~
-- DB
+- Persistence
   - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
   - [ORM](https://github.com/agongi/study/tree/master/orm/)
   - Redis

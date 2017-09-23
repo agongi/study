@@ -8,9 +8,6 @@
 ### [JPA](jpa)
 Java Persistence API, just a specification
 
-### [Hibernate](hibernate)
-Implementation of JPA, provides the under the hood functionality
-
 ### [MyBatis](mybatis)
 SQL Mapper
 
