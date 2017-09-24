@@ -11,7 +11,7 @@
 ```java
 // Spring will generate Impl class
 public interface UserRepository extends JpaRepository<User, Long> {
-  // nothing ..
+  // method name queries
 }
 ```
 
@@ -25,12 +25,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 String jpql = "select m from Member as m where m.student_number = '0991022'";
 Member member = entityManager.createQuery(jpql, Member.class).getMember();
 ```
-
-> 고려할점
-
-- 묵시적 JOIN
-  - @OneToMapy : 기본값=지연로딩(LAZY)
-  - @ManyToOne : 기본값=즉시로딩(EAGER)=> Order 정보 이외에 N : 1 관계에 있는 Entity를 묵시적으로 로딩해 와서 지연이 된 사례
 
 > 쉽게 사용하기위한 Builder Patterns
 

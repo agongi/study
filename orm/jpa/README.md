@@ -8,9 +8,11 @@
 
 ### Index
 - [Object-Oriented Query Language](object-oriented-query-language)
+- [FetchType.LAZY vs EAGER](lazy-eager)
+- [QueryDSL](http://www.querydsl.com/static/querydsl/4.0.0/reference/ko-KR/html_single/)
+- [Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
 
-### JPA
-TBD
+### Basic
 
 ```java
 @Repository
