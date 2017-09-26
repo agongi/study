@@ -30,6 +30,7 @@
 
 ### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
+- [Publish and Listen Application Events](https://howtodoinjava.com/spring/spring-core/how-to-publish-and-listen-application-events-in-spring/)
 - [Creating Asynchronous Methods](https://spring.io/guides/gs/async-method/)
 - [Using custom arguments in controller](https://sdqali.in/blog/2016/01/29/using-custom-arguments-in-spring-mvc-controllers/)
 - [Field Dependency Injection Considered Harmful](http://vojtechruzicka.com/field-dependency-injection-considered-harmful/)

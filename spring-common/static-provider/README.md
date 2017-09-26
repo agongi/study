@@ -21,7 +21,6 @@
  */
 @Slf4j
 @Component
-@ToString
 public class RedisTypeProvider implements ApplicationContextAware, EmbeddedValueResolverAware {
 
     @Value("${deploy.phase}")
