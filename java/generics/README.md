@@ -7,7 +7,10 @@
 ㅁ References:
 - https://docs.oracle.com/javase/tutorial/java/generics/index.html
 - https://stackoverflow.com/questions/745756/java-generics-wildcarding-with-multiple-classes
+- https://stackoverflow.com/questions/5207115/java-generics-t-vs-object
 - http://ohgyun.com/51
+- https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card
+- https://stackoverflow.com/questions/5207115/java-generics-t-vs-object
 ```
 
 ### Motivation
@@ -165,6 +168,14 @@ List<? super Custom>
 ```
 
 - ? is supertypes of Custom
+
+#### Object vs Class<?>
+<?> is a shorthand for <? extends Object>
+
+- ?는 알 수 없는 타입
+- <?> : 모든 객체 자료형, 내부적으로는 Object로 인식
+- <? super 객체자료형> : 명시된 객체자료형의 상위 객체, 내부적으로는 Object로 인식
+- <? extends 객체자료형> : 명시된 객체 자료형을 상속한 하위객체, 내부적으로는 명시된 객체 자료형으로 인식
 
 ### Restrictions on Generics
 #### Cannot Instantiate Generic Types with Primitive Types
