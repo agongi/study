@@ -8,9 +8,8 @@
 - https://docs.oracle.com/javase/tutorial/java/generics/index.html
 - https://stackoverflow.com/questions/745756/java-generics-wildcarding-with-multiple-classes
 - https://stackoverflow.com/questions/5207115/java-generics-t-vs-object
-- http://ohgyun.com/51
 - https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card
-- https://stackoverflow.com/questions/5207115/java-generics-t-vs-object
+- http://ohgyun.com/51
 ```
 
 ### Motivation
