@@ -1,5 +1,5 @@
 ## FactoryBean
-Using FactoryBeans to create the `uncreatable`.
+Create the `uncreatable`.
 
 ```
 ㅁ Author: suktae.choi
@@ -58,7 +58,7 @@ public class JacksonFactory {
  /**
   * @author suktae.choi
   */
- public class JacksonFactoryBean implements ApplicationContextAware, FactoryBean<JacksonBean>, InitializingBean {
+ public class JacksonFactoryBean implements FactoryBean<JacksonBean> {
      private ApplicationContext applicationContext;
      private JacksonBean jacksonBean;
 
@@ -83,16 +83,6 @@ public class JacksonFactory {
      @Override
      public boolean isSingleton() {
          return true;
-     }
-
-     @Override
-     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-         this.applicationContext = applicationContext;
-     }
-
-     @Override
-     public void afterPropertiesSet() throws Exception {
-         // initialize
      }
  }
 ```

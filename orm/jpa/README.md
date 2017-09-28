@@ -10,10 +10,10 @@
 - [Object-Oriented Query Language](object-oriented-query-language)
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [QueryDSL](http://www.querydsl.com/static/querydsl/4.0.0/reference/ko-KR/html_single/)
+  - [extra](https://doohwan-yoo.github.io/querydsl/)
 - [Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
 
 ### Basic
-
 ```java
 @Repository
 public class UserRepository {
