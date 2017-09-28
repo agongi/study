@@ -174,7 +174,7 @@ enum Color {
 // *************************************************************************
 enum Color {
   RED, GREEN, BLUE;
-  static final Map<String,Color> colorMap;
+  private static final Map<String,Color> colorMap;
 
   static {
     HashMap<String, Color> map = new HashMap<>();
@@ -202,25 +202,24 @@ public static class AlphabetVO {
     private Integer id;
 }
 
-
 @Getter
 public enum AlphabetType {
     A("A", 1) {
         @Override
         public AlphabetVO getAlphabet() {
-            return new AlphabetVO(this.name, this.id);
+            return new AlphabetVO(getName(), getId());
         }
     },
     B("B", 2) {
         @Override
         public AlphabetVO getAlphabet() {
-            return new AlphabetVO(this.name, this.id);
+            return new AlphabetVO(getName(), getId());
         }
     },
     C("C", 3) {
         @Override
         public AlphabetVO getAlphabet() {
-            return new AlphabetVO(this.name, this.id);
+            return new AlphabetVO(getName(), getId());
         }
     },
     ;
@@ -255,5 +254,44 @@ public enum Books implements Price {
     public double getPrice() {
         return this.price;
     }
+}
+```
+
+#### Enum Group
+```java
+interface EnumGroup<E extends Enum<E>> {
+    EnumSet<E> getGroup();
+}
+
+@Getter
+public enum AlphabetType {
+    A("A", 1),
+    B("B", 2),
+    C("C", 3),
+    X("X", 24),
+    ;
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    private enum Group implements EnumGroup<AlphabetType> {
+        HEAD(EnumSet.of(A, B, C)),
+        TAIL(EnumSet.of(X)),
+        ;
+
+        private EnumSet group;
+
+        @Override
+        public EnumSet<AlphabetType> getGroup() {
+            return group;
+        }
+    }
+
+    private String name;
+    private Integer id;
+    }
+}
+
+public static void main(String[] args) {
+    EnumSet<AlphabetType> set = AlphabetType.Group.HEAD.getGroup();
+    log.info("group.HEAD: {}", set);
 }
 ```
