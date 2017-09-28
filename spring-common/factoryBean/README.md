@@ -1,5 +1,5 @@
 ## FactoryBean
-Create the `uncreatable`.
+Create the `uncreatable`
 
 ```
 ㅁ Author: suktae.choi
