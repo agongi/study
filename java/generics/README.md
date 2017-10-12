@@ -13,16 +13,12 @@
 ```
 
 ### Motivation
-- `java.lang.ClassCastException` check in compile-time
-- Elimination of casts
+- Prevent `java.lang.ClassCastException` in runtime
+- No more casting
 
 ### Generic Types
-#### Raw Types
+#### Type Parameters
 ```java
-/**
- * Generic class or interface without any type arguments
- * @param <T> the type of the value being boxed
- */
 public class Box<T> {
     // T stands for "Type"
     private T t;
@@ -32,9 +28,8 @@ public class Box<T> {
 }
 ```
 
-> A type variable T can be any **non-primitive** type
+> Naming Conventions
 
-#### Naming Conventions
 - E - Element (used extensively by the Java Collections Framework)
 - K - Key
 - V - Value
@@ -42,66 +37,27 @@ public class Box<T> {
 - T - Type
 - S, U, V etc., - 2nd, 3rd, 4th types
 
-### Generic Methods
-This is similar to declaring a generic type, but the type parameter's **scope is limited to the method** where it is declared
+Type variables can only be **non-primitive** type
 
-```java
-public class Util {
-    public static <K, V> boolean compare(Pair<K, V> p1, Pair<K, V> p2) {
-        return p1.getKey().equals(p2.getKey()) &&
-               p1.getValue().equals(p2.getValue());
-    }
-}
-
-public class Pair<K, V> {
-
-    private K key;
-    private V value;
-
-    public Pair(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public void setKey(K key) { this.key = key; }
-    public void setValue(V value) { this.value = value; }
-    public K getKey()   { return key; }
-    public V getValue() { return value; }
-}
-```
-
-> Generic methods need to addressed **before method return type**
-
-### Bounded Type Parameters
+#### Bounded Type Parameters
 It can restrict the types to only accept instances of Number or its subclasses. The syntax `extends` is used to make sense to mean either "extends" (as in classes) or "implements" (as in interfaces)
 
 ```java
 public class Box<T> {
-
-    private T t;          
-
-    public void set(T t) {
-        this.t = t;
-    }
-
-    public T get() {
-        return t;
-    }
-
-    public <U extends Number> void inspect(U u){
-        System.out.println("T: " + t.getClass().getName());
-        System.out.println("U: " + u.getClass().getName());
+    public <E extends Number> void inspect(E e){
+        // ...
     }
 
     public static void main(String[] args) {
-        Box<Integer> integerBox = new Box<Integer>();
-        integerBox.set(new Integer(10));
-        integerBox.inspect("some text");  // error: this is still String!
+        Box<Integer> integerBox = new Box<Integer>();        
+        integerBox.inspect("some text");  // compile-error
     }
 }
 ```
 
-#### Multiple Bounds
+> Multiple Bounds
+
+If one of the bounds is a class, it must be specified first
 ```java
 Class A { /* ... */ }
 interface B { /* ... */ }
@@ -111,39 +67,10 @@ interface C { /* ... */ }
 <T extends B & A & C>  // fail, B is interface
 ```
 
-> If one of the bounds is a class, it must be specified first
-
-### Type Inference
-#### Instantiation of Generic Classes
-```java
-Map<String, List<String>> myMap = new HashMap<String, List<String>>();
-// type inferred
-Map<String, List<String>> myMap = new HashMap<>();
-```
-
-#### Target Types
-emptyList returns a value of type List<T>, the compiler infers that the type argument <T> must be the value String
-
-```java
-List<String> list = Collections.<String>emptyList();
-// target type inference
-List<String> list = Collections.emptyList();
-```
-
 ### Generics, Inheritance, and Subtypes
-```java
-Box<Number> box = new Box<Number>();
-box.add(new Integer(10));   // OK
-box.add(new Double(10.1));  // OK
-```
-
 <img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
 
-> Given two concrete types A and B (for example, Number and Integer), MyClass\<A\> has no relationship to MyClass\<B\> regardless of whether or not A and B are related
-
-### Type wildcards
-The question mark (?), called the wildcard, represents an unknown type
-
+### Wildcards
 #### Unbounded Wildcards
 ```java
 List<?> list
@@ -168,13 +95,38 @@ List<? super Custom>
 
 - ? is supertypes of Custom
 
-#### Object vs Class<?>
-<?> is a shorthand for <? extends Object>
+#### [Object vs Class<?>](https://stackoverflow.com/questions/5207115/java-generics-t-vs-object)
+<T> is generic which is getting value without casting but Object MUST be with casting
 
-- ?는 알 수 없는 타입
-- <?> : 모든 객체 자료형, 내부적으로는 Object로 인식
-- <? super 객체자료형> : 명시된 객체자료형의 상위 객체, 내부적으로는 Object로 인식
-- <? extends 객체자료형> : 명시된 객체 자료형을 상속한 하위객체, 내부적으로는 명시된 객체 자료형으로 인식
+#### <?> vs <T>
+Use ? if it is used once, but T if this is reusable
+
+### Generic Methods
+```java
+public class CompareUtils {
+    public static <K, V> boolean comparePair(Pair<K, V> p1, Pair<K, V> p2) {
+        return p1.getKey().equals(p2.getKey()) &&
+               p1.getValue().equals(p2.getValue());
+    }
+}
+```
+
+### Type Inference
+#### Instantiation of Generic Classes
+```java
+Map<String, List<String>> myMap = new HashMap<String, List<String>>();
+// type inferred
+Map<String, List<String>> myMap = new HashMap<>();
+```
+
+#### Target Types
+emptyList returns a value of type List<T>, the compiler infers that the type argument <T> must be the value String
+
+```java
+List<String> list = Collections.<String>emptyList();
+// target type inference
+List<String> list = Collections.emptyList();
+```
 
 ### Restrictions on Generics
 #### Cannot Instantiate Generic Types with Primitive Types
@@ -190,7 +142,7 @@ public static <E> void append(List<E> list) {
 }
 ```
 
-As a workaround, you can create an object of a type parameter through reflection:
+As a workaround, you can create an object of a type parameter through reflection :
 ```java
 public static <E> void append(List<E> list, Class<E> cls) throws Exception {
     E elem = cls.newInstance();   // OK
