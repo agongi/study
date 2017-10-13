@@ -9,6 +9,7 @@
 - https://stackoverflow.com/questions/745756/java-generics-wildcarding-with-multiple-classes
 - https://stackoverflow.com/questions/5207115/java-generics-t-vs-object
 - https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card
+- https://stackoverflow.com/questions/24391123/object-vs-classt-vs-class-in-java
 - http://ohgyun.com/51
 ```
 
@@ -95,10 +96,36 @@ List<? super Custom>
 
 - ? is supertypes of Custom
 
-#### [Object vs Class<?>](https://stackoverflow.com/questions/5207115/java-generics-t-vs-object)
-<T> is generic which is getting value without casting but Object MUST be with casting
+#### [Object vs Class<?>](https://stackoverflow.com/questions/24391123/object-vs-classt-vs-class-in-java)
+```java
+private class SimpleClass {
+    private Integer keyboard;
+    private String mouse;
+}
 
-#### <?> vs <T>
+
+@Test
+public void test2() {
+    SimpleClass simpleClass = new SimpleClass();
+    // param Object
+    doWithObject(simpleClass);
+
+    // param Class<?>
+    doWithClass(SimpleClass.class);
+    doWithClass(simpleClass.getClass());
+
+}
+
+private void doWithObject(Object obj) {
+    System.out.println(obj.getClass().getSimpleName());
+}
+
+private void doWithClass(Class<?> clz) {
+    System.out.println(clz.getSimpleName());
+}
+```
+
+#### \<?> vs \<T>
 Use ? if it is used once, but T if this is reusable
 
 ### Generic Methods
