@@ -26,6 +26,8 @@ public class UserRepository {
 }
 ```
 
+<img src="images/Screen%20Shot%202017-10-14%20at%2018.37.01.png" width="75%">
+
 ### Draft - 용어정리
 JPA는 Java Persistence API (표준)
 
