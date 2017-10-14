@@ -25,3 +25,18 @@ public class UserRepository {
   }
 }
 ```
+
+### Draft - 용어정리
+JPA는 Java Persistence API (표준)
+
+Hibernate 는 JPA 의 구현체
+
+Join 이나 복잡한 관계는 JPA 로 힘듬, 그래서 Query 를 작성해야 하는데..
+- JPQL (Java Persistence Query Language) / HQL (Hibernate Query Language)
+  - JPA 에서 제공하지만, 매우 복잡함
+- Criteria
+  - JPA 에서 제공하지만, 비슷하게 복잡함
+- QueryDSL
+  - 그나마 쓸만함
+
+Spring-Data-JPA 는 단순하게 반족되는 CRUD Repository 및 Query 작성을 자동으로 지원
