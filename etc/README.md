@@ -1,5 +1,4 @@
 ## ETC
-Temp Page
 
 ```
 ㅁ Author: suktae.choi

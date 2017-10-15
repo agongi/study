@@ -14,6 +14,7 @@
   - [Java](https://github.com/agongi/study/tree/master/java/)
   - [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
   - RxJava
+  - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)
 - FE
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
   - Angular.js
@@ -44,9 +45,6 @@
 - [E2EE (End-to-End Encryption)](https://github.com/agongi/study/tree/master/e2ee/)
 - OCSP Stapling
 
-### Architect Design
-- [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)
-
-### Seminar / Interview / etc,
+### Miscellaneous
 - [Book](https://github.com/agongi/study/tree/master/book/)
 - [ETC](https://github.com/agongi/study/tree/master/etc/)
