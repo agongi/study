@@ -2,7 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.03 ~
+ㅁ Date: 2016.08.03
 ㅁ References:
 - http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
 - https://blog.outsider.ne.kr/902

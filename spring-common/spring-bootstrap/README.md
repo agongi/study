@@ -11,13 +11,8 @@
  - http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/SpringServletContainerInitializer.html
 ```
 
-### 1. XML-based approach
-SpringContext and bean definitions are declared in web.xml and each of config files.
-
- - web.xml
- - applicationContext.xml
- - api-servlet.xml
-
+### Config
+#### XML-Based
 ```xml
 <listener>
      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -43,78 +38,64 @@ SpringContext and bean definitions are declared in web.xml and each of config fi
 </servlet-mapping>
 ```
 
-#### 1.1 Java-based approach
-- main or WebApplicationInitializer implementations entry-point
-- AppConfig.java
-- DispatcherConfig.java
-
+#### Java-Based
 ```java
 public class MyWebAppInitializer implements WebApplicationInitializer {
-
    @Override
    public void onStartup(ServletContext container) {
      // Create the Spring application context
-     AnnotationConfigWebApplicationContext rootContext =
-       new AnnotationConfigWebApplicationContext();
+     AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
      rootContext.register(AppConfig.class);
 
-     // Manage the lifecycle of the root application context
      container.addListener(new ContextLoaderListener(rootContext));
 
-     // Create the dispatcher servlet's Spring application context
-     AnnotationConfigWebApplicationContext dispatcherContext =
-       new AnnotationConfigWebApplicationContext();
+     AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
      dispatcherContext.register(DispatcherConfig.class);
 
-     // Register and map the dispatcher servlet
-     ServletRegistration.Dynamic dispatcher =
-       container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
+     ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
      dispatcher.setLoadOnStartup(1);
      dispatcher.addMapping("/");
+   }
+}
+```
+
+### Bootstrap
+### By Servlet Container
+**ServletContainerInitializer** class will be loaded and instantiated and have its onStartup() method invoked by any Servlet 3.0+ container during container startup.
+```
+ServletContainerInitializer(javax) <-- SpringServletContainerInitializer <-- WebApplicationInitializer <--
+... <-- AbstractAnnotationConfigDispatcherServletInitializer
+
+@HandlesTypes(WebApplicationInitializer.class)
+```
+
+**@Interface HandlesTypes** is used to declare the class types that a ServletContainerInitializer can handle, Servlet 3.0+ containers will automatically scan the classpath for implementations of Spring's **WebApplicationInitializer interface** and provide the set of all such types to the webAppInitializerClasses parameter of this method.
+
+```java
+public class MyWebAppInitializer implements WebApplicationInitializer {
+   @Override
+   public void onStartup(ServletContext container) {
+     AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+     rootContext.register(AppConfig.class);
    }
 }
 
 @Configuration
 public class AppConfig {
-
     @Bean
     public MyBean myBean() {
-        // instantiate, configure and return bean ...
+        return new MyBean();
     }
 }
 ```
 
-### 2. Bootstrapped by servlet-container
-**SpringServletContainerInitializer** class will be loaded and instantiated and have its onStartup() method invoked by any Servlet 3.0-compliant container during container startup.
-```
-ServletContainerInitializer <-- SpringServletContainerInitializer
-
-@HandlesTypes(WebApplicationInitializer.class)
-```
-
-**@interface HandlesTypes** is used to declare the class types that a ServletContainerInitializer can handle, Servlet 3.0+ containers will automatically scan the classpath for implementations of Spring's **WebApplicationInitializer interface** and provide the set of all such types to the webAppInitializerClasses parameter of this method.
-
-```java
-public class MyWebAppInitializer implements WebApplicationInitializer {
-
-   @Override
-   public void onStartup(ServletContext container) {
-     // ... some configuration
-   }
-}
-```
-
-#### 2.1 Bootstrapped by itself
-java -jar Application
-
+#### By Itself
 ```java
 public class Application {
-
   public static void main(String args[]) {
     AbstractApplicationContext container = new ClassPathXmlApplicationContext("applicationContext.xml");
 
     // ... some configuration
-
     container.registerShutdownHook();
 }
 ```
