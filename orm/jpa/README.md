@@ -40,5 +40,7 @@ Join 이나 복잡한 관계는 JPA 로 힘듬, 그래서 Query 를 작성해야
   - JPA 에서 제공하지만, 비슷하게 복잡함
 - QueryDSL
   - 그나마 쓸만함
+- @Query("select ... from ... where ...")
+  - Spring-Data 에서 제공, repository interface 에 메소드 선언하고 해당 메소드위에 @Query 어노테이션 사용하고 쿼리 직접작성
 
 Spring-Data-JPA 는 단순하게 반족되는 CRUD Repository 및 Query 작성을 자동으로 지원
