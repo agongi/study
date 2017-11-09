@@ -4,6 +4,8 @@
 ㅁ Author: suktae.choi
 ㅁ Date: 2017.09.23
 ㅁ References:
+- http://wonwoo.ml/index.php/post/828
+- http://yellowh.tistory.com/122
 ```
 
 ### Index
