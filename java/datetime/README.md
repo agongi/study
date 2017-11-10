@@ -8,11 +8,40 @@
  - http://d2.naver.com/helloworld/645609
 ```
 
-- Creation
-- Modification
-  - Plus, Minus
-  - With (set)
-- Comparison
-  - isAfter
-  - isBefore
-  - isEqual
+### DateFormatUtils
+- commons.lang3
+```java
+Date date = new Date();
+String dateString = DateFormatUtils.format(date, "yyyy-MM-dd");
+```
+- Spring
+```java
+@DateTimeFormat("yyyy-MM-dd")
+private String dateString;
+```
+
+### DateUtils
+- commons.lang3
+```java
+Date date = new Date();
+date = DateUtils.setYears(date, 2018); // set
+date = DateUtils.addMonths(date, -1); // plus, minus
+date = DateUtils.truncate(date, Calendar.MONTH); // truncate
+```
+
+### Comparison
+```java
+Date date1 = new Date();
+date1 = DateUtils.setYears(date1, 2018);
+
+Date date2 = new Date();
+
+boolean isAfter = date1.after(date2);
+log.debug("isAfter: {}", isAfter);
+
+boolean isBefore = date1.before(date2);
+log.debug("isBefore: {}", isBefore);
+
+boolean isSame = DateUtils.isSameDay(date1, date2);
+log.debug("isSame: {}", isSame);
+```
