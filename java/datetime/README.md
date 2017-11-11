@@ -8,14 +8,24 @@
  - http://d2.naver.com/helloworld/645609
 ```
 
-### DateFormatUtils
-- commons.lang3
+### ToString(), ToDate()
 ```java
+// ToString()
 Date date = new Date();
 String dateString = DateFormatUtils.format(date, "yyyy-MM-dd");
-```
-- Spring
-```java
+log.debug("dateString: {}", dateString);
+
+////////////////////////////////////////////////////////////////////
+
+// toDate()
+String now = "2018-10-01";
+Date date = DateUtils.parseDate(now, "yyyy-MM-dd");
+
+log.debug("date: {}", date);
+
+////////////////////////////////////////////////////////////////////
+
+// toString() with Spring support
 @DateTimeFormat("yyyy-MM-dd")
 private String dateString;
 ```
