@@ -22,6 +22,8 @@
  - http://initproc.tistory.com/entry/G1-Garbage-Collection
 ```
 
+<img src="images/687474703a2f2f6366696c65352e75662e746973746f72792e636f6d2f696d6167652f32313242383434453536364433313843324633374133.png" width="75%">
+
 ### CMS (Serial, Parallel) Garbage Collection
 <img src="images/Screen%20Shot%202017-08-15%20at%2003.02.19.png" width="75%">
 
@@ -102,6 +104,8 @@ Old GC 를 통해 필요한 Memory 를 확보하지 못하면, Full GC 수행
 
 - Single Thread
 - STW
+
+> 최대한 Young, Old 로 버티면서 Full GC 횟수를 줄이는 방식이지만, 한번 Full GC 가 발생하면 STW 가 길다
 
 ### Changes in JDK 8
 JDK 8 에서 변경된 점
