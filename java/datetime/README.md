@@ -13,15 +13,12 @@
 // ToString()
 Date date = new Date();
 String dateString = DateFormatUtils.format(date, "yyyy-MM-dd");
-log.debug("dateString: {}", dateString);
 
 ////////////////////////////////////////////////////////////////////
 
 // toDate()
 String now = "2018-10-01";
 Date date = DateUtils.parseDate(now, "yyyy-MM-dd");
-
-log.debug("date: {}", date);
 
 ////////////////////////////////////////////////////////////////////
 
