@@ -7,6 +7,7 @@
 - http://rapapa.net/?p=311
 - http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
 - http://www.jidum.com/jidums/view.do?jidumId=167
+- http://wiki.gurubee.net/pages/viewpage.action?pageId=26744652
 ```
 
 <img src="images/Screen%20Shot%202017-07-23%20at%2012.38.04.png" width="75%">
@@ -53,7 +54,7 @@ on demo_people.pid = demo_property.pid;
 +———–+————–+———————-+
 ```
 
-#### Left Join
+#### Left Outer Join (== Left Join)
 All left table's row must present and fill-out with right table's column
 
 ```sql
@@ -72,7 +73,7 @@ on demo_people.pid = demo_property.pid;
 +————+————–+———————-+
 ```
 
-#### Right Join
+#### Right Outer Join (== Right Join)
 All right table's row must present and fill-out with left table's column
 
 ```sql
