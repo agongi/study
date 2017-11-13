@@ -151,3 +151,49 @@ from dept a, emp b
 where a.deptno = b.deptno
 and a.deptno between 10 and 20;
 ```
+
+### Union vs Join
+```sql
+Table1 (1, 2, 3, 4)
+Table2 (3, 4, 5, 6)
+```
+
+- Union
+```sql
+Table1 UNION Table2
+
+id
+---
+1
+2
+3
+4
+3
+4
+5
+6
+```
+
+- Outer Join
+```sql
+Table1 t1 OUTER JOIN Table2 t2 ON t1.id = t2.id
+
+id    id
+---------
+1    NULL
+2    NULL
+3     3
+4     4
+NULL  5
+NULL  6
+```
+
+- Inner Join
+```sql
+Table1 t1 INNER JOIN Table2 t2 ON t1.id = t2.id
+
+id    id
+---------
+3     3
+4     4
+```
