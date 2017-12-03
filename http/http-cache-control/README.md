@@ -19,6 +19,7 @@ Cache is or about to be expired, It is needed to be verified
 - If-None-Match (HTTP/1.1)
   - Etag (Hash)
 
+#### Flow
 ----->
 - If-None-Match (or Last-Modified-Since)
 
@@ -32,10 +33,11 @@ Cache is or about to be expired, It is needed to be verified
 #### Freshness
 TTL is still alive, It will be used
 
-- Expires
+- Expires (HTTP/1.0)
   - Date
-- Cache-Control
+- Cache-Control (HTTP/1.1)
   - max-age: seconds
 
+#### Flow
 ------><------
 - Cache is valid, It is reused except request
