@@ -1,7 +1,4 @@
 ## Java ByteBuffer
-Java quick-reference of handling ByteBuffer.
-
-> **String** `can be converted to Byte[]` provided in java.nio package; **ByteBuffer** `is the wrapper of byte[]` for easy using, providing better method for handling I/O operations.
 
 ```
 ㅁ Author: suktae.choi
@@ -14,42 +11,59 @@ Java quick-reference of handling ByteBuffer.
  - http://darksilber.tistory.com/entry/ByteBuffer-%EB%B0%94%EC%9D%B4%ED%8A%B8%EB%B2%84%ED%8D%BC
 ```
 
-### Flow that could be transformed
-```
-String <===> byte[] <===> ByteBuffer (non-direct)
+<img src="images/" width="75%">
+
+- Non-direct
+  - system_call()
+  - I/O
+  - copy to kernel memory via DMA (CPU non-intensive)
+  - **copy to heap**
+  - CRUD heap data
+- Direct
+  - system_call()
+  - I/O
+  - copy to kernel
+  - CRUD kernel memory data
+
+<img src="images/" width="75%">
+
+```java
+// heap access (Non-direct)
+ByteBuffer buff = ByteBuffer.allocate(10);
+// kernel access (Direct)
+ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
 ```
 
-### terms
+> ByteBuffer only can access kernel buffer
+
+### Terms
 - capacity
- - physical(actual) buffer size
+  - physical buffer size
 - limit
- - limitation(logical) of buffer size
+  - limitation(logical) of buffer size
 - position
- - current starting point of read/write
- - mark
+  - current starting point of read/write
+- mark
   - set specific position for
 
 ```
 2016-10-30 23:33:27 [main] [DEBUG] com.games.io.ByteBufferTest - java.nio.HeapByteBuffer [pos=0 lim=6 cap=6]
 ```
+
+### Basic Operations
 - put()/get()
- - basic in/out I/O commands
 - flip()
- - limit = pos, pot = 0
-
- > use case: put data and ready to get
-
+  - limit = pos, pos = 0
 - clear()
- - pos = 0, limit = capacity
-
- > It doesn't delete data in buffer, just set position to 0. (clear all meta-data)
-
+  - pos = 0, limit = capacity (Initialize)
 - reset()
- - jump pos to mark (pos = mark)
+  - pos = mark (Jump position to mark)
 - remaining()
- - position에서 limit까지의 공간
+  - limit - position
 
+### Convert
 #### String to byte[]
+
 ```java
 // String to byte[]
 byte[] bytes = "suktae".getBytes();
