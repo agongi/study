@@ -11,31 +11,6 @@
  - http://darksilber.tistory.com/entry/ByteBuffer-%EB%B0%94%EC%9D%B4%ED%8A%B8%EB%B2%84%ED%8D%BC
 ```
 
-<img src="images/" width="75%">
-
-- Non-direct
-  - system_call()
-  - I/O
-  - copy to kernel memory via DMA (CPU non-intensive)
-  - **copy to heap**
-  - CRUD heap data
-- Direct
-  - system_call()
-  - I/O
-  - copy to kernel
-  - CRUD kernel memory data
-
-<img src="images/" width="75%">
-
-```java
-// heap access (Non-direct)
-ByteBuffer buff = ByteBuffer.allocate(10);
-// kernel access (Direct)
-ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
-```
-
-> ByteBuffer only can access kernel buffer
-
 ### Terms
 - capacity
   - physical buffer size
@@ -49,6 +24,33 @@ ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
 ```
 2016-10-30 23:33:27 [main] [DEBUG] com.games.io.ByteBufferTest - java.nio.HeapByteBuffer [pos=0 lim=6 cap=6]
 ```
+
+### Direct vs Non-direct
+- Non-direct
+  - system_call()
+  - I/O
+  - copy to kernel memory via DMA (CPU non-intensive)
+  - **copy to heap**
+  - CRUD heap data
+- Direct
+  - system_call()
+  - I/O
+  - copy to kernel
+  - CRUD kernel memory data
+
+<img src="images/Screen%20Shot%202017-12-12%20at%2002.41.18.png" width="75%">
+
+```java
+// heap access (Non-direct)
+ByteBuffer buff = ByteBuffer.allocate(10);
+// kernel access (Direct)
+ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
+```
+
+> ByteBuffer only can access kernel buffer
+
+<img src="images/Screen%20Shot%202017-12-12%20at%2001.42.43.png" width="75%">
+
 
 ### Basic Operations
 - put()/get()
