@@ -9,13 +9,11 @@
 - https://github.com/winterbe/java8-tutorial
 ```
 
-### Design Pattern
-- [Factory Pattern](https://github.com/agongi/study/tree/master/java/factory-pattern/)
-- [Singleton Pattern](https://github.com/agongi/study/tree/master/java/singleton-pattern/)
-- [Builder Pattern](https://github.com/agongi/study/tree/master/java/builder-pattern/)
-- [Observer Pattern](https://github.com/agongi/study/tree/master/java/observer-pattern/)
-- [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
-- [Double Checked Locking](https://github.com/agongi/study/tree/master/java/double-checked-locking/)
+### Java 8
+- [Stream](https://github.com/agongi/study/tree/master/java/stream/)
+- [CompletableFuture](https://github.com/agongi/study/tree/master/java/completable-future/)
+- [Closure](https://github.com/agongi/study/tree/master/java/closure/)
+- [Optional](https://github.com/agongi/study/tree/master/java/optional/)
 
 ### Index
 - [String vs StringBuilder vs StringBuffer](https://github.com/agongi/study/tree/master/java/string-stringbuilder-stringbuffer/)
@@ -49,11 +47,13 @@
 - [Number](https://github.com/agongi/study/tree/master/java/number/)
 - [Data Type](https://github.com/agongi/study/tree/master/java/data-type/)
 
-### Java 8
-- [Stream](https://github.com/agongi/study/tree/master/java/stream/)
-- [CompletableFuture](https://github.com/agongi/study/tree/master/java/completable-future/)
-- [Closure](https://github.com/agongi/study/tree/master/java/closure/)
-- [Optional](https://github.com/agongi/study/tree/master/java/optional/)
+### Design Pattern
+- [Factory Pattern](https://github.com/agongi/study/tree/master/java/factory-pattern/)
+- [Singleton Pattern](https://github.com/agongi/study/tree/master/java/singleton-pattern/)
+- [Builder Pattern](https://github.com/agongi/study/tree/master/java/builder-pattern/)
+- [Observer Pattern](https://github.com/agongi/study/tree/master/java/observer-pattern/)
+- [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
+- [Double Checked Locking](https://github.com/agongi/study/tree/master/java/double-checked-locking/)
 
 ### Blog
 - [Java Enum 활용기](http://woowabros.github.io/tools/2017/07/10/java-enum-uses.html)

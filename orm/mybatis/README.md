@@ -11,6 +11,8 @@
 - [#{...} vs ${...}](%23-%24)
 - [ResultMap](resultMap)
 - [Selectkey](selectkey)
-- [TypeHandler](http://www.mybatis.org/mybatis-3/configuration.html#typeHandlers)
 - [Dynamic SQL](dynamic-sql)
 - [ON DUPLICATE KEY UPDATE](on-duplicate-key-update)
+
+### Blog
+- [TypeHandler와 Enum 관리하기](https://www.holaxprogramming.com/2015/11/12/spring-boot-mybatis-typehandler/)

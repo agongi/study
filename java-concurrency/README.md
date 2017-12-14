@@ -22,5 +22,4 @@
 ### To do
 - Thread 종류들 table로 정리 / code 로 비교정리
 - Concurrent packages
-- Callable vs Runnable
 - [CountDownLatch vs Semaphore](https://stackoverflow.com/questions/184147/countdownlatch-vs-semaphore)
