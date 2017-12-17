@@ -13,33 +13,11 @@
 <img src="images/Screen%20Shot%202017-07-23%20at%2012.38.04.png" width="75%">
 
 ### Join Types
-```sql
-mysql> select * from demo_people;
-
-+————+————–+——+
-| name | phone | pid |
-+————+————–+——+
-| Mr Brown | 01225 708225 | 1 |
-| Miss Smith | 01225 899360 | 2 |
-| Mr Pullen | 01380 724040 | 3 |
-+————+————–+——+
-
-mysql> select * from demo_property;
-
-+——+——+————————+
-| pid | spid | selling |
-+——+——+————————+
-| 1 | 1 | Old House Farm |
-| 3 | 2 | The Willows |
-| 3 | 3 | Tall Trees |
-| 3 | 4 | The Melksham Florist |
-| 4 | 5 | Dun Roamin |
-+——+——+————————+
-```
 #### Inner Join (== Join)
 **Intersection** of both tables
 
 ```sql
+-- Explicit Inner Join
 mysql> select name, phone, selling
 from demo_people join demo_property
 on demo_people.pid = demo_property.pid;
@@ -47,15 +25,20 @@ on demo_people.pid = demo_property.pid;
 +———–+————–+———————-+
 | name | phone | selling |
 +———–+————–+———————-+
-| Mr Brown | 01225 708225 | Old House Farm |
-| Mr Pullen | 01380 724040 | The Willows |
-| Mr Pullen | 01380 724040 | Tall Trees |
-| Mr Pullen | 01380 724040 | The Melksham Florist |
+| Mr Brown | 01225 708225 | Old House Farm
+| Mr Pullen | 01380 724040 | The Willows
+| Mr Pullen | 01380 724040 | Tall Trees
+| Mr Pullen | 01380 724040 | The Melksham Florist
 +———–+————–+———————-+
+
+-- Implicit Inner Join
+mysql> select name, phone, selling
+from demo_people, demo_property
+where demo_people.pid = demo_property.pid;
 ```
 
 #### Left Outer Join (== Left Join)
-All left table's row must present and fill-out with right table's column
+All **left table's row must present** and fill-out with right table's column
 
 ```sql
 mysql> select name, phone, selling
@@ -65,16 +48,16 @@ on demo_people.pid = demo_property.pid;
 +————+————–+———————-+
 | name | phone | selling |
 +————+————–+———————-+
-| Mr Brown | 01225 708225 | Old House Farm |
-| Miss Smith | 01225 899360 | NULL |
-| Mr Pullen | 01380 724040 | The Willows |
-| Mr Pullen | 01380 724040 | Tall Trees |
-| Mr Pullen | 01380 724040 | The Melksham Florist |
+| Mr Brown | 01225 708225 | Old House Farm
+| Miss Smith | 01225 899360 | NULL
+| Mr Pullen | 01380 724040 | The Willows
+| Mr Pullen | 01380 724040 | Tall Trees
+| Mr Pullen | 01380 724040 | The Melksham Florist
 +————+————–+———————-+
 ```
 
 #### Right Outer Join (== Right Join)
-All right table's row must present and fill-out with left table's column
+All **right table's row must present** and fill-out with left table's column
 
 ```sql
 mysql> select name, phone, selling
@@ -84,28 +67,69 @@ on demo_people.pid = demo_property.pid;
 +———–+————–+———————-+
 | name | phone | selling |
 +———–+————–+———————-+
-| Mr Brown | 01225 708225 | Old House Farm |
-| Mr Pullen | 01380 724040 | The Willows |
-| Mr Pullen | 01380 724040 | Tall Trees |
-| Mr Pullen | 01380 724040 | The Melksham Florist |
-| NULL | NULL | Dun Roamin |
+| Mr Brown | 01225 708225 | Old House Farm
+| Mr Pullen | 01380 724040 | The Willows
+| Mr Pullen | 01380 724040 | Tall Trees
+| Mr Pullen | 01380 724040 | The Melksham Florist
+| NULL | NULL | Dun Roamin
 +———–+————–+———————-+
 ```
 
-#### Outer Join
-**Union** of both tables
+#### Outer Join (== Left + Right join)
+**Combination** of both right and left join
 
 ```sql
+mysql> select name, phone, selling
+from demo_people outer join demo_property
+on demo_people.pid = demo_property.pid;
+
 +———–+————–+———————-+
 | name | phone | selling |
 +———–+————–+———————-+
-| Mr Brown | 01225 708225 | Old House Farm |
-| Miss Smith | 01225 899360 | NULL |
-| Mr Pullen | 01380 724040 | The Willows |
-| Mr Pullen | 01380 724040 | Tall Trees |
-| Mr Pullen | 01380 724040 | The Melksham Florist |
-| NULL | NULL | Dun Roamin |
+| Mr Brown | 01225 708225 | Old House Farm
+| Miss Smith | 01225 899360 | NULL
+| Mr Pullen | 01380 724040 | The Willows
+| Mr Pullen | 01380 724040 | Tall Trees
+| Mr Pullen | 01380 724040 | The Melksham Florist
+| NULL | NULL | Dun Roamin
 +———–+————–+———————-+
+```
+
+#### Cross Join
+**Multiply** table A and B. The result set is N * M
+
+**Join key** clauses are **not specified** in cross join
+
+<img src="images/Screen%20Shot%202017-07-23%20at%2012.38.04.png" width="75%">
+
+```sql
+-- Explicit Inner Join
+mysql> select name, phone, selling
+from demo_people cross join demo_property
+
++———–+————–+———————-+
+| name | phone | selling |
++———–+————–+———————-+
+| Mr Brown | 01225 708225 | Old House Farm
+| Mr Brown | 01225 708225 | The Willows
+| Mr Brown | 01225 708225 | Tall Trees
+| Mr Brown | 01225 708225 | The Melksham Florist
+| Mr Brown | 01225 708225 | Dun Roamin
+| Miss Smith | 01225 899360 | Old House Farm
+| Miss Smith | 01225 899360 | The Willows
+| Miss Smith | 01225 899360 | Tall Trees
+| Miss Smith | 01225 899360 | The Melksham Florist
+| Miss Smith | 01225 899360 | Dun Roamin
+| Mr Pullen | 01380 724040 | Old House Farm
+| Mr Pullen | 01380 724040 | The Willows
+| Mr Pullen | 01380 724040 | Tall Trees
+| Mr Pullen | 01380 724040 | The Melksham Florist
+| Mr Pullen | 01380 724040 | Dun Roamin
++———–+————–+———————-+
+
+-- Implicit Inner Join
+mysql> select name, phone, selling
+from demo_people, demo_property
 ```
 
 ### [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
