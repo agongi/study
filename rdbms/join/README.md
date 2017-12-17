@@ -100,7 +100,7 @@ on demo_people.pid = demo_property.pid;
 
 **Join key** clauses are **not specified** in cross join
 
-<img src="images/Screen%20Shot%202017-07-23%20at%2012.38.04.png" width="75%">
+<img src="images/Screen%20Shot%202017-12-18%20at%2002.11.14.png" width="75%">
 
 ```sql
 -- Explicit Inner Join
