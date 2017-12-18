@@ -103,7 +103,7 @@ on demo_people.pid = demo_property.pid;
 <img src="images/Screen%20Shot%202017-12-18%20at%2002.11.14.png" width="75%">
 
 ```sql
--- Explicit Inner Join
+-- Explicit Cross Join
 mysql> select name, phone, selling
 from demo_people cross join demo_property
 
@@ -127,7 +127,7 @@ from demo_people cross join demo_property
 | Mr Pullen | 01380 724040 | Dun Roamin
 +———–+————–+———————-+
 
--- Implicit Inner Join
+-- Implicit Cross Join
 mysql> select name, phone, selling
 from demo_people, demo_property
 ```
