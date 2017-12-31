@@ -22,6 +22,12 @@ Date date = DateUtils.parseDate(now, "yyyy-MM-dd");
 
 ////////////////////////////////////////////////////////////////////
 
+// Convert() from/to String
+Date parsedDate = DateUtils.parseDate("201712", "yyyyMM");
+String appliedDate = DateFormatUtils.format(parsedDate, "yyyyMMdd");
+
+////////////////////////////////////////////////////////////////////
+
 // toString() with Spring support
 @DateTimeFormat("yyyy-MM-dd")
 private String dateString;
