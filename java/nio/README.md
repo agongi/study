@@ -1,7 +1,4 @@
 ## NIO (New Input/Output)
-TBD
-
->###### TBD
 
 ```
 ㅁ Author: suktae.choi
@@ -12,7 +9,7 @@ TBD
  - http://palpit.tistory.com/646
 ```
 
-#### 1. Channel vs Stream
+### 1. Channel vs Stream
 stream is directional (1-way)
  : read Stream
  : write Stream
@@ -20,7 +17,7 @@ stream is directional (1-way)
 channel is bi-directional (2-way)
  : read/write channel
 
-#### 2. Buffer vs Stream
+### 2. Buffer vs Stream
 stream is the model of realtime transfer
  : 1 byte in, 1 byte out
 
@@ -29,10 +26,10 @@ buffer is the mechanism of storing a mount of data before transfer
 
  > Buffer has more performance benefit rather than stream.
 
-#### 3. File I/O
+### 3. File I/O
 Path
 
-#### 4. TCP (Connection-Oriented) Blocking Channel
+### 4. TCP (Connection-Oriented) Blocking Channel
 **Server**
  - open()
  - bind()
@@ -65,10 +62,10 @@ one thread per request -> any thread in `threadPool` per request with `queue`.
 
 <img src="https://github.com/agongi/study/blob/master/java/nio/images/Screen%20Shot%202016-05-15%20at%2016.43.12.png" width="75%">
 
-#### 5. TCP (Connection-Oriented) Non-Blocking Channel
+### 5. TCP (Connection-Oriented) Non-Blocking Channel
 selector
 
-#### 6. UDP
+### 6. UDP
 **Server**​
  - open()
  - bind()​
