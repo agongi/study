@@ -5,7 +5,6 @@
 ㅁ Date: 2018.01.09
 ```
 
-### Code
 Generic EnumCode Converter
 
 ```java
@@ -33,13 +32,14 @@ public class EnumCodeConverter<T extends Enum<T> & CodeEnum> implements Attribut
 }
 ```
 
-How to use
+Extends EnumCodeConverter with argument \<T\>
 
 ```java
-public class Person {
+public enum PersonType {
   // ...
 
   @Converter(autoApply = true)
-  public static class
+  public static class PersonTypeConverter extends EnumCodeConverter<PersonType> {
+  }
 }
 ```
