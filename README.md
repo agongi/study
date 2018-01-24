@@ -18,11 +18,13 @@
 - FE
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
   - Angular.js
-  - [React](https://steemit.com/kr-dev/@heejin/facebook-react)
+  - React
 - Persistence
   - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
   - [ORM](https://github.com/agongi/study/tree/master/orm/)
   - Redis
+- Basic
+  - [Servlet](servlet)
 
 ### Protocol
 - [HTTP](https://github.com/agongi/study/tree/master/http/)
