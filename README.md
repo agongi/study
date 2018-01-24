@@ -5,7 +5,7 @@
 ### Framework
 - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
 - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
-- [Spring Batch](tree/master/spring-batch/)
+- [Spring Batch](spring-batch/)
 - Spring Security
 - Netty
 
