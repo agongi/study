@@ -5,7 +5,7 @@
 ### Framework
 - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
 - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
-- [Spring Batch](https://docs.spring.io/spring-batch/trunk/reference/htmlsingle/)
+- [Spring Batch](tree/master/spring-batch/)
 - Spring Security
 - Netty
 
@@ -18,7 +18,7 @@
 - FE
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
   - Angular.js
-  - ~~[React](https://steemit.com/kr-dev/@heejin/facebook-react) @Deprecated~~
+  - [React](https://steemit.com/kr-dev/@heejin/facebook-react)
 - Persistence
   - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
   - [ORM](https://github.com/agongi/study/tree/master/orm/)
