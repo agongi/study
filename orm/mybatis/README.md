@@ -16,3 +16,4 @@
 
 ### Blog
 - [TypeHandler와 Enum 관리하기](https://www.holaxprogramming.com/2015/11/12/spring-boot-mybatis-typehandler/)
+- [MyBatis Like 검색시 처리방법](http://fruitdev.tistory.com/60)
