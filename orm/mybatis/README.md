@@ -9,8 +9,8 @@
 
 ### Index
 - [#{...} vs ${...}](%23-%24)
-- [ResultMap](resultMap)
-- [Selectkey](selectkey)
+- [\<resultMap\>](resultMap)
+- [\<selectKey\>](selectKey)
 - [Dynamic SQL](dynamic-sql)
 - [ON DUPLICATE KEY UPDATE](on-duplicate-key-update)
 

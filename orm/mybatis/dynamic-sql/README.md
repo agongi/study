@@ -7,7 +7,7 @@
  - http://www.mybatis.org/mybatis-3/dynamic-sql.html
 ```
 
-### Foreach
+### \<foreach\>
 Insert multiple values at once
 
 ```java
@@ -25,13 +25,32 @@ public void insert(String id, List<Item> items) {
     INSERT INTO
         user_item (id, item_id, item_type, item_name)
     VALUE
-    <foreach collection="items" item="item" separator=",">
-        (#{id}, #{item.itemId}, #{item.itemType}, #{item.itemName})
+    <foreach collection="items" item="item" open="(" separator="," close=")" index="index" >
+        #{id}, #{item.itemId}, #{item.itemType}, #{item.itemName}
     </foreach>
 </insert>
 ```
 
-### If
+```java
+public void insert(List<Item> items) {
+  getSqlsession().insert("ItemRepository.insertItems", items);
+}
+```
+
+```sql
+<insert id="insertItems">
+    INSERT INTO
+        user_item (item_id, item_type, item_name)
+    VALUE
+    <foreach collection="list" item="item" open="(" separator="," close=")" index="index" >
+        #{item.itemId}, #{item.itemType}, #{item.itemName}
+    </foreach>
+</insert>
+```
+
+> List type will be automatically assigned to map named **list**, Array is as **array**
+
+### \<if test\>
 Use if statement in sql
 
 ```sql
@@ -46,7 +65,7 @@ Use if statement in sql
 </select>
 ```
 
-### SQL
+### \<sql\>
 Refer to table columns
 
 ```sql
