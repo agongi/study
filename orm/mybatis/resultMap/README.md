@@ -1,4 +1,4 @@
-## <resultMap>
+## \<resultMap\>
 
 ```
 ㅁ Author: suktae.choi
