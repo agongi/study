@@ -10,7 +10,7 @@
 ### Index
 - [#{...} vs ${...}](%23-%24)
 - [\<resultMap\>](resultMap)
-- [\<selectKey\>](selectKey)
+- [\<selectKey\>](https://github.com/agongi/study/tree/master/orm/mybatis/selectkey)
 - [Dynamic SQL](dynamic-sql)
 - [ON DUPLICATE KEY UPDATE](on-duplicate-key-update)
 
