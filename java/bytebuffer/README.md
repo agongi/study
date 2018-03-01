@@ -12,17 +12,13 @@
 ```
 
 ### Terms
-- capacity
-  - physical buffer size
-- limit
-  - limitation(logical) of buffer size
-- position
-  - current starting point of read/write
-- mark
-  - set specific position for
-
+- mark - save point
+- position - current position
+- limit - logical endpoint
+- capacity - physical endpoint
+  
 ```
-2016-10-30 23:33:27 [main] [DEBUG] com.games.io.ByteBufferTest - java.nio.HeapByteBuffer [pos=0 lim=6 cap=6]
+0 <= mark <= position <= limit <= capacity
 ```
 
 ### Direct vs Non-direct
