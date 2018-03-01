@@ -25,14 +25,15 @@
 - Non-direct
   - system_call()
   - I/O
-  - copy to kernel memory via DMA (CPU non-intensive)
+  - load to kernel
   - **copy to heap**
-  - CRUD heap data
+  - CRUD in heap memory
+  - **GC clear heap in future** 
 - Direct
   - system_call()
   - I/O
-  - copy to kernel
-  - CRUD kernel memory data
+  - load to kernel
+  - CRUD in kernel memory
 
 <img src="images/Screen%20Shot%202017-12-12%20at%2002.41.18.png" width="75%">
 
