@@ -27,7 +27,6 @@
 - [Comparable vs Comparator](https://github.com/agongi/study/tree/master/java/comparable-comparator/)
 - [Iterator vs foreach vs for](https://github.com/agongi/study/tree/master/java/iterator-foreach-for/)
 - [Overriding vs Overloading](https://github.com/agongi/study/tree/master/java/overriding-overloading/)
-- [Heap vs Direct allocation](https://github.com/agongi/study/tree/master/java/heap-direct-allocation/)
 - [Nested Class](https://github.com/agongi/study/tree/master/java/nested-class/)
 - [How HashMap works](https://github.com/agongi/study/tree/master/java/how-hashmap-works/)
 - [How ClassLoader Works](https://github.com/agongi/study/tree/master/java/classloader/)
