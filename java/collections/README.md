@@ -12,11 +12,12 @@
 
 ### In a Nutshell
 #### Read-Only Collections
-- Map<K, V> map = Collections.unmodifiableMap();
-- List<E> list = Collections.unmodifiableList();
-- Set<E> set = Collections.unmodifiableSet();
+- List<E> list = Collections.unmodifiableList(new ArrayList());
+- Set<E> set = Collections.unmodifiableSet(new HashSet());
+- Map<K, V> map = Collections.unmodifiableMap(new HashMap());
 
 #### Concurrency
+- List<E> list = Collections.synchronizedList(new ArrayList());
 - Set<E> set = Collections.synchronizedSet(new HashSet());
 - Set<E> set = new ConcurrentHashMap<>().keySet();
 - Map<K,V> map = Collections.synchronizedMap(new HashMap());
