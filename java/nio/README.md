@@ -13,8 +13,6 @@
 - [ByteBuffer](bytebuffer)
 
 
-
-
 ### 1. Channel vs Stream
 stream is directional (1-way)
  : read Stream

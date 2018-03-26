@@ -1,9 +1,7 @@
 ## ThreadLocal
-ThreadLocal is used to `share variable` within **each thread's life-cycle**. It can avoid CME(Concurrency Modification Exception) in multi-thread environment.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.04.17
 ㅁ References:
  - https://docs.oracle.com/javase/8/docs/api/java/lang/ThreadLocal.html
  - https://stackoverflow.com/questions/2784009/why-should-java-threadlocal-variables-be-static
@@ -11,8 +9,10 @@ ThreadLocal is used to `share variable` within **each thread's life-cycle**. It 
  - http://tutorials.jenkov.com/java-concurrency/threadlocal.html
 ```
 
-### ThreadLocal
-These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable. ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread.
+ThreadLocal is used to `share variable` within **each thread's life-cycle**. It can avoid CME(Concurrency Modification Exception) in multi-thread environment.
+
+These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable.
+ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread.
 
 #### Usage
 ```java
