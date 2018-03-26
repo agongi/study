@@ -1,4 +1,4 @@
-## Java ByteBuffer
+## ByteBuffer
 
 ```
 ㅁ Author: suktae.choi
@@ -16,7 +16,7 @@
 - position - current position
 - limit - logical endpoint
 - capacity - physical endpoint
-  
+
 ```
 0 <= mark <= position <= limit <= capacity
 ```
@@ -28,7 +28,7 @@
   - load to kernel
   - **copy to heap**
   - CRUD in heap memory
-  - **GC clear heap in future** 
+  - **GC clear heap in future**
 - Direct
   - system_call()
   - I/O
