@@ -15,9 +15,8 @@
 ### Index
 - [Volatile](volatile)
 - [ThreadLocal](threadlocal)
-- [Thread-Safe Code in a Nutshell](thread-safe)
-- [Synchronized](synchronized)
 - [ThreadPool](threadpool)
+- [Synchronized](synchronized)
 
 ### To do
 - Concurrent packages
