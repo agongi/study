@@ -2,13 +2,12 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.14
 ㅁ References:
  - https://en.wikipedia.org/wiki/Java_collections_framework
  - http://tutorials.jenkov.com/java-collections/index.html
 ```
 
-<img src="https://github.com/agongi/study/blob/master/java/collections/images/Screen%20Shot%202016-02-14%20at%2018.31.04.png" width="75%">
+<img src="images/Screen%20Shot%202016-02-14%20at%2018.31.04.png" width="75%">
 
 ### In a Nutshell
 #### Read-Only Collections
@@ -22,14 +21,14 @@
 - Set<E> set = new ConcurrentHashMap<>().keySet();
 - Map<K,V> map = Collections.synchronizedMap(new HashMap());
 
-### [List](https://github.com/agongi/study/tree/master/java/collections/list/)
+### [List](list)
 Duplicated element is allowed
 
 - ArrayList
 - LinkedList
 - CopyOnWriteArrayList
 
-### [Set](https://github.com/agongi/study/tree/master/java/collections/set/)
+### [Set](set)
 Duplicated is not allowed
 
 - HashSet
@@ -43,7 +42,7 @@ Duplicated is not allowed
   - SortedSet
   - NavigableSet
 
-### [Map](https://github.com/agongi/study/tree/master/java/collections/map/)
+### [Map](map)
 key - value pair structure
 
 - HashMap
@@ -61,3 +60,16 @@ key - value pair structure
   - ConcurrentNavigableMap
 
 > Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package
+
+### [Queue](queue)
+FIFO, FILO structure
+
+- ArrayBlockingQueue
+- LinkedBlockingQueue
+  - LinkedBlockingDeque
+- ConcurrentLinkedQueue
+- DelayQueue
+- LinkedTransferQueue
+- SynchronousQueue
+- PriorityQueue
+  - PriorityBlockingQueue
