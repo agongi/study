@@ -17,7 +17,7 @@
 #### Executor Framework
 - ForkJoinTask
   - It is **much smaller (lighter)** than traditional callable and/or runnable
-- Task divides separately and each subtasks are assigned to threads
+- Task **divides** separately and each **subtasks** are assigned to threads
 - One global queue for accepting submit, all thread **hold each queue** separately
   - Task will be distributed to each threads and enqueue in thread queue
   - If one thread is **free to steal** task of other thread, It dequeue one from it (== from hard-working thread that holds lots of tasks)
