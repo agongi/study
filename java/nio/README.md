@@ -2,11 +2,10 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.05.15
 ㅁ References:
- - http://palpit.tistory.com/644
- - http://palpit.tistory.com/645
- - http://palpit.tistory.com/646
+- http://palpit.tistory.com/644
+- http://palpit.tistory.com/645
+- http://palpit.tistory.com/646
 ```
 
 ### Index
@@ -31,7 +30,10 @@ buffer is the mechanism of storing a mount of data before transfer
  > Buffer has more performance benefit rather than stream.
 
 ### 3. File I/O
-Path
+https://homoefficio.github.io/2017/02/19/Blocking-NonBlocking-Synchronous-Asynchronous/
+
+https://homoefficio.github.io/2016/08/13/%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-AsynchronousFileChannel%EB%A1%9C-%EB%8B%A4%EB%A4%84%EB%B3%B4%EA%B8%B0/
+
 
 ### 4. TCP (Connection-Oriented) Blocking Channel
 **Server**

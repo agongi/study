@@ -19,8 +19,7 @@
 - [Synchronized](synchronized)
 
 ### To do
-- Concurrent packages
-- [CountDownLatch vs Semaphore](https://stackoverflow.com/questions/184147/countdownlatch-vs-semaphore)
+- [CountDownLatch vs CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html)
 
 ### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)
