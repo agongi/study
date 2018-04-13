@@ -1,4 +1,4 @@
-## FactoryBean
+## Factory Bean
 Create the `uncreatable`
 
 ```
