@@ -13,7 +13,7 @@
 - BE
   - [Java](https://github.com/agongi/study/tree/master/java/)
   - [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
-  - RxJava
+  - [RxJava](rxjava)
   - [Server Architect](https://github.com/agongi/study/tree/master/server-architect/)
 - FE
   - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
