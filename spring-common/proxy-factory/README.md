@@ -3,6 +3,13 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- http://whiteship.tistory.com/564
-- http://stackoverflow.com/questions/4970297/how-to-get-beans-created-by-factorybean-spring-managed
+- https://blog.outsider.ne.kr/851
+```
+
+```java
+ProxyFactory factory = new ProxyFactory(myBusinessInterfaceImpl);
+factory.addAdvice(myMethodInterceptor);
+factory.addAdvisor(myAdvisor);
+
+MyBusinessInterface tb = (MyBusinessInterface) factory.getProxy();
 ```

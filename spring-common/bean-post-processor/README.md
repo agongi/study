@@ -1,21 +1,19 @@
-## Spring Custom Annotation
+## BeanPostProcessor
+`BeanPostProcessor` that is notified when bean is instantiated **for all bean's life-cycle.**
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.11
 ㅁ References:
- - https://www.mkyong.com/java/java-custom-annotations-example/
- - https://deors.wordpress.com/2011/09/26/annotation-types/
- - http://javadevtips.blogspot.kr/2012/12/work-with-annotations-in-spring.html
- - https://dzone.com/articles/spring-annotation-processing-how-it-works
- - http://www.alexecollins.com/java-annotation-processor-tutorial/
- - http://snoopy81.tistory.com/171
- - http://www.programcreek.com/java-api-examples/index.php?api=org.springframework.core.annotation.AnnotationUtils
- - http://knight76.tistory.com/entry/spring-Spring-Utis%EC%9D%98-ReflectionUtils-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C
- - http://dev-ahn.tistory.com/130
+- https://www.mkyong.com/java/java-custom-annotations-example/
+- https://deors.wordpress.com/2011/09/26/annotation-types/
+- http://javadevtips.blogspot.kr/2012/12/work-with-annotations-in-spring.html
+- https://dzone.com/articles/spring-annotation-processing-how-it-works
+- http://www.alexecollins.com/java-annotation-processor-tutorial/
+- http://snoopy81.tistory.com/171
+- http://www.programcreek.com/java-api-examples/index.php?api=org.springframework.core.annotation.AnnotationUtils
+- http://knight76.tistory.com/entry/spring-Spring-Utis%EC%9D%98-ReflectionUtils-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C
+- http://dev-ahn.tistory.com/130
 ```
-
-AppleProcessor implements interface `BeanPostProcessor` that is notified when bean is instantiated **for all bean's life-cycle.**
 
 ### BeanPostProcessor
 #### Hello (== Target Class)
