@@ -6,6 +6,8 @@
 - https://blog.outsider.ne.kr/851
 ```
 
+Applicable of proxying bean programmatically
+
 ```java
 ProxyFactory factory = new ProxyFactory(myBusinessInterfaceImpl);
 factory.addAdvice(myMethodInterceptor);
