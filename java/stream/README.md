@@ -198,42 +198,58 @@ Optional.ofNullable(list).orElse(new Name(10, "haha"));
 ```
 
 ### Collectors
-#### Collectors.toMap(Function::identity())
+#### toMap() / toList()
 ```java
 Map<Integer, Object> map = list.stream()
     .collect(Collectors.toMap(Object::getId, Function::identity()));
 ```
 
-#### Collectors.groupingBy()
+#### collectingAndThen()
+```java
+@Autowired
+private void setViewResolvers(List<ViewResolver> viewResolvers) {
+  viewResolverMap = viewResolvers.stream()
+    .collect(Collectors.collectingAndThen(
+            Collectors.toMap(ViewResolver::getType, Function.identity()),
+            Collections::unmodifiableMap
+    ));
+}
+```
+
+#### groupingBy()
 ```java
 // key - value(groupBy)
 Map<Integer, List<Object>> map = list.stream()
     .collect(Collectors.groupingBy(Object::getId));
 
 Map<String, Long> map = list.stream()
-    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    .collect(Collectors.groupingBy(Object::getId, Collectors.counting()));
 ```
 
-#### Collectors.partitioningBy()
+#### partitioningBy()
 ```java
 // key(boolean) - value(groupBy)
 Map<Boolean, List<String>> map = list.stream()
     .collect(Collectors.partitioningBy(k -> StringUtils.length(k) > 5));
 ```
 
-#### Collectors.summingInt()
+#### summingInt()
 ```java
 Map<Integer, Integer> map = list.stream()
     .collect(Collectors.groupingBy(Object::getId, Collectors.summingInt(Object::getScore)));
 ```
 
-#### Collectors.joining()
+#### joining()
 ```java
 List<String> list = Arrays.asList("java", "python", "nodejs", "ruby");
 
-// java | python | nodejs | ruby
-String result = list.stream().collect(Collectors.joining(" | "));
+// java|python|nodejs|ruby
+String result = list.stream().collect(Collectors.joining("|"));
 ```
+
+#### reducing()
+
+#### comparing()
 
 ### Miscellaneous
 #### mapToInt()
