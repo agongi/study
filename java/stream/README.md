@@ -64,7 +64,17 @@ public class StreamTest {
 // conditional statement
 list.stream()
     .filter(o -> o.getId() > 0)
-    // ...
+    // ..
+
+// isNull
+list.stream()
+    .filter(Objects::isNull)
+    // ..
+
+// notNull
+list.stream()
+    .filter(Objects::nonNull)
+    // ..
 ```
 
 #### distinct()
@@ -93,6 +103,9 @@ List<Object> sortedList = list.stream()
     .sorted(Comparator.comparing(o -> o.getId(), Comparator.reverseOrder()))
     .collect(Collectors.toList());
 ```
+
+#### pick()
+stream 처리도중 중간결과를 로깅할때 필요
 
 ### Optional API
 #### findAny()
@@ -198,10 +211,14 @@ Optional.ofNullable(list).orElse(new Name(10, "haha"));
 ```
 
 ### Collectors
-#### toMap() / toList()
+#### toMap() / toList() / toSet() / toCollection()
 ```java
 Map<Integer, Object> map = list.stream()
     .collect(Collectors.toMap(Object::getId, Function::identity()));
+
+// defines  concrete type of collection
+Set<Integer> set = list.stream()
+    .collect(Collectors.toCollection(HashSet::new));
 ```
 
 #### collectingAndThen()
@@ -221,9 +238,6 @@ private void setViewResolvers(List<ViewResolver> viewResolvers) {
 // key - value(groupBy)
 Map<Integer, List<Object>> map = list.stream()
     .collect(Collectors.groupingBy(Object::getId));
-
-Map<String, Long> map = list.stream()
-    .collect(Collectors.groupingBy(Object::getId, Collectors.counting()));
 ```
 
 #### partitioningBy()
@@ -233,10 +247,30 @@ Map<Boolean, List<String>> map = list.stream()
     .collect(Collectors.partitioningBy(k -> StringUtils.length(k) > 5));
 ```
 
-#### summingInt()
+#### mapping()
+```java
+// convert U to t
+// It is commonly used with groupingBy, partitioningBy
+Map<City, Set<String>> lastNamesByCity = people.stream()
+  .collect(groupingBy(Person::getCity, mapping(Person::getLastName, toSet())));
+```
+
+#### summingInt() / summingDouble() / summingLong()
 ```java
 Map<Integer, Integer> map = list.stream()
-    .collect(Collectors.groupingBy(Object::getId, Collectors.summingInt(Object::getScore)));
+    .collect(Collectors.groupingBy(Object::getId, summingInt(Object::getScore)));
+```
+
+#### minBy() / maxBy()
+```java
+Map<Integer, Integer> map = list.stream()
+    .collect(Collectors.groupingBy(Object::getId, maxBy(comparing(Object::getScore))));
+```
+
+#### counting()
+```java
+Map<String, Long> map = list.stream()
+    .collect(Collectors.groupingBy(Object::getId, counting()));
 ```
 
 #### joining()
@@ -244,7 +278,7 @@ Map<Integer, Integer> map = list.stream()
 List<String> list = Arrays.asList("java", "python", "nodejs", "ruby");
 
 // java|python|nodejs|ruby
-String result = list.stream().collect(Collectors.joining("|"));
+String result = list.stream().collect(joining("|"));
 ```
 
 #### reducing()
