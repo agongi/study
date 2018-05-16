@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2018.01.25
 ㅁ References:
 - https://docs.spring.io/spring-batch/trunk/reference/htmlsingle
 ```

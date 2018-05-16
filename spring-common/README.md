@@ -13,6 +13,7 @@
 - [@Autowired vs @Inject vs @Resource](autowired-inject-resource)
 - [Filter vs Interceptor](filter-interceptor)
 - [/* vs /](servlet-mapping)
+- [Environment vs Resource/Properties vs @Value](enviroment-resource-properties-value)
 - [@Cacheable](cacheable)
 - [@Pageable](pageable)
 - [@DateTimeFormat](date-time-format)
