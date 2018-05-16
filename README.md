@@ -6,8 +6,6 @@
 - [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
 - [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
 - [Spring Batch](spring-batch/)
-- Spring Security
-- Netty
 
 ### Dev
 - BE
