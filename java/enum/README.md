@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.10.12
 ㅁ References:
  - http://stackoverflow.com/questions/11575376/why-use-enums-instead-of-constants
  - http://stackoverflow.com/questions/2229297/java-enumerations-vs-static-constants
@@ -237,23 +236,15 @@ public interface Price {
     public double getPrice();
 }
 
+@Getter
+@AllArgsConstructor
 public enum Books implements Price {
     HARRY_POTTER (12.99),
     THE_SOULFORGE (12.11),
     GAME_OF_THRONES (10.00),
-    DRAGONLANCE (6.77),
-    ;
+    DRAGONLANCE (6.77);
 
     private final double price;
-
-    Books(double price) {
-        this.price = price;
-    }
-
-    @Override
-    public double getPrice() {
-        return this.price;
-    }
 }
 ```
 
@@ -264,34 +255,40 @@ interface EnumGroup<E extends Enum<E>> {
 }
 
 @Getter
+@AllArgsConstructor
 public enum AlphabetType {
     A("A", 1),
     B("B", 2),
     C("C", 3),
-    X("X", 24),
-    ;
-
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    private enum Group implements EnumGroup<AlphabetType> {
-        HEAD(EnumSet.of(A, B, C)),
-        TAIL(EnumSet.of(X)),
-        ;
-
-        private EnumSet group;
-
-        @Override
-        public EnumSet<AlphabetType> getGroup() {
-            return group;
-        }
-    }
+    X("X", 24);
 
     private String name;
     private Integer id;
+
+
+    @Getter
+    @AllArgsConstructor
+    private enum Group implements EnumGroup<AlphabetType> {
+        HEAD(EnumSet.of(A, B, C)),
+        TAIL(EnumSet.of(X));
+
+        private EnumSet group;
     }
 }
 
 public static void main(String[] args) {
     EnumSet<AlphabetType> set = AlphabetType.Group.HEAD.getGroup();
     log.info("group.HEAD: {}", set);
+}
+```
+
+#### EnumSet, EnumMap
+EnumSet, EnumMap are much efficient of handling enumType data
+```java
+@Test
+public void testSetMap() {
+    Map<TestType, String> map = new EnumMap<>(TestType.class);
+
+    Set<TestType> set = EnumSet.allOf(TestType.class);
 }
 ```
