@@ -3,16 +3,17 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
- - http://stackoverflow.com/questions/11575376/why-use-enums-instead-of-constants
- - http://stackoverflow.com/questions/2229297/java-enumerations-vs-static-constants
- - http://www.nextree.co.kr/p11686/
- - http://www.mkyong.com/java/java-enum-example/
- - https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
- - http://stackoverflow.com/questions/4709175/what-are-enums-and-why-are-they-useful
- - http://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
- - https://stackoverflow.com/questions/443980/why-cant-enums-constructor-access-static-fields
- - https://stackoverflow.com/questions/32337555/stream-of-vs-arrays-stream-to-get-an-enum-from-a-value
- - https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+- http://stackoverflow.com/questions/11575376/why-use-enums-instead-of-constants
+- http://stackoverflow.com/questions/2229297/java-enumerations-vs-static-constants
+- http://www.nextree.co.kr/p11686/
+- http://www.mkyong.com/java/java-enum-example/
+- https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
+- http://stackoverflow.com/questions/4709175/what-are-enums-and-why-are-they-useful
+- http://stackoverflow.com/questions/6667243/using-enum-values-as-string-literals
+- https://stackoverflow.com/questions/443980/why-cant-enums-constructor-access-static-fields
+- https://stackoverflow.com/questions/32337555/stream-of-vs-arrays-stream-to-get-an-enum-from-a-value
+- https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+- https://javarevisited.blogspot.kr/2012/09/what-is-enummap-in-java-example-tutorial.html
 ```
 
 ```java
