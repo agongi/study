@@ -39,3 +39,4 @@
 - [Field Dependency Injection Considered Harmful](http://vojtechruzicka.com/field-dependency-injection-considered-harmful/)
 - [ChainedTransactionManager](http://kwon37xi.egloos.com/4886947)
 - [파일 다운로드 방법](http://yangyag.tistory.com/207)
+- [Inject value into static variables](https://www.mkyong.com/spring/spring-inject-a-value-into-static-variables/)
