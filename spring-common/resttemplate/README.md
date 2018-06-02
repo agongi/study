@@ -70,3 +70,21 @@ HttpEntity<String> response = RestTemplate.exchange(
 ```
 #### execute
 It can use customized request/response callback
+
+### Exception Handle
+```java
+try {
+    return restTemplate.postForObject(
+        url,
+        URLEncoder.encode(mapper.writeValueAsString(requestVO), StandardCharsets.UTF_8.name()),
+        ResponseVO.class);
+
+} catch (RestClientResponseException e) {
+    // 4xx, 5xx http status
+    log.error("status: {}, body: {}", e.getRawStatusCode(), e.getResponseBodyAsString());
+
+} catch (Exception e) {
+    // invocation error
+    throw new RuntimeException(e);
+}
+```
