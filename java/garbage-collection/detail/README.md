@@ -1,8 +1,7 @@
-## Garbage Collection - Additional
+## Garbage Collection - Detail
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.19
 ㅁ References:
  - http://darksilber.tistory.com/entry/Java-Reference-Object%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%ED%99%9C%EC%9A%A9strongweak-reference
  - http://javarevisited.blogspot.kr/2014/03/difference-between-weakreference-vs-softreference-phantom-strong-reference-java.html

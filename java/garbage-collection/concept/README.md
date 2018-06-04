@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.13
 ㅁ References:
  - http://www.oracle.com/technetwork/tutorials/tutorials-1876574.html
  - http://javarevisited.blogspot.sg/2011/04/garbage-collection-in-java.html
