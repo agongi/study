@@ -28,6 +28,7 @@
 - [Comparable vs Comparator](comparable-comparator)
 - [Iterator vs foreach vs for](iterator-foreach-for)
 - [Overriding vs Overloading](overriding-overloading)
+- [MessageFormat.format vs String.format](message-format-string-format)
 - [Nested Class](nested-class)
 - [How HashMap works](how-hashmap-works)
 - [How ClassLoader Works](classloader)
