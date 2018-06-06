@@ -19,7 +19,7 @@
 p.333 java 8 in action
 
 
-#### Optional() to Stream()
+#### Optional to Stream
 ```java
 // java.util
 public String getUrl() {
@@ -52,4 +52,13 @@ public List<String> getUrl() {
         .flatMap(List::stream)            // Stream<List<String>>
         .collect(Collectors.toList());    // List<String>
 }
+```
+
+#### Array to Stream
+```java
+Optional.ofNullable(jsonString)                     // Optional<String>   
+    .map(o -> StringUtils.split(o.trim(), ",\r\n")) // Optional<String[]>
+    .map(Arrays::stream)                            // Stream<List<String>>
+    .orElse(Stream.empty())                         // ...
+    .collect(Collectors.toSet());                   // Set<String>
 ```
