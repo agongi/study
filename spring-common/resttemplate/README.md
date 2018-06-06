@@ -52,20 +52,22 @@ Use customized HTTP Header for each request
 
 #### exchange
 ```java
-// headers
+// header
 HttpHeaders headers = new HttpHeaders();
 headers.setContentType(MediaType.APPLICATION_JSON);
-// bodys
+// body
 MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap();
 bodyMap.set("key", "value");
+
 // requestEntity
 HttpEntity request = new HttpEntity(bodyMap, headers);
+// HttpEntity request = new HttpEntity(userVO, headers);  // or just use POJO object
 
 HttpEntity<String> response = RestTemplate.exchange(
     "http://example.com",
-    HttpMethod.GET,       // any methods
+    HttpMethod.GET, // any methods
     request,
-    String.class
+    String.class    // if dont care of response
 );
 ```
 #### execute
