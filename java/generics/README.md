@@ -85,16 +85,13 @@ public class BoxUtils {
 List<? extends Custom>
 ```
 
-- ? is subtypes of Custom
-  - read values type of `Custom` or casting to subtype with `@SuppressWarnings("uncheked")`
-  - write type of value that inherits or implements `Custom`
+- read: `Custom` or casting with `@SuppressWarnings("uncheked")`
+- write: inherits or implements `Custom`
 
 #### Lower Bounded Wildcards
 ```java
 List<? super Custom>
 ```
-
-- ? is supertypes of Custom
 
 #### Multiple Bounds
 It doesn't supported
