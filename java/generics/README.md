@@ -2,8 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.24
-ㅁ Origin: Effective Java 2nd edition
 ㅁ References:
 - https://docs.oracle.com/javase/tutorial/java/generics/index.html
 - https://stackoverflow.com/questions/745756/java-generics-wildcarding-with-multiple-classes
@@ -17,8 +15,9 @@
 - Prevent `java.lang.ClassCastException` in runtime
 - No more casting
 
-### Generic Types
-#### Type Parameters
+<img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
+
+### Type Parameters
 ```java
 public class Box<T> {
     // T stands for "Type"
@@ -38,10 +37,8 @@ public class Box<T> {
 - T - Type
 - S, U, V etc., - 2nd, 3rd, 4th types
 
-Type variables can only be **non-primitive** type
-
-#### Bounded Type Parameters
-It can restrict the types to only accept instances of Number or its subclasses. The syntax `extends` is used to make sense to mean either "extends" (as in classes) or "implements" (as in interfaces)
+#### Upper Bounded Type Parameters
+It can restrict the types to only accept instances of Number or its subclasses
 
 ```java
 public class Box<T> {
@@ -56,11 +53,14 @@ public class Box<T> {
 }
 ```
 
-> Multiple Bounds
+#### Lower Bounded Type Parameters
+It doesn't supported
 
+#### Multiple Bounds
 If one of the bounds is a class, it must be specified first
+
 ```java
-Class A { /* ... */ }
+Class A     { /* ... */ }
 interface B { /* ... */ }
 interface C { /* ... */ }
 
@@ -68,17 +68,17 @@ interface C { /* ... */ }
 <T extends B & A & C>  // fail, B is interface
 ```
 
-### Generics, Inheritance, and Subtypes
-<img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
-
 ### Wildcards
-#### Unbounded Wildcards
 ```java
-List<?> list
+public class BoxUtils {
+  public Object get(List<?> list) {
+    return list.get(0);
+  }
+}
 ```
 
-- read values as `Object`
-- write only `null` values is allowed
+- read: `Object`
+- write: Not allowed except `null`
 
 #### Upper Bounded Wildcards
 ```java
@@ -96,71 +96,24 @@ List<? super Custom>
 
 - ? is supertypes of Custom
 
-#### [Object vs Class<?>](https://stackoverflow.com/questions/24391123/object-vs-classt-vs-class-in-java)
+#### Multiple Bounds
+It doesn't supported
+
+### Differences
+#### [Type Parameters vs Wildcard](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
 ```java
-private class SimpleClass {
-    private Integer keyboard;
-    private String mouse;
-}
+// ensure dest, src represent exactly the same type
+public static <T extends Number> void copy(List<T> dest, List<T> src)
 
-
-@Test
-public void test2() {
-    SimpleClass simpleClass = new SimpleClass();
-    // param Object
-    doWithObject(simpleClass);
-
-    // param Class<?>
-    doWithClass(SimpleClass.class);
-    doWithClass(simpleClass.getClass());
-
-}
-
-private void doWithObject(Object obj) {
-    System.out.println(obj.getClass().getSimpleName());
-}
-
-private void doWithClass(Class<?> clz) {
-    System.out.println(clz.getSimpleName());
-}
+// can be ensured
+public static void copy(List<? extends Number> dest, List<? extends Number> src)
 ```
 
 #### \<?> vs \<T>
-Use ? if it is used once, but T if this is reusable
-
-### Generic Methods
-```java
-public class CompareUtils {
-    public static <K, V> boolean comparePair(Pair<K, V> p1, Pair<K, V> p2) {
-        return p1.getKey().equals(p2.getKey()) &&
-               p1.getValue().equals(p2.getValue());
-    }
-}
-```
-
-### Type Inference
-#### Instantiation of Generic Classes
-```java
-Map<String, List<String>> myMap = new HashMap<String, List<String>>();
-// type inferred
-Map<String, List<String>> myMap = new HashMap<>();
-```
-
-#### Target Types
-emptyList returns a value of type List<T>, the compiler infers that the type argument <T> must be the value String
-
-```java
-List<String> list = Collections.<String>emptyList();
-// target type inference
-List<String> list = Collections.emptyList();
-```
+- T - reusable
+- ? - once
 
 ### Restrictions on Generics
-#### Cannot Instantiate Generic Types with Primitive Types
-```java
-Pair<int, char> p = new Pair<>(8, 'a');  // compile-time error
-```
-
 #### Cannot Create Instances of Type Parameters
 ```java
 public static <E> void append(List<E> list) {
@@ -177,17 +130,13 @@ public static <E> void append(List<E> list, Class<E> cls) throws Exception {
 }
 ```
 
-#### Cannot Declare Static Fields Whose Types are Type Parameters
+#### Cannot Declare Static Fields of Type Parameters
 ```java
 public class MobileDevice<T> {
     private static T os;
 
     // ...
 }
-
-MobileDevice<Smartphone> phone = new MobileDevice<>();
-MobileDevice<Pager> pager = new MobileDevice<>();
-MobileDevice<TabletPC> pc = new MobileDevice<>();
 ```
 static field represents class-level variables shared by all objects of the class. It can't have different types at the same time
 
@@ -204,5 +153,5 @@ public static <E> void rtti(List<E> list) {
 
 #### Cannot Create Arrays of Parameterized Types
 ```java
-List<Integer>[] arrayOfLists = new List<Integer>[2];  // compile-time error
+E[] arrayOfLists = new E[];  // compile-time error
 ```
