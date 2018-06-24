@@ -46,6 +46,7 @@
 - [Datetime](datetime)
 - [Number](number)
 - [Data Type](data-type)
+- [Pattern-Matcher](pattern-matcher)
 
 ### Design Pattern
 - [Factory Pattern](factory-pattern)
