@@ -102,7 +102,7 @@ It doesn't supported
 // ensure dest, src represent exactly the same type
 public static <T extends Number> void copy(List<T> dest, List<T> src)
 
-// can be ensured
+// can't be ensured
 public static void copy(List<? extends Number> dest, List<? extends Number> src)
 ```
 
