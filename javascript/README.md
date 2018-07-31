@@ -8,6 +8,7 @@
 ### Index
 - CommonJS
 - ECMAScript
+- [Get checked values](get-checked-values/)
 
-### Task
-- [Get checked values](https://github.com/agongi/study/tree/master/javascript/get-checked-values/)
+### Blog
+- [jQuery - Ajax - crossdomain 이슈](http://igna.tistory.com/19)
