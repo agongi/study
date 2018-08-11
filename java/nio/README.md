@@ -10,6 +10,7 @@
 
 ### Index
 - [ByteBuffer](bytebuffer)
+- [Files](files)
 
 
 ### 1. Channel vs Stream
