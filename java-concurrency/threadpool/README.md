@@ -1,5 +1,4 @@
 ## Thread Pool
-
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
@@ -9,28 +8,68 @@
 
 ### ForkJoinPool vs Executor Framework
 #### ForkJoinPool
-- Runnable and/or Callable task
-- Thread handles one task completely (== turnkey)
-- One global queue for all shared tasks
+- Worker - Runnable or Callable
+- Task - one per thread
+- Queue - One global queue for all shared tasks
   - It may cause performance **bottleneck once frequent enqueue/dequeue** occurs due to concurrent operation
 
 #### Executor Framework
-- ForkJoinTask
-  - It is **much smaller (lighter)** than traditional callable and/or runnable
-- Task **divides** separately and each **subtasks** are assigned to threads
-- One global queue for accepting submit, all thread **hold each queue** separately
+- Worker - ForkJoinTask
+  - It is **much smaller (lighter)** than callable or runnable
+- Task - Task **divides** separately and each **subtasks** are assigned to threads
+- Queue - One global queue for accepting submit, all thread **hold each queue** separately
   - Task will be distributed to each threads and enqueue in thread queue
-  - If one thread is **free to steal** task of other thread, It dequeue one from it (== from hard-working thread that holds lots of tasks)
+  - If one is **free to steal**, It dequeues one from it
 
-### Types of pool
+### Types
 #### Executors.newFixedThreadPool()
-It remains a fixed number of min/max thread alive
+- Thread count - fixed
+- Thread lifetime - 0 (infinite)
+- Queue size - unlimited
+
+```java
+public static ExecutorService newFixedThreadPool(int nThreads) {
+  return new ThreadPoolExecutor(nThreads, nThreads,
+    0L, TimeUnit.MILLISECONDS,
+    new LinkedBlockingQueue<Runnable>());
+}
+```
 
 #### Executors.newSingleThreadPool()
-It equals to Executors.newFixedThreadPool(1)
+- Thread count - 1
+- Thread lifetime - 0 (infinite)
+- Queue size - unlimited
+
+```java
+public static ExecutorService newFixedThreadPool() {
+  return new ThreadPoolExecutor(1, 1,
+    0L, TimeUnit.MILLISECONDS,
+    new LinkedBlockingQueue<Runnable>());
+}
+```
 
 #### Executors.newCachedThreadPool()
-It may adjust a number of threads until max point. It will release that once spare threads keep calm **over than default idle-time**
+- Thread count - unlimited
+- Thread lifetime - 60s
+- Queue size - 0 (hand-off)
+
+```java
+public static ExecutorService newCachedThreadPool() {
+  return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+    60L, TimeUnit.SECONDS,
+    new SynchronousQueue<Runnable>());
+}
+```
 
 #### Executors.newWorkStealingPool()
-It is a **wrapper of ForkJoinPool()** instead of executor framework
+- Thread count - upon processors count
+- Queue size -  64M (static final int MAXIMUM_QUEUE_CAPACITY = 1 << 26)
+
+```java
+public static ExecutorService newWorkStealingPool() {
+  return new ForkJoinPool
+    (Runtime.getRuntime().availableProcessors(),
+    ForkJoinPool.defaultForkJoinWorkerThreadFactory,
+    null, true);
+}
+```

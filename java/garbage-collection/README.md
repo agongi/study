@@ -5,10 +5,9 @@
 ㅁ References:
 - http://d2.naver.com/helloworld
 - http://javarevisited.blogspot.kr
+- https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter
 ```
 
 #### [Concept](concept)
-Basic concept of GC
 
 #### [Detail](detail)
-Internal mechanism of GC
