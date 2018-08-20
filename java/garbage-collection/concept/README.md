@@ -120,3 +120,10 @@ JDK8 에서는
 - new / survive / old / metaSpace 로 아키텍쳐가 변경되었고
 
 기존의 perm에 저장되어 문제를 유발하던 static Object 는 heap으로 옮겨서 GC 대상이 되도록함
+
+### CMS vs Parallel
+**Parellel**
+Parallel GC 방식에서는 Full GC가 수행될 때마다 Compaction 작업을 진행하기 때문에 시간이 많이 소요된다. 하지만, Full GC가 수행된 이후에는 메모리를 연속적으로 지정할 수 있어 메모리를 더 빠르게 할당할 수 있다.
+
+**CMS**
+CMS GC는 Compaction 작업을 기본으로 수행하지 않는다. Compaction 작업을 수행하지 않기 때문에 당연히 속도가 빠르다. 하지만, Compaction 작업을 수행하지 않으면 디스크 조각 모음을 실행하기 전의 상태처럼 메모리에 빈 공간이 여기저기 생겨 크기가 큰 객체가 들어갈 수 있는 공간이 없을 수 있다. 그럴때 Concurrent mode failure 경고가 발생하면서 Compaction 작업을 수행한다. 그런데, CMS GC를 사용할 때에는 Compaction 시간이 다른 Parallel GC보다 더 오래 소요된다. 그래서 오히려 더 문제가 될 수 있다
