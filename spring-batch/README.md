@@ -4,6 +4,7 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://docs.spring.io/spring-batch/trunk/reference/htmlsingle
+- http://becko.tistory.com/category/Spring-Batch
 ```
 
 ### Blog
