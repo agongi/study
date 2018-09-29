@@ -106,6 +106,31 @@ public static <T extends Number> void copy(List<T> dest, List<T> src)
 public static void copy(List<? extends Number> dest, List<? extends Number> src)
 ```
 
+#### Collection\<?> vs Collection\<Object>
+```java
+public class MyTask {
+  public static void print(List<Object> list) {
+    // ...
+  }
+
+  public static void print2(List<?> list) {
+    // ...
+  }
+
+  public static void print3(List<? extends Object> list) {
+    // the same as List<?>
+  }
+
+  public static void main() {
+    List<Integer> list = Arrays.asList(1, 2, 3);
+
+    MyTask.print(list);   // compile-error: List<Object> is only accepted.
+    MyTask.print2(list);  // OK
+    MyTask.print3(list);  // OK
+  }
+}
+```
+
 #### \<?> vs \<T>
 - T - reusable
 - ? - once
