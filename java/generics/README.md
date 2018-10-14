@@ -11,9 +11,7 @@
 - http://ohgyun.com/51
 ```
 
-### Motivation
-- Prevent `java.lang.ClassCastException` in runtime
-- No more casting
+Generics is used to prevent being `java.lang.ClassCastException` in runtime and remove redundant type-casting
 
 <img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
 
@@ -97,7 +95,7 @@ List<? super Custom>
 It doesn't supported
 
 ### Differences
-#### [Type Parameters vs Wildcard](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
+#### [\<T> vs \<?>](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
 ```java
 // ensure dest, src represent exactly the same type
 public static <T extends Number> void copy(List<T> dest, List<T> src)
@@ -106,36 +104,62 @@ public static <T extends Number> void copy(List<T> dest, List<T> src)
 public static void copy(List<? extends Number> dest, List<? extends Number> src)
 ```
 
+> \<T> is reusable, but \<?> can't
+
+```java
+public static <T> boolean isEmpty(List<T> list) {
+  return list.size() < 1;
+}
+
+public static boolean isEmpty(List<?> list) {
+  return list.size() < 1;
+}
+```
+
+> works the same that both never care about element but List<> itself
+
 #### Collection\<?> vs Collection\<Object>
 ```java
 public class MyTask {
-  public static void print(List<Object> list) {
+  public static void print(List<T> list) {
     // ...
   }
 
-  public static void print2(List<?> list) {
+  public static void print2(List<Object> list) {
     // ...
   }
 
-  public static void print3(List<? extends Object> list) {
+  public static void print3(List<?> list) {
+    // ...
+  }
+
+  public static void print4(List<? extends Object> list) {
     // the same as List<?>
   }
 
   public static void main() {
     List<Integer> list = Arrays.asList(1, 2, 3);
 
-    MyTask.print(list);   // compile-error: List<Object> is only accepted.
-    MyTask.print2(list);  // OK
+    MyTask.print(list);   // OK
+    MyTask.print2(list);  // compile-error: List<Object> is only accepted.
     MyTask.print3(list);  // OK
+    MyTask.print4(list);  // OK
   }
 }
 ```
 
-#### \<?> vs \<T>
-- T - reusable
-- ? - once
+### Features
+#### Producer - Consumer
+```java
+public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+  // ...
+}
+```
 
-### Restrictions on Generics
+- Consumer: src is used in method -> \<? extends T>
+- Producer: dest is used out of method -> \<? super T>
+
+### Restrictions
 #### Cannot Create Instances of Type Parameters
 ```java
 public static <E> void append(List<E> list) {
@@ -177,3 +201,5 @@ public static <E> void rtti(List<E> list) {
 ```java
 E[] arrayOfLists = new E[];  // compile-time error
 ```
+
+#### Producer /
