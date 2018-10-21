@@ -20,6 +20,7 @@
 - Set<E> set = Collections.synchronizedSet(new HashSet());
 - Set<E> set = new ConcurrentHashMap<>().keySet();
 - Map<K,V> map = Collections.synchronizedMap(new HashMap());
+- SortedMap<K, V> m = Collections.synchronizedSortedMap(new TreeMap());
 
 ### [List](list)
 Duplicated element is allowed
