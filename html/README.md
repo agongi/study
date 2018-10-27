@@ -3,7 +3,7 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://developer.mozilla.org/en-US/
+- https://developer.mozilla.org/en-US/docs/Learn
 ```
 
 ### Blog
