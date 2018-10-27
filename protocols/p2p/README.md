@@ -23,14 +23,14 @@ Peer-To-Peer communication contrast to traditional Client-To-Server model.
   - Client sends all packets to `TURN` server for relaying
   - `TURN` server will check IP, PORT of destination and relay to it
 
-<img src="https://github.com/agongi/study/blob/master/p2p/images/Screen%20Shot%202016-05-13%20at%2000.49.17.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-13%20at%2000.49.17.png" width="75%">
 
 ###### 3. ICE (Interactive Connectivity Establishment)
 It will determine which protocol is perfect fit it this condition. (TURN or STUN or something else)
 
 ###### 4. Hole Punching (STUN)
-<img src="https://github.com/agongi/study/blob/master/p2p/images/Screen%20Shot%202016-05-13%20at%2000.49.43.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-13%20at%2000.49.43.png" width="75%">
 
-<img src="https://github.com/agongi/study/blob/master/p2p/images/Screen%20Shot%202016-05-13%20at%2000.49.52.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-13%20at%2000.49.52.png" width="75%">
 
-<img src="https://github.com/agongi/study/blob/master/p2p/images/Screen%20Shot%202016-05-13%20at%2000.50.09.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-13%20at%2000.50.09.png" width="75%">

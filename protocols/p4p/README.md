@@ -22,7 +22,7 @@ Some people thought tracker has no way to know `ISP information` of each peers a
 
 #### 1. Client to iTracker
 
-<img src="https://github.com/agongi/study/blob/master/p4p/images/Screen%20Shot%202016-06-10%20at%2000.19.58.png" width="75%">
+<img src="images/Screen%20Shot%202016-06-10%20at%2000.19.58.png" width="75%">
 
  - peer A downloads .torrent file from tracker
  - user runs .torrent file in BitTorrent client. Client sends IP to prefixed iTracker server
@@ -33,7 +33,7 @@ Some people thought tracker has no way to know `ISP information` of each peers a
 
 #### 2. pTracker to iTracker
 
-<img src="https://github.com/agongi/study/blob/master/p4p/images/Screen%20Shot%202016-06-10%20at%2000.20.05.png" width="75%">
+<img src="images/Screen%20Shot%202016-06-10%20at%2000.20.05.png" width="75%">
 
  - peer A downloads .torrent file from tracker
  - client requests to iTracker with Hash of .torrent and client IP
@@ -44,4 +44,4 @@ Some people thought tracker has no way to know `ISP information` of each peers a
 
 ###### Comparision
 
-<img src="https://github.com/agongi/study/blob/master/p4p/images/Screen%20Shot%202016-06-10%20at%2000.06.25.png" width="75%">
+<img src="images/Screen%20Shot%202016-06-10%20at%2000.06.25.png" width="75%">

@@ -5,7 +5,6 @@ OAuth is an open standard for authorization, commonly used as a way for Internet
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.17
 ㅁ References:
  - https://msdn.microsoft.com/en-us/library/office/dn631818.aspx
 ```
@@ -15,7 +14,7 @@ TBD (Not used secure production system)
 
 #### 2. Explicit grant flow (Authorization code)
 
-<img src="https://github.com/agongi/study/blob/master/oauth/images/Screen%20Shot%202016-02-16%20at%2003.23.09.png" width="75%">
+<img src="images/Screen%20Shot%202016-02-16%20at%2003.23.09.png" width="75%">
 
 1) The client start OAuth, by using a URL in the following format :
 

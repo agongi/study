@@ -52,7 +52,7 @@ GET ws://localhost/chat HTTP/1.1
   Sec-WebSocket-Version: 13
 ```
 
-<img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.17.49.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-11%20at%2001.17.49.png" width="75%">
 
 ### server response -> handshake done to differ to WebSocket
 
@@ -66,11 +66,11 @@ HTTP/1.1 101 Switching Protocols
 > **Q. Why websocket needs an opening handshake using HTTP? Why can't it be an independent protocol?** <br><br>
 **A.** The WebSocket Protocol attempts to address the goals of existing bidirectional HTTP technologies in the context of the **existing HTTP infrastructure**; as such, it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries, even if this implies some complexity specific to the current environment. However, the design does not limit WebSocket to HTTP, and future implementations could use a simpler handshake over a dedicated port without reinventing the entire protocol.
 
-<img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.30.34.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-11%20at%2001.30.34.png" width="75%">
 
 ### bidirectional communication is going on without unnecessary HTTP headers and latency of pushing event from server to client
 
-<img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.30.49.png" width="50%">
+<img src="images/Screen%20Shot%202016-05-11%20at%2001.30.49.png" width="50%">
 
 > WS provides APIs to make easy communication each other in async.
 
@@ -80,7 +80,7 @@ HTTP/1.1 101 Switching Protocols
 
 WebSocket request & response headers:
 
-<img src="https://github.com/agongi/study/blob/master/websocket/images/Screen%20Shot%202016-05-11%20at%2001.17.50.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-11%20at%2001.17.50.png" width="75%">
 
  - Data transfer is done within one TCP connection lifecycle.
  - `No extra headers after handshake`. You might notice that the "length" column represents each packet's size, it is less than 100 bytes by average in my case and it only depend on exact transferred data size.

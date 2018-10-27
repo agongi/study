@@ -26,7 +26,7 @@ TCP provides an effective abstraction of a reliable network running over an unre
 ### 3-way-handshake
 Origin 3-way-handshaking in TCP connection.
 
-<img src="https://github.com/agongi/study/blob/master/tcp/images/18338404268_f693b065d4_o.png">
+<img src="images/18338404268_f693b065d4_o.png">
 
 > CLOSE_WAIT 종료 : 커널 옵션으로 타임아웃 조절이 가능한 FIN_WAIT이나 재사용이 가능한 TIME_WAIT과 달리, CLOSE_WAIT는 포트를 잡고 있는 프로세스의 종료 또는 네트워크 재시작 외에는 제거할 방법이 없습니다. 즉, 로컬 어플리케이션이 정상적으로 close()를 요청하는 것이 가장 좋은 방법입니다.
 

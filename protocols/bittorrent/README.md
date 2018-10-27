@@ -23,7 +23,7 @@ Download torrent file from the public and/or private tracker website. It contain
 #### 2. Tracker Request
 Torrent client sends http request to specific tracker url that is mentioned in .torrent file with `peerId` and `Hash`. The tracker site is responsible for getting these request from each peers and managing peer-list-table.
 
-<img src="https://github.com/agongi/study/blob/master/bittorrent/images/Screen%20Shot%202016-05-30%20at%2023.23.41.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-30%20at%2023.23.41.png" width="75%">
 
 #### 3. Tracker Response
 Tracker responds IP, PORT of 50 peers.
@@ -41,4 +41,4 @@ Tracker responds IP, PORT of 50 peers.
  - peer A broadcast the information of the file pieces to all peers (notification)
  - peer A turns into a seeder after download the file completely
 
-<img src="https://github.com/agongi/study/blob/master/bittorrent/images/Screen%20Shot%202016-05-30%20at%2023.24.00.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-30%20at%2023.24.00.png" width="75%">

@@ -19,6 +19,6 @@ Key features of QUIC over existing TCP+TLS+SPDY include
  - Forward error correction
  - Connection migration
 
-<img src="https://github.com/agongi/study/blob/master/quic/images/Screen%20Shot%202016-02-20%20at%2019.50.43.png" width="75%">
+<img src="images/Screen%20Shot%202016-02-20%20at%2019.50.43.png" width="75%">
 
-<img src="https://github.com/agongi/study/blob/master/quic/images/0rtt-graphic.png" width="75%">
+<img src="images/0rtt-graphic.png" width="75%">

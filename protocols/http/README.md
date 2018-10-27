@@ -17,7 +17,7 @@
 ```
 
 #### Index
-- [HTTP Cache-Control](https://github.com/agongi/study/tree/master/http/http-cache-control)
+- [HTTP Cache-Control](http/http-cache-control)
 
 ### HTTP/1.1
 #### Keep-alive
@@ -30,7 +30,7 @@ HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default:
 #### N-TCP-Connection
 Client is able to create 2-TCP-Connections per domain to get over performance limitation. The total number is vary.
 
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.39.28.png" width="75%">
+<img src="images/Screen%20Shot%202017-04-11%20at%2001.39.28.png" width="75%">
 
 > Trick: Negotiate max-connection to each sub-domain e.g. 2-Connections per image.google.com, 2-Connections per video.google.com
 
@@ -45,7 +45,7 @@ Pipelining enables client to send all request in parallel before receives respon
 SPDY is invented by Google to improve HTTP/1.1 flaws. The core developers of SPDY have been involved in the development of HTTP/2, including both Mike Belshe and Roberto Peon. As of February 2015, Google has announced that following the recent final ratification of the HTTP/2 standard, support for `SPDY would be deprecated`, and that support for SPDY would be withdrawn completely in 2016.
 
 #### Binary framing layer
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.44.59.png" width="75%">
+<img src="images/Screen%20Shot%202017-04-11%20at%2001.44.59.png" width="75%">
 
 The `layer` refers to a design choice to introduce a new optimized encoding mechanism between the socket interface and the higher HTTP API exposed to our applications: the HTTP semantics, such as verbs, methods, and headers, are unaffected, but the way they are encoded while in transit is different. Unlike the **newline delimited plaintext** HTTP/1.x protocol, all HTTP/2 communication is split into smaller **messages** and **frames**, each of which is encoded in binary format.
 
@@ -55,7 +55,7 @@ As a result, both client and server must use the new binary encoding mechanism t
 - Message: A complete sequence of frames that map to a logical request or response message.
 - Frame: The smallest unit of communication in HTTP/2, each containing a frame header, which at a minimum identifies the stream to which the frame belongs.
 
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.37.17.png" width="75%">
+<img src="images/Screen%20Shot%202017-04-11%20at%2001.37.17.png" width="75%">
 
 The relation of these terms can be summarized as follows:
 
@@ -73,7 +73,7 @@ One TCP Connection means that client need to negotiate 3-way-handshake once and 
 #### Multiplexing
 The new binary framing layer in HTTP/2 resolves the head-of-line blocking problem found in HTTP/1.x and eliminates the need for multiple connections to enable parallel processing and delivery of requests and responses.
 
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202017-04-11%20at%2001.37.08.png" width="75%">
+<img src="images/Screen%20Shot%202017-04-11%20at%2001.37.08.png" width="75%">
 
 The snapshot captures multiple streams in flight within the same connection. The client is transmitting a DATA frame (stream 5) to the server, while the server is transmitting an interleaved sequence of frames to the client for streams 1 and 3. As a result, there are three parallel streams in flight.
 
@@ -93,7 +93,7 @@ Server can push static resources e.g. css and/or javascript **BEFORE** respond H
 
 Pushed resources are cached in browser and `cache-hit (HTTP 304 Not Modified)`.
 
-<img src="https://github.com/agongi/study/blob/master/http/images/Screen%20Shot%202016-02-02%20at%2000.34.17.png" width="75%">
+<img src="images/Screen%20Shot%202016-02-02%20at%2000.34.17.png" width="75%">
 
 #### Priority
 Client could `set priority` in request so when server receives it, It can set up priority in processing and response it rather than others.
