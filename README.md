@@ -1,38 +1,38 @@
-### WEB/WAS
-- [Apache](https://github.com/agongi/study/tree/master/apache/)
-- [Tomcat](https://github.com/agongi/study/tree/master/tomcat/)
+### WEBWAS
+- [Apache](apache)
+- [Tomcat](tomcat)
 
 ### Framework
-- [Spring Common](https://github.com/agongi/study/tree/master/spring-common/)
-- [Spring Boot](https://github.com/agongi/study/tree/master/spring-boot/)
-- [Spring Batch](spring-batch/)
+- [Spring Common](spring-common)
+- [Spring Boot](spring-boot)
+- [Spring Batch](spring-batch)
 
 ### Dev
 - BE
-  - [Java](https://github.com/agongi/study/tree/master/java/)
-  - [Java Concurrency](https://github.com/agongi/study/tree/master/java-concurrency/)
+  - [Java](java)
+  - [Java Concurrency](java-concurrency)
   - [RxJava](rxjava)
-  - [Architecture](https://github.com/agongi/study/tree/master/server-architect/)
+  - [Architecture](server-architect)
 - FE
   - [HTML](html)
-  - [JavaScript](https://github.com/agongi/study/tree/master/javascript/)
+  - [JavaScript](javascript)
   - React
 - Persistence
-  - [RDBMS](https://github.com/agongi/study/tree/master/rdbms/)
-  - [ORM](https://github.com/agongi/study/tree/master/orm/)
+  - [RDBMS](rdbms)
+  - [ORM](orm)
 - Core
   - [Servlet](servlet)
 
 ### [Protocols](protocols)
 
 ### Security
-- [TLS (Transport Layer Security)](https://github.com/agongi/study/tree/master/tls/)
-- [SAN (Subject Alternative Name)](https://github.com/agongi/study/tree/master/san/)
-- [Diffie–Hellman key Exchange](https://github.com/agongi/study/tree/master/diffie–hellman/)
-- [PFS (Perfect Forward Secrecy)](https://github.com/agongi/study/tree/master/pfs/)
-- [E2EE (End-to-End Encryption)](https://github.com/agongi/study/tree/master/e2ee/)
+- [TLS (Transport Layer Security)](tls)
+- [SAN (Subject Alternative Name)](san)
+- [Diffie–Hellman key Exchange](diffie–hellman)
+- [PFS (Perfect Forward Secrecy)](pfs)
+- [E2EE (End-to-End Encryption)](e2ee)
 - OCSP Stapling
 
 ### Miscellaneous
-- [Book](https://github.com/agongi/study/tree/master/book/)
-- [ETC](https://github.com/agongi/study/tree/master/etc/)
+- [Book](book)
+- [ETC](etc)
