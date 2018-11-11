@@ -25,13 +25,7 @@
 
 ### [Protocols](protocols)
 
-### Security
-- [TLS (Transport Layer Security)](tls)
-- [SAN (Subject Alternative Name)](san)
-- [Diffie–Hellman key Exchange](diffie–hellman)
-- [PFS (Perfect Forward Secrecy)](pfs)
-- [E2EE (End-to-End Encryption)](e2ee)
-- OCSP Stapling
+### [Security](security)
 
 ### Miscellaneous
 - [Book](book)

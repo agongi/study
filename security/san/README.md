@@ -19,7 +19,7 @@ The Subject Alternative Name (SAN), also known as Unified Communications Certifi
 ```
 
 #### 1. Wildcard certificate
-![img-san-wildcard-certificate](https://github.com/agongi/study/blob/master/san/images/Wildcard_SSL_certificate_Explanation.jpg)
+![img-san-wildcard-certificate](images/Wildcard_SSL_certificate_Explanation.jpg)
 
  - `Unlimited` count of single level of subdomains
  - Doesn't support different domain
@@ -36,7 +36,7 @@ Supported domains are following.
 ```
 
 #### 2. SAN certificate
-![img-san-san-certificate](https://github.com/agongi/study/blob/master/san/images/geotrust_san.png)
+![img-san-san-certificate](images/geotrust_san.png)
 
 - `Limited` count of single level of subdomains
 
