@@ -11,7 +11,7 @@
 - BE
   - [Java](java)
   - [Java Concurrency](java-concurrency)
-  - [RxJava](rxjava)
+  - [Reactive Stream](reactive-stream)
   - [Architecture](server-architect)
 - FE
   - [HTML](html)

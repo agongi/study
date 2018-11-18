@@ -1,10 +1,14 @@
-## RxJava
+## Reactive Stream
 
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://proandroiddev.com/understanding-rxjava-subscribeon-and-observeon-744b0c6a41ea
 ```
+
+### Index
+- [Reactor](reactor)
+- [RxJava](#)
 
 scheduler - thread pool
 
@@ -17,12 +21,9 @@ subscribeOn
 observeOn
 쓰레드를 선언한 다음부터 새로운 쓰레드가 선언되기 전까지 데이터 처리에 동작할 쓰레드를 할당합니다.
 
-
-
 subscribeOn() 은 체인 어디에 정의하든 상관없이 최상위에있는것처럼동작, 여러번정의해도 first one 만 적용 나머지는 무시
 한번선택된 thread in Schedulers 가 혼자 처리한다 (thread assigned per requests, thread per flow)
 -> flatmap 으로 pick-up 하도록 풀어줘야함
-
 
 Observable 을 Subscribe 한다
 
