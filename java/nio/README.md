@@ -12,29 +12,19 @@
 - [Files](files)
 
 ### 1. Channel vs Stream
-stream is directional (1-way)
- : read Stream
- : write Stream
-
-channel is bi-directional (2-way)
- : read/write channel
+- stream is directional (1-way)
+  - read Stream
+  - write Stream
+- channel is bi-directional (2-way)
+  - read/write channel
 
 ### 2. Buffer vs Stream
-stream is the model of realtime transfer
- : 1 byte in, 1 byte out
+- stream is the model of realtime transfer
+  - 1 byte in, 1 byte out (no buffering)
+- buffer is the mechanism of storing a mount of data before transfer
+  - 1 byte in, more bytes comes then send
 
-buffer is the mechanism of storing a mount of data before transfer
- : 1 byte in, more bytes comes then send
-
- > Buffer has more performance benefit rather than stream.
-
-### 3. File I/O
-https://homoefficio.github.io/2017/02/19/Blocking-NonBlocking-Synchronous-Asynchronous/
-
-https://homoefficio.github.io/2016/08/13/%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-AsynchronousFileChannel%EB%A1%9C-%EB%8B%A4%EB%A4%84%EB%B3%B4%EA%B8%B0/
-
-
-### 4. TCP (Connection-Oriented) Blocking Channel
+### 3. TCP (Connection-Oriented) Blocking Channel
 **Server**
  - open()
  - bind()
@@ -67,10 +57,7 @@ one thread per request -> any thread in `threadPool` per request with `queue`.
 
 <img src="images/Screen%20Shot%202016-05-15%20at%2016.43.12.png" width="75%">
 
-### 5. TCP (Connection-Oriented) Non-Blocking Channel
-selector
-
-### 6. UDP
+### 4. UDP
 **Server**​
  - open()
  - bind()​

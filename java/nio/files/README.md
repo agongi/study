@@ -2,6 +2,9 @@
 
 ```
 ㅁ Author: suktae.choi
+ㅁ References:
+- https://homoefficio.github.io/2017/02/19/Blocking-NonBlocking-Synchronous-Asynchronous/
+- https://homoefficio.github.io/2016/08/13/%EB%8C%80%EC%9A%A9%EB%9F%89-%ED%8C%8C%EC%9D%BC%EC%9D%84-AsynchronousFileChannel%EB%A1%9C-%EB%8B%A4%EB%A4%84%EB%B3%B4%EA%B8%B0/
 ```
 
 ### Write
@@ -155,6 +158,9 @@ public void fileChannelTest() {
 }
 ```
 
+#### AsynchronousFileChannel.read(byteBuffer)
+TBD
+
 ### Read
 #### Files.readAllByte(path), readAllLines(path)
 ```java
@@ -300,3 +306,6 @@ public void fileChannelTest() {
     }
 }
 ```
+
+#### AsynchronousFileChannel.write(byteBuffer)
+TBD
