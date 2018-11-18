@@ -97,9 +97,9 @@ This wraps keys as WeakReference
 <img src="images/Screen%20Shot%202017-08-19%20at%2002.05.18.png" width="75%">
 
 #### ConcurrentHashMap
-Partial-lock on write
+- partial row-lock on write
+  - better performance than ``Collections.synchronizedMap()``
 
-Those examples are available on HashMap but useful in concurrency condition
 ```java
 Integer value = map.get("no2");
 if (value == null) {
@@ -137,5 +137,5 @@ Natural-order
 - read no-lock / write lock
 
 #### Collections.synchronizedMap(new HashMap())
-- Simple wrap of origin map with wrap synchronized-block in all methods
-- read lock / write lock (entire table-lock, not row-lock)
+- entire table-lock on read/write
+  - low performance
