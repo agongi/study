@@ -47,6 +47,7 @@
 - [Number](number)
 - [Data Type](data-type)
 - [Pattern-Matcher](pattern-matcher)
+- [StopWatch](stop-watch)
 
 ### Design Pattern
 - [Factory Pattern](factory-pattern)

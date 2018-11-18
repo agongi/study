@@ -20,7 +20,6 @@
 
 ### To do
 - [CountDownLatch vs CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html)
-- 용어정리 (동기 vs 비동기, 병렬 vs 직렬)
 
 ### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)
