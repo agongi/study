@@ -37,3 +37,4 @@ Reading status
 - [2017-04-11] Steve Jobs, [Thoughts on Flash](http://www.apple.com/hotnews/thoughts-on-flash/)
 - [2017-06-06] [쇼미더머니: 실리콘밸리 에디션](http://www.popit.kr/%EC%87%BC%EB%AF%B8%EB%8D%94%EB%A8%B8%EB%8B%88-%EC%8B%A4%EB%A6%AC%EC%BD%98%EB%B0%B8%EB%A6%AC-%EC%97%90%EB%94%94%EC%85%98/)
 - [2018-06-17] [어깨결림, 허리통증, 두통에 시달리다가 턱걸이로 고친 이야기](https://www.clien.net/service/board/use/12246257)
+- [2018-11-28] [퇴근길에 만난 대학생](https://www.clien.net/service/board/park/12874499)
