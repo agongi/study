@@ -1,15 +1,30 @@
 ## Proxy Protocol
-The PROXY protocol provides a convenient way to **safely transport connection information** such as a client's address across multiple layers of NAT or TCP proxies.
-
-> **proxy-protocol header is transferred to each endpoints additionally** just after TCP connection established
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.12.14
 ㅁ References:
- - http://www.haproxy.org/download/1.7/doc/proxy-protocol.txt
- - http://blog.leedoing.com/23
+- http://www.haproxy.org/download/1.7/doc/proxy-protocol.txt
+- https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/
+- https://www.haproxy.com/blog/preserve-source-ip-address-despite-reverse-proxies/
 ```
 
-#### Approach
-It is easy to perform for the sender (just send a short header once the connection is established) and to parse for the receiver (simply perform one read() on the incoming connection to fill in addresses after an accept). The protocol used to carry connection information across proxies was thus called the PROXY protocol.
+`Proxy Protocol` is used between proxies (hence its name) or between a proxy and a server which could understand it.
+source IP is changed in each hop of network routing, so it is not possible to understand origin (client) IP of sender.
+
+<img src="images/..." width="75%">
+
+If proxy protocol is enabled, `PROXY TCPx` prefix is attached in start of TCP payload. (generally starts of HTTP protocol)
+
+```
+|----- TCP Header -----||---- TCP Payload ----||- Checksum -|
+  src port : dest port   PROXY TCP4 {HTTP ...}
+
+// tcp payload (HTTP start)
+PROXY TCP4 192.168.0.2 192.168.0.5 56487 443\r\n
+GET / HTTP 2.0\r\n
+Host: 192.168.0.5\r\n ....
+```
+
+<img src="images/..." width="75%">
+
+> Prefix `PROXY TCPx` is not a spec of HTTP protocol, so It will fail whether both proxies are enable proxy protocol.
