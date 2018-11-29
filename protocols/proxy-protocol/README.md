@@ -8,10 +8,10 @@
 - https://www.haproxy.com/blog/preserve-source-ip-address-despite-reverse-proxies/
 ```
 
-`Proxy Protocol` is used between proxies (hence its name) or between a proxy and a server which could understand it.
-source IP is changed in each hop of network routing, so it is not possible to understand origin (client) IP of sender.
+`Proxy Protocol` is used between proxies (hence its name) or between a proxy and a server which could understand it. <br>
+Source IP is changed in each hop of network routing, so it is not possible to understand origin (client) IP of sender.
 
-<img src="images/..." width="75%">
+<img src="images/Proxy-protocol-figure-1.png" width="75%">
 
 If proxy protocol is enabled, `PROXY TCPx` prefix is attached in start of TCP payload. (generally starts of HTTP protocol)
 
@@ -25,6 +25,6 @@ GET / HTTP 2.0\r\n
 Host: 192.168.0.5\r\n ....
 ```
 
-<img src="images/..." width="75%">
+<img src="images/j4uRp.png" width="75%">
 
 > Prefix `PROXY TCPx` is not a spec of HTTP protocol, so It will fail whether both proxies are enable proxy protocol.
