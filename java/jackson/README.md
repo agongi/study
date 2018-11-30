@@ -60,7 +60,7 @@ String jsonString = "{\"name\":\"suktae\"}";
 Person person = mapper.readValue(jsonString, Person.class);
 ```
 
-#### from Collection<Object>
+#### from Collection\<Object>
 ```java
 // TypeFactory (== JavaType)
 JavaType type = mapper.getTypeFactory.constructCollectionType(List.class, SomeClass.class);
