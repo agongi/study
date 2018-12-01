@@ -72,5 +72,7 @@ List<SomeClass> list = mapper.readValue(jsonString, new TypeReference<List<SomeC
 
 - TypeFactory
   - dynamic: can be diverse in runtime
+  - no anonymous instance is created 
 - TypeReference
   - static: must be known in compile-time
+  - anonymous instance is created: new TypeReference()
