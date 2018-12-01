@@ -5,7 +5,6 @@ The WebSocket Protocol is an `independent TCP-based protocol`. Its only relation
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.05.11 ~ 06.03
 ㅁ References:
  - https://en.wikipedia.org/wiki/WebSocket
  - http://www.joinc.co.kr/w/man/12/websocket
@@ -80,7 +79,7 @@ HTTP/1.1 101 Switching Protocols
 
 WebSocket request & response headers:
 
-<img src="images/Screen%20Shot%202016-05-11%20at%2001.17.50.png" width="75%">
+<img src="images/Screen%20Shot%202016-05-11%20at%2001.30.50.png" width="75%">
 
  - Data transfer is done within one TCP connection lifecycle.
  - `No extra headers after handshake`. You might notice that the "length" column represents each packet's size, it is less than 100 bytes by average in my case and it only depend on exact transferred data size.
