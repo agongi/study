@@ -1,9 +1,7 @@
 ## Books
-Reading status
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.05.04
 ```
 
 #### Major
@@ -19,6 +17,7 @@ Reading status
 - **[18.04.01 ~ 05.04]** 길벗, 자바로 배우는 리팩토링 입문
 - **[18.05.19 ~ 11.02]** 에이콘, 스프링5.0 마이크로서비스. 2nd edition
 - **[18.11.05 ~]** 에이콘, 토비의 스프링 3
+- **[18.12.03 ~ 12.09]** GOOGLE, Open session in view pattern
 
 #### Literary
 - **[16.03.01 ~ 08.11]** 이영도, 드래곤라자
