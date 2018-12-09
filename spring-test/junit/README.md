@@ -2,11 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 ```
-
-### Index
-
 
 ### Intro
 #### @RunWith

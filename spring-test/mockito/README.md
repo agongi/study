@@ -7,11 +7,9 @@
 - https://stackoverflow.com/questions/15976008/using-mockito-to-stub-and-execute-methods-for-testing
 ```
 
-### Index
-
 ### Intro
 #### @Mock
-- All methods are stubbed. (Override)
+- `All methods` are stubbed. (Override)
 - invoke method will do nothing unless it is specified
 
 ```java
@@ -22,7 +20,7 @@ Person p = Mockito.mock(Person.class);
 ```
 
 #### @Spy
-- Only specified methods are stubbed. (Overload)
+- `Only specified methods` are stubbed. (Overload)
 - invoke method will do origin behavior unless it is specified
 
 ```java
@@ -91,3 +89,8 @@ public class ExampleTest {
   }
 }
 ```
+
+### Usage
+- given
+- when
+- then
