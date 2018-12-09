@@ -2,50 +2,53 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.05.12
 ㅁ References:
  - http://blog.eomdev.com/java/2016/04/01/%EC%9E%90%EB%B0%948%EC%9D%98-java.time-%ED%8C%A8%ED%82%A4%EC%A7%80.html
  - http://d2.naver.com/helloworld/645609
 ```
 
-### ToString(), ToDate()
+### Convert
+#### Date <-> String
 ```java
-// ToString()
+// date to string
 Date date = new Date();
 String dateString = DateFormatUtils.format(date, "yyyy-MM-dd");
 
 ////////////////////////////////////////////////////////////////////
 
-// toDate()
+// string to date
 String now = "2018-10-01";
 Date date = DateUtils.parseDate(now, "yyyy-MM-dd");
-
-////////////////////////////////////////////////////////////////////
-
-// Convert() from/to String
-Date parsedDate = DateUtils.parseDate("201712", "yyyyMM");
-String appliedDate = DateFormatUtils.format(parsedDate, "yyyyMMdd");
-
-////////////////////////////////////////////////////////////////////
-
-// toString() with Spring support
-@DateTimeFormat("yyyy-MM-dd")
-private String dateString;
 ```
 
-### DateUtils
-- commons.lang3
+#### Bind
+```java
+// DB to Entity
+@DateTimeFormat("yyyy-MM-dd")
+private String dateString;
+
+// API to VO
+@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMddHHmmss", timezone="Asia/Seoul")
+private Date regDate;
+```
+
+### Operation
+#### Modification
 ```java
 Date date = new Date();
-date = DateUtils.setYears(date, 2018); // set
-date = DateUtils.addMonths(date, -1); // plus, minus
+
+// set year/month/day
+date = DateUtils.setYears(date, 2018);
+// add (plus,minus) year/month/day
+date = DateUtils.addMonths(date, -1);
+// truncate (20181130121212) to 20181100000000
 date = DateUtils.truncate(date, Calendar.MONTH); // truncate
 ```
 
-### Comparison
+#### Comparison
 ```java
 Date date1 = new Date();
-date1 = DateUtils.setYears(date1, 2018);
+date1 = DateUtils.addMonths(date1, 1);
 
 Date date2 = new Date();
 
