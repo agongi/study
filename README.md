@@ -1,4 +1,5 @@
-### WEBWAS
+### WEB/WAS
+- Nginx
 - [Apache](apache)
 - [Tomcat](tomcat)
 
@@ -6,6 +7,7 @@
 - [Spring Common](spring-common)
 - [Spring Boot](spring-boot)
 - [Spring Batch](spring-batch)
+- [Spring Test](spring-test)
 
 ### Dev
 - BE
