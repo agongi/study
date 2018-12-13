@@ -32,6 +32,7 @@
 - [ThreadLocal in Spring Bean](threadlocal-in-spring-bean)
 - [RestTemplate](resttemplate)
 - [MessageSourceAccessor](message-source-accessor)
+- [AspectJ](aspectj)
 
 ### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
