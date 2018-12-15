@@ -7,7 +7,7 @@
 ```
 
 ### PointCut
-@AfterReturning(pointcut = "@annotation(com.naver.ncp.sell.annotation.securityLog.IimsSecurityLogWritable) && (execution(* com.naver.game..*Controller.*(..)))", returning = "returnObject")
+
 
 ### Advice
 #### Normal
