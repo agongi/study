@@ -7,7 +7,7 @@
 ```
 
 ### PointCut
-
+<img src="images/Screen%20Shot%202018-12-15%20at%2018.32.19.png" width="75%">
 
 ### Advice
 #### Normal
