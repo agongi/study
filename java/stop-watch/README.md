@@ -3,7 +3,6 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-
 ```
 
 ### StopWatch
