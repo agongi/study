@@ -8,7 +8,9 @@
  - https://www.mkyong.com/java/java-convert-object-to-map-example/
 ```
 
-### [Annotations](http://www.baeldung.com/jackson-annotations)
+### Blog
+- [Annotations](http://www.baeldung.com/jackson-annotations)
+- [MixIn](https://github.com/FasterXML/jackson-docs/wiki/JacksonMixInAnnotations): Entity 수정없이 선택적으로 필드 포함/제외
 
 ### Serialize
 #### to JSON
@@ -72,7 +74,7 @@ List<SomeClass> list = mapper.readValue(jsonString, new TypeReference<List<SomeC
 
 - TypeFactory
   - dynamic: can be diverse in runtime
-  - no anonymous instance is created 
+  - no anonymous instance is created
 - TypeReference
   - static: must be known in compile-time
   - anonymous instance is created: new TypeReference()
