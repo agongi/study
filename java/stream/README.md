@@ -9,7 +9,7 @@
  - https://www.mkyong.com/java8/java-8-flatmap-example/
 ```
 
-<img src="https://github.com/agongi/study/blob/master/java/stream/images/figure2.jpg" width="75%">
+<img src="images/figure2.jpg" width="75%">
 
 ### Stream API
 #### map()
@@ -77,15 +77,29 @@ list.stream()
     // ..
 ```
 
+#### of()/concat()
+
+```java
+// of() create stream with
+Stream.of("a", "b", "c")
+    .filter(Objects::nonNull)
+    // ...
+    
+// concat() merge stream with
+Stream.concat(
+    Arrays.asList("a", "b").stream(),
+    Stream.of("c")
+).collect(Collectors.toList());
+```
+
 #### distinct()
+
 ```java
 // remove duplicated
 list.stream()
     .distinct()
     // ...
 ```
-
-#### reduce()
 
 
 #### sorted()
@@ -104,8 +118,10 @@ List<Object> sortedList = list.stream()
     .collect(Collectors.toList());
 ```
 
-#### pick()
-stream 처리도중 중간결과를 로깅할때 필요
+#### peek()
+stream 처리도중 중간결과를 로깅할때 유효함
+
+> map 으로 대체가능하고, 많이 사용하지않음
 
 ### Optional API
 #### findAny()
@@ -203,11 +219,6 @@ list.stream().filter(name -> name.getId() != 0).findFirst().orElseGet(Name::new)
 ```java
 list.stream().filter(name -> name.getId() != 0).findFirst().orElseThrow(() -> new IllegalArgumentException());
 list.stream().filter(name -> name.getId() != 0).findFirst().orElseThrow(IllegalArgumentException::new);
-```
-
-#### Optional.ofNullable(obj);
-```java
-Optional.ofNullable(list).orElse(new Name(10, "haha"));
 ```
 
 ### Collectors
