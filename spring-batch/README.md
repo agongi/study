@@ -10,7 +10,9 @@
 
 ### Index
 - Flow
-- Reader
+- [Reader](reader)
+- [Writer](writer)
+- [Processor](processor)
 - Job Parameter & Execution
 
 ### Blog
@@ -20,3 +22,8 @@
 - [ExecutionContext 및 @JobScope, @StepScope](https://jojoldu.tistory.com/330)
 - [ItemReader 리턴타입](https://jojoldu.tistory.com/132)
 - [Flow](https://jojoldu.tistory.com/328)
+
+### Tasklet vs Reader/Processor/Writer
+
+- R/P/W is **chunk-based** (== commit-internal) processing
+- Tasklet is bundle of R/P/W
