@@ -2,28 +2,102 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.09
 ㅁ References:
- - https://stackoverflow.com/questions/15164864/how-to-accept-date-params-in-a-get-request-to-spring-mvc-controller
+- https://stackoverflow.com/questions/15164864/how-to-accept-date-params-in-a-get-request-to-spring-mvc-controller
+- https://stackoverflow.com/questions/37871033/spring-datetimeformat-configuration-for-java-time
+- https://jojoldu.tistory.com/361?category=635883
 ```
 
-### DateTime param in controller
+### Request
+
+#### JsonFormat
+
+@RequestBody
+
 ```java
-@RequestMapping(value="/users" , method=RequestMethod.GET)
-public ModelAndView getUsers(
-  @RequestParam(value = "since", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime since) {
+@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+public void getById(
+    @RequestBody RequestVO request,
+	BindingResult bindingResult) {
+    
     // ...
-  }
+}
+
+// @RequestBody
+@Data
+public class RequestVO {
+    private String name;
+	
+    // It is also working
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime regDate;
+    
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DatePatterns.DATETIME_SYSTEM_COMPACT, timezone = "Asia/Seoul")
+    private Date modDate;
+}
 ```
 
-### Timestamp in controller
+#### DateTimeFormat
+
+@ModelAttribute
+
 ```java
-@RequestMapping(value="/users" , method=RequestMethod.GET)
-public ModelAndView getUsers(
-  @RequestParam(value = "since", required = false) Long since {
+@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+public void getById(RequestVO request) {
     // ...
-  }
+}
 
-// service
-DateTime sinceValue = new DateTime(since.longValue());
+
+// @ModelAttribute
+@Data
+public class RequestVO {
+    private String name;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime regDate;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Date modDate;
+}
 ```
+
+@RequestParam
+
+```java
+// @RequestParam
+@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+public void getById(
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("regDate") LocalDateTime regDate,
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("modDate") Date modDate {
+    
+    // ...
+}
+```
+
+### Response
+
+#### JsonFormat
+
+@ResponseBody
+
+```java
+@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+public ResponseVO getById(@PathVariable("id") String id) {
+    // ...
+}
+
+// @ResponseBody
+@Data
+public class ResponseVO {
+    private String name;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DatePatterns.DATETIME_SYSTEM_COMPACT, timezone = "Asia/Seoul")
+	private Date regDate;
+}
+```
+
+#### DateTimeFormat
+
+Not working!
+
+> Jackson only cares POJO from/to json
