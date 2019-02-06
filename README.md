@@ -30,5 +30,4 @@
 ### [Security](security)
 
 ### Miscellaneous
-- [Book](book)
-
+- [Books](books)
