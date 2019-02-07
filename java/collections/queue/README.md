@@ -3,36 +3,22 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- http://oniondev.egloos.com/558949
+- https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
 ```
 
 ### Queue Implementations
-#### ArrayBlockingQueue
-A bounded blocking queue backed by an array. This queue orders elements FIFO (first-in-first-out)
-
-#### LinkedBlockingQueue
-An unbounded (optionally-bounded) blocking queue based on linked nodes. This queue orders elements FIFO (first-in-first-out)
-
-By default, capacity is defined Integer.MAX_VALUE
-
-#### TransferQueue
-LinkedTransferQueue
-
-A blocking queue in which producers may wait for consumers to receive elements.<br>
-a queue with 0 capacity, such as SynchronousQueue, put and transfer are effectively synonymous.
-
-#### SynchronousQueue
-A blocking queue in which each insert operation must wait for a corresponding remove operation by another thread, and vice versa (capacity 0)
-
-#### PriorityQueue
-An unbounded priority queue based in which elements are ordered in natural-order, or by a Comparator provided at construct time.<br>
-A priority does not permit insertion of non-comparable objects (doing so may result in ClassCastException).
-
-> PriorityBlockingQueue is blocking type of PriorityQueue
-
-#### DelayQueue
-An unbounded blocking queue of Delayed elements, in which an element can only be taken when its delay has expired
+- PriorityQueue - an unbounded priority queue backed by a heap
 
 ### Concurrent packages
-#### ConcurrentLinkedQueue
-An unbounded thread-safe queue based on linked nodes. This queue orders elements FIFO (first-in-first-out)
+- ConcurrentLinkedQueue - an unbounded thread-safe FIFO queue based on linked nodes
+  - ConcurrentLinkedDeque
+- LinkedBlockingQueue - an optionally bounded FIFO blocking queue backed by linked nodes
+  - LinkedBlockingDeque
+
+- ArrayBlockingQueue - a bounded FIFO blocking queue backed by linked nodes
+- LinkedTransferQueue - an unbounded TransferQueue based on linked nodes
+- PriorityBlockingQueue - an unbounded blocking priority queue backed by a heap
+- DelayQueue - a time-based scheduling queue backed by a heap
+~~- SynchronousQueue - a simple rendezvous mechanism that uses the BlockingQueue interface~~
+
+> blocking is that producers may wait for consumers to receive elements
