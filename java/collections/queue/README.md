@@ -19,6 +19,6 @@
 - LinkedTransferQueue - an unbounded TransferQueue based on linked nodes
 - PriorityBlockingQueue - an unbounded blocking priority queue backed by a heap
 - DelayQueue - a time-based scheduling queue backed by a heap
-~~- SynchronousQueue - a simple rendezvous mechanism that uses the BlockingQueue interface~~
+- ~~SynchronousQueue - a simple rendezvous mechanism that uses the BlockingQueue interface~~
 
 > blocking is that producers may wait for consumers to receive elements
