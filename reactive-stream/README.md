@@ -3,7 +3,8 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://proandroiddev.com/understanding-rxjava-subscribeon-and-observeon-744b0c6a41ea
+- https://projectreactor.io/docs/core/release/reference
+- https://javacan.tistory.com/search/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%A6%AC%EC%95%A1%ED%84%B0%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0
 ```
 
 ### Index
