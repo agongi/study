@@ -11,3 +11,6 @@
 - [PFS (Perfect Forward Secrecy)](pfs)
 - [E2EE (End-to-End Encryption)](e2ee)
 - OCSP Stapling
+- Encrypted SNI
+- Secure DNS
+- DNSSEC
