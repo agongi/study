@@ -12,5 +12,4 @@
 - [E2EE (End-to-End Encryption)](e2ee)
 - OCSP Stapling
 - Encrypted SNI
-- Secure DNS
-- DNSSEC
+- DNSCrypt, DNS Over HTTPS or TLS
