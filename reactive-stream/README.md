@@ -39,7 +39,7 @@ public interface Subscription {
 }
 ```
 
-![Screen Shot 2019-02-08 at 02.00.45](images/Screen Shot 2019-02-08 at 02.00.45.png)
+![Screen Shot 2019-02-08 at 02.00.45](images/Screen%20Shot%202019-02-08%20at%2002.00.45.png)
 
 #### Publisher (== `Observable` in RxJava)
 
