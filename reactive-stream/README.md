@@ -5,56 +5,899 @@
 ㅁ References:
 - https://projectreactor.io/docs/core/release/reference
 - https://javacan.tistory.com/search/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%A6%AC%EC%95%A1%ED%84%B0%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0
+- https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
 ```
 
-### Index
-- [Reactor](reactor)
-- [RxJava](#)
+### Reactive Stream 명세
 
-scheduler - thread pool
+#### Pub/Sub 구조
 
-Schedulers.io()
-Network IO 나 File IO 등을 처리하기 위한 쓰레드
-Schedulers.computation()
-단순 연산로직등에 사용되며 Event Looper 에 의해 동작하는 쓰레드
-subscribeOn
-데이터를 주입하는 시점에 대한 쓰레드 선언이며 모든 stream 내에서 최종적으로 선언한 쓰레드가 할당됩니다.
-observeOn
-쓰레드를 선언한 다음부터 새로운 쓰레드가 선언되기 전까지 데이터 처리에 동작할 쓰레드를 할당합니다.
+```java
+public interface Publisher<T> {
+    /**
+     * Request {@link Publisher} to start streaming data.
+     */
+    public void subscribe(Subscriber<? super T> s);
+}
 
-subscribeOn() 은 체인 어디에 정의하든 상관없이 최상위에있는것처럼동작, 여러번정의해도 first one 만 적용 나머지는 무시
-한번선택된 thread in Schedulers 가 혼자 처리한다 (thread assigned per requests, thread per flow)
--> flatmap 으로 pick-up 하도록 풀어줘야함
+public interface Subscriber<T> {
+    /**
+     * Invoked after calling {@link Publisher#subscribe(Subscriber)}.
+     *
+     * No data will start flowing until {@link Subscription#request(long)} is invoked.
+     * It is the responsibility of this {@link Subscriber} instance to call {@link Subscription#request(long)} whenever more data is wanted.
+     */
+    public void onSubscribe(Subscription s);
+    public void onNext(T t);
+    public void onError(Throwable t);
+    public void onComplete();
+}
 
-Observable 을 Subscribe 한다
+public interface Subscription {
+    public void request(long n);
+    public void cancel();
+}
+```
 
-<define>
-Observable ob = Observable.from() - hot (eager)
-Observable ob = Observable.create() - cold (lazy)
-Observable ob = Observable.just()
+![Screen Shot 2019-02-08 at 02.00.45](images/Screen Shot 2019-02-08 at 02.00.45.png)
 
-<operations>
-ob.subscribe();
+#### Publisher (== `Observable` in RxJava)
 
-ob.from()
-.map()
-.filter()
-.onNext()
-.onCompleted()
-.subscribe();
+- Flux - 0...N 개의 데이터를 가짐
 
-<execution over control>
-Subscription sub = ob.subscribe(...);
-sub.unsubscribe();
+  ```java
+  List<? extends T> datas
+  ```
+
+- Mono - 0...1 개의 데이터를 가짐
+
+  ```java
+  @Nullable T data;
+  ```
+
+#### Subscriber (== `Observer` in Rxjava)
+
+- 서비스로직 구현, 데이터를 소비
+  - Consumer<? super T>  consumer
+
+#### Subscription
+
+- executionContext 로 이해하면됨
+  - Publisher 의 data 참조하고, Subscriber 가 누구인지 알고있음
+  - Subscriber 와 실질적으로 통신하며 데이터를 전달
+  - beanScope.request 같이 해당 요청단위(== 구독) 에서만 유효함
+
+### Core Features
+
+#### Request/Response
+
+- [req] subscription.request(N)
+- [res] for (i = offset; i < N; i++) { subscriber.onNext(datas[i]) }
+
+```java
+/* request(1) */
+[req] subscriber -> subscription
+[res] subscriber <- subscription
+[req] subscriber -> subscription
+[res] subscriber <- subscription
+...
+    
+/* request(N) */
+[req] subscriber -> subscription
+[res] subscriber <- subscription
+[res] subscriber <- subscription
+[res] subscriber <- subscription
+[res] subscriber <- subscription
+... until N times
+```
+
+> request(1) 로 요청하면 polling 과 동일하게 동작한다.
+>
+> 불필요한 round-trip 을 방지하기위해, 내부적으로 request(N) 후 buffer 에 저장해서 1개씩 응답하는 구현체도 있다.
+
+#### Push/Pull
+
+- Pull
+  - 구독 (subscribe) 은 완료된 상태
+  - (subscriber -> publisher) #request
+  - (subscriber <- publisher) #onNext 로 데이터를 받음
+- Push
+  - 구독 (subscribe) 은 완료된 상태
+  - ~~(subscriber -> publisher) #request~~
+  - (subscriber <- publisher) #onNext 로 데이터를 받음
+
+#### Backpressure
+
+- [req] subscription.request(N) 에서 N 을 조절함
+  - 여유가있으면 - N++
+  - 여유가없으면 - N--
+
+```java
+.subscribe(new Subscriber<Integer>() {
+    private Subscription s;
+    private List<Integer> buffer = new ArrayList<>();
+	private final int DEFAULT_CHUNK_SIZE = 10;
+    private final int MAX_CAPACITY = 100;
+ 
+    @Override
+    public void onSubscribe(Subscription s) {
+        if (Objects.isNull(this.s)) {
+            this.s = s;
+        }
+        // 최초 요청
+        s.request(DEFAULT_CHUNK_SIZE);
+    }
+ 
+    @Override
+    public void onNext(Integer integer) {
+        buffer.add(s);
+
+        // backPressure 
+        subscription.request(buffer.size() > MAX_CAPACITY ? DEFAULT_CHUNK_SIZE / 2 : DEFAULT_CHUNK_SIZE);
+    }
+    
+    // ... onError(), onComplete()
+});
+```
+
+#### Hot/Cold
+
+- Cold (== no cache)
+  - lazy-evaluation
+  - subscriber 가 #subscribe() 할때 시점의 데이터를 매번 생성
+- Hot (== cached)
+  - no lazy
+  - 중간 데이터를 가지고 있음
+
+```java
+/* Cold */
+Flux.just(1, 2, 3, 4, 5)
+            .sort(Comparator.naturalOrder()) // sorting
+            .map(o -> Long.valueOf(o))	// instance 생성
+            .subscribe(o -> /* do something .. */ o.toString());
+
+Flux.just(1, 2, 3, 4, 5)
+            .sort(Comparator.naturalOrder()) // sorting
+            .map(o -> Long.valueOf(o)) // instance 생성
+            .subscribe(p -> /* do something .. */ p.toString());
+
+/* Hot */
+Flux<Long> sortedFlux = Flux.just(1, 2, 3, 4, 5)
+    .sort(Comparator.naturalOrder()) // sorting
+    .map(o -> Long.valueOf(o)) // instance 생성
+    .publish()       // cold -> hot
+    .autoConnect(2); // subscriber 가 2명되면, event emit
+
+sortedFlux.subscribe(/* do something .. */);
+sortedFlux.subscribe(/* do something .. */);
+```
+
+#### Schedulers (== thread pool)
+
+- Schedulers.immediate()
+
+> The current thread
+
+- Schedulers.single()
+- Schedulers.newSingle("pool-prefix")
+
+> Executors.newSingleThreadExecutor()
+>
+> - thread count: fixed (1)
+> - queue size: unbounded
+
+- Schedulers.parallel()
+- Schedulers.newParallel("pool-prefix", 4) // thread count: 4
+
+> Executors.newFixedThreadPool()
+>
+> - thread count: fixed (1..N, default count per cores)
+> - queue size: unbounded
+
+- Schedulers.elastic()
+- Schedulers.newElastic("pool-prefix", 300) // ttl 300s
+
+> Executors.newCachedThreadPool()
+>
+> - thread count: dynamic (1...unbounded, default ttl 60s)
+> - queue size: 0
+
+Reactor 에서 제공하는 blocking APIs (`block()`, `blockFirst()`, `blockLast()`,` toIterable()`, `toStream()`) 는 **elastic** 에서만 지원한다. 다른 Schedulers & Custom pool 은 IlegalStateException 이 발생
+
+> 생각해보면 unbounded-worker 가 생성되는 elastic 는 blocking APIs, bounded type 인 다른 풀은 미지원
+
+newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 명시적으로 dispose() 를 호출해서 종료필요
+
+#### publishOn/subscribeOn
+
+- publishOn
+  - 선언부분 아래부터 지정된 스케쥴러에서 async 로 수행 (== affected below)
+  - Typically used for ``fast publisher``, ``slow consumer(s)`` scenarios.
+- subscribeOn
+  - 지정된 스케쥴러에서 async 로 수행 (== affected emission)
+  - Typically used for ``slow publisher`` (e.g., blocking IO), ``fast consumer(s)`` scenarios.
+
+```java
+/* publishOn() */
+[main] Application main
+[main] subscribe()
+[main] onSubscribe()
+[main] just, create, generate
+[main] ...
+	publishOn("PUB1")	// affect below
+[PUB1] map
+[PUB1] flatMap
+[PUB1] filter
+
+/* subscribeOn() */
+[main] Application main
+[main] subscribe()
+[main] onSubscribe()
+[SUB1] just, create, generate // blocking IO
+[SUB1] ...
+[SUB1] map
+[SUB1] flatmap
+	subscribeOn("SUB1")	// affect emission
+	subscribeOn("SUB2") // ignored
+[SUB1] filter
+
+/* publishOn() + subscribeOn() */
+[main] Application main
+[main] subscribe()
+[main] onSubscribe()
+[SUB1] just, create, generate // blocking IO
+[SUB1] ...
+	publishOn("PUB1")
+[PUB1] map
+[PUB1] flatmap
+	subscribeOn("SUB1")	// affect emission
+	subscribeOn("SUB2") // ignored
+[PUB1] filter
+```
+
+#### ![Screen Shot 2019-02-10 at 23.48.55](images/Screen%20Shot%202019-02-10%20at%2023.48.55.png)
+
+### Sequence
+
+#### Generator
+
+- 이미 생성된 값으로 생성
+  - just
+  - range
+  - fromStream
+  - fromIterable
+
+```java
+// just
+Flux.just(0, 1, 2, 3, 4);
+
+// range
+flux.range(0, 4);
+
+// fromStream
+Flux.fromStream(Stream.of(0, 1, 2, 3, 4));
+
+// fromIterable
+Flux.fromIterable(Arrays.asList(0, 1, 2, 3, 4));
+```
+
+- generate
+  - push - 미지원
+    - 요청 - 응답 없음 (async)
+    - 요청 없음 - 응답 (async)
+    - 요청 1번 - 응답 N번
+  - multi-thread  - 미지원
+  - state - **지원**
+
+```java
+/* Consumer<T> */
+// 조건만족 확인못함 (state 가 없음)
+Flux.generate(o -> {
+	Random random = new Random();
+    int ranInt = random.nextInt();
+    
+    o.next(ranInt);
+    
+    if (/* 조건만족시 */ true) {
+        o.complete();
+    }
+});
+
+// 조건만족 확인위해, instance field 가 필요함 (state)
+Flux.generate(new Consumer<SynchronousSink<Integer>>() {
+	private int emitCount = 0;
+
+    @Override
+    public void accept(SynchronousSink<Integer> o) {
+        Random random = new Random();
+        int ranInt = random.nextInt();
+
+        o.next(ranInt);
+        emitCount++;
+
+        if (/* 조건만족시 */ emitCount > 10) {
+            o.complete();
+        }
+    }
+});
+
+/* Supplier<S>, BiFunction, Consumer<S> with state */
+// 조건만족 확인가능 (state 가 있음)
+Flux.generate(
+    () -> 0, // init
+    (state, o) -> {
+        Random random = new Random();
+        int ranInt = random.nextInt();
+
+        o.next(ranInt);
+
+        if (/* 조건만족시 */ state > 10) {
+            o.complete();
+        }
+        return state++;
+    },
+    state -> System.out.println("state: " + state) // destroy
+);
+```
+
+> 요청에 대한 응답을 **동기적으로 (sync)** 하는 케이스에 적합
+
+에러가 발생하는 케이스는
+
+```java
+// push 미지원
+Flux.generate(o -> {
+	Random random = new Random();
+    int ranInt = random.nextInt();
+    
+    o.next(ranInt);
+    o.next(ranInt);	// 요청 1번 - 응답 N번
+});
+
+java.lang.IllegalStateException: More than one call to onNext
+	at reactor.core.publisher.FluxGenerate$GenerateSubscription.next(FluxGenerate.java:157)
+	at SequenceTest.lambda$generateTest$0(SequenceTest.java:22)
+	at reactor.core.publisher.FluxGenerate.lambda$new$1(FluxGenerate.java:56)
+```
+
+```java
+// push 미지원
+Flux.generate(o -> {
+    Listener.addEventListener(new ListenerSupport() {
+        @Override
+        public void onData(int data) {
+            o.next(data);	// 요청 없음 - 응답 (async)
+        }
+        
+        @Override
+        public void onComplete() {
+            o.complete();
+        }
+    });
+    
+    // 요청 - 응답 없음 (async)
+});
+
+java.lang.IllegalStateException: The generator didn`t call any of the SynchronousSink method
+	at reactor.core.publisher.FluxGenerate$GenerateSubscription.slowPath(FluxGenerate.java:276)
+	at reactor.core.publisher.FluxGenerate$GenerateSubscription.request(FluxGenerate.java:204)
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.request(FluxPeekFuseable.java:138)
+	at reactor.core.publisher.BaseSubscriber.request(BaseSubscriber.java:212)
+	at ch4.CreateTest$3.hookOnSubscribe(CreateTest.java:86)	
+```
+
+- create
+  - push - **지원**
+    - 요청 - 응답 없음 (async)
+    - 요청 없음 - 응답 (async)
+    - 요청 1번 - 응답 N번
+  - multi-thread  - **지원**
+  - state - 없음
+
+```java
+/* Consumer<T> */
+// push 지원
+Flux.create(o -> {
+    Listener.addEventListener(new ListenerSupport() {
+        @Override
+        public void onData(int data) {
+            o.next(data); // 요청 없음 - 응답 (async)
+            o.next(data); // 요청 1번 - 응답 N번
+        }
+        
+        @Override
+        public void onComplete() {
+            o.complete();
+        }
+    });
+    
+    // 요청 - 응답 없음 (async)
+});
 
 
-<execution over pooling>
-// Subscribe 하는 클라이언트가, 발행된 아이템을 처리할때 사용하는 풀 지정
-Subscription sub = ob.subscribeOn(Schedulers.io()).subscribe(...);
-// Observable 이, 자신을 구독하는 client 에게 발생할때 사용하는 풀 지정
-Observable.observeOn(Schedulers.io()).from(...)
+/* Consumer<T>, OverflowStrategy */
+DROP - 데이터 누락
+LATEST - 마지막 신호만 전달
+ERROR - exception 발생
+IGNORE - 무시하고 신호 발생
+:: cause exception on subscriber
+BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
+:: cause exception (OOM) on publisher
+```
 
+> 요청에 대한 응답을 **비동기적으로 (async)** 하는 케이스에 적합
 
-<Observable types>
-Single - 1개의 아이템만 발행가능한 Observable (1개의 응답이 있는 메소드)
-Completable - 0개의 아이템이 발행가능한 Observable (void 형태의 메소드)
+- push (== create 와 유사함)
+  - push - **지원**
+    - 요청 - 응답 없음 (async)
+    - 요청 없음 - 응답 (async)
+    - 요청 1번 - 응답 N번
+  - multi-thread  - 미지원
+    - onNext, onComplete, onError 이벤트를 발행하는 thread 가 동일해야함
+  - state - 없음
+
+#### Operator
+
+- map
+- flatMap
+- filter
+- handle (== filter + map)
+
+### Errors
+
+```java
+Flux.just(1, 2, 0)
+    .map(i -> "100 / " + i + " = " + (100 / i)) // divide-by-zero
+    .subscribe(
+	    o -> System.out.println(o),	// onNext
+    	o -> System.out.println("errors: " + o)	// onError
+);
+```
+
+#### handle
+
+- onErrorReturn(T value)
+  - return given value
+- onErrorResume(Function<Throwable, Publisher\<T\>> fallback)
+  - start new sequence
+- onErrorMap(Function<Throwable, Throwable> mapper)
+  - catch & re-throw
+- onErrorContinue(BiConsumer<Throwable, Object> consumer)
+  - ignore element -> continue current sequence
+
+```java
+Flux.just(1, 2, 0, 3)
+    .map(i -> 100 / i)
+    .onErrorContinue((throwable, o) -> { // ignore element
+        System.out.println(throwable);
+        System.out.println("error element: " + o);
+    })
+    .onErrorMap(throwable -> new IllegalArgumentException()) // catch & re-throw
+    .onErrorResume(throwable -> Flux.just(5, 10, 50)) // start new sequence
+    .onErrorReturn(100) // return given value & exit
+    .subscribe(o -> System.out.println(o));
+```
+
+#### finally
+
+- doFinally(Consumer\<SignalType\> onFinally)
+  - finally
+- using
+  - try-with-resource
+
+```java
+/* onFinally#complete */
+Flux.just(1, 2, 3, 4, 5)
+    /**
+    * 종료이벤트가 발생되면, 바로 호출됨
+    */
+    .doFinally(exitType -> {
+        /**
+        * onComplete
+        * onError
+        * cancel
+        */
+        System.out.println("onFinally: " + exitType);
+    })
+    .subscribe(
+    o -> System.out.println("onNext: " + o),
+    o -> System.out.println("onError: " + o),
+    () -> System.out.println("onComplete")
+);
+// console 결과
+onNext: 1
+onNext: 2
+onNext: 3
+onNext: 4
+onNext: 5
+onComplete
+onFinally: onComplete
+
+/* onFinally#complete */
+Flux.just(1, 2, 3, 4, 5)
+    /**
+    * 종료이벤트가 발생되면, 바로 호출됨
+    */
+    .doFinally(exitType -> {
+        /**
+        * onComplete
+        * onError
+        * cancel
+        */
+        System.out.println("onFinally: " + exitType);
+    })
+    .take(1) // 1개 element 처리후, subscription#cancel 이벤트 발생
+    .subscribe(
+    o -> System.out.println("onNext: " + o),
+    o -> System.out.println("onError: " + o),
+    () -> System.out.println("onComplete")
+);
+// console 결과
+onNext: 1
+onFinally: cancel
+onComplete
+```
+
+```java
+/* using */
+Flux.using(
+    () -> Files.lines(Paths.get("owfs_file")), // read file
+    o -> {	// string to Flux
+        System.out.println(o);
+        return Flux.fromStream(o);
+    },
+    o -> { // finally
+        System.out.println("onFinally");
+        o.close();
+    }).subscribe(System.out::println);
+```
+
+#### retry
+
+- retry(long try)
+  - 무조건 재시도, 재시도 횟수 지정
+- retryWhen(Function<Throwable, Publisher\<T\>>)
+  - 에러가 발생할 때마다 에러가 companion Flux로 전달된다.
+  - companion Flux가 뭐든 발생하면 재시도가 일어난다.
+  - companion Flux가 종료되면 재시도를 하지 않고 원본 시퀀스 역시 종료된다.
+  - companion Flux가 에러를 발생하면 재시도를 하지 않고, 컴페니언 Flux가 발생한 에러를 전파한다.
+
+```java
+/* retry */
+Flux.just(1, 2, 3)
+    .log()
+    .map(i -> {
+        if (i < 3) {
+            return i;
+        } else {
+            throw new IllegalStateException();
+        }
+    })
+    .retry(1) // so
+    .subscribe(
+	o -> System.out.println("onNext: " + o),
+    err -> System.err.println("onError: " + err),
+    () -> System.out.println("onComplete")
+);
+// console 결과
+onNext: 1
+onNext: 2
+  -- exception
+onNext: 1
+onNext: 2
+IllegalStateException
+
+/* retryWhen */
+Flux.just(1, 2, 3)
+    .log()
+    .map(i -> {
+        if (i < 3) {
+            return i;
+        } else {
+            throw new IllegalStateException();
+        }
+    })
+    .retryWhen(errorsFlux -> errorsFlux
+    	.take(1))
+    .subscribe(
+		o -> System.out.println("onNext: " + o),
+    	err -> System.err.println("onError: " + err),
+	    () -> System.out.println("onComplete")
+);
+// console 결과
+onNext: 1
+onNext: 2
+  -- exception
+onNext: 1
+onNext: 2
+onComplete
+```
+
+#### re-throw
+
+Sequence 이벤트 발생시, try~catch 에서 잡힌 Exception 은 re-throw 가 안된다. 
+
+```java
+// exception throw 하는 method
+private String convert(int i) throws IOException {
+    throw new IOException();
+}
+
+public Flux<String> convertAsync() throws IOException { // throws IOException 선언 필요
+    try {
+        return convert(3);
+    } catch (Exception e) {
+        throw e;
+    }
+}
+```
+
+다른 예외로 convert 해서 우회가능하나, re-throw 하고싶으면 해당 예외를 wrapping 하는 유틸이 있다.
+
+- Exceptions.propagate(Throwable t)
+  - re-throw 된 예외를 wrap
+- Exceptions.unwrap(Throwable t)
+  - re-throw 된 예외를 unwrap
+
+```java
+// re-throw 가 안된다
+public Flux<String> convertAsync() throws IOException {
+    Flux.range(1, 10)
+    .map(o -> {
+        try {
+            return convert(o);
+        } catch (Exception e) {
+            throw e; // unhandled exception: IOException
+            // throw new IllegalArgumentException(); 로 바꿔서 던지는건 가능
+        }
+    });
+}
+```
+
+```java
+// wrap(re-throw) 해서 전파가능
+Flux.range(1, 10)
+    .map(i -> {
+        try {
+            return convert(i);
+        } catch (IOException e) {
+            throw Exceptions.propagate(e); // wrap & re-throw
+        }
+    })
+    .subscribe(
+    v -> System.out.println("onNext"),
+    e -> {
+        Throwable throwable = Exceptions.unwrap(e); // unwrap
+
+        if (throwable instanceof IOException) {
+            System.out.println("onError: IOException");
+        } else {
+            System.out.println("onError: Exception");
+        }
+    }
+);
+// console 결과
+onError: IOException
+```
+
+### Processors
+
+Publisher and/or Subscriber 가능
+
+```java
+final class DelegateProcessor<IN, OUT> extends FluxProcessor<IN, OUT> {
+    final Publisher<OUT> downstream;
+    final Subscriber<IN> upstream;
+
+    DelegateProcessor(Publisher<OUT> downstream, Subscriber<IN> upstream) {
+		this.downstream = Objects.requireNonNull(downstream, "Downstream must not be null");
+		this.upstream = Objects.requireNonNull(upstream, "Upstream must not be null");
+	}
+}
+```
+
+#### Direct
+
+broadcasting without circular-buffer
+
+- DirectProcessor
+  - backPressure - 미지원
+  - subscriber - N개
+- UnicastProcessor
+  - backPressure - 지원
+  - subscriber - 1개
+
+```java
+/* DirectProcessor */
+@Test
+public void directProcessorTest() {
+    // create processor
+    DirectProcessor<Integer> processor = DirectProcessor.create();
+    // create publisher
+    FluxSink<Integer> fluxSink = processor.sink();
+    processor.subscribe(o -> System.out.println("[1]=" + o));
+    
+    fluxSink.next(1); // processor 에서 파생된 publisher 에서 발행하거나
+    processor.onNext(2); // processor 에서 직접 발행할수도있고
+    
+    processor.subscribe(o -> System.out.println("[2]=" + o));
+
+    fluxSink.next(3);
+    fluxSink.next(4);
+}
+// console 결과
+[1]=1
+[1]=2
+[1]=3
+[2]=3
+[1]=4
+[2]=4
+```
+
+```java
+/* UnicastProcessor */
+@Test
+public void unicastProcessorTest() {
+    // create processor
+    UnicastProcessor<Integer> processor = UnicastProcessor.create(); // queue 전달가능, default unbounded-queue
+    // create publisher
+    FluxSink<Integer> fluxSink = processor.sink();
+    
+    fluxSink.next(1);
+    processor.onNext(2);
+    
+    processor.subscribe(o -> System.out.println("[1]=" + o));
+	// processor.subscribe(o -> System.out.println("[2]=" + o)); // exception
+
+    fluxSink.next(3);
+    fluxSink.next(4);
+}
+// console 결과
+[1]=1 -- rewind 과정
+[1]=2 -- rewind 과정
+[1]=3
+[1]=4
+    
+// console 결과 (exception)
+Caused by: java.lang.IllegalStateException: UnicastProcessor allows only a single Subscriber
+	at reactor.core.publisher.UnicastProcessor.subscribe(UnicastProcessor.java:430)
+	at reactor.core.publisher.Flux.subscribe(Flux.java:7743)
+	at reactor.core.publisher.Flux.subscribeWith(Flux.java:7907)
+```
+
+#### Synchronous
+
+looping internally (circular buffer), processing synchronously
+
+- EmitterProcessor
+  - backPressure - 지원
+  - subscriber - N개
+  - no cached
+- ReplayProcessor
+  - backPressure - 지원
+  - subscriber - N개
+  - cached (이전에 발행된 데이터를 캐싱)
+
+```java
+/* EmitterProcessor */
+@Test
+public void emitterProcessorTest() {
+    // create processor
+    EmitterProcessor<Integer> processor = EmitterProcessor.create();
+    // create publisher
+    FluxSink<Integer> fluxSink = processor.sink();
+
+    processor.subscribe(o -> System.out.println("[1]=" + o));
+
+    fluxSink.next(1);
+    processor.onNext(2);
+
+    processor.subscribe(o -> System.out.println("[2]=" + o));
+
+    fluxSink.next(3);
+    fluxSink.next(4);
+}
+// console 결과
+[1]=1
+[1]=2
+[1]=3
+[2]=3
+[1]=4
+[2]=4
+
+/* ReplayProcessor */
+동일한 코드로 ReplayProcessor 를 만든다면
+// console 결과
+[1]=1
+[1]=2
+[2]=1 -- rewind 과정
+[2]=2 -- rewind 과정
+[1]=3
+[2]=3
+[1]=4
+[2]=4
+```
+
+#### Asynchronous
+
+looping internally (circular buffer), processing asynchronously
+
+- TopicProcessor
+  - backPressure - 지원
+  - subscriber - N개
+  - no cached
+  - async
+- WorkQueueProcessor
+  - backPressure - 지원
+  - subscriber - N개 (1개의 subscriber 만 이벤트를 받음)
+  - no cached
+  - async
+
+```java
+/* TopicProcessor: sync */
+@Test
+public void topicProcessorTest() {
+    // create processor
+    TopicProcessor<Integer> processor = TopicProcessor.create(); // create 로 생성하면 sync
+    // create publisher
+    FluxSink<Integer> fluxSink = processor.sink();
+
+    processor.subscribe(o -> System.out.println("[1]=" + o));
+
+    fluxSink.next(1);
+	processor.onNext(2);
+
+    processor.subscribe(o -> System.out.println("[2]=" + o));
+
+    fluxSink.next(3);
+    fluxSink.next(4);
+}
+// console 결과
+[1]=1
+[1]=2
+[1]=3 -- sync
+[2]=3 -- sync
+[1]=4 -- sync
+[2]=4 -- sync
+    
+/* TopicProcessor: async */
+@Test
+public void topicProcessorAsyncTest() {
+    // create processor
+    TopicProcessor<Integer> processor = TopicProcessor.share("ASYNC-", 256); // thread-pool 지정 및 TopicProcessor#share 로 생성
+    // create publisher
+    FluxSink<Integer> fluxSink = processor.sink();
+
+    processor.subscribe(o -> System.out.println("[1]=" + o));
+
+    fluxSink.next(1);
+	processor.onNext(2);
+
+    processor.subscribe(o -> System.out.println("[2]=" + o));
+
+    fluxSink.next(3);
+    fluxSink.next(4);
+}
+// console 결과
+[1]=1
+[1]=2
+[1]=3 -- async
+[1]=4 -- async
+[2]=3 -- async
+[2]=4 -- async
+```
+
+```java
+/* WorkQueueProcessor */
+동일한 코드작성
+
+// console 결과
+[1]=1
+[1]=2
+[1]=3 -- one of subscriber
+[2]=4 -- one of subscriber
+```
+
+### Debug & Test
+
+https://kazuhira-r.hatenablog.com/entry/20180103/1514986183
