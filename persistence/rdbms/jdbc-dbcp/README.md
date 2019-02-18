@@ -8,4 +8,5 @@
  - http://d2.naver.com/helloworld/1321
 ```
 
-<img src="https://github.com/agongi/study/blob/master/rdbms/jdbc-dbcp/images/Screen%20Shot%202016-02-25%20at%2023.42.54.png" width=“75%”>
+<img src="images/Screen%20Shot%202016-02-25%20at%2023.42.54.png" width="75%">
+

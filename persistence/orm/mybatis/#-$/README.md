@@ -1,12 +1,10 @@
 ## #{...} vs ${...}
-#{...} is deal with **variable**, on the other hand ${...} is treated as **constant**.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.04.13
 ㅁ References:
- - http://marobiana.tistory.com/60
- - https://github.com/mybatis/mybatis-3/wiki/FAQ#what-is-the-difference-between--and-
+- http://marobiana.tistory.com/60
+- https://github.com/mybatis/mybatis-3/wiki/FAQ#what-is-the-difference-between--and-
 ```
 
 ### #{value}
@@ -14,13 +12,12 @@
 SELECT *
 FROM USER
 WHERE
-  NAME = ?
+  NAME = ? -- #{name}
 ```
 Sql is cached as prepared statement in driver, and the parameter are set in `?`
 
-- **Variable**
-  - Used in value
-    - column = #{value}
+- Used in value
+  - column = #{value}
 - double quotes are automatically marked
 ```sql
 SELECT *
@@ -34,18 +31,17 @@ WHERE
 SELECT *
 FROM ${table}
 WHERE
-  ${column} = ?
+  ${column} = "james"
 ```
 It is bound in sql statement itself
 
-- **Constant**
-  - Used in field or table
-    - ${column} = "value"
-    - ... FROM ${table}
+- Used in field or table
+  - ${column} = "value"
+  - SELECT * FROM ${table}
 - double quotes are not marked
 ```sql
 SELECT *
 FROM USER_COUNTRY
 WHERE
-  ID = ?
+  ID = "james"
 ```

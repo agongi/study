@@ -19,9 +19,7 @@
   - [HTML](html)
   - [JavaScript](javascript)
   - React
-- Persistence
-  - [RDBMS](rdbms)
-  - [ORM](orm)
+- [Persistence](persistence)
 - Core
   - [Servlet](servlet)
 
