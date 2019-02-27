@@ -7,7 +7,7 @@
 ```
 
 ### ForkJoinPool vs Executor Framework
-#### ForkJoinPool
+#### ForkJoinPool (== JVM default since JDK.7, used in parallelStream())
 - Worker - Runnable or Callable
 - Task - one per thread
 - Queue - One global queue for all shared tasks
