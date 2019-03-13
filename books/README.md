@@ -18,7 +18,8 @@
 - **[18.05.19 ~ 11.02]** 에이콘, 스프링5.0 마이크로서비스. 2nd edition
 - **[18.11.05 ~]** 에이콘, 토비의 스프링 3
 - **[18.12.03 ~ 12.09]** GOOGLE, Open session in view pattern
-- **[19.01.20 ~ ]** O'REILLY, RxJava를 활용한 리액티브 프로그래밍
+- **[18.12.26 ~ ]** Spring, Reactor Reference
+- **[19.01.20 ~ ]** YouTube, 토비의 봄 TV
 
 #### Literary
 - **[16.03.01 ~ 08.11]** 이영도, 드래곤라자

@@ -8,6 +8,10 @@
 - https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
 ```
 
+#### Index
+
+- [Blocking to Reactive](<http://wiki.sys4u.co.kr/pages/viewpage.action?pageId=7766994#id-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C%EB%A1%9C%EB%B0%B0%EC%9B%8C%EB%B3%B4%EB%8A%94Reactor-11.BlockingtoReactive>)
+
 ### Reactive Stream 명세
 
 #### Pub/Sub 구조
@@ -261,11 +265,12 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 
 #### Generator
 
-- 이미 생성된 값으로 생성
-  - just
-  - range
-  - fromStream
-  - fromIterable
+정해진 input (source emission) 에서 생성
+
+- just
+- range
+- fromStream
+- fromIterable
 
 ```java
 // just
@@ -280,6 +285,8 @@ Flux.fromStream(Stream.of(0, 1, 2, 3, 4));
 // fromIterable
 Flux.fromIterable(Arrays.asList(0, 1, 2, 3, 4));
 ```
+
+흘러들어오는 input (stream) 에서 생성
 
 - generate
   - push - 미지원
