@@ -63,3 +63,4 @@
 - [How to remove all elements from ArrayList in Java - Clear vs RemoveAll](http://javarevisited.blogspot.kr/2015/09/how-to-reset-arraylist-in-java-clear-vs-removeAll-example.html)
 - [Stream in other stream pipeline](https://stackoverflow.com/questions/36246998/stream-filter-of-1-list-based-on-another-list)
 - [How to cast List<Object> to List<MyClass>](https://stackoverflow.com/questions/1917844/how-to-cast-listobject-to-listmyclass)
+- [Understanding JIT](https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler)
