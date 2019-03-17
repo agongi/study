@@ -11,6 +11,7 @@
 #### Index
 
 - [Blocking to Reactive](<http://wiki.sys4u.co.kr/pages/viewpage.action?pageId=7766994#id-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C%EB%A1%9C%EB%B0%B0%EC%9B%8C%EB%B3%B4%EB%8A%94Reactor-11.BlockingtoReactive>)
+- [Proxy server with WebFlux](https://translate.googleusercontent.com/translate_c?depth=1&hl=ko&rurl=translate.google.co.kr&sl=ja&sp=nmt4&tl=en&u=https://kazuhira-r.hatenablog.com/entry/20180408/1523190124&xid=17259,15700023,15700186,15700190,15700248,15700253&usg=ALkJrhgdKV2YylUpbK6DdnJCS77pUGhknA)
 
 ### Reactive Stream 명세
 
@@ -265,7 +266,7 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 
 #### Generator
 
-정해진 input (source emission) 에서 생성
+정해진 source (ex. Collection) 에서 생성
 
 - just
 - range
@@ -286,7 +287,7 @@ Flux.fromStream(Stream.of(0, 1, 2, 3, 4));
 Flux.fromIterable(Arrays.asList(0, 1, 2, 3, 4));
 ```
 
-흘러들어오는 input (stream) 에서 생성
+Custom source (ex. 사용자입력) 에서 생성
 
 - generate
   - push - 미지원
@@ -393,7 +394,7 @@ java.lang.IllegalStateException: The generator didn`t call any of the Synchronou
 	at ch4.CreateTest$3.hookOnSubscribe(CreateTest.java:86)	
 ```
 
-- create
+- create(FluxSink\<T\>)
   - push - **지원**
     - 요청 - 응답 없음 (async)
     - 요청 없음 - 응답 (async)
@@ -907,4 +908,145 @@ public void topicProcessorAsyncTest() {
 
 ### Debug & Test
 
-https://kazuhira-r.hatenablog.com/entry/20180103/1514986183
+#### StepVerifier
+
+테스트할 대상인 Publisher 를 전달하고, onNext/onError/onComplete 가 발생시 예상되는 return 값을 검증하는 코드를 작성한다.
+
+- StepVerifier.create(Publisher\<T\>)
+
+Emission 되는 각각의 element 에 대해 assert 진행후, 마지막에 verify() 을 호출하여 (lazy-evaluation) 작성된 TC 를 수행한다.
+
+- expectNext(T)
+- expectComplete()
+- expectError()
+- verify()
+
+```java
+// 기본적인 emission test
+StepVerifier.create(Flux.just("foo", "bar"))
+  .expectNext("foo")	// onNext
+  .expectNext("bar")	// onNext
+  .expectComplete()	// onComplete
+  .verify();
+```
+
+Exception 이 예상되는 케이스는 다음과 같이 처리한다.
+
+```java
+// @Test(expected = Class<? extends Throwable>) 와 동일한 역할
+assertThatExceptionOfType(AssertionError.class)
+  .isThrownBy(() -> 
+		StepVerifier.create(...)
+		.verify())
+  .withMessage("AssertionError occur");
+```
+
+부가적인 로깅
+
+- as(String)
+
+```java
+private <T> Flux<T> appendError(Flux<T> source) {
+  return source.concatWith(Mono.error(new IllegalArgumentException("errorMsg")));
+}
+
+@Test
+public void testAppendError() {
+  Flux<String> source = Flux.just("foo", "bar");
+
+  Duration duration = StepVerifier.create(appendBoomError(source))
+    .expectNext("fuu")
+    .as("첫번째 expectNext() 실패")	// expectNext("fuu") 에서 실패시 detailMessage 출력
+    .expectNext("bar")
+    .expectErrorMessage("errorMsg")
+    .verify();
+}
+```
+
+#### Manipulate Time
+
+StepVerifier can be used in time-based scenario.
+
+- StepVerifier.withVirtualTime(Supplier<? extends Publisher>)
+
+```java
+// Publisher is delayed in specified duration
+StepVerifier.withVirtualTime(() -> Mono.delay(Duration.ofDays(1)).map(o -> "foo"))
+	// handling time
+```
+
+There are two expectation methods that deal with time
+
+- thenAwait(Duration) - 지정된 Duration 이후, 다음 event 의 test 수행
+- expectNoEvent(Duration) - 지정된 Duration 이후, event 가 발생하지 않음을 test
+
+```java
+/* thenAwait(Duration) */
+StepVerifier.withVirtualTime(() -> Mono.delay(Duration.ofDays(1)).map(o -> "foo"))
+  .thenAwait(Duration.ofDays(2))
+  .expectNext("foo")
+  .expectComplete()
+  .verify();
+```
+
+```java
+/* expectNoEvent() */
+StepVerifier.withVirtualTime(() -> Mono.delay(Duration.ofDays(1)))
+  .expectSubscription() 
+  .expectNoEvent(Duration.ofDays(1)) 
+  .expectNext(0L) 
+  .verifyComplete(); 
+```
+
+> `expectNoEvent` also considers the `subscription` as an event. If you use it as a first step, it usually fails because the subscription signal is detected. Use`expectSubscription().expectNoEvent(duration)` pattern instead.
+
+#### Context
+
+Reactor 는 기본적으로 async + parallel (선택적) 이므로 ThreadLocal 로 임시데이터를 관리하기 어렵다.
+
+그리고 stream-scoped 의 변수를 저장하기에 적합하지 않으므로 (ThreadLocal 은 thread-scoped) Reactor 3.1 부터 Context 를 지원한다. 더 자세한 내용은 Advanced Features 에 정리하고, StepVerifier 로 Context 를 테스트하는 방법은 크게 2가지가 있다.
+
+- expectAccessibleContext() - context 가 있음을 검증
+- expectNoAccessibleContext() - context 가 없음을 검증
+
+```java
+/* expectAccessibleContext() */
+StepVerifier.create(Mono.just(1), StepVerifierOptions.create().withInitialContext(Context.of("foo", "bar")))
+  .expectAccessibleContext()	// assert context is not null
+  .contains("foo", "bar")	// assert context contains
+  .then()	// put back to test
+  .expectNext(1)
+  .verifyComplete();
+```
+
+```java
+/* expectNoAccessibleContext() */
+StepVerifier.create(Mono.just(1))
+  .expectNoAccessibleContext()	// assert context is null
+  .expectNext(1)
+  .verifyComplete();
+```
+
+#### TestPublisher
+
+you have implemented your own operator and you want to verify how it behaves with regards to the Reactive Streams specification, especially if its source is not well behaved.
+
+#### PublisherProbe
+
+Before version 3.1, you would need to manually maintain one `AtomicBoolean` per state you wanted to assert and attach a corresponding `doOn*` callback to the publisher you wanted to evaluate. This could be a lot of boilerplate when having to apply this pattern regularly. Fortunately, since 3.1.0 there’s an alternative with `PublisherProbe`, as follows
+
+### Advanced Features
+
+#### Parallelizing
+
+Paralle Flux can starve your CPU's from any sequence whose work can be subdivided in concurrent tasks. Turn back into a `Flux`with `ParallelFlux#sequential()`, an unordered join or use arbitrary merge strategies via 'groups()'
+
+```java
+Mono.fromCallable( () -> System.currentTimeMillis() )
+	.repeat()
+    .parallel(8) //parallelism
+    .runOn(Schedulers.parallel())
+    .doOnNext( d -> System.out.println("I'm on thread "+Thread.currentThread()) )
+    .subscribe()
+```
+
