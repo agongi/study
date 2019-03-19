@@ -4,6 +4,7 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - http://arahansa.github.io/docs_spring/jpa.html
+- https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 ```
 
 ### Index
@@ -16,7 +17,6 @@
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
 - [Spring - Open Session In View](http://kingbbode.tistory.com/27)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
-
 
 @Transactional 이 begin; JDBC 연결이 수행됨
 hibernate session 을 연다; 영속성이 생성됨 (관리됨)
