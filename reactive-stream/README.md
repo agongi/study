@@ -13,9 +13,33 @@
 - [Blocking to Reactive](<http://wiki.sys4u.co.kr/pages/viewpage.action?pageId=7766994#id-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C%EB%A1%9C%EB%B0%B0%EC%9B%8C%EB%B3%B4%EB%8A%94Reactor-11.BlockingtoReactive>)
 - [Proxy server with WebFlux](https://translate.googleusercontent.com/translate_c?depth=1&hl=ko&rurl=translate.google.co.kr&sl=ja&sp=nmt4&tl=en&u=https://kazuhira-r.hatenablog.com/entry/20180408/1523190124&xid=17259,15700023,15700186,15700190,15700248,15700253&usg=ALkJrhgdKV2YylUpbK6DdnJCS77pUGhknA)
 
-### Reactive Stream 명세
+### Core Features
 
-#### Pub/Sub 구조
+#### Publisher (== `Observable` in RxJava)
+
+- Flux - 0...N 개의 데이터를 가짐
+
+  ```java
+  List<? extends T> datas
+  ```
+
+- Mono - 0...1 개의 데이터를 가짐
+
+  ```java
+  @Nullable T data;
+  ```
+
+#### Subscriber (== `Observer` in Rxjava)
+
+- 서비스로직 구현, 데이터를 소비
+  - Consumer<? super T>  consumer
+
+#### Subscription
+
+- executionContext 로 이해하면됨
+  - Publisher 의 data 참조하고, Subscriber 가 누구인지 알고있음
+  - Subscriber 와 실질적으로 통신하며 데이터를 전달
+  - beanScope.request 같이 해당 요청단위(== 구독) 에서만 유효함
 
 ```java
 public interface Publisher<T> {
@@ -45,34 +69,6 @@ public interface Subscription {
 ```
 
 ![Screen Shot 2019-02-08 at 02.00.45](images/Screen%20Shot%202019-02-08%20at%2002.00.45.png)
-
-#### Publisher (== `Observable` in RxJava)
-
-- Flux - 0...N 개의 데이터를 가짐
-
-  ```java
-  List<? extends T> datas
-  ```
-
-- Mono - 0...1 개의 데이터를 가짐
-
-  ```java
-  @Nullable T data;
-  ```
-
-#### Subscriber (== `Observer` in Rxjava)
-
-- 서비스로직 구현, 데이터를 소비
-  - Consumer<? super T>  consumer
-
-#### Subscription
-
-- executionContext 로 이해하면됨
-  - Publisher 의 data 참조하고, Subscriber 가 누구인지 알고있음
-  - Subscriber 와 실질적으로 통신하며 데이터를 전달
-  - beanScope.request 같이 해당 요청단위(== 구독) 에서만 유효함
-
-### Core Features
 
 #### Request/Response
 
@@ -143,38 +139,6 @@ public interface Subscription {
     
     // ... onError(), onComplete()
 });
-```
-
-#### Hot/Cold
-
-- Cold (== no cache)
-  - lazy-evaluation
-  - subscriber 가 #subscribe() 할때 시점의 데이터를 매번 생성
-- Hot (== cached)
-  - no lazy
-  - 중간 데이터를 가지고 있음
-
-```java
-/* Cold */
-Flux.just(1, 2, 3, 4, 5)
-            .sort(Comparator.naturalOrder()) // sorting
-            .map(o -> Long.valueOf(o))	// instance 생성
-            .subscribe(o -> /* do something .. */ o.toString());
-
-Flux.just(1, 2, 3, 4, 5)
-            .sort(Comparator.naturalOrder()) // sorting
-            .map(o -> Long.valueOf(o)) // instance 생성
-            .subscribe(p -> /* do something .. */ p.toString());
-
-/* Hot */
-Flux<Long> sortedFlux = Flux.just(1, 2, 3, 4, 5)
-    .sort(Comparator.naturalOrder()) // sorting
-    .map(o -> Long.valueOf(o)) // instance 생성
-    .publish()       // cold -> hot
-    .autoConnect(2); // subscriber 가 2명되면, event emit
-
-sortedFlux.subscribe(/* do something .. */);
-sortedFlux.subscribe(/* do something .. */);
 ```
 
 #### Schedulers (== thread pool)
@@ -266,12 +230,12 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 
 #### Generator
 
-정해진 source (ex. Collection) 에서 생성
+**정해진 source (ex. Collection) 에서 생성하는 방법**
 
-- just
-- range
-- fromStream
-- fromIterable
+- just()
+- range()
+- fromStream()
+- fromIterable()
 
 ```java
 // just
@@ -287,7 +251,7 @@ Flux.fromStream(Stream.of(0, 1, 2, 3, 4));
 Flux.fromIterable(Arrays.asList(0, 1, 2, 3, 4));
 ```
 
-Custom source (ex. 사용자입력) 에서 생성
+**Custom source (ex. 사용자입력) 에서 생성하는 방법**
 
 - generate
   - push - 미지원
@@ -443,13 +407,6 @@ BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
   - multi-thread  - 미지원
     - onNext, onComplete, onError 이벤트를 발행하는 thread 가 동일해야함
   - state - 없음
-
-#### Operator
-
-- map
-- flatMap
-- filter
-- handle (== filter + map)
 
 ### Errors
 
@@ -690,7 +647,7 @@ onError: IOException
 
 ### Processors
 
-Publisher and/or Subscriber 가능
+Publisher and/or Subscriber 가 모두 가능함
 
 ```java
 final class DelegateProcessor<IN, OUT> extends FluxProcessor<IN, OUT> {
@@ -906,7 +863,7 @@ public void topicProcessorAsyncTest() {
 [2]=4 -- one of subscriber
 ```
 
-### Debug & Test
+### Test
 
 #### StepVerifier
 
@@ -1029,11 +986,80 @@ StepVerifier.create(Mono.just(1))
 
 #### TestPublisher
 
-you have implemented your own operator and you want to verify how it behaves with regards to the Reactive Streams specification, especially if its source is not well behaved.
+실제 Publisher 를 사용하는게 어렵다면, TestPublisher 를 만들어서 이벤트 발행을 할수있다.
+
+- next(T)
+- complete()
+- error(Throwable)
+- emit(T…) - next(T) + complete()
+
+```java
+/* TestPublisher.create() */
+@Test
+public void testPublisher() {
+  TestPublisher publisher = TestPublisher.create()
+    .next("A")
+    .complete();
+
+  StepVerifier.create(publisher)
+    .expectNext("A")
+    .expectError()
+    .verify();
+}
+```
+
+> Flux.just("A") vs TestPublisher.create().next("A") 는 테스트 관점으로 보면 동일하지 않을까?
+
+의도적으로 예외상황 (ex. stackOverFlow 등) 을 만들수있다.
+
+```java
+/* TestPublisher.createNoncompliant(Enum.Violation) */
+@Test
+public void testPublisher() {
+  TestPublisher publisher = TestPublisher
+    .createNoncompliant(TestPublisher.Violation.REQUEST_OVERFLOW);
+
+  StepVerifier.create(publisher)
+    .expectNext("A")
+    .expectError()
+    .verify();
+}
+
+/* Enum.Violation */
+REQUEST_OVERFLOW - continuous onNext
+ALLOW_NULL - onNext(null)
+CLEANUP_ON_TERMINATE - onComplete + onError
+DEFER_CANCELLATION - ignore cancel signal
+```
+
+TestPublisher 도 Publisher 를 상속하여, 직접 사용할 수 있지만 Flux/Mono conversion 도 지원한다
+
+```java
+/* TestPublisher -> Flux/Mono */
+@Test
+public void testPublisher() {
+  TestPublisher publisher = TestPublisher.create()
+    .next("A")
+    .complete();
+
+  StepVerifier.create(publisher.flux()) // or .mono()
+    .expectNext("A")
+    .expectError()
+    .verify();
+}
+```
 
 #### PublisherProbe
 
 Before version 3.1, you would need to manually maintain one `AtomicBoolean` per state you wanted to assert and attach a corresponding `doOn*` callback to the publisher you wanted to evaluate. This could be a lot of boilerplate when having to apply this pattern regularly. Fortunately, since 3.1.0 there’s an alternative with `PublisherProbe`, as follows
+
+### Debugging
+
+Global Hooks
+
+checkpoint()
+
+log()
 
 ### Advanced Features
 
@@ -1048,5 +1074,37 @@ Mono.fromCallable( () -> System.currentTimeMillis() )
     .runOn(Schedulers.parallel())
     .doOnNext( d -> System.out.println("I'm on thread "+Thread.currentThread()) )
     .subscribe()
+```
+
+#### Hot/Cold
+
+- Cold (== no cache)
+  - lazy-evaluation
+  - subscriber 가 #subscribe() 할때 시점의 데이터를 매번 생성
+- Hot (== cached)
+  - no lazy
+  - 중간 데이터를 가지고 있음
+
+```java
+/* Cold */
+Flux.just(1, 2, 3, 4, 5)
+            .sort(Comparator.naturalOrder()) // sorting
+            .map(o -> Long.valueOf(o))	// instance 생성
+            .subscribe(o -> /* do something .. */ o.toString());
+
+Flux.just(1, 2, 3, 4, 5)
+            .sort(Comparator.naturalOrder()) // sorting
+            .map(o -> Long.valueOf(o)) // instance 생성
+            .subscribe(p -> /* do something .. */ p.toString());
+
+/* Hot */
+Flux<Long> sortedFlux = Flux.just(1, 2, 3, 4, 5)
+    .sort(Comparator.naturalOrder()) // sorting
+    .map(o -> Long.valueOf(o)) // instance 생성
+    .publish()       // cold -> hot
+    .autoConnect(2); // subscriber 가 2명되면, event emit
+
+sortedFlux.subscribe(/* do something .. */);
+sortedFlux.subscribe(/* do something .. */);
 ```
 
