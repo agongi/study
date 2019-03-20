@@ -907,6 +907,7 @@ private <T> Flux<T> appendError(Flux<T> source) {
   return source.concatWith(Mono.error(new IllegalArgumentException("errorMsg")));
 }
 
+/* as(String) */
 @Test
 public void testAppendError() {
   Flux<String> source = Flux.just("foo", "bar");
@@ -1055,11 +1056,91 @@ Before version 3.1, you would need to manually maintain one `AtomicBoolean` per 
 
 ### Debugging
 
-Global Hooks
+기본적으로 Reactive Stream 은 디버깅이 어렵습니다. 성공/실패시 바로 그 지점에서 Exception 이 떨어지지않고 해당 이벤트에 따른 처리가 Stream 으로 흘러가기 때문입니다. 그래서 별도의 breakpoint 를 잡으며 따라가지 않으면 쉽게 파악이 되지 않습니다.
 
-checkpoint()
+> 만약 스트림을 비동기로 처리했다면?! HER..
 
-log()
+Reactor 에서는 프로그램 상에서 easy-debugging 을 위한 3가지 방법을 제공합니다.
+
+**Hooks**
+
+- JVM level 에서의 global debug_mode 설정 (jvm-scoped)
+
+```java
+/* Hooks */
+@Test
+public void testHooks() {
+  	Hooks.onOperatorDebug();    // enable debug_mode
+
+	  Mono<Integer> mono = Flux.range(1, 5)
+    	.map((num) -> num * 10)
+    	.single();
+
+	  mono.subscribe(System.out::println);
+  	Hooks.resetOnOperatorDebug();   // disable debug_mode
+}
+```
+
+**checkpoint(String)**
+
+- chain 에서 예외발생시, downstream 에 checkpoint() 가 있다면 debug-message 출력 (downstream-scoped)
+
+```java
+/* checkpoint(String) */
+@Test
+public void testCheckPoint() {
+Flux<Integer> flux = Flux.just(10, 20, 50, 21, 0, 15, 62)
+  .checkpoint("just() 예외발생")
+  .map(num -> num * 10)
+  .checkpoint("num -> num * 100 에서 예외발생")
+  .map(num -> 100 / num)	// java.lang.ArithmeticException: / by zero
+  .checkpoint("num -> 100 / num 에서 예외발생")	// description is given
+  .map(num -> num + 10)
+  .checkpoint("num -> num + 10 에서 예외발생");
+
+  flux.subscribe(System.out::println);
+}
+// console
+Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Assembly site of producer [reactor.core.publisher.FluxMapFuseable] is identified by light checkpoint [num -> 100 / num 에서 예외발생].
+
+/* checkpoint(String) - 예외발생시 아래에 있는 checkpoint() 가 검색됨 */
+@Test
+public void testCheckPoint() {
+Flux<Integer> flux = Flux.just(10, 20, 50, 21, 0, 15, 62)
+  .checkpoint("just() 예외발생")
+  .map(num -> num * 10)
+  .checkpoint("num -> num * 100 에서 예외발생")
+  .map(num -> 100 / num)	// java.lang.ArithmeticException: / by zero
+  //.checkpoint("num -> 100 / num 에서 예외발생")
+  .map(num -> num + 10)
+  .checkpoint("num -> num + 10 에서 예외발생");	// description is given
+
+  flux.subscribe(System.out::println);
+}
+// console
+...
+Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Assembly site of producer [reactor.core.publisher.FluxMapFuseable] is identified by light checkpoint [num -> num + 10 에서 예외발생].
+```
+
+**log()**
+
+- chain 에서 예외발생시, debug-message 출력 (chain-scoped)
+
+```java
+/* log() */
+@Test
+public void testLog() {
+  Flux<Integer> flux = Flux.just(10, 20, 50, 21, 0, 15, 62)
+    .map(num -> num * 10)
+    .map(num -> 100 / num)	// java.lang.ArithmeticException: / by zero
+    .map(num -> 10 + num)
+    .log();
+
+  flux.subscribe(System.out::println);
+}
+```
 
 ### Advanced Features
 
@@ -1107,4 +1188,3 @@ Flux<Long> sortedFlux = Flux.just(1, 2, 3, 4, 5)
 sortedFlux.subscribe(/* do something .. */);
 sortedFlux.subscribe(/* do something .. */);
 ```
-

@@ -13,7 +13,6 @@
 - BE
   - [Java](java)
   - [Java Concurrency](java-concurrency)
-  - [Reactive Stream](reactive-stream)
   - [Architecture](server-architect)
 - FE
   - [HTML](html)
@@ -21,6 +20,7 @@
   - React
 - [Persistence](persistence)
 - Core
+  - [Reactive Stream](reactive-stream)
   - [Servlet](servlet)
 
 ### [Protocols](protocols)
