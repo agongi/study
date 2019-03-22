@@ -8,7 +8,7 @@
 ### Index
 - [Modules (CommonJS vs AMD)](modules)
 - [ECMAScript 2015 (ES6)](es6)
-- [Get checked values](get-checked-values/)
+- [Web Authentication API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API)
 
 ### Blog
 - [jQuery - Ajax - crossdomain 이슈](http://igna.tistory.com/19)
