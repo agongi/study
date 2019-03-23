@@ -647,17 +647,11 @@ onError: IOException
 
 ### Processors
 
-Publisher and/or Subscriber 가 모두 가능함
+Publisher and/or Subscriber 을 모두 만족하는 Bridge
 
 ```java
-final class DelegateProcessor<IN, OUT> extends FluxProcessor<IN, OUT> {
-    final Publisher<OUT> downstream;
-    final Subscriber<IN> upstream;
-
-    DelegateProcessor(Publisher<OUT> downstream, Subscriber<IN> upstream) {
-		this.downstream = Objects.requireNonNull(downstream, "Downstream must not be null");
-		this.upstream = Objects.requireNonNull(upstream, "Upstream must not be null");
-	}
+/* Processor */
+public interface Processor<T, R> extends Subscriber<T>, Publisher<R> {
 }
 ```
 
@@ -1144,7 +1138,170 @@ public void testLog() {
 
 ### Advanced Features
 
-#### Parallelizing
+#### Mutualizing Operator
+
+반복되는 operator-chain 을 function<> 으로 빼서, 재사용 가능하게 제공되는 wrapper
+
+```java
+@Test
+public void transformTest() {
+  Function<Flux<String>, Flux<String>> filterAndMap = f -> f.filter(color -> !color.equals("orange"))	// filter
+    .map(String::toUpperCase);	// map
+
+  Flux.fromIterable(Arrays.asList("blue", "green", "orange", "purple"))
+    .doOnNext(System.out::println)
+    .transform(filterAndMap)
+    .subscribe(d -> System.out.println("Subscriber to Transformed MapAndFilter: " + d));
+}
+
+/* equivalent to .. */
+@Test
+public void transformEquivalentTest() {
+  Flux.fromIterable(Arrays.asList("blue", "green", "orange", "purple"))
+    .doOnNext(System.out::println)
+    .filter(color -> !color.equals("orange"))	// filter
+    .map(String::toUpperCase)	// map
+    .subscribe(d -> System.out.println("Subscriber to Transformed MapAndFilter: " + d));
+}
+```
+
+**transform(Function<? super Flux\<T\>, ? extends Publisher\<V\>>)**
+
+Subscriber 가 subsribe 하기전에 eager-loaded
+
+```java
+/* transform() */
+@Test
+public void composeTest() {
+  AtomicInteger count = new AtomicInteger(0);
+  Function<Flux<Integer>, Flux<Integer>> mapper = f -> {
+    count.incrementAndGet();
+
+    return f;
+  };
+
+  Flux<Integer> flux = Flux.just(0)
+    .transform(mapper);
+
+  System.out.println(count);
+
+  flux.subscribe();
+  flux.subscribe();
+  flux.subscribe();
+
+  System.out.println(count);
+}
+// console 결과
+1
+1
+```
+
+**compose(Function<? super Flux\<T\>, ? extends Publisher\<V\>>)**
+
+Subscriber 가 subsribe 하는시점에 lazy-loaded
+
+```java
+/* javadoc */
+public final <V> Flux<V> compose(Function<Flux<T>, ? extends Publisher<V>> transformer) {
+   return defer(() -> transformer.apply(this));	// defer
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+/* compose() */
+@Test
+public void composeTest() {
+	// ...
+
+  Flux<Integer> flux = Flux.just(0)
+    .compose(transformer);
+
+  // ...
+}
+// console 결과
+0
+3
+```
+
+#### Hot/Cold
+
+- Cold publisher
+  - subscriber 가 #subscribe() 할때, 데이터 발행
+- Hot publisher
+  - publisher 정의시점에 데이터 발행되고 & 흘러감
+  - subscriber 가 #subscribe() 하면, 그떄시점 부터 발행되는 element 를 받을수 있음
+
+> Most of `hot publishers` in Reactor extend **Processor**.
+
+```java
+/* cold */
+@Test
+public void coldPublisherTest() {
+  Flux<Integer> coldFlux = Flux.fromIterable(Arrays.asList(0, 1, 2, 3));
+
+  coldFlux.subscribe(d -> System.out.println("[0]: " + d));
+  coldFlux.subscribe(d -> System.out.println("[1]: " + d));
+}
+// console 결과
+[0]: 0
+[0]: 1
+[0]: 2
+[0]: 3
+[1]: 0
+[1]: 1
+[1]: 2
+[1]: 3
+```
+
+```java
+/* hot */
+@Test
+public void hotPublisherTest() {
+  DirectProcessor<Integer> hotSource = DirectProcessor.create();
+  Flux<Integer> hotFlux = hotSource.map(Function.identity());
+
+  hotSource.onNext(0);	// missing, no subscriber
+  hotFlux.subscribe(d -> System.out.println("[0]: " + d));
+
+  hotSource.onNext(1);
+  hotFlux.subscribe(d -> System.out.println("[1]: " + d));
+
+  hotSource.onNext(2);
+  hotSource.onNext(3);
+
+  hotSource.onComplete();
+}
+// console 결과
+[0]: 1
+[0]: 2
+[1]: 2
+[0]: 3
+[1]: 3
+```
+
+#### ConnectableFlux
+
+This is what `ConnectableFlux` is made for. Two main patterns are covered in the `Flux` API that return a `ConnectableFlux`: `publish` and `replay`.
+
+- `publish` dynamically tries to respect the demand from its various subscribers, in terms of backpressure, by forwarding these requests to the source. Most notably, if any subscriber has a pending demand of `0`, publish **pauses** its requesting to the source.
+- `replay` buffers data seen through the first subscription, up to configurable limits (in time and buffer size). It replays the data to subsequent subscribers.
+
+A `ConnectableFlux` offers additional methods to manage subscriptions downstream versus subscriptions to the original source. These additional methods include the following:
+
+- `connect()` can be called manually once you reach enough subscriptions to the flux. That triggers the subscription to the upstream source.
+- `autoConnect(n)` can do the same job automatically once `n` subscriptions have been made.
+- `refCount(n)` not only automatically tracks incoming subscriptions but also detects when these subscriptions are cancelled. If not enough subscribers are tracked, the source is "disconnected", causing a new subscription to the source later if additional subscribers appear.
+- `refCount(int, Duration)` adds a "grace period": Once the number of tracked subscribers becomes too low, it waits for the `Duration` before disconnecting the source, potentially allowing for enough new subscribers to come in and cross the connection threshold again.
+
+#### Batches
+
+Flux<GroupedFlux\<T\>\>
+
+Flux<Flux\<T\>>
+
+Flux<List\<T\>>
+
+#### ParallelFlux
 
 Paralle Flux can starve your CPU's from any sequence whose work can be subdivided in concurrent tasks. Turn back into a `Flux`with `ParallelFlux#sequential()`, an unordered join or use arbitrary merge strategies via 'groups()'
 
@@ -1157,34 +1314,20 @@ Mono.fromCallable( () -> System.currentTimeMillis() )
     .subscribe()
 ```
 
-#### Hot/Cold
+#### Schedulers
 
-- Cold (== no cache)
-  - lazy-evaluation
-  - subscriber 가 #subscribe() 할때 시점의 데이터를 매번 생성
-- Hot (== cached)
-  - no lazy
-  - 중간 데이터를 가지고 있음
+#### Hooks
 
-```java
-/* Cold */
-Flux.just(1, 2, 3, 4, 5)
-            .sort(Comparator.naturalOrder()) // sorting
-            .map(o -> Long.valueOf(o))	// instance 생성
-            .subscribe(o -> /* do something .. */ o.toString());
+**Dropping Hooks**
 
-Flux.just(1, 2, 3, 4, 5)
-            .sort(Comparator.naturalOrder()) // sorting
-            .map(o -> Long.valueOf(o)) // instance 생성
-            .subscribe(p -> /* do something .. */ p.toString());
+**Internal-Error Hooks**
 
-/* Hot */
-Flux<Long> sortedFlux = Flux.just(1, 2, 3, 4, 5)
-    .sort(Comparator.naturalOrder()) // sorting
-    .map(o -> Long.valueOf(o)) // instance 생성
-    .publish()       // cold -> hot
-    .autoConnect(2); // subscriber 가 2명되면, event emit
+**Assembly Hooks**
 
-sortedFlux.subscribe(/* do something .. */);
-sortedFlux.subscribe(/* do something .. */);
-```
+**Hook Presets**
+
+#### Context
+
+#### Cleanup
+
+#### Null-safety

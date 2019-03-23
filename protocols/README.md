@@ -16,4 +16,3 @@
 - [WebSocket](websocket)
 - [Proxy Protocol](proxy-protocol)
 - [OAuth 2.0](oauth)
-
