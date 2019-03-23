@@ -1281,17 +1281,125 @@ public void hotPublisherTest() {
 
 #### ConnectableFlux
 
-This is what `ConnectableFlux` is made for. Two main patterns are covered in the `Flux` API that return a `ConnectableFlux`: `publish` and `replay`.
+데이터 발행의 단순 lazy-evaluation (deferred) 이 아닌, 특정시점에 트리거 하도록 제어하는 Publisher
 
-- `publish` dynamically tries to respect the demand from its various subscribers, in terms of backpressure, by forwarding these requests to the source. Most notably, if any subscriber has a pending demand of `0`, publish **pauses** its requesting to the source.
-- `replay` buffers data seen through the first subscription, up to configurable limits (in time and buffer size). It replays the data to subsequent subscribers.
+>Not only **defer** some processing to the subscription time of one subscriber, but you might actually want for several of them to *rendezvous* and **then** trigger.
 
-A `ConnectableFlux` offers additional methods to manage subscriptions downstream versus subscriptions to the original source. These additional methods include the following:
+2가지 방법으로 생성 할 수 있다.
 
-- `connect()` can be called manually once you reach enough subscriptions to the flux. That triggers the subscription to the upstream source.
-- `autoConnect(n)` can do the same job automatically once `n` subscriptions have been made.
-- `refCount(n)` not only automatically tracks incoming subscriptions but also detects when these subscriptions are cancelled. If not enough subscribers are tracked, the source is "disconnected", causing a new subscription to the source later if additional subscribers appear.
-- `refCount(int, Duration)` adds a "grace period": Once the number of tracked subscribers becomes too low, it waits for the `Duration` before disconnecting the source, potentially allowing for enough new subscribers to come in and cross the connection threshold again.
+**publish**
+
+- 구독시점에 subscriber 로 데이터가 흘러가지 않음
+- connect() 로 trigger 시, 그 시점부터 이벤트 발행
+
+```java
+/* ConnectableFlux = flux.publish() */
+@Test
+public void connectableFluxTest_publish() {
+  Flux<Integer> flux = Flux.range(1, 3);
+  ConnectableFlux<Integer> connectableFlux = flux.publish();
+
+  connectableFlux.subscribe(o -> System.out.println("[0]: " + o));
+  connectableFlux.subscribe(o -> System.out.println("[1]: " + o));
+
+  System.out.println("will now connect");
+  connectableFlux.connect();  // trigger
+
+  connectableFlux.subscribe(o -> System.out.println("[2]: " + o));    // ignored
+}
+
+// console 결과
+will now connect
+[0]: 1
+[1]: 1
+[0]: 2
+[1]: 2
+[0]: 3
+[1]: 3
+```
+
+**replay**
+
+- 구독시점에 subscriber 로 데이터가 흘러가지 않음
+- connect() 로 trigger 시, 그 시점부터 이벤트 발행
+- trigger 이후 subscribe 은 기존 데이터 replay (history 를 저장할 bufferSize 지정가능)
+
+```java
+/* ConnectableFlux = flux.replay() */
+@Test
+public void connectableFluxTest_replay() {
+  Flux<Integer> flux = Flux.range(1, 3);
+  ConnectableFlux<Integer> connectableFlux = flux.replay();
+
+  connectableFlux.subscribe(o -> System.out.println("[0]: " + o));
+  connectableFlux.subscribe(o -> System.out.println("[1]: " + o));
+
+  System.out.println("will now connect");
+  connectableFlux.connect();
+
+  connectableFlux.subscribe(o -> System.out.println("[2]: " + o));    // replayed
+}
+// console 결과
+will now connect
+[0]: 1
+[1]: 1
+[0]: 2
+[1]: 2
+[0]: 3
+[1]: 3
+[2]: 1	// replayed
+[2]: 2	// replayed
+[2]: 3	// replayed
+```
+
+ConnectableFlux 는 이벤트 trigger 하는 4가지 방법을 제공한다.
+
+- connect() - 호출시 triggering
+- autoConnect(int) - 지정한 count 도달시 triggering
+- refCount(int) - autoConnect && referenceCount == 0 이 되면 data publish 를 pend 하는 기능이 있다
+
+```java
+@Test
+public void connectableFluxTest_autoConnect() throws InterruptedException {
+  Flux<Integer> flux = Flux.range(1, 3)
+    .publish()
+    .autoConnect(2);
+
+  flux.subscribe(o -> System.out.println("[0]: " + o));
+  flux.subscribe(o -> System.out.println("[1]: " + o));
+
+  System.out.println("will now connect");
+
+  flux.subscribe(o -> System.out.println("[2]: " + o));
+}
+// console 결과
+-- autoConnect(1)
+[0]: 1
+[0]: 2
+[0]: 3
+will now connect
+
+-- autoConnect(2)
+[0]: 1
+[1]: 1
+[0]: 2
+[1]: 2
+[0]: 3
+[1]: 3
+will now connect
+
+-- autoConnect(3)
+will now connect
+[0]: 1
+[1]: 1
+[2]: 1
+[0]: 2
+[1]: 2
+[2]: 2
+[0]: 3
+[1]: 3
+[2]: 3
+```
 
 #### Batches
 
