@@ -1504,16 +1504,118 @@ public void bufferTest() {
 
 #### ParallelFlux
 
-Paralle Flux can starve your CPU's from any sequence whose work can be subdivided in concurrent tasks. Turn back into a `Flux`with `ParallelFlux#sequential()`, an unordered join or use arbitrary merge strategies via 'groups()'
+Serial 하게 정의된 Publisher 를 parallel - runOn 패턴을 이용해서 병렬처리 할 수 있다. 
+
+- parallel(int)
+  - data 를 지정된 rails (== chunk) 단위로 분할한다. (default: the number of CPU-cores)
+  - 병렬처리를 하진 않는다. 반드시 runOn 을 통해 스케쥴러 명시가 필요함
+- runOn(Scheduler)
+  - rails 단위로 분리된 task 를 실행할 thread-pool 을 지정한다.
 
 ```java
-Mono.fromCallable( () -> System.currentTimeMillis() )
-	.repeat()
-    .parallel(8) //parallelism
-    .runOn(Schedulers.parallel())
-    .doOnNext( d -> System.out.println("I'm on thread "+Thread.currentThread()) )
-    .subscribe()
+/* parallel - runOn */
+@Test
+public void parallelTest() {
+  Flux.range(0, 16)
+    .parallel(4) // parallel level
+    .runOn(Schedulers.parallel()) // thread-pool
+    .subscribe(i -> System.out.println("[" + Thread.currentThread().getName() + "] " + i));
+}
+// console 결과
+[parallel-2] 1
+[parallel-3] 2
+[parallel-4] 3
+[parallel-1] 0
+[parallel-2] 5
+[parallel-3] 6
+[parallel-1] 4
+[parallel-4] 7
+[parallel-1] 8
+[parallel-2] 9
+[parallel-3] 10
+[parallel-4] 11
+[parallel-1] 12
+[parallel-2] 13
+[parallel-3] 14
+[parallel-4] 15
 ```
+
+> 기존 publishOn 과 다른점은, parallelism 의 지정이 가능하다는 점이다.
+
+Flux#parallel 을 통해 생성된 ParallelFlux 를 다시 sequential 하게 변경하려면, ParallelFlux#sequential 를 호출하면된다. 메서드가 호출된 이후의 chain 은 serial 하게 수행된다.
+
+```java
+/* sequential */
+@Test
+public void parallelTest() {
+  Flux.range(0, 16)
+    .parallel() // parallel level
+    .runOn(Schedulers.parallel()) // thread-pool
+    .sequential() // revert to serial
+    .map(o -> o++) // 해당 chain 부터 1개의 쓰레드로 모아짐
+    .subscribe(i -> System.out.println("[" + Thread.currentThread().getName() + "] " + i));
+}
+// console 결과
+[parallel-1] 0
+[parallel-1] 1
+[parallel-1] 2
+[parallel-1] 3
+[parallel-1] 5
+[parallel-1] 6
+[parallel-1] 7
+[parallel-1] 9
+[parallel-1] 10
+[parallel-1] 11
+[parallel-1] 4
+[parallel-1] 8
+[parallel-1] 13
+[parallel-1] 12
+[parallel-1] 14
+[parallel-1] 15
+```
+
+> ParallelFlux 를 #subscribe(Subscriber\<? super T\>) 로 구독을 하면 묵시적으로 rails 가 sequential 하게 묶인다. 대신subscribe(Consumer\<? super T\> consumer) 로 lambda 로 구독하면 분산된 rails 만큼 구독된다.
+>
+> 이유는 코드를 보면:
+>
+> ```java
+> /* #subscribe(Subscriber<? super T>) */
+> @Override
+> @SuppressWarnings("unchecked")
+> public final void subscribe(Subscriber<? super T> s) {
+>   Flux.onLastAssembly(sequential())	// 여기에서 sequential() 호출됨
+>     .subscribe(new FluxHide.SuppressFuseableSubscriber<>(Operators.toCoreSubscriber(s)));
+> }
+> // console 결과
+> [parallel-1] 0
+> [parallel-1] 1
+> [parallel-1] 2
+> [parallel-1] 3
+> [parallel-1] 4
+> [parallel-2] 5
+> [parallel-3] 6
+> [parallel-4] 7
+> [parallel-1] 8
+> [parallel-2] 9
+> [parallel-3] 10
+> [parallel-3] 11
+> [parallel-1] 12
+> [parallel-2] 13
+> [parallel-3] 14
+> [parallel-4] 15
+> ```
+>
+> 하지만 로그를 찍어보면 병렬처리되었는데, 여기서 말하는 implicit-sequential 은 rails 단위로 병렬수행된 task 를 subscriber 에 도달했을때 merge/each execute 방법에 대한 이야기이다.
+>
+> 즉:
+>
+> parallel(4) - runOn - subscribe(Consumer)
+>
+> -> rails 의 갯수만큼 subscribe 호출
+>
+> parallel(4) - runOn - subscribe(Subscriber)
+>
+> -> (병렬처리된 rails 를 sequential 로 머지 후) subscribe 를 1번 호출
 
 #### Schedulers
 
