@@ -386,7 +386,6 @@ Flux.create(o -> {
     // 요청 - 응답 없음 (async)
 });
 
-
 /* Consumer<T>, OverflowStrategy */
 DROP - 데이터 누락
 LATEST - 마지막 신호만 전달
@@ -1359,6 +1358,7 @@ ConnectableFlux 는 이벤트 trigger 하는 4가지 방법을 제공한다.
 - refCount(int) - autoConnect && referenceCount == 0 이 되면 data publish 를 pend 하는 기능이 있다
 
 ```java
+/* connectableFlux.autoConnect() */
 @Test
 public void connectableFluxTest_autoConnect() throws InterruptedException {
   Flux<Integer> flux = Flux.range(1, 3)
@@ -1403,11 +1403,104 @@ will now connect
 
 #### Batches
 
-Flux<GroupedFlux\<T\>\>
+Flux 에 element 가 많을때 (ex. batch 작업등) 작업을 쪼개서 수행할수 있도록 Partitioning 이 필요하다. Reactor 에서는 3가지 방법을 제공한다.
 
-Flux<Flux\<T\>>
+**Flux<GroupedFlux\<T\>\>**
 
-Flux<List\<T\>>
+groupBy 를 이용해 key-value pair 로 partitioning 한다.
+
+```java
+/* groupBy */
+@Test
+public void groupedFluxTest() {
+  Flux<String> mapFlux = Flux.just(3, 1, 5, 2, 4, 6, 11, 12, 13)
+    .groupBy(i -> i % 2 == 0 ? "even" : "odd") // Flux<GroupedFlux<String, Integer>
+    .concatMap(e -> e.map(o -> String.format("[%s]=%s", e.key(), o))); // Flux<String>
+
+  mapFlux.subscribe(o -> System.out.println(o));
+}
+// console 결과
+-- flatMap
+[odd]=3
+[odd]=1
+[odd]=5
+[even]=2
+[even]=4
+[even]=6
+[odd]=13
+[even]=12
+[odd]=11
+  
+-- flatMapSequential
+[odd]=3
+[odd]=1
+[odd]=5
+[odd]=13
+[odd]=11
+[even]=2
+[even]=4
+[even]=6
+[even]=12
+
+-- concatMap
+[odd]=3
+[odd]=1
+[odd]=5
+[odd]=13
+[odd]=11
+[even]=2
+[even]=4
+[even]=6
+[even]=12
+```
+
+- flatMap
+  - Ordering - source's order
+- flatMapSequential
+  - Ordering - group's order
+  - Concurrency - 먼저 전달된 GroupedFlux 가 다 처리된후 다음 Flux 의 flatten 수행
+- concatMap
+  - Ordering - group's order
+  - Concurrency - 처리되는대로 flatten 수행 (==parallelism)
+
+**Flux<Flux\<T\>>**
+
+window 를 이용해 Flux-subset 을 만들어 partitioning 한다.
+
+```java
+/* window*/
+@Test
+public void windowTest() {
+  StepVerifier.create(
+    Flux.range(1, 10)
+    .window(5, 3) // Flux<Flux<T>>
+    .concatMap(Function.identity())) // Flux<T>
+    .expectNext(1, 2, 3, 4, 5)
+    .expectNext(4, 5, 6, 7, 8)
+    .expectNext(7, 8, 9, 10)
+    .expectNext(10)
+    .verifyComplete();
+}
+```
+
+**Flux<List\<T\>>**
+
+buffer 를 이용해 Collection\<T\> 를 만들어 partitioning 한다.
+
+```java
+/* buffer */
+@Test
+public void bufferTest() {
+  StepVerifier.create(
+    Flux.range(1, 10)
+    .buffer(5, 3)) // Flux<List<T>>
+    .expectNext(Arrays.asList(1, 2, 3, 4, 5))
+    .expectNext(Arrays.asList(4, 5, 6, 7, 8))
+    .expectNext(Arrays.asList(7, 8, 9, 10))
+    .expectNext(Arrays.asList(10))
+    .verifyComplete();
+}
+```
 
 #### ParallelFlux
 
