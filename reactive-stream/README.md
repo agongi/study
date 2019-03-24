@@ -1619,6 +1619,14 @@ public void parallelTest() {
 
 #### Schedulers
 
+Schedulers.Factory
+
+Schedulers.decorateExecutorService
+
+> Once you create own Factory, you must apply via Schedulers.setFactory(Factory)
+
+Schedulers.onHandleError
+
 #### Hooks
 
 **Dropping Hooks**
@@ -1631,6 +1639,23 @@ public void parallelTest() {
 
 #### Context
 
+Flux#subscriberContext
+
+**API**
+
+**Read context**
+
+**Write context**
+
 #### Cleanup
 
+The doOnDiscard Flux/Mono operator
+
+The onOperatorError hook
+
+The onNextDropped hook
+
+Operator-specific handlers
+
 #### Null-safety
+
