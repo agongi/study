@@ -1139,7 +1139,7 @@ public void testLog() {
 
 #### Mutualizing Operator
 
-반복되는 operator-chain 을 function<> 으로 빼서, 재사용 가능하게 제공되는 wrapper
+반복되는 연산을 function<T, V> 으로 묶어서 재사용 할수있으며, 아래의 예제는 동일한 결과가 나온다:
 
 ```java
 @Test
@@ -1163,6 +1163,8 @@ public void transformEquivalentTest() {
     .subscribe(d -> System.out.println("Subscriber to Transformed MapAndFilter: " + d));
 }
 ```
+
+Reactor 에서는 2가지 wrapper 를 지원한다.
 
 **transform(Function<? super Flux\<T\>, ? extends Publisher\<V\>>)**
 
@@ -1619,13 +1621,67 @@ public void parallelTest() {
 
 #### Schedulers
 
-Schedulers.Factory
+Reactor 에서 기본적으로 제공하는 Scheduler 를 customize 하는 방법을 소개한다.
 
-Schedulers.decorateExecutorService
+> 내부적으로 병렬처리 되는 operation 을 scheduler 지정없이 사용하면 parallel 스케쥴러로 동작한다.
 
-> Once you create own Factory, you must apply via Schedulers.setFactory(Factory)
+아래 2가지 방법으로 변경이 가능하다.
 
-Schedulers.onHandleError
+**Schedulers.Factory**
+
+생성되는 모든 Scheduler 를 override 해서 customize 한다.
+
+```java
+/* Factory (== @Override) */
+@Test
+public void setFactoryTest() {
+  // given
+  AtomicInteger count = new AtomicInteger(0);
+  Schedulers.setFactory(new Schedulers.Factory() {
+    @Override
+    public Scheduler newElastic(int ttlSeconds, ThreadFactory threadFactory) {
+      count.incrementAndGet();
+
+      return Schedulers.newParallel("custom", ttlSeconds);
+    }
+  });
+
+  // when
+  Schedulers.elastic().dispose();	// invoked
+  Schedulers.newElastic("newElastic").dispose();	// invoked
+
+  // then
+  Assert.assertEquals(count.get(), 2);
+}
+```
+
+**Schedulers.decorateExecutorService**
+
+Scheduler 가 return 될때 decorator-chain 을 apply 하여 customize 한다.
+
+```java
+/* Decorator (== Proxy) */
+@Test
+public void addDecoratorTest() {
+  // given
+  AtomicInteger count = new AtomicInteger(0);
+  BiFunction<Scheduler, ScheduledExecutorService, ScheduledExecutorService> decorator = (scheduler, server) -> {
+    count.incrementAndGet();
+
+    return server;
+  };
+
+  // when
+  Schedulers.addExecutorServiceDecorator("decorator1", decorator);
+  Schedulers.addExecutorServiceDecorator("decorator2", decorator);
+  Schedulers.addExecutorServiceDecorator("decorator3", decorator);
+
+  Schedulers.newSingle("newSingle").dispose();	// invokes all decorators
+
+  // then
+  Assert.assertEquals(count.get(), 3);
+}
+```
 
 #### Hooks
 
