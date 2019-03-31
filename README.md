@@ -27,5 +27,4 @@
 
 ### [Security](security)
 
-### Miscellaneous
-- [Books](books)
+### [Books](books)
