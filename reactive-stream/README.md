@@ -1144,7 +1144,8 @@ public void testLog() {
 ```java
 @Test
 public void transformTest() {
-  Function<Flux<String>, Flux<String>> filterAndMap = f -> f.filter(color -> !color.equals("orange"))	// filter
+  Function<Flux<String>, Flux<String>> filterAndMap = f -> f
+    .filter(color -> !color.equals("orange"))	// filter
     .map(String::toUpperCase);	// map
 
   Flux.fromIterable(Arrays.asList("blue", "green", "orange", "purple"))
@@ -1308,7 +1309,6 @@ public void connectableFluxTest_publish() {
 
   connectableFlux.subscribe(o -> System.out.println("[2]: " + o));    // ignored
 }
-
 // console 결과
 will now connect
 [0]: 1
@@ -1415,7 +1415,7 @@ groupBy 를 이용해 key-value pair 로 partitioning 한다.
 /* groupBy */
 @Test
 public void groupedFluxTest() {
-  Flux<String> mapFlux = Flux.just(3, 1, 5, 2, 4, 6, 11, 12, 13)
+  Flux<String> mapFlux = Flux.just(3, 1, 5, 2, 4, 6, 13, 12, 11)
     .groupBy(i -> i % 2 == 0 ? "even" : "odd") // Flux<GroupedFlux<String, Integer>
     .concatMap(e -> e.map(o -> String.format("[%s]=%s", e.key(), o))); // Flux<String>
 
@@ -1470,7 +1470,7 @@ public void groupedFluxTest() {
 window 를 이용해 Flux-subset 을 만들어 partitioning 한다.
 
 ```java
-/* window*/
+/* window */
 @Test
 public void windowTest() {
   StepVerifier.create(
