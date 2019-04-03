@@ -4,6 +4,7 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://projectreactor.io/docs/core/release/reference
+- https://github.com/reactive-streams/reactive-streams-jvm
 - https://javacan.tistory.com/search/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%A6%AC%EC%95%A1%ED%84%B0%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0
 - https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
 ```
