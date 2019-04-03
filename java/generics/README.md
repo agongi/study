@@ -26,7 +26,7 @@ public class Box<T> {
 }
 ```
 
-> Naming Conventions
+Naming Conventions
 
 - E - Element (used extensively by the Java Collections Framework)
 - K - Key
@@ -36,8 +36,6 @@ public class Box<T> {
 - S, U, V etc., - 2nd, 3rd, 4th types
 
 #### Upper Bounded Type Parameters
-It can restrict the types to only accept instances of Number or its subclasses
-
 ```java
 public class Box<T> {
     public <E extends Number> void inspect(E e){
@@ -77,6 +75,20 @@ public class BoxUtils {
 
 - read: `Object`
 - write: Not allowed except `null`
+
+> write is not permitted generally but using **capture\<?\>**
+
+```java
+private void reverse(List<?> ids) {
+  reverseHelper(ids);
+}
+
+private void reverseHelper(/* capture<?> */ List<T> ids) {
+  for(...) {
+  	ids.add(i);	// List<?> is captured to List<T> and allowed to write
+  }
+}
+```
 
 #### Upper Bounded Wildcards
 ```java
@@ -141,23 +153,29 @@ public class MyTask {
     List<Integer> list = Arrays.asList(1, 2, 3);
 
     MyTask.print(list);   // OK
-    MyTask.print2(list);  // compile-error: List<Object> is only accepted.
+    MyTask.print2(list);  // compile-error: List<Object> (exact match) or Collection<Object>
     MyTask.print3(list);  // OK
     MyTask.print4(list);  // OK
   }
 }
 ```
 
+> List<T>
+
 ### Features
-#### Producer - Consumer
+#### Producer - Consumer (PECS)
 ```java
 public static <T> void copy(List<? super T> dest, List<? extends T> src) {
-  // ...
+  // src is input <extends>
+
+  // dest is output <super>
 }
 ```
 
 - Consumer: src is used in method -> \<? extends T>
 - Producer: dest is used out of method -> \<? super T>
+
+> Producer Extends, Consumer Super
 
 ### Restrictions
 #### Cannot Create Instances of Type Parameters
