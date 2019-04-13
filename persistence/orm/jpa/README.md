@@ -17,6 +17,7 @@
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
 - [Spring - Open Session In View](http://kingbbode.tistory.com/27)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
+- [OSIV](http://pds19.egloos.com/pds/201106/28/18/Open_Session_In_View_Pattern.pdf)
 
 @Transactional 이 begin; JDBC 연결이 수행됨
 hibernate session 을 연다; 영속성이 생성됨 (관리됨)
