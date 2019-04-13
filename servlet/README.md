@@ -6,7 +6,8 @@
 
 ### Index
 
-- [Servlet 4.0](<https://javaee.github.io/servlet-spec/downloads/servlet-4.0/servlet-4_0_FINAL.pdf>)
+- Servlet 3.1
+- [Servlet 4.0](https://javaee.github.io/servlet-spec/downloads/servlet-4.0/servlet-4_0_FINAL.pdf)
 
 ### Blog
 
