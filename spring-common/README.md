@@ -42,3 +42,5 @@
 - [ChainedTransactionManager](http://kwon37xi.egloos.com/4886947)
 - [파일 다운로드 방법](http://yangyag.tistory.com/207)
 - [Inject value into static variables](https://www.mkyong.com/spring/spring-inject-a-value-into-static-variables/)
+- [Going Reactive with Spring, Coroutines and Kotlin Flow](https://spring.io/blog/2019/04/12/going-reactive-with-spring-coroutines-and-kotlin-flow)
+
