@@ -11,5 +11,6 @@
 - [RDBMS](rdbms)
 - [ORM](orm)
 - [HBase](http://engineering.vcnc.co.kr/2014/05/hbase-schema-in-between)
+- Redis
 - MongoDB
 

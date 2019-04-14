@@ -7,7 +7,7 @@
 - https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 ```
 
-### Index
+#### Index
 - [Object-Oriented Query Language](object-oriented-query-language)
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
@@ -18,6 +18,20 @@
 - [Spring - Open Session In View](http://kingbbode.tistory.com/27)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
 - [OSIV](http://pds19.egloos.com/pds/201106/28/18/Open_Session_In_View_Pattern.pdf)
+
+### Overview
+
+#### Auto-Commit (== Implicit)
+
+- Open session
+- Connect DB physically using JDBC
+- Transaction begin
+- …. CRUD
+- Transaction commit or rollback
+- Close connection
+- Close session
+
+> Keep session connected until at end of view resolving is OSIV pattern
 
 @Transactional 이 begin; JDBC 연결이 수행됨
 hibernate session 을 연다; 영속성이 생성됨 (관리됨)
