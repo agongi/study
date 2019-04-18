@@ -1678,15 +1678,58 @@ public void addDecoratorTest() {
 }
 ```
 
-#### Hooks
+#### [Hooks](https://github.com/reactor/reactor-core/blob/master/reactor-core/src/test/java/reactor/core/publisher/HooksTest.java)
 
 **Dropping Hooks**
+
+onNext or onError 가 누락되었을때 기본동작은 `logLevel.debug` 출력이다.
+
+해당 action 을 Hooks 을 통해 제어할 수 있다.
+
+```java
+// reset after
+@After
+public void resetAllHooks() {
+  Hooks.resetOnNextDropped();
+  Hooks.resetOnErrorDropped();
+}
+
+@Test
+public void errorHooks() throws Exception {
+  Hooks.onNextDropped(d -> {
+    throw new TestException(d.toString());
+  });
+
+  Hooks.onErrorDropped(e -> {
+    throw new TestException(e.toString());
+  });
+
+  try {
+    Operators.onNextDropped("helloooo", Context.empty());
+    // Assert.fail();
+  } catch (Exception e) {
+    System.out.println(e.getStackTrace());
+  }
+
+  try {
+    Operators.onErrorDropped(new TestException("woooooorld"), Context.empty());
+    // Assert.fail();
+  } catch (Exception e) {
+    System.out.println(e.getStackTrace());
+  }
+}
+// console 결과
+helloooo
+woooooorld
+```
 
 **Internal-Error Hooks**
 
 **Assembly Hooks**
 
 **Hook Presets**
+
+
 
 #### Context
 
