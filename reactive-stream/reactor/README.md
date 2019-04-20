@@ -1539,80 +1539,34 @@ public void parallelTest() {
 
 > 기존 publishOn 과 다른점은, parallelism 의 지정이 가능하다는 점이다.
 
-Flux#parallel 을 통해 생성된 ParallelFlux 를 다시 sequential 하게 변경하려면, ParallelFlux#sequential 를 호출하면된다. 메서드가 호출된 이후의 chain 은 serial 하게 수행된다.
+ParallelFlux 다시 Flux 로 변경하려면, ParallelFlux#sequential 를 호출하면 된다. Flux\<T\> 로 변경시 rails 로 분산된 data 는 1개로 합쳐진다.
+
+> rails 가 묶이지만, runOn(Scheduler) 에서 지정된 쓰레드풀에서 실행된다. 즉 병렬로 실행된다.
 
 ```java
 /* sequential */
 @Test
 public void parallelTest() {
-  Flux.range(0, 16)
-    .parallel() // parallel level
+  Flux.range(0, 100)
+    .parallel(4) // parallel level (4-rails)
     .runOn(Schedulers.parallel()) // thread-pool
-    .sequential() // revert to serial
-    .map(o -> o++) // 해당 chain 부터 1개의 쓰레드로 모아짐
+    .sequential() // single Flux (no-rails)
+    .map(o -> o++) // rails 구분없이 수행됨
     .subscribe(i -> System.out.println("[" + Thread.currentThread().getName() + "] " + i));
 }
 // console 결과
-[parallel-1] 0
-[parallel-1] 1
-[parallel-1] 2
-[parallel-1] 3
-[parallel-1] 5
-[parallel-1] 6
-[parallel-1] 7
-[parallel-1] 9
-[parallel-1] 10
-[parallel-1] 11
 [parallel-1] 4
+[parallel-3] 6
+[parallel-3] 7
 [parallel-1] 8
-[parallel-1] 13
-[parallel-1] 12
-[parallel-1] 14
-[parallel-1] 15
+[parallel-2] 9
+[parallel-3] 10
+[parallel-4] 11
 ```
 
-> ParallelFlux 를 #subscribe(Subscriber\<? super T\>) 로 구독을 하면 묵시적으로 rails 가 sequential 하게 묶인다. 대신subscribe(Consumer\<? super T\> consumer) 로 lambda 로 구독하면 분산된 rails 만큼 구독된다.
->
-> 이유는 코드를 보면:
->
-> ```java
-> /* #subscribe(Subscriber<? super T>) */
-> @Override
-> @SuppressWarnings("unchecked")
-> public final void subscribe(Subscriber<? super T> s) {
->   Flux.onLastAssembly(sequential())	// 여기에서 sequential() 호출됨
->     .subscribe(new FluxHide.SuppressFuseableSubscriber<>(Operators.toCoreSubscriber(s)));
-> }
-> // console 결과
-> [parallel-1] 0
-> [parallel-1] 1
-> [parallel-1] 2
-> [parallel-1] 3
-> [parallel-1] 4
-> [parallel-2] 5
-> [parallel-3] 6
-> [parallel-4] 7
-> [parallel-1] 8
-> [parallel-2] 9
-> [parallel-3] 10
-> [parallel-3] 11
-> [parallel-1] 12
-> [parallel-2] 13
-> [parallel-3] 14
-> [parallel-4] 15
-> ```
->
-> 하지만 로그를 찍어보면 병렬처리되었는데, 여기서 말하는 implicit-sequential 은 rails 단위로 병렬수행된 task 를 subscriber 에 도달했을때 merge/each execute 방법에 대한 이야기이다.
->
-> 즉:
->
-> parallel(4) - runOn - subscribe(Consumer)
->
-> -> rails 의 갯수만큼 subscribe 호출
->
-> parallel(4) - runOn - subscribe(Subscriber)
->
-> -> (병렬처리된 rails 를 sequential 로 머지 후) subscribe 를 1번 호출
+그렇다면 rails vs non-rails 의 차이는 무엇일까?
+
+element 가 rails (== group) 에 속하면, 해당 군은 동일한 Thread 에서 수행됨이 [보장된다](https://javacan.tistory.com/entry/Reactor-Start-7-Parallel). 다른 rails 의 작업이 먼저 끝났더라도 workSteal 이 발생하지않고, 쓰레드가 할당안된 다른 rail 를 찾아서 처리되기 때문이다.
 
 #### Schedulers
 
