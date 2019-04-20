@@ -1693,7 +1693,7 @@ public void resetAllHooks() {
   Hooks.resetOnNextDropped();
   Hooks.resetOnErrorDropped();
 }
-
+/* dropHooks */
 @Test
 public void errorHooks() throws Exception {
   Hooks.onNextDropped(d -> {
@@ -1725,11 +1725,92 @@ woooooorld
 
 **Internal-Error Hooks**
 
+onNext and/or onError and/or onComplete 수행도중 에러 발생시, Hooks 을 통해 제어 가능하다.
+
+```java
+/* errorHooks */
+@Test
+public void errorHooks() {
+  // Hooks onError
+  Hooks.onOperatorError((ex, obj) -> {
+    log.warn("Hooks. ex={}, obj={}", ex, obj);
+
+    return ex;
+  });
+
+  final int value = 10;
+
+  Flux<Integer> flux = Flux.just(1, 2, 0, 3, 4, 5);
+  flux.map(o -> value / o)
+    .doOnError(c -> log.warn("doOnError. ex={}", c.toString())) // stream onError
+    .subscribe(r -> log.info("{} -> {}", value, r));
+}
+// console 결과
+14:54:08.474 [main] INFO  ch8.HooksTest - 10 -> 10
+14:54:08.475 [main] INFO  ch8.HooksTest - 10 -> 5
+14:54:08.478 [main] WARN  ch8.HooksTest - Hooks. ex=java.lang.ArithmeticException: / by zero, obj=0
+14:54:08.479 [main] WARN  ch8.HooksTest - doOnError. ex=java.lang.ArithmeticException: / by zero
+```
+
 **Assembly Hooks**
+
+stream-chain 에서 각 operator 가 수행할때, Hooks 을 통해 제어 가능하다.
+
+```java
+/* assembleHooks */
+@Test
+public void assembleOnLastHooks() {
+  Hooks.onEachOperator(p -> {
+    log.info("onEachOperator. publish={}", p);
+
+    return p;
+  });
+
+  Hooks.onLastOperator(p -> {
+    log.info("onLastOperator. publish={}", p);
+
+    return p;
+  });
+
+  int value = 10;
+
+  Flux<Integer> flux = Flux.just(1, 2, 3, 4, 5);
+  flux.map(o -> value / o)
+    .subscribe(r -> log.info("{} -> {}", value, r));
+}
+// console 결과
+15:27:10.641 [main] INFO  ch8.HooksTest - onEachOperator. publish=FluxArray
+15:27:10.643 [main] INFO  ch8.HooksTest - onEachOperator. publish=FluxMapFuseable
+15:27:10.645 [main] INFO  ch8.HooksTest - onLastOperator. publish=FluxMapFuseable
+15:27:10.650 [main] INFO  ch8.HooksTest - 10 -> 10
+15:27:10.650 [main] INFO  ch8.HooksTest - 10 -> 5
+15:27:10.650 [main] INFO  ch8.HooksTest - 10 -> 3
+15:27:10.650 [main] INFO  ch8.HooksTest - 10 -> 2
+15:27:10.650 [main] INFO  ch8.HooksTest - 10 -> 2
+```
 
 **Hook Presets**
 
+몇몇 유용한 방식으로 boot 에 적용.
 
+[ApplicaionListener](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-spring-application.html#boot-features-application-events-and-listeners)
+
+```java
+@Slf4j
+@Profile("!real")
+@Component
+class ApplicationReadyEventListener implements ApplicationListener<ApplicationReadyEvent> {
+  @Override
+  public void onApplicationEvent(ApplicationReadyEvent event) {
+    Hooks.onOperatorDebug();
+    Hooks.onNextError((throwable, o) -> {
+      log.error("TARGET OBJECT : {}", o, throwable);
+
+      return o;
+    });
+  }
+}
+```
 
 #### Context
 
