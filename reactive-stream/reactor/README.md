@@ -1458,7 +1458,7 @@ public void groupedFluxTest() {
   - Concurrency - 먼저 전달된 GroupedFlux 가 다 처리된후 다음 Flux 의 flatten 수행
 - concatMap
   - Ordering - group's order
-  - Concurrency - 처리되는대로 flatten 수행 (==parallelism)
+  - Concurrency - 처리되는대로 flatten 수행 (== parallelized)
 
 **Flux<Flux\<T\>>**
 
