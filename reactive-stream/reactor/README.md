@@ -1768,13 +1768,104 @@ class ApplicationReadyEventListener implements ApplicationListener<ApplicationRe
 
 #### Context
 
-Flux#subscriberContext
+Using Flux/Mono to handle stream operations, `ThreadLocal` based-data is no longer supported in non-blocking world.
 
-**API**
+> The execution can also easily and often jump from one thread to another.
 
-**Read context**
+Reactor now supports `Context` that is chain-scoped, is an good alternative of thread-based one.
 
-**Write context**
+```java
+/* Basic get/set */
+@Test
+public void simpleTest() {
+  Mono.just("[Hello]")
+    .flatMap(o -> {
+      Mono<Context> context = Mono.subscriberContext();   // getContext
+      Mono<String> map = context.map(ctx -> o
+                                     + ctx.get("key")
+                                     + ctx.getOrDefault("no-key", ", reactor1."));
+
+      return map;
+    })
+    .subscriberContext(context -> context.put("key", " World1")) // setContext, closest to 1st #get("key")
+    .subscriberContext(context -> context.put("key", " world2")) // setContext
+    .subscribe(o -> log.info("{}", o));
+}
+// consloe 결과
+[Hello] World1, reactor1.
+```
+
+The fetched value with given key is coming on the closest put action. so key=World1 is provided in #get("key") operations.
+
+But what happened when multiple #get is operated in the middle of chain?
+
+```java
+/* Basic propagation */
+@Test
+public void propagationTest() {
+  Mono.just("[Hello]")
+    .flatMap(o -> {
+      Mono<Context> context = Mono.subscriberContext();   // getContext
+      Mono<String> map = context.map(ctx -> o
+                                     + ctx.get("key") // (1)
+                                     + ctx.getOrDefault("no-key", ", reactor1."));
+
+      return map;
+    })
+    .subscriberContext(context -> context.put("key", " World1")) // setContext, closest to 1st #get("key")
+    .flatMap(o -> {
+      Mono<Context> context = Mono.subscriberContext();   // getContext
+      Mono<String> map = context.map(ctx -> o
+                                     + ctx.get("key") // (2)
+                                     + ctx.getOrDefault("no-key", ", reactor2"));
+
+      return map;
+    })
+    .subscriberContext(context -> context.put("key", " world2")) // setContext, closest to 2nd #get("key")
+    .subscribe(o -> log.info("{}", o));
+}
+// console 결과
+[Hello] World1, reactor1. world2, reactor2
+```
+
+(1) is fetching value in #put("key", "World1") that is the closest in downstream-chain, (2) is infected of #put("key", "World2")
+
+Context is especially useful in carrying `requestID` in each hop of the thread in async-chain which is key role in servlet-based MDC utils. MDC keeps data in threadlocal but It is not working in multi-thread condition. Here is the brief sample:
+
+**MDC practice**
+
+```java
+/* Alternative of ThreadLocal: Context */
+@Test
+public void solvedOfContext() throws InterruptedException {
+  // given
+  String requestId = UUID.randomUUID().toString();
+  ThreadLocal<String> mdc = new ThreadLocal();
+  mdc.set(requestId);
+
+  log.info("[{}] start", mdc.get());
+
+  // when
+  Flux.range(0, 10)
+    .flatMap(o -> Mono.subscriberContext() // getContext#1
+             .map(ctx -> {
+               log.info("[{}] {}", ctx.get("requestId"), o);
+
+               return ctx;
+             })
+             .map(ctx -> o))
+    .handle((o, handler) -> {	// getContext#2
+      log.info("[{}] {}", handler.currentContext().get("requestId"), o);
+
+      handler.next(o);
+    })
+    .subscriberContext(Context.of("requestId", mdc.get()))
+    .subscribeOn(Schedulers.elastic())
+    .subscribe();
+
+  Thread.sleep(500);
+}
+```
 
 #### Cleanup
 
