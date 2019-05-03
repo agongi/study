@@ -1866,16 +1866,3 @@ public void solvedOfContext() throws InterruptedException {
   Thread.sleep(500);
 }
 ```
-
-#### Cleanup
-
-The doOnDiscard Flux/Mono operator
-
-The onOperatorError hook
-
-The onNextDropped hook
-
-Operator-specific handlers
-
-#### Null-safety
-
