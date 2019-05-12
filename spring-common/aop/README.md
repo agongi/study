@@ -3,11 +3,11 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-  - https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
-  - https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
-  - http://www.mkyong.com/spring/spring-aop-examples-advice/
-  - http://haviyj.tistory.com/33
-  - https://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html
+- https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
+- https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
+- http://www.mkyong.com/spring/spring-aop-examples-advice/
+- http://haviyj.tistory.com/33
+- https://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html
 ```
 
 ### Spring AOP
