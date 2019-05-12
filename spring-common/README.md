@@ -20,7 +20,7 @@
 - [@Configuration](configuration)
 - [Spring Flow](spring-flow)
 - [Spring Bootstrap](spring-bootstrap)
-- [Spring AOP](spring-common/spring-aop)
+- [AOP (Aspect-Oriented Programming)](aop)
 - [Transaction](transaction)
 - [Classpath](classpath)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)

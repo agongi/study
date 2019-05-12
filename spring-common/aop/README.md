@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.23
 ㅁ References:
   - https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
   - https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
@@ -50,25 +49,25 @@ Spring AOP is supported in following way:
   - Method should not be final
     - Proxy override target method to delegate but final keyword can't be make it
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/aop-proxy-call.png" width="75%">
+<img src="images/aop-proxy-call.png" width="75%">
 
 ##### JVM Dynamic Proxy
 - Spring AOP default
 - Works in `interface`
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture2-4.png" width="75%">
+<img src="images/Picture2-4.png" width="75%">
 
 ##### CGLIB Proxy
 - Spring also supports it when this one is declared
 - Works in concrete `target class`
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture3-3.png" width="75%">
+<img src="images/Picture3-3.png" width="75%">
 
 #### AspectJ
 - JVM loadtime weaving using bytecode instrument
 - No limitations
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/spring-aop/images/Picture5-2.png" width="75%">
+<img src="images/Picture5-2.png" width="75%">
 
 ```xml
   <aop:aspectj-autoproxy proxy-target-class="true"/>
