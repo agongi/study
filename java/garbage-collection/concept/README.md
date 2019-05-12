@@ -3,22 +3,23 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
- - http://www.oracle.com/technetwork/tutorials/tutorials-1876574.html
- - http://javarevisited.blogspot.sg/2011/04/garbage-collection-in-java.html
- - http://javarevisited.blogspot.kr/2011/05/java-heap-space-memory-size-jvm.html
+- http://www.oracle.com/technetwork/tutorials/tutorials-1876574.html
+- http://javarevisited.blogspot.sg/2011/04/garbage-collection-in-java.html
+- http://javarevisited.blogspot.kr/2011/05/java-heap-space-memory-size-jvm.html
 
- - http://d2.naver.com/helloworld/1329
- - http://d2.naver.com/helloworld/329631
- - http://d2.naver.com/helloworld/1134732
- - http://d2.naver.com/helloworld/6043
- - http://d2.naver.com/helloworld/37111
- - http://d2.naver.com/helloworld/4717
- - http://d2.naver.com/helloworld/184615
+- http://d2.naver.com/helloworld/1329
+- http://d2.naver.com/helloworld/329631
+- http://d2.naver.com/helloworld/1134732
+- http://d2.naver.com/helloworld/6043
+- http://d2.naver.com/helloworld/37111
+- http://d2.naver.com/helloworld/4717
+- http://d2.naver.com/helloworld/184615
 
- - https://prezi.com/bwba2m2xhive/java-garbage-collection
- - https://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html
- - http://imp51.tistory.com/entry/G1-GC-Garbage-First-Garbage-Collector-Tuning
- - http://initproc.tistory.com/entry/G1-Garbage-Collection
+- https://prezi.com/bwba2m2xhive/java-garbage-collection
+- https://yckwon2nd.blogspot.kr/2014/04/garbage-collection.html
+- http://imp51.tistory.com/entry/G1-GC-Garbage-First-Garbage-Collector-Tuning
+- http://initproc.tistory.com/entry/G1-Garbage-Collection
+- https://perfectacle.github.io/2019/05/07/jvm-gc-basic/?fbclid=IwAR21u1pfPvsTrGzV-FCzi_OAkEYinloxIB9AQqp9OSAEf5Yxy_85gaOfsQ0
 ```
 
 <img src="images/687474703a2f2f6366696c65352e75662e746973746f72792e636f6d2f696d6167652f32313242383434453536364433313843324633374133.png" width="75%">
