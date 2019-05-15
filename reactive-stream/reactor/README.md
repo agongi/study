@@ -1828,7 +1828,22 @@ public void propagationTest() {
 [Hello] World1, reactor1. world2, reactor2
 ```
 
-(1) is fetching value in #put("key", "World1") that is the closest in downstream-chain, (2) is infected of #put("key", "World2")
+(1) is fetching value in #put("key", "World1") that is the closest in downstream-chain, (2) is infected of #put("key", "World2").
+
+A Stream started with `Mono#subscriberContext` is reverse-direction referenced in chain:
+
+```java
+/* subscriberContext-chain */
+@Test
+public void startStreamTest() {
+  Mono<String> r = Mono.subscriberContext() // stream of context
+    .map(ctx -> ctx.put("key", "hello"))
+    .flatMap(ctx -> Mono.just(ctx))
+    .map(ctx -> ctx.getOrDefault("key", "no-hello")); // key already exists!
+}
+// console 결과
+hello
+```
 
 Context is especially useful in carrying `requestID` in each hop of the thread in async-chain which is key role in servlet-based MDC utils. MDC keeps data in threadlocal but It is not working in multi-thread condition. Here is the brief sample:
 
