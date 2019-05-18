@@ -44,3 +44,4 @@
 - [2018-06-17] [어깨결림, 허리통증, 두통에 시달리다가 턱걸이로 고친 이야기](https://www.clien.net/service/board/use/12246257)
 - [2018-11-28] [퇴근길에 만난 대학생](https://www.clien.net/service/board/park/12874499)
 - [2019-03-31] [개발자, 혹은 프로그래머를 생각하시는 분들께](https://www.clien.net/service/board/park/13324908)
+- [2019-05-18] [40대 중반 남성 신체 후기](https://www.clien.net/service/board/use/13489065)
