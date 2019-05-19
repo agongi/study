@@ -223,7 +223,7 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 
 ### Sequence
 
-#### Generator
+#### Emission
 
 **정해진 source (ex. Collection) 에서 생성하는 방법**
 
@@ -402,7 +402,29 @@ BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
     - onNext, onComplete, onError 이벤트를 발행하는 thread 가 동일해야함
   - state - 없음
 
-### Errors
+### Handle
+
+- handle(BiConsumer<T, SynchronousSink>)
+
+  - filter + map
+  - but returns `SynchronousSink`, not suitable for #create and/or #push
+
+  ```java
+  public class SequenceHandler {
+    public Flux<Integer> handle(Flux<Integer> sequence) {
+      return sequence.handle((number, sink) -> {
+        if (number % 2 == 0) {
+          sink.next(number / 2); // SynchronousSink used
+        }
+      });
+    }
+  }
+  ```
+
+- filter and/or map
+  - 
+
+### Exception
 
 ```java
 Flux.just(1, 2, 0)
@@ -413,7 +435,7 @@ Flux.just(1, 2, 0)
 );
 ```
 
-#### handle
+#### error
 
 - onErrorReturn(T value)
   - return given value
