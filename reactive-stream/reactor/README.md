@@ -422,6 +422,7 @@ BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
   ```
 
 - filter and/or map
+  
   - 
 
 ### Exception
@@ -1668,6 +1669,7 @@ onNext or onError 가 누락되었을때 기본동작은 `logLevel.debug` 출력
 public void resetAllHooks() {
   Hooks.resetOnNextDropped();
   Hooks.resetOnErrorDropped();
+  Hooks.resetOnOperatorError();
 }
 /* dropHooks */
 @Test
@@ -1901,5 +1903,36 @@ public void solvedOfContext() throws InterruptedException {
     .subscribe();
 
   Thread.sleep(500);
+}
+```
+
+#### Clean-Up
+
+**doOnDiscard**
+
+The elements what couldn't pass through next-chain after filter are catched in `doOnDiscard`.
+
+```java
+@Test
+public void discardLocalMultipleFilters() {
+  AtomicInteger numberCount = new AtomicInteger(0);
+  AtomicInteger stringCount = new AtomicInteger(0);
+  AtomicInteger objectCount = new AtomicInteger(0);
+
+  StepVerifier.create(Flux.range(1, 12)
+			.hide() //hide both avoid the fuseable AND tryOnNext usage
+			.filter(i -> i % 2 == 0) // Flux<Integer>
+			.map(String::valueOf)
+			.filter(s -> s.length() < 2) // Flux<String>
+			.doOnDiscard(Number.class, i -> numberCount.incrementAndGet())
+			.doOnDiscard(String.class, i -> stringCount.incrementAndGet())
+			.doOnDiscard(Object.class, i -> objectCount.incrementAndGet()))
+    .expectNext("2", "4", "6", "8")
+    .expectComplete()
+    .verify();
+
+  assertThat(numberCount).hasValue(6); // 1 3 5 7 9 11
+  assertThat(stringCount).hasValue(2); // 10 12
+  assertThat(objectCount).hasValue(8); // all
 }
 ```
