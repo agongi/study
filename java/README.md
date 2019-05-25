@@ -19,6 +19,7 @@
 - [Collections](collections)
 - [NIO](nio)
 - [Garbage Collection](garbage-collection)
+- [Generics](generics)
 
 ### Index
 - [String vs StringBuilder vs StringBuffer](string-stringbuilder-stringbuffer)
@@ -32,11 +33,8 @@
 - [Nested Class](nested-class)
 - [How HashMap works](how-hashmap-works)
 - [How ClassLoader Works](classloader)
-- [How to iterate Map](how-to-iterate-map)
 - [try-with-resources](try-with-resources)
-- [JVM Memory Model](jvm-memory-model)
-- [Generics](generics)
-- [Enumerations](enum)
+- [Enumeration](enum)
 - [Exception](exception)
 - [Varargs](varargs)
 - [Serializable](serializable)
