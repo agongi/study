@@ -21,6 +21,15 @@
 - [Garbage Collection](garbage-collection)
 - [Generics](generics)
 
+### Design Pattern
+
+- [Factory Pattern](factory-pattern)
+- [Singleton Pattern](singleton-pattern)
+- [Builder Pattern](builder-pattern)
+- [Observer Pattern](observer-pattern)
+- [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
+- [Double Checked Locking](double-checked-locking)
+
 ### Index
 - [String vs StringBuilder vs StringBuffer](string-stringbuilder-stringbuffer)
 - [Primitive type vs Boxed type](primitive-boxed)
@@ -46,15 +55,6 @@
 - [Data Type](data-type)
 - [Pattern-Matcher](pattern-matcher)
 - [StopWatch](stop-watch)
-- [Lombok](lombok)
-
-### Design Pattern
-- [Factory Pattern](factory-pattern)
-- [Singleton Pattern](singleton-pattern)
-- [Builder Pattern](builder-pattern)
-- [Observer Pattern](observer-pattern)
-- [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
-- [Double Checked Locking](double-checked-locking)
 
 ### Blog
 - [Java Enum 활용기](http://woowabros.github.io/tools/2017/07/10/java-enum-uses.html)
