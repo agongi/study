@@ -7,6 +7,7 @@
 - https://stackoverflow.com/questions/15976008/using-mockito-to-stub-and-execute-methods-for-testing
 - https://jojoldu.tistory.com/226
 - https://www.baeldung.com/java-spring-mockito-mock-mockbean
+- https://dzone.com/articles/a-guide-to-mocking-with-mockito
 ```
 
 ### Inject mock
@@ -50,9 +51,9 @@ public class PersonService {
 }
 
 // static method
-PersonService p = Mockito.mock(PersonService.class);
+PersonService p = Mockito.spy(PersonService.class);
 // annotation
-@Mock private PersonService p;
+@Spy private PersonService p = new PersonServiceImpl();
 
 // given
 given(p.getAge()).willReturn(100);
@@ -73,7 +74,7 @@ DI @Mock/@Spy instances onto target.
 @Mock(name = "loginService")
 private LoginService loginService;
 @Spy
-private LoginAuthUtils authUtils;
+private LoginAuthUtils authUtils = new LoginAuthUtils();
 
 // @Mock & @Spy will be injected into @InjectMocks target
 @InjectMocks
@@ -147,6 +148,30 @@ public class ExampleTest {
 ```
 
 ### Usage
-- given
-- when
-- then
+
+#### Verify void method
+
+```java
+public class CrudTest {
+  @Mock
+  private CrudRepository repository;
+  @Captor
+  private ArgumentCaptor<List<Long>> idsCaptor;
+  @InjectMocks
+  private CrudService service = new CrudServiceImpl();
+
+  @Test
+  public void CRUD_TEST() {
+    // given
+    given(repository.findById(anyLong())).willReturn(Arrays.asList("001", "002"));
+
+    // when - 기존에 이미 저장된 id 는 제거후, repository#save 호출
+    service.create(Arrays.asList("002", "003"));
+
+    // then
+    verify(repository).save(idsCaptor.capture());   // save 직전의 argument 를 captor 한다.
+    Assert.assertNotNull(idsCaptor.getValue());
+    Assert.assertTrue(CollectionUtils.size(idsCaptor.getValue()) == 1); // "003"
+  }
+}
+```

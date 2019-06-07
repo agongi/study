@@ -15,7 +15,7 @@ Java Persistence API, just a specification
 
 > Hibernate is implementation of JPA
 
-### [QueryDSL](querydsl)
+### [QueryDSL](query-dsl)
 
 JPQL (Java Persistence Query Language) -> HQL (Hibernate Query Language) -> Querydsl
 
