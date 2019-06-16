@@ -45,3 +45,5 @@
 - [2018-11-28] [퇴근길에 만난 대학생](https://www.clien.net/service/board/park/12874499)
 - [2019-03-31] [개발자, 혹은 프로그래머를 생각하시는 분들께](https://www.clien.net/service/board/park/13324908)
 - [2019-05-18] [40대 중반 남성 신체 후기](https://www.clien.net/service/board/use/13489065)
+- [2019-06-08] [우리 팀의 근무 수칙](https://brunch.co.kr/@svillustrated/54)
+- [2019-06-11] [한국판 매트리스 전쟁](https://www.clien.net/service/board/lecture/13587825)
