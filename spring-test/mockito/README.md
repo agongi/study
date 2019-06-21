@@ -175,3 +175,44 @@ public class CrudTest {
   }
 }
 ```
+
+#### local variable
+
+```java
+// testable
+public List<Object> getSites(Long id) {
+	User user = repository.findById(id);
+  
+  List<Site> sites = user.getLoginableSites();
+  // .... 
+  return sites;
+}
+
+// test
+public class CrudTest {
+  @Mock
+  private CRUDRepository repository;
+  @InjectMocks
+  private UserService = new UserServiceImpl();
+
+  @Test
+  public void test() {
+    // given
+    Long id = 123456L;
+    User user = mock(User.class);
+    when(user.getLoginableSites()).thenReturn(Arrays.asList(
+      new Site(1),
+      new Site(2),
+      new Site(3)
+    ));
+
+    given(repository.findById(anyLong())).willReturn(user);
+    
+    // when
+    List<Site> sites = userService.getSites(id);
+    // then
+    assertNotNull(sites);
+    assertTrue(sites.size(), 3);
+  }
+}
+```
