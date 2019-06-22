@@ -27,6 +27,7 @@ Duplicated element is allowed
 
 - ArrayList
 - LinkedList
+  - CursorableLinkedList
 - CopyOnWriteArrayList
 
 ### [Set](set)

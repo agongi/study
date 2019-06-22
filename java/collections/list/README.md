@@ -9,23 +9,33 @@
  - http://javarevisited.blogspot.kr/2012/02/difference-between-linkedlist-vs.html
 ```
 
-### List Implementations
-#### ArrayList
-Good for **random access** based on index
-  - get
+### ArrayList
 
-Bad for re-indexing condition
-  - add/remove
+Commonly used random-access link.
 
-#### LinkedList
-Good for sequential access or insert/delete
-  - add/remove/iterator
+- pros: **random access** based on index
+    - get
+  - cons: re-indexing condition
 
-Bad random access
-  - get
+      - add/remove
+
+### LinkedList
+
+LinkedList is used to search from start to end.
+
+- pros: **sequential access** or insert/delete
+    - add/remove/iterator
+  - cons: random access
+
+      - get
+
+#### CursorableLinkedList
+
+subset of linkedList, but capable in iteration at the passed fromIndex
 
 ### Concurrent packages
 #### CopyOnWriteArrayList
+
 Copy entire List on write
   - Iteration can keep origin snapshot while other thread changes the value of it
 
