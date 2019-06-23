@@ -22,3 +22,4 @@
 - ~~SynchronousQueue - a simple rendezvous mechanism that uses the BlockingQueue interface~~
 
 > blocking is that producers may wait for consumers to receive elements
+

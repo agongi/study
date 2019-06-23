@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.08.28
 ㅁ References:
 - https://docs.oracle.com/javase/tutorial/collections/implementations/set.html
 - http://tutorials.jenkov.com/java-collections/set.html

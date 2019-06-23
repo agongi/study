@@ -10,7 +10,9 @@
 <img src="images/Screen%20Shot%202016-02-14%20at%2018.31.04.png" width="75%">
 
 ### In a Nutshell
+
 #### Read-Only Collections
+
 - List<E> list = Collections.unmodifiableList(new ArrayList());
 - Set<E> set = Collections.unmodifiableSet(new HashSet());
 - Map<K, V> map = Collections.unmodifiableMap(new HashMap());
