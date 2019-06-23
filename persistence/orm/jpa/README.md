@@ -151,3 +151,112 @@ The EntityManager works with PersistenceContext and if it's not provided the Ent
 
 The TransactionManager is responsible for creating, commiting and ... tranactions based on annotations you provide
 
+### JPA 기본개념
+
+#### 기본키 매핑
+
+IDENTITY - auto increment 등 처럼 DB 에 위임
+SEQUENCE - 생성할 시퀀스를 지정 (generator)
+TABLE - 키 생성 전용 테이블이 있고, 그걸 지정
+
+#### 컬럼매핑
+
+@Column
+@Temporal - date, time, datetime 지정 (기본값은 datetime 이 모두 표현되는 timestamp)
+@Lob - clob (char[], string), blob (나머지)
+@Transient - ORM 에서 관리하지 않을 field
+
+@Access - 접근제어레벨
+
+- field 직접 접근, private 이라도 접근
+-  property getter/setter 통해서 접근
+
+#### 연관관계 매핑
+
+- OneToOne (무조건 1-1 로 존재해야함, 매핑이 optional 이면 1-1 이라고해도, oneToMany 로 매핑)
+- OneToMany(mappedBy=B)
+  - mappedBy 는 주인이 아닌곳에
+- ManyToOne
+- manytomany
+
+@JoinColumn - 연관관계테이블의 키매핑에 사용, 생략가능
+
+```java
+/**
+ * 단방향 매핑
+ */
+@OneToMany(fetch = FetchType.LAZY)
+@JoinColumn(name = "SEQ_ID", referencedColumnName = "USER_ID")
+private Set<Usery> Users = new LinkedHashSet<>();
+```
+
+- 단방향: joinColumn (생략가능) 으로 key-만 지정 + 연관관계annotation 사용 (mappedBy 미사용)
+- 양방향: 연관관계 annotation 사용 (mappedBy 로 owner 지정해야함)
+
+#### 상속관계 매핑
+
+- @Inheritance
+
+N 개의 타입으로 상속관계매핑이 필요한 경우
+
+```java
+@Entity(name = "PersonInfo")
+@Table(name = "PERS_INFO")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorFormula("case when LOCT_TP in ('A','B) then 'KR' when LOCT_TP in ('C') then 'JP' else 'US' end")
+public abstract class PersonInfo {
+    @Column("name)
+    private String name;
+    
+    @Column("LOCT_TP")
+    @DiscriminatorColumn("type")
+    private LocationType locationType;
+}
+
+
+```
+
+컬럼당 1개의 상속관계가 정의된다면
+
+```java
+@DiscriminatorValue("KR")
+public class KrPersonInfo extends PersonInfo {
+    // ..
+}
+
+@Entity(name = "PersonInfo")
+@Table(name = "PERS_INFO")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "LOCT_TP")
+public abstract class PersonInfo {
+    @Column("name)
+    private String name;
+    
+    @Column("LOCT_TP")
+    private LocationType locationType;
+}
+
+@DiscriminatorValue("KR")
+public class KrPersonInfo extends PersonInfo {
+    // ..
+}
+```
+
+- @MappedClass - 컬럼에 영향을 끼치지 않음 (단순 코드상 상속)
+
+#### 복합키 매핑
+
+@IdClass
+
+@EmbeddedId - Embeddable
+
+#### 조인테이블 매핑
+
+매핑테이블을 별도로 지정하는 방식이다
+
+@JoinTables
+
+
+
+
+
