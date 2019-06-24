@@ -200,7 +200,7 @@ public class CrudTest {
     // given
     Long id = 123456L;
     User user = mock(User.class);
-    when(user.getLoginableSites()).thenReturn(Arrays.asList(
+    given(user.getLoginableSites()).willReturn(Arrays.asList(
       new Site(1),
       new Site(2),
       new Site(3)
