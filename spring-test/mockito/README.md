@@ -10,7 +10,20 @@
 - https://dzone.com/articles/a-guide-to-mocking-with-mockito
 ```
 
+### Overview
+
+Mockito is a framework for unit-test in java that mocking tastable fields or variables.
+
+- when(mock#method).thenReturn(T);
+- verify(mock).method();
+
+MockitoBBD (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior of the application.
+
+- given(mock#method).willReturn(T);
+- then(mock).should().methodI();
+
 ### Inject mock
+
 #### @Mock
 - `All methods` are stubbed. (Override)
 - invoke method will do nothing unless it is specified
@@ -149,7 +162,7 @@ public class ExampleTest {
 
 ### Usage
 
-#### Verify void method
+#### Verify void method /w `Captor`
 
 ```java
 public class CrudTest {
@@ -176,7 +189,7 @@ public class CrudTest {
 }
 ```
 
-#### local variable
+#### Mocking local variable /w Mock's` Mock`
 
 ```java
 // testable
@@ -205,11 +218,11 @@ public class CrudTest {
       new Site(2),
       new Site(3)
     ));
-
     given(repository.findById(anyLong())).willReturn(user);
     
     // when
     List<Site> sites = userService.getSites(id);
+    
     // then
     assertNotNull(sites);
     assertTrue(sites.size(), 3);
