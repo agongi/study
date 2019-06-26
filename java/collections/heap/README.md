@@ -43,7 +43,7 @@ heap 으로 값을 관리하고, (최소힙 기준) #get 을 호출하면 낮은
 - right-child-node >= parent
 - 그리고 이진트리
 
-[in-order (중위순회)]([https://ratsgo.github.io/data%20structure&algorithm/2017/10/22/bst/](https://ratsgo.github.io/data structure&algorithm/2017/10/22/bst/)) 방식으로 탐색하는데, 그때의 효율성은 아래와 같다:
+[in-order (중위순회)](https://ratsgo.github.io/data%20structure&algorithm/2017/10/22/bst) 방식으로 탐색하는데, 그때의 효율성은 아래와 같다:
 
 - search-key K 입력됨
 - 루트노드와 K 비교
@@ -53,13 +53,13 @@ heap 으로 값을 관리하고, (최소힙 기준) #get 을 호출하면 낮은
 
 insert/delete 가 자주 발생할시 트리의 balance 가 무너질수 있고, 그때는 효율적이지 않게됩니다.
 
-![Screen Shot 2019-06-27 at 01.31.30](/Users/suktae/Documents/OneDrive/workspace/git/study/java/collections/heap/images/Screen Shot 2019-06-27 at 01.31.30.png)
+![Screen Shot 2019-06-27 at 01.31.30](images/Screen Shot 2019-06-27 at 01.31.30.png)
 
-#### [AVL 트리]([https://ratsgo.github.io/data%20structure&algorithm/2017/10/27/avltree/](https://ratsgo.github.io/data structure&algorithm/2017/10/27/avltree/))
+#### [AVL 트리](https://ratsgo.github.io/data%20structure&algorithm/2017/10/27/avltree/)
 
 AVL 트리란 서브트리의 높이를 적절하게 제어해 전체 트리가 어느 한쪽으로 늘어지지 않도록 한 이진탐색트리(Binary Search Tree)의 일종입니다.
 
-#### [RB 트리]([https://ratsgo.github.io/data%20structure&algorithm/2017/10/28/rbtree/](https://ratsgo.github.io/data structure&algorithm/2017/10/28/rbtree/))
+#### [RB 트리](https://ratsgo.github.io/data structure&algorithm/2017/10/28/rbtree/)
 
 RB 트리는 다음 다섯 가지 속성을 만족하는 이진탐색트리(Binary Search Tree)의 일종입니다.
 
@@ -69,6 +69,6 @@ RB 트리는 다음 다섯 가지 속성을 만족하는 이진탐색트리(Bina
 4. 어떤 노드가 빨간색이라면 두 개 자식노드는 모두 검은색이다. (따라서 빨간색 노드가 같은 경로상에 연이어 등장하지 않는다)
 5. ‘각 노드~자손 잎새노드 사이의 모든 경로’에 대해 검은색 노드의 수가 같다.
 
-#### [의사결정 트리]([https://ratsgo.github.io/machine%20learning/2017/03/26/tree/](https://ratsgo.github.io/machine learning/2017/03/26/tree/))
+#### [의사결정 트리](https://ratsgo.github.io/machine learning/2017/03/26/tree/)
 
-#### [랜덤포레스트 (Random Forest)/로테이션포레스트 (Rotation Forest)]([https://ratsgo.github.io/machine%20learning/2017/03/17/treeensemble/](https://ratsgo.github.io/machine learning/2017/03/17/treeensemble/))
+#### [랜덤포레스트 (Random Forest)/로테이션포레스트 (Rotation Forest)](https://ratsgo.github.io/machine%20learning/2017/03/17/treeensemble/)
