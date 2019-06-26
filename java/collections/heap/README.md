@@ -53,7 +53,7 @@ heap 으로 값을 관리하고, (최소힙 기준) #get 을 호출하면 낮은
 
 insert/delete 가 자주 발생할시 트리의 balance 가 무너질수 있고, 그때는 효율적이지 않게됩니다.
 
-![Screen Shot 2019-06-27 at 01.31.30](images/Screen Shot 2019-06-27 at 01.31.30.png)
+<img src="images/Screen Shot 2019-06-27 at 01.31.30.png" width="50%">
 
 #### [AVL 트리](https://ratsgo.github.io/data%20structure&algorithm/2017/10/27/avltree/)
 
