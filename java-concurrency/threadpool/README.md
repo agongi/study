@@ -73,3 +73,58 @@ public static ExecutorService newWorkStealingPool() {
     null, true);
 }
 ```
+
+### ThreadPoolExecutor
+
+<img src="images/Screen Shot 2019-06-27 at 01.48.23.png" width=50%>
+
+제공되는 ExecutorService 를 상속하여, 좀더 세밀한 제어가 가능하다
+
+- Hooks
+- Initialize/Finalize
+
+```java
+/**
+ * ReentrantLock 을 이용한 pause/resume ThreadPool
+ */
+class PausableThreadPoolExecutor extends ThreadPoolExecutor {
+  private boolean isPaused;
+  private ReentrantLock pauseLock = new ReentrantLock();
+  private Condition unpaused = pauseLock.newCondition();
+
+  public PausableThreadPoolExecutor(...) { super(...); }
+
+  protected void beforeExecute(Thread t, Runnable r) {
+    super.beforeExecute(t, r);
+    pauseLock.lock();
+    try {
+      while (isPaused) unpaused.await();
+    } catch (InterruptedException ie) {
+      t.interrupt();
+    } finally {
+      pauseLock.unlock();
+    }
+  }
+
+  public void pause() {
+    pauseLock.lock();
+    try {
+      isPaused = true;
+    } finally {
+      pauseLock.unlock();
+    }
+  }
+
+  public void resume() {
+    pauseLock.lock();
+    try {
+      isPaused = false;
+      unpaused.signalAll();
+    } finally {
+      pauseLock.unlock();
+    }
+  }
+}
+```
+
+### ScheduledThreadPoolExecutor
