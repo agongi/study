@@ -2,8 +2,8 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.14
 ㅁ References:
+- https://docs.oracle.com/javase/tutorial/collections/implementations/list.html
  - http://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist
  - http://www.javatpoint.com/difference-between-arraylist-and-linkedlist
  - http://javarevisited.blogspot.kr/2012/02/difference-between-linkedlist-vs.html

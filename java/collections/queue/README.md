@@ -3,7 +3,7 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
+- https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
 ```
 
 ### Queue Implementations

@@ -17,7 +17,7 @@ Mockito is a framework for unit-test in java that mocking tastable fields or var
 - when(mock#method).thenReturn(T);
 - verify(mock).method();
 
-MockitoBBD (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior of the application.
+MockitoBDD (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior of the application.
 
 - given(mock#method).willReturn(T);
 - then(mock).should().methodI();
@@ -189,7 +189,7 @@ public class CrudTest {
 }
 ```
 
-#### Mocking local variable /w Mock's` Mock`
+#### Mocking local variable /w Mock's`Mock`
 
 ```java
 // testable
