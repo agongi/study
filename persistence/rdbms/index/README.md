@@ -36,7 +36,7 @@ INDEX A asc, B asc, C asc
 - A 컬럼이 조건에 없다면, 해당 트리는 사용불가
 - C A 라면, A 로 우선 인덱스는 탄 후 나머지 트리의 full scan
 
-![Screen Shot 2019-06-28 at 00.48.14](images/Screen Shot 2019-06-28 at 00.48.14.png)
+<img src="images/Screen Shot 2019-06-28 at 00.48.14.png">
 
 ### Discussion
 
