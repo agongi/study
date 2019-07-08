@@ -74,7 +74,7 @@ public static ExecutorService newWorkStealingPool() {
 }
 ```
 
-### ThreadPoolExecutor
+#### ThreadPoolExecutor
 
 <img src="images/Screen Shot 2019-06-27 at 01.48.23.png" width=50%>
 
@@ -127,4 +127,4 @@ class PausableThreadPoolExecutor extends ThreadPoolExecutor {
 }
 ```
 
-### ScheduledThreadPoolExecutor
+#### ScheduledThreadPoolExecutor
