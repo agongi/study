@@ -48,3 +48,4 @@
 - [2019-05-18] [40대 중반 남성 신체 후기](https://www.clien.net/service/board/use/13489065)
 - [2019-06-08] [우리 팀의 근무 수칙](https://brunch.co.kr/@svillustrated/54)
 - [2019-06-11] [한국판 매트리스 전쟁](https://www.clien.net/service/board/lecture/13587825)
+- [2019-07-15] [좋은 프로그래머가 된다는 것은](http://blog.naver.com/PostView.nhn?blogId=knix008&logNo=221532193951)
