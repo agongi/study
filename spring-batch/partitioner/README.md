@@ -9,7 +9,8 @@
 
 Step 에서 처리할 chunk 를 분할해서 parallel 처리 가능하게함.
 
-1) 파니셔닝 Step 2) 실제로 item read/write 을 수행하는 Step
+- 파니셔닝 Step
+- partial items 의 read/write 수행 Step
 
 으로 크게 구분된다.
 
