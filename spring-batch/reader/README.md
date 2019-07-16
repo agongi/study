@@ -20,6 +20,8 @@ stream fetchSize 단위로 계속 읽음
 
 #### MyBatisCursorItemReader
 
+
+
 ### Paging
 
 limit (pageSize)
@@ -43,3 +45,6 @@ order by id;
 
 
 
+### List
+
+#### ListItemReader
