@@ -14,7 +14,7 @@ public class TestJobConfig {
   public Job testJob() {
     return jobBuilders.get(JOB_NAME)
       .start(new FlowBuilder<Flow>("testFlow")
-             .start(decider()).on(FlowExecutionStatus.COMPLETED.getName())
+             .from(decider()).on(FlowExecutionStatus.COMPLETED.getName())
 	             .to(step1())
   	           .next(step2())
     	         .next(step3())
