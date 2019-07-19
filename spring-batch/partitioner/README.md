@@ -28,22 +28,15 @@ public class TestJobConfig {
   public Step partitionStep() {
     return stepBuilders.get("partitionStep")
       .partitioner("partitionStep", partitioner(null))
+      // partitionHandler 에서 지정하거나
+      .partitionHandler()
+      // step-level 에서 직접 지정할수있음
       .gridSize(10)
       .taskExecutor(asyncTaskExecutor)
       .step(partialProcessStep())
       .build();
   }
-
-  // 전달된 chunk item 의 read/write step
-  @Bean
-  public Step partialProcessStep() {
-    return stepBuilders.get("partialProcessStep")
-      .<Object, Object>chunk(1000)
-      .reader(partialReader(null, null))
-      .writer(partialWriter())
-      .build();
-  }
-
+  
   @Bean
   public Partitioner partitioner(
     @Value("#{jobExecutionContext[total]}") Integer totalCount) {
@@ -65,6 +58,26 @@ public class TestJobConfig {
 
       return partitionMap;
     };
+  }
+  
+  @Bean
+  public PartitionHandler partitionHandler() {
+    TaskExecutorPartitionHandler partitionHandler = new TaskExecutorPartitionHandler();
+    partitionHandler.setStep(partialProcessStep());
+    partitionHandler.setTaskExecutor(asyncTaskExecutor);
+    partitionHandler.setGridSize(10);
+
+    return partitionHandler
+  }
+  
+  // 전달된 chunk item 의 read/write step
+  @Bean
+  public Step partialProcessStep() {
+    return stepBuilders.get("partialProcessStep")
+      .<Object, Object>chunk(1000)
+      .reader(partialReader(null, null))
+      .writer(partialWriter())
+      .build();
   }
 
   @Bean
