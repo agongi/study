@@ -49,8 +49,8 @@ public ItemWriter<Map<String, Object>> writer(
 }
 ```
 
-####HibernateItemWriter
+#### HibernateItemWriter
 
-####JpaItemWriter
+#### JpaItemWriter
 
-####[MyBatisBatchItemWriter](http://www.mybatis.org/spring/batch.html)
+#### [MyBatisBatchItemWriter](http://www.mybatis.org/spring/batch.html)
