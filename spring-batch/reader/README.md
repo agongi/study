@@ -7,44 +7,61 @@
 - http://www.mybatis.org/spring/batch.html
 ```
 
-### Cursor
+### JDBC
 
-stream fetchSize 단위로 계속 읽음
-1개의 connection 이 유지되면서 스트리밍으로 데이터 처리
+#### Cursor
 
-#### JdbcCursorItemReader
+- JdbcCursorItemReader
 
-#### HibernateCursorItemReader
+조회쿼리의 params 은 Collection/Array 로 전달한다:
 
-#### StoredProcedureItemReader
+- ListPreparedStatementSetter
+- ArgumentPreparedStatementSetter
 
-#### MyBatisCursorItemReader
+sql 결과는 Object/Map 으로 반환한다:
 
+- BeanPropertyRowMapper
+- ColumnMapRowMapper
 
+```java
+@Bean
+public JdbcCursorItemReader<Map<String, Object>> cursorReader() {
+  ListPreparedStatementSetter statementSetter = new ListPreparedStatementSetter();
+  statementSetter.setParameters(Lists.newArrayList(from, to));
 
-### Paging
+  JdbcCursorItemReader<Map<String, Object>> itemReader = new JdbcCursorItemReader<>();
+  itemReader.setDataSource(dataSource);
+  itemReader.setFetchSize(1000);
+  itemReader.setSql("select id, amount from pay where id >= ? and id < ?");
+  // input
+  itemReader.setPreparedStatementSetter(statementSetter);
+  // output
+  itemReader.setRowMapper(new ColumnMapRowMapper());
 
-limit (pageSize)
-offset (pageNo)
-각각의 쿼리수행시 connection 연결/끊음이 반복
+  return itemReader;
+}
+```
 
-select *
-from nc_xxx
-limit {no}, {size}
-order by id;
+HibernateCursorItemReader
 
-> 페이징시 정렬을 하지않으면, 누락/중복 발생가능성있음
+StoredProcedureItemReader
 
-#### JdbcPagingItemReader
+#### Paging
 
-#### HibernatePagingItemReader
+JdbcPagingItemReader
 
-#### JpaPagingItemReader
+HibernatePagingItemReader
 
-#### MyBatisPagingItemReader
+JpaPagingItemReader
 
+### File
 
+FlatFileItemWriter
 
-### List
+### Custom
 
-#### ListItemReader
+ListItemReader
+
+MyBatisPagingItemReader
+
+MyBatisCursorItemReader
