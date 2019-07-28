@@ -19,7 +19,7 @@
 String result = mapper.writeValueAsString(new Person());
 ```
 
-### to Map
+#### to Map
 ```java
 /**
  * @author suktae.choi
@@ -62,7 +62,7 @@ String jsonString = "{\"name\":\"suktae\"}";
 Person person = mapper.readValue(jsonString, Person.class);
 ```
 
-#### from Collection\<Object>
+#### from Super-Type-Token
 ```java
 // TypeFactory (== JavaType)
 JavaType type = mapper.getTypeFactory.constructCollectionType(List.class, SomeClass.class);
@@ -77,4 +77,4 @@ List<SomeClass> list = mapper.readValue(jsonString, new TypeReference<List<SomeC
   - no anonymous instance is created
 - TypeReference
   - static: must be known in compile-time
-  - anonymous instance is created: new TypeReference()
+  - anonymous instance is created: new TypeReference() {}
