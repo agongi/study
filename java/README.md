@@ -41,7 +41,6 @@
 - [MessageFormat.format vs String.format](message-format-string-format)
 - [Nested Class](nested-class)
 - [How HashMap works](how-hashmap-works)
-- [How ClassLoader Works](classloader)
 - [try-with-resources](try-with-resources)
 - [Enumeration](enum)
 - [Exception](exception)

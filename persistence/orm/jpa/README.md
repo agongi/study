@@ -145,7 +145,7 @@ sessionAlreadyClosedException
 
 The EntityManager works with PersistenceContext and if it's not provided the EntityManager creates one.
 
-스프링에서는 @Bean 으로 관리하고, @PersistenceContext 로 주입받아 사용한다.
+스프링에서는 @Bean 으로 관리하고, `@PersistenceContext` 로 주입받아 사용한다.
 
 #### TransactionManager
 
