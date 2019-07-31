@@ -14,7 +14,6 @@
 
 ### Index
 - [Volatile](volatile)
-- [ThreadLocal](threadlocal)
 - [ThreadPool](threadpool)
 - [Synchronized](synchronized)
 - [Lock](lock)
