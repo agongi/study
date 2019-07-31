@@ -51,7 +51,7 @@ new SoftReference() itself remains	// soft-reference itself
 
 #### Weak Reference
 
-- referent: It will be collected even if there are references in next GC even if there are references
+- referent: It will be collected in next GC even if there are references
 - reference-queue: optional
   - 생성자를 통해 reference-queue 가 주입되었으면, enqueued
 
