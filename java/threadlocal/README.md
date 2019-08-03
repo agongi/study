@@ -50,8 +50,9 @@ public class SessionContextHolder {
 }
 ```
 
-These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable.
-ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread.
+web request 가 왔을때 간단히 session value 를 저장하는 예제이다. ThreadLocal 을 통해 저장하면 per-thread 단위의 context 가 map 으로 관리되어 동시성문제도 발생하지 않는다.
+
+그리고 필요가 없어진 context 는 memory-leak 방지를 위해 clear 를 명시적으로 해주어야 한다.
 
 #### Why Static
 Because if it were an instance level field, then it would actually be "Per Thread - Per Instance", not just a guaranteed "Per Thread." That isn't normally the semantic you're looking for.
@@ -212,8 +213,8 @@ static class ThreadLocalMap {
 
 그러나 일반적인 web-application + threadLocal 을 사용하는 유형을 보면
 
-- private static final 로 항상 참조하고있고 (== strong-reference)
-- thread 는 pool 에서 재사용되므로, 항상 그 상태가 지속된다.
+- private static final 로 항상 참조됨 (== strong-reference)
+- thread 는 pool 에서 재사용되므로, 값이 clear 되지 않는다 (== thread never die)
 
 코드로 표현하면 다음과 같다:
 
@@ -226,19 +227,11 @@ Thread#ThreadLocal.ThreadLocalMap table[];
 table[i]; // is that one.
 ```
 
-Entry 는 항상 참조되어 삭제되지않고
-
-대신 memory-leak 이 걱정된다면, value 를 weakReference 로 생성하자
+Entry 는 항상 참조되어 삭제되지 않으므로 memory-leak 이 걱정된다면, value 를 weak/soft reference 로 생성하자
 
 ```java
 // referent forever
 private static final ThreadLocal<WeakReference<Object>> context = new ThreadLocal<>();
-
 ```
 
-
-
-
-
-
-
+value 가 weak/soft reference 로 정의되면, strong-reference 가 없을시 GC 를 통해 수집된다.
