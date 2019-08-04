@@ -234,4 +234,32 @@ Entry 는 항상 참조되어 삭제되지 않으므로 memory-leak 이 걱정�
 private static final ThreadLocal<WeakReference<Object>> context = new ThreadLocal<>();
 ```
 
-value 가 weak/soft reference 로 정의되면, strong-reference 가 없을시 GC 를 통해 수집된다.
+### Patterns
+
+#### Collection
+
+Collection\<Reference\<Object\>\> 는 GC 발생시 어떻게 클리어되는지 알아보자
+
+```java
+// LIST
+List<Object> lists = new ArrayList<>();
+lists.add(new Sample());
+lists.add(new WeakReference<>(new Sample()));
+
+System.gc();
+TimeUnit.SECONDS.sleep(2);
+
+System.out.println(lists.size());	// 2
+System.out.println(((Reference)lists.get(1)).get());	// null
+```
+
+reference-chain 으로 포현해보면
+
+```
+ArrayList -> Sample
+					-> WeakReference -> Sample
+```
+
+Collection 의 element (Map 의 경우 Entry)  는 삭제되지 않는다. 즉 weakReference 객체 자체는 element 로 남아있지만 reference 가 참조하는 Sample instance 는 GC 대상이 되어 클리어된다.
+
+> Element 까지 삭제가 보장필요하면, clear 를 명시적으로 수행해야한다.
