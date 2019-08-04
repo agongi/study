@@ -1,4 +1,4 @@
-## Environment vs Resource/Properties vs @Value
+## Resource
 
 ```
 ㅁ Author: suktae.choi
@@ -21,17 +21,12 @@ private static class ContextHolder {
     Properties properties = new Properties();
 
     try {
-      properties.load(resource.getInputStream());
+      properties.load(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8.name()));
     } catch (IOException e) {
       throw new BaseRuntimeException("properties load 실패");
     }
 
-    propMap = properties.entrySet()
-      .stream()
-      .collect(Collectors.collectingAndThen(
-        Collectors.toMap(o -> o.getKey(), o -> o.getValue()),
-        Collections::unmodifiableMap
-      ));
+    propMap = Collections.unmodifiableMap(properties);
   }
 ```
 
