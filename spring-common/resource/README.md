@@ -6,7 +6,7 @@
 - https://www.mkyong.com/java/java-properties-file-examples/
 ```
 
-### Resource
+### Resource class
 
 ```java
 /**
