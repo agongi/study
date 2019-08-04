@@ -147,8 +147,7 @@ Enable mockito with springContext
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ExampleTest {
   // with mockito
-  @Rule
-  public MockitoRule rule = MockitoJUnit.rule();
+  @Rule public MockitoRule rule = MockitoJUnit.rule();
 
   @Mock private LoginService loginService;
   @InjectMocks private LoginFacade loginFacade;
@@ -189,13 +188,13 @@ public class CrudTest {
 }
 ```
 
-#### Mocking local variable /w Mock's`Mock`
+#### Result returns mock
 
 ```java
 // testable
 public List<Object> getSites(Long id) {
-	User user = repository.findById(id);
-  
+  User user = repository.findById(id);
+
   List<Site> sites = user.getLoginableSites();
   // .... 
   return sites;
@@ -206,26 +205,64 @@ public class CrudTest {
   @Mock
   private CRUDRepository repository;
   @InjectMocks
-  private UserService = new UserServiceImpl();
+  private UserService userService = new UserServiceImpl();
 
   @Test
   public void test() {
     // given
     Long id = 123456L;
     User user = mock(User.class);
-    given(user.getLoginableSites()).willReturn(Arrays.asList(
+    given(service.getLoginableSites()).willReturn(Arrays.asList(
       new Site(1),
       new Site(2),
       new Site(3)
     ));
+    // result returns mock.
     given(repository.findById(anyLong())).willReturn(user);
-    
+
     // when
     List<Site> sites = userService.getSites(id);
-    
+
     // then
     assertNotNull(sites);
     assertTrue(sites.size(), 3);
   }
 }
 ```
+
+#### Skip void method (a.k.a validate ignore)
+
+```java
+PowerMockito.doNothing()
+  .when(validationService)
+  .check(anyLong(), any(ValidationType.class));
+```
+
+#### T vs Class\<?\>
+
+```java
+#method(any(Class.class));	// Class<?>
+#method(anyObject());	// instance
+```
+
+#### Static class mocking (== based-on powerMock)
+
+```java
+@RunWith(PowerMockRunner.class)	// powerMock
+@PrepareForTest(StaticBeanProvider.class)
+public class TestClass {
+	@Mock private MockService mockService;
+  
+  @Test
+  public void test() {
+    // static class mock
+    PowerMockito.mockStatic(StaticBeanProvider.class);
+    // static's behavior
+    given(StaticBeanProvider.getBean(MockService.class)).willReturn(mockService);
+
+    // define retured-mock's behavior
+    given(mockService.findOne(anyLong()).willReturn(new User("testName"));
+  }
+}
+```
+
