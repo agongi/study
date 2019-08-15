@@ -60,21 +60,19 @@ public class TestRestController {
 
 > PropertyEditor affects the rules in the **same @Controller-scope** only.
 
-propertyEditor 는 동시성 환경에서 singleton-bean 으로 사용하면 안된다. request 환경에서 상태를 공유할수 있기때문에 항상 새로운 객체를 생성하거나, @Bean @Scope(value = "prototype") 으로 사용해야한다.
-
 #### PropertyEditor
 
 Listener class for actual hooks of request string to controller.
 
 ```java
 public class CustomTypeEditor extends PropertyEditorSupport {
-	// req is binding to controller's
+  // req is binding to controller's
   @Override
   public void setAsText(String text) {
-		String upper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, text);
+    String upper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, text);
     setValue(CustomType.valueOf(upper));
   }
-	
+
   // just before 
   @Override
   public String getAsText() {
@@ -82,6 +80,31 @@ public class CustomTypeEditor extends PropertyEditorSupport {
   }
 }
 ```
+
+propertyEditor 는 동시성 환경에서 singleton-bean 으로 사용하면 안된다. request 환경에서 상태를 공유할수 있기때문에 항상 새로운 객체를 생성하거나, @Bean @Scope(value = "prototype") 으로 사용해야한다.
+
+아래 코드를 봐보자:
+
+```java
+public class UserPropertyEditor extends PropertyEditorSupport {
+  @Override
+  public String getAsText() {
+    return String.valueOf(((User)getValue()).intValue());
+  }
+
+  @Override
+  public void setValue(Object value) {
+    super.setValue(value);
+  }
+}
+```
+
+Object -> String 의 converting 시
+
+- \#setValue 로 field set
+- \#getAsText 로 converting 수행
+
+\#setValue 를 하는시점에 stateful 하므로, 동시성 문제가 발생한다.
 
 ### Application-scoped
 
