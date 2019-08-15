@@ -5,7 +5,26 @@
 ㅁ Reference:
 - https://www.baeldung.com/spring-mvc-custom-property-editor
 - https://blog.outsider.ne.kr/825
+- https://engkimbs.tistory.com/738
 ```
+
+#### PropertyEditor vs Converter vs Formatter
+
+- PropertyEditor
+  - scope: Controller
+  - stateful
+  - two-way binding
+- Converter
+  - scope: Application
+  - stateless
+  - one-way binding
+- Formatter
+  - scope: Application
+  - stateless
+  - two-way binding
+    - Only works in String - Object bind
+
+#### Index
 
 `AnnotationMethodHandlerAdapter` 는 매칭된 URL 을 정의한 @Controller 를 호출하는 역할을 담당한다.
 
@@ -17,6 +36,8 @@
 - WebDataBinder 에 등록
 
 하는 과정이 필요하다.
+
+### Controller-scoped
 
 #### @InitBinder
 
@@ -62,6 +83,8 @@ public class CustomTypeEditor extends PropertyEditorSupport {
 }
 ```
 
+### Application-scoped
+
 #### WebBindingInitializer
 
 모든 Controller 에 공통으로 정의할 PropertyEditor 를 등록하려면, WebBindingInitializer 를 사용한다.
@@ -69,12 +92,16 @@ public class CustomTypeEditor extends PropertyEditorSupport {
 3.0 까지는 WebBindingInitializer 에 등록했는데, 3.1 로 올라가면서 `HandlerMethodArgumentResolver` 로 변경되었다.
 
 ```java
-@Override
-public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-  super.addArgumentResolvers(argumentResolvers);
-  argumentResolvers.add(userMethodArgumentResolver);
+public class BaseWebConfig extends WebMvcConfigurerAdapter {
+  @Override
+  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    super.addArgumentResolvers(argumentResolvers);
+    argumentResolvers.add(userMethodArgumentResolver);
+  }
 }
+```
 
+```java
 @Component
 public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver {
   @Override
@@ -85,8 +112,69 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
   @Override
   public String resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
     String id = webRequest.getParameter("id");
-    
+
     return new User(id);
   }
 }
 ```
+
+### Converter
+
+```java
+public class BaseWebConfig extends WebMvcConfigurerAdapter {
+  @Override
+  protected void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new UserConverter.StringToUser());
+    registry.addConverter(new UserConverter.UserToString());
+  }
+}
+```
+
+```java
+public class UserConverter {
+  public static class StringToUser implements Converter<String, User> {
+    @Override
+    public Category convert(String source) {
+      return new User(source);
+    }
+  }
+
+  public static class UserToString implements Converter<User, String> {
+    @Override
+    public String convert(User source) {
+      return source.getName();
+    }
+  }
+}
+```
+
+#### Formatter
+
+Converter + locale
+
+```java
+public class BaseWebConfig extends WebMvcConfigurerAdapter {
+  @Override
+  protected void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new UserFormatter());
+  }
+}
+```
+
+```java
+public class UserFormatter implements Formatter<User> {
+  @Override
+  public User parse(String text, Locale locale) throws ParseException {
+    return new User(Integer.parseInt(text));
+  }
+
+  @Override
+  public String print(User object, Locale locale) {
+    return object.getId().toString();
+  }
+}
+```
+
+#### ConversionService
+
+Converter & Formatters are registered in `ConversionService`.
