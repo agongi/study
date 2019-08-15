@@ -35,6 +35,8 @@
 - [AspectJ](aspectj)
 - [Property Editor](property-editor)
 
+### Series
+
 ### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
 - [Creating Asynchronous Methods](https://spring.io/guides/gs/async-method/)
