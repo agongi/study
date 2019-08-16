@@ -1,4 +1,4 @@
-## Property Editor
+## Binding & Validation
 
 ```
 ㅁ Author: suktae.choi
@@ -201,3 +201,27 @@ public class UserFormatter implements Formatter<User> {
 #### ConversionService
 
 Converter & Formatters are registered in `ConversionService`.
+
+#### MessageConverter
+
+XML/JSON messages are se/deserialized using messageConverters.
+
+Once added, HTTP body could be accepted in mentioned format using `Accept: application/json`
+
+```java
+public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+  converters.add(new StringHttpMessageConverter());
+  converters.add(new MappingJackson2HttpMessageConverter());
+}
+```
+
+#### @NumberFormat
+
+#### @DateTimeFormat
+
+#### @JsonFormat
+
+```java
+@JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
+private Date regDate;
+```
