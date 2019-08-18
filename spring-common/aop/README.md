@@ -10,60 +10,93 @@
 - https://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html
 ```
 
-### Spring AOP
-**Advice** to **PointCut target.**
+### Cores
+**Advice** the **Aspect** to **PointCut** target.
+
+- Advice - Inject when
+- Aspect - contents
+- PointCut - target.
+
+Here is brief example:
 
 ```java
-@Before(value = "@annotation(repayable)")
-public void before(JoinPoint joinPoint, Repayable repayable) {
-  // omitted ...
+@AspectJ
+public class DefaultRestAspect {
+  @Before(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))")
+  public void before() {
+    // aspect executed before controller
+  }
+
+  @AfterReturning(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))", returning = "returnVal")
+  public void afterReturning(JoinPoint joinPoint, Object returnVal) {
+    // aspect executed after controller's response is successfully returned
+  }
+
+  @Around(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))")
+  public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
+    // @Before
+    Object returnVal = pjp.proceed();
+    // @AfterReturning
+    return returnVal;
+  }
 }
 ```
 
-- @Before - Run before the method execution
-- @After - Run after the method returned a result
-- @AfterReturning - Run after the method returned a result, intercept the returned result as well.
-- @AfterThrowing - Run after the method throws an exception
+#### PointCut
+
+- execution
+- within
+- this
+- target
+- args
+- @annotation
+
+#### Advice
+
+- @Before - Before the method execution
+- @AfterReturning - After the method returned a result, intercept the returned result as well.
+- @AfterThrowing - After the method throws an exception
+  - @After (== finally) - After the method is invoked (a.k.a after the afterReturning and/or afterThrowing)
 - @Around - Run around the method execution, combine all three advices above.
 
-```java
-@Around
-public void around(ProceedingJoinPoint jointPoint) {
-  // before
+#### Aspect
 
-  Object return = jointPoint.proceed();
+The contents what to do.
 
-  // after
-}
-```
+### Proxy
 
-Spring AOP is supported in following way:
-- [Based-on Proxy](spring-aop#proxy)
-- [Based-on AspectJ - not using proxy](spring-aop#aspectj)
+`Proxy` is wrapping the target class (a.k.a delegate) for adding extra features without modifying it.
 
-#### Proxy
-- Runtime weaving
-- Limitations
-  - Self-invocation doesn't work around because It will not come through proxy
-  - Public method only affected
-  - Method should not be final
-    - Proxy override target method to delegate but final keyword can't be make it
+Proxy is categorized in two-way:
+
+- Runtime-weaving
+- Compile-weaving
+
+Spring's default proxy used runtime-weaving and it has following drawbacks:
+
+- Self-invocation doesn't work around because It will not come through proxy
+- Public method only affected
+- Method should not be final
+  - Proxy override target method to delegate but final keyword can't be make it
 
 <img src="images/aop-proxy-call.png" width="75%">
 
-##### JVM Dynamic Proxy
-- Spring AOP default
+#### JVM Dynamic Proxy
+- Runtime-weaving
+- springAOP default
 - Works in `interface`
 
 <img src="images/Picture2-4.png" width="75%">
 
-##### CGLIB Proxy
-- Spring also supports it when this one is declared
-- Works in concrete `target class`
+#### CGLIB Proxy
+- Runtime-weaving
+- enabled when `proxyTargetClass=true`
+- Works in `target class`
 
 <img src="images/Picture3-3.png" width="75%">
 
 #### AspectJ
+- Compile-weaving
 - JVM loadtime weaving using bytecode instrument
 - No limitations
 
@@ -89,5 +122,5 @@ public class LoggingAspect {
 ```
 
 ### AOP vs Interceptor
-- AOP - postHandle()/afterCompletion are not invoked when **exception thrown in target method**
-- Interceptor - @AfterThrowing/@After/@Around can handle it
+- Interceptor - postHandle()/afterCompletion are not invoked when **exception thrown in target method**
+- AOP - @AfterThrowing/@After/@Around can handle it
