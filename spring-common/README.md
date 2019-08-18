@@ -13,14 +13,12 @@
 - [@Autowired vs @Inject vs @Resource](autowired-inject-resource)
 - [Filter vs Interceptor](filter-interceptor)
 - [/* vs /](servlet-mapping)
-- [Resource](resource)
 - [@Cacheable](cacheable)
 - [@Pageable](pageable)
 - [@DateTimeFormat](date-time-format)
 - [@Configuration](configuration)
 - [Spring Flow](spring-flow)
 - [Spring Bootstrap](spring-bootstrap)
-- [AOP (Aspect-Oriented Programming)](aop)
 - [Classpath](classpath)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [Bean Cycle](bean-cycle)
@@ -37,6 +35,8 @@
 
 - [Binding & Validation](binding-validation)
 - [Transaction](transaction)
+- [Resource](resource)
+- [AOP](aop)
 
 ### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)

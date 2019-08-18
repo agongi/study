@@ -4,9 +4,48 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://www.mkyong.com/java/java-properties-file-examples/
+- https://blog.outsider.ne.kr/794
 ```
 
-### Resource class
+### Cores
+
+#### Resource
+
+Spring provides abstraction Resource interface for better accessing the resources.
+
+These are concrete implementation of Resource interface:
+
+- UrlResource - http:/
+- ClassPathResource - classpath:/
+- FileSystemResource - file:/
+- ServletContextResource
+- InputStreamResource
+- ByteArrayResource
+
+**ResourceLoader**
+
+All applicationContext (ex. AnnotationConfigWebApplicationContext, ClassPathXmlApplicationContext) implement ResourceLoader interface for providing resources that corresponds to type.
+
+(Ex. ClassPath... provides ClassPathResource)
+
+```java
+// applicationContext implements resourceLoader
+public interface ResourceLoader {
+    Resource getResource(String location);
+}
+```
+
+ResourceLoader could be injected using ResourceLoaderAware.
+
+```java
+public interface ResourceLoaderAware {
+   void setResourceLoader(ResourceLoader resourceLoader);
+}
+```
+
+### Usage
+
+#### Resource
 
 ```java
 /**
@@ -30,7 +69,7 @@ private static class ContextHolder {
   }
 ```
 
-### ResourceUtils
+#### ResourceUtils
 
 ```java
 /**
@@ -50,7 +89,7 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-### Environment
+#### Environment
 
 ```java
 /**
@@ -68,7 +107,7 @@ public class LocaleConfig implements EnvironmentAware {
 }
 ```
 
-### @Value
+#### @Value
 
 ```java
 /**
