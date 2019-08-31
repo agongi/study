@@ -113,3 +113,33 @@ return jdbcTemplate.queryForObject(
 ```
 
 ### Batch
+
+Batch commands is a cost-efficient way to execute sql multiple times in batch processing.
+
+> It means It can reduce RTT
+
+```java
+@Override
+public void update(List<? extends User> items) {
+  jdbcTemplate.batchUpdate("update USER set name = ?, mod_ymdt = ? where id = ?", new BatchPreparedStatementSetter() {
+    @Override
+    public void setValues(PreparedStatement preparedStatement, int index) throws SQLException {
+      User item = items.get(index);
+      preparedStatement.setString(1, item.getId());
+      preparedStatement.setTimestamp(2, new Date());
+    }
+
+    @Override
+    public int getBatchSize() {
+      return items.size();
+    }
+  });
+}
+```
+
+### Stored Procedure
+
+```java
+jdbcTemplate.execute("{CALL USER_STORED_PROCEDURE()}", o -> o.execute());
+```
+
