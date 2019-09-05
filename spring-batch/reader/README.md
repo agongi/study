@@ -7,11 +7,9 @@
 - http://www.mybatis.org/spring/batch.html
 ```
 
-### JDBC
+### Cursor
 
-#### Cursor
-
-- JdbcCursorItemReader
+#### JdbcCursorItemReader
 
 조회쿼리의 params 은 Collection/Array 로 전달한다:
 
@@ -46,9 +44,9 @@ HibernateCursorItemReader
 
 StoredProcedureItemReader
 
-#### Paging
+### Paging
 
-JdbcPagingItemReader
+#### JdbcPagingItemReader
 
 HibernatePagingItemReader
 
@@ -60,7 +58,40 @@ FlatFileItemWriter
 
 ### Custom
 
-ListItemReader
+#### ListItemReader
+
+Simple reader of using service#method
+
+```java
+@Bean
+@StepScope
+public ItemReader<User> itemReader() {
+  // List<User> UserService#getAllUsers
+  return new ListItemReader(userService.getAllUsers());
+}
+```
+
+#### RepositoryItemReader
+
+Simple reader of using repository#method
+
+```java
+@Bean
+@StepScope
+public ItemReader<User> itemReader() {
+  RepositoryItemReader<User> reader = new RepositoryItemReader<>();
+  reader.setRepository(userRepository);
+  reader.setMethodName("getAllUsers");
+  reader.setSort(Collections.singletonMap("id", Sort.Direction.ASC));
+
+  List<Object> parameters = new ArrayList<>();
+  parameters.add(new Date());
+
+  reader.setArguments(parameters);
+
+  return reader;
+}
+```
 
 MyBatisPagingItemReader
 
