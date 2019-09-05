@@ -83,7 +83,7 @@ public class CustomTypeEditor extends PropertyEditorSupport {
 }
 ```
 
-propertyEditor 는 동시성 환경에서 singleton-bean 으로 사용하면 안된다. request 환경에서 상태를 공유할수 있기때문에 항상 새로운 객체를 생성하거나, @Bean @Scope(value = "prototype") 으로 사용해야한다.
+**propertyEditor 는 동시성 환경에서 singleton-bean 으로 사용하면 안된다.** request 환경에서 상태를 공유할수 있기때문에 항상 새로운 객체를 생성하거나, @Bean @Scope(value = "prototype") 으로 사용해야한다.
 
 아래 코드를 봐보자:
 
