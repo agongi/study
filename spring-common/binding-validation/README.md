@@ -8,7 +8,9 @@
 - https://engkimbs.tistory.com/738
 ```
 
-#### PropertyEditor vs Converter vs Formatter
+### Cores
+
+#### Comparison
 
 - PropertyEditor
   - scope: Controller
@@ -141,7 +143,7 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
 }
 ```
 
-### Converter
+#### Converter
 
 ```java
 public class BaseWebConfig extends WebMvcConfigurerAdapter {
@@ -215,6 +217,8 @@ public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
 }
 ```
 
+### Annotations
+
 #### @NumberFormat
 
 #### @DateTimeFormat
@@ -225,3 +229,33 @@ public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
 @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
 private Date regDate;
 ```
+
+### Validation
+
+`BindingResult` is automatically created when the Controller params (ex. **RequestBody** or **ModelAttribute**) is binded.
+
+```java
+public void getUser(@RequestBody User user, BindingResult bindingResult) {
+	new Validator().validate(user, bindingResult);
+  
+  if (bindingResult.hasErrors()) {
+  	// .. handling
+  }
+}
+```
+
+or you can manually create it like this:
+
+```java
+public void getUser(@PathVariable String id) {
+  User user = userRepository.findById(id);
+	BindingResult bindingResult = new BeanPropertyBindingResult(user, "user");
+  
+	new Validator().validate(user, bindingResult);
+  
+  if (bindingResult.hasErrors()) {
+  	// .. handling
+  }
+}
+```
+
