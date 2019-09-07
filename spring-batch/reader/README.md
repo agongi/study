@@ -54,7 +54,37 @@ JpaPagingItemReader
 
 ### File
 
-FlatFileItemWriter
+#### FlatFileItemWriter
+
+Read from file
+
+```java
+@Bean
+@StepScope
+public FlatFileItemReader<User> fileReader() {
+  DefaultLineMapper<User> defaultLineMapper = new DefaultLineMapper<>();
+  defaultLineMapper.setFieldSetMapper(new UserFieldSetMapper());
+  defaultLineMapper.setLineTokenizer(new DelimitedLineTokenizer(","));
+
+  FlatFileItemReader<User> userFileReader = new FlatFileItemReader();
+  userFileReader.setLineMapper(defaultLineMapper);
+  userFileReader.setEncoding(StandardCharsets.UTF_8.name());
+  userFileReader.setResource(resourceLoader.getResource(directoryPath));
+
+  return userFileReader;
+}
+
+public class UserFieldSetMapper implements FieldSetMapper<User> {
+  @Override
+  public SellerSaleStats mapFieldSet(FieldSet fieldSet) throws BindException {
+    return User.builder()
+      .id(fieldSet.readLong(1))
+      .name(fieldSet.readString(2))
+      .age(fieldSet.readInt(3))
+      .build();
+  }
+}
+```
 
 ### Custom
 
