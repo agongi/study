@@ -8,14 +8,14 @@
 - https://jojoldu.tistory.com/search/spring%20batch
 ```
 
-### Index
+#### Index
 - [Reader](reader)
 - [Writer](writer)
 - [Processor](processor)
 - [Flow](flow)
 - [Partitioner](partitioner)
 
-### Blog
+#### Blog
 - [Spring Batch commit-interval에 대한 정리](http://sheerheart.tistory.com/entry/Spring-Batch-commitinterval%EC%97%90-%EB%8C%80%ED%95%9C-%EC%A0%95%EB%A6%AC)
 - [Tasklet vs Reader/Processor/Writer](http://www.baeldung.com/spring-batch-tasklet-chunk)
 - [JpaItemReader 및 MongoItemReader 활용](http://devjms.tistory.com/72)
@@ -27,4 +27,23 @@
 
 - R/P/W is **chunk-based** (== commit-internal) processing
 - Tasklet is bundle of these (== turnkey)
+
+#### Step
+
+#### How to set terminate once condition meets
+
+```java
+@Bean
+@StepScope
+public ChunkListener dispatchChunkListener() {
+  return new ChunkListenerSupport() {
+    @Override
+    public void afterChunk(ChunkContext context) {
+      if ((Integer)context.getStepContext().getJobExecutionContext().get("count") >= 1000) {
+        context.getStepContext().getStepExecution().setTerminateOnly();
+      }
+    }
+  };
+}
+```
 

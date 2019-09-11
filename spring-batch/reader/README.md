@@ -19,6 +19,13 @@
 sql 결과는 Object/Map 으로 반환한다:
 
 - BeanPropertyRowMapper
+
+  - column 명과 fieldName 이 다르다면, 조회결과를 field 과 동일하게 alias 설정이 필요하다
+
+    ```sql
+    SELECT USER_ID as id ....
+    ```
+
 - ColumnMapRowMapper
 
 ```java
@@ -38,6 +45,20 @@ public JdbcCursorItemReader<Map<String, Object>> cursorReader() {
 
   return itemReader;
 }
+```
+
+아니면 직접구현할 수 있다.
+
+```java
+// out
+itemReader.setRowMapper((rs, rowNum) -> {
+  Channel item = new WindowChannel();
+  item.setId(rs.getLong("USER_ID"));
+  item.setName(rs.getString("USER_NM"));
+  item.setUserAddress(JacksonUtils.toObject(rs.getString("USER_ADDR"), UserAddress.class));
+  
+  return item;
+});
 ```
 
 HibernateCursorItemReader
