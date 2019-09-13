@@ -23,24 +23,26 @@
 - [ItemReader 리턴타입](https://jojoldu.tistory.com/132)
 - [Flow 활용](https://jojoldu.tistory.com/328)
 
-### Tasklet vs Reader/Processor/Writer
+### Cores
+
+#### Tasklet vs Reader/Processor/Writer
 
 - R/P/W is **chunk-based** (== commit-internal) processing
 - Tasklet is bundle of these (== turnkey)
 
 #### Step
 
-#### How to set terminate once condition meets
+- How to set terminate once condition meets
 
 ```java
 @Bean
 @StepScope
-public ChunkListener dispatchChunkListener() {
+public ChunkListener chunkListener() {
   return new ChunkListenerSupport() {
     @Override
     public void afterChunk(ChunkContext context) {
-      if ((Integer)context.getStepContext().getJobExecutionContext().get("count") >= 1000) {
-        context.getStepContext().getStepExecution().setTerminateOnly();
+      if (/* condition meets */) {
+        context.getStepContext().getStepExecution().setTerminateOnly();          
       }
     }
   };
