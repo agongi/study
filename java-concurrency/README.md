@@ -12,16 +12,19 @@
  - http://tutorials.jenkov.com/java-concurrency/index.html
 ```
 
-### Index
+#### Index
 - [Volatile](volatile)
 - [ThreadPool](threadpool)
 - [Synchronized](synchronized)
 - [Lock](lock)
 
-### To do
-- [CountDownLatch vs CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html)
-
-### Blog
+#### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)
 - [Difference between CompletableFuture, Future and RxJava's Observable](https://stackoverflow.com/questions/35329845/difference-between-completablefuture-future-and-rxjavas-observable)
+- [CountDownLatch vs CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html)
 
+### Cores
+
+#### Concurrency vs Parallel
+
+![cDdWLKL](/images/cDdWLKL.jpg)
