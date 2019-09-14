@@ -27,4 +27,4 @@
 
 #### Concurrency vs Parallel
 
-![cDdWLKL](/images/cDdWLKL.jpg)
+![concurrent-parallel](images/concurrent-parallel.jpg)
