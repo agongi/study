@@ -8,25 +8,30 @@
 - http://eincs.com/2009/08/java-nio-bytebuffer-channel/
 ```
 
-### Index
+#### Index
 - [ByteBuffer](bytebuffer)
 - [Files](files)
+- Paths
 
-### 1. Channel vs Stream
+### Cores
+
+#### Channel vs Stream
+
 - stream is directional (1-way)
   - read Stream
   - write Stream
 - channel is bi-directional (2-way)
   - read/write channel
 
-### 2. Buffer vs Stream
+#### Buffer vs Stream
 - stream is the model of realtime transfer
   - 1 byte in, 1 byte out (no buffering)
 - buffer is the mechanism of storing a mount of data before transfer
   - 1 byte in, more bytes comes then send
 
-### 3. TCP (Connection-Oriented) Blocking Channel
+#### TCP (Connection-Oriented) Blocking Channel
 **Server**
+
  - open()
  - bind()
  - accept()
@@ -58,8 +63,9 @@ one thread per request -> any thread in `threadPool` per request with `queue`.
 
 <img src="images/Screen%20Shot%202016-05-15%20at%2016.43.12.png" width="75%">
 
-### 4. UDP
+#### UDP
 **Server**​
+
  - open()
  - bind()​
  - ~~accept()~~
@@ -70,6 +76,7 @@ one thread per request -> any thread in `threadPool` per request with `queue`.
  - send()
 
 **Client**
+
  - open()
  - ~~connect()~~
  - send()
