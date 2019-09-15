@@ -14,6 +14,12 @@
 
 ### Items
 
+#### Vanilla
+
+그냥 순수 JavaScript를 일컫는 말이다. Vanilla는 비격식으로 평범한, 특별할 것 없는 이라는 뜻을 가진 형용사이다.
+
+왜 굳이 별도의 learning-curve 가 있는 대안언어 (ex. TypeScript) 를 학습해야해? 라는 질문의 대답으로 나온 Joke
+
 #### TypeScript
 
 TypeScript 명세대로 구현하고, 작성된 코드를 native-js 로 transpile 한다.
