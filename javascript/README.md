@@ -2,7 +2,8 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.01.28
+ㅁ References
+- https://developer.mozilla.org
 ```
 
 #### Index
