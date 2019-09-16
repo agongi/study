@@ -26,9 +26,9 @@ TypeScript 명세대로 구현하고, 작성된 코드를 native-js 로 transpil
 
 순수 JS 로 구현하는것 대비 장점은: [Why you shouldn`t be scared of TypeScript](https://han41858.tistory.com/14)
 
-#### CoffeeScript
+#### CoffeeScript/Dart
 
-CoffeeScript 명세대로 구현하면, transpile 시 native-js 를 생성한다.
+CoffeeScript/Dart 명세대로 구현하면, transpile 시 native-js 를 생성한다.
 
 #### Babel
 

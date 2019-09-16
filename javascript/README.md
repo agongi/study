@@ -7,9 +7,14 @@
 
 #### Index
 - [ECMAScript 2015 (ES6)](es6)
+- [Framework](framework)
 - [Modules](modules)
 - [Bundler](bundler)
 - [Transpiler](transpiler)
+- [Web Component](web-component)
+- [Web Assembly](web-assembly)
+- [Web Worker](web-worker)
+- [Quality](quality)
 - CSS
   - less
   - sass
