@@ -35,7 +35,7 @@
 
 - [Binding & Validation](binding-validation)
 - [Transaction](transaction)
-- [Resource](resource)
+- [Properties](properties)
 - [AOP](aop)
 - [JDBC](jdbc)
 
