@@ -11,7 +11,7 @@
 
 #### Index
 
-- [reference](reference)
+- [Reference](reference)
 
 ### GC 유형
 
