@@ -85,7 +85,7 @@
 
 #### CMS GC
 
-[img]
+<img src="images/helloworld-1329-5.png" width="75%">
 
 Initial Mark 는 살아 있는 객체만 찾는다. (STW)
 
@@ -100,7 +100,7 @@ STW 를 짧게 여러번 하는대신 아래의 단점이 존재한다.
 - 다른 GC 방식보다 메모리와 CPU를 더 많이 사용한다.
 - Compaction 단계가 기본적으로 제공되지 않는다.
 
-Compaction 을 기본적으로 수행하지 않아, 한번 수행되면 STW 가 길어지기 때문에 확인을 해보아야한다.
+Compaction 을 기본적으로 수행하지 않아, 한번 수행되면 STW 가 길어진다
 
 #### G1 GC
 
