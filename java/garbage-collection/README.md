@@ -172,4 +172,4 @@ Old GC 를 통해 필요한 Memory 를 확보하지 못하면, Full GC 수행
 
 - `new / survive / old / metaSpace (native)`
 
->  기존 perm 에 저장되어 문제를 유발하던 static/string literal 은 heap 으로 옮겨져 GC 대상으로 됨
+>  기존 perm 에 저장되어 문제를 유발하던 static/string literal 은 heap 으로 옮겨져 GC 대상으로 됨 

@@ -41,11 +41,28 @@ public ChunkListener chunkListener() {
   return new ChunkListenerSupport() {
     @Override
     public void afterChunk(ChunkContext context) {
+      StepExecution stepExecution = context.getStepContext().getStepExecution();
+
       if (/* condition meets */) {
-        context.getStepContext().getStepExecution().setTerminateOnly();          
+        stepExecution.setTerminateOnly();          
       }
     }
   };
 }
+```
+
+- How many commit (== chunk) does it happen?
+
+```java
+.listener(new ChunkListenerSupport() {
+  @Override
+  public void afterChunk(ChunkContext context) {
+    StepExecution stepExecution = context.getStepContext().getStepExecution();
+    
+    if (stepExecution.getCommitCount() >= MAX_COMMIT_INTERVAL) {
+      stepExecution.setTerminateOnly();
+    }
+  }
+})
 ```
 
