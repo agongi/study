@@ -28,7 +28,7 @@
 - [Static Provider](static-provider)
 - [ThreadLocal in Spring Bean](threadlocal-in-spring-bean)
 - [RestTemplate](resttemplate)
-- [MessageSourceAccessor](message-source-accessor)
+- [MessageSource](message-source)
 - [AspectJ](aspectj)
 
 ### Series

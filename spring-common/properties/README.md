@@ -85,7 +85,7 @@ The table describes some of the system properties provided as default.
 | `"user.home"`       | User home directory                                          |
 | `"user.name"`       | User account name                                            |
 
-### Practice
+### Practices
 
 #### Resource
 
@@ -97,19 +97,31 @@ Resource interface 의 구현클래스 (ex. ClassPathResource) 를 이용할때�
 /**
 * Spring#Resource 로 properties load
 */
-private static class ContextHolder {
-  private static final String DEFAULT_PROPERTIES = "properties/core/application.properties";
+private static class ResourceTest {
+  @Value("{classpath:application.yml}")
+  private Resource resource1;
 
-  static {
-    Resource resource = new ClassPathResource(DEFAULT_PROPERTIES);
-    Properties properties = new Properties();
+  public ResourceTest() throws FileNotFoundException {
+    Resource resource2 = new ClassPathResource("classpath:application.yml");
+    File file = ResourceUtils.getFile("classpath:application.yml");
+    Properties prop1 = new Properties();
+    Properties prop2 = new Properties();
+    Properties prop3;
+    Properties prop4;
 
     try {
-      properties.load(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8.name()));
+      // traditional-approach
+      prop1.load(new FileInputStream(file));
+      // traditional-approach
+      prop2.load(new InputStreamReader(resource1.getInputStream(), "UTF-8"));
+      // by utils
+      prop3 = PropertiesLoaderUtils.loadProperties(resource1);
+      prop4 = PropertiesLoaderUtils.loadProperties(resource2);
     } catch (IOException e) {
       throw new BaseRuntimeException("properties load 실패");
     }
   }
+}
 ```
 
 #### ResourceUtils
@@ -129,7 +141,7 @@ public static void main(String[] args) throws IOException {
   prop1.load(new FileInputStream(file));
 
   Properties prop2 = new Properties();
-  prop2.load(new FileReader(file, StandardCharsets.UTF_8));
+  prop2.load(new FileReader(file));
 }
 ```
 
@@ -143,14 +155,14 @@ public class LocaleConfig implements EnvironmentAware {
   @Value("${title}")
   private String title;
   private Environment env;
-  
+
   @Override
   public void setEnvironment(Environment environment) {
     this.env = environment;
   }
 
   public void init() {
-		String contents = env.getProperty("contents");
+    String contents = env.getProperty("contents");
   }
 }
 ```
