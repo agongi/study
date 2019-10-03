@@ -16,8 +16,12 @@ If the same bean of type exists, @Primary one is used
 #### @Lazy
 Bean is created once getBean() is invoked
 
+#### @DependsOn
+
 #### @Import
 
 #### @ContextConfiguration
 
 #### @Propertysources
+
+with PropertySourcePlaceHolderConfigurer
