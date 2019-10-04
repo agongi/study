@@ -1,19 +1,21 @@
-## Bean Cycle
+## Spring Common
 
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
-- https://blog.outsider.ne.kr/902
-- http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/BeanFactory.html
 ```
 
-### Before Bean's Creation
-- BeanFactoryPostProcessor's `postProcessBeanFactory`
-  - All bean definitions will have been loaded, but no beans have been instantiated yet
+#### Index
+- [BeanFactory vs ApplicationContext](bean-factory-application-context)
+- [FactoryBean](factory-bean)
+- [BeanPostProcessor](bean-post-processor)
 
-### Get Started of Bean Creation
-#### Initialize
+### Cores
+
+#### Life-Cycle
+
+##### Initialize
+
 - BeanNameAware's setBeanName
 - BeanClassLoaderAware's setBeanClassLoader
 - BeanFactoryAware's setBeanFactory
@@ -30,7 +32,8 @@
 - A custom **init-method** definition
 - **postProcessAfterInitialization** of `BeanPostProcessors`
 
-#### Destroy
--  **@PreDestroy**
--  **destroy** of `DisposableBean`
--  A custom **destroy-method** definition
+##### Destroy
+
+- **@PreDestroy**
+- **destroy** of `DisposableBean`
+- A custom **destroy-method** definition

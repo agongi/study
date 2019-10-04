@@ -9,7 +9,6 @@
 ```
 
 ### Index
-- [ApplicationContext vs BeanFactory](bean-factory)
 - [@Autowired vs @Inject vs @Resource](autowired-inject-resource)
 - [Filter vs Interceptor](filter-interceptor)
 - [/* vs /](servlet-mapping)
@@ -21,10 +20,7 @@
 - [Spring Bootstrap](spring-bootstrap)
 - [Classpath](classpath)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
-- [Bean Cycle](bean-cycle)
-- [FactoryBean](factory-bean)
 - [ProxyFactory](proxy-factory)
-- [BeanPostProcessor](bean-post-processor)
 - [Static Provider](static-provider)
 - [ThreadLocal in Spring Bean](threadlocal-in-spring-bean)
 - [RestTemplate](resttemplate)
@@ -33,6 +29,7 @@
 
 ### Series
 
+- [Bean](bean)
 - [Binding & Validation](binding-validation)
 - [Transaction](transaction)
 - [Properties](properties)

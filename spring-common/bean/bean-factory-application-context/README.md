@@ -1,4 +1,4 @@
-## ApplicatioContext vs BeanFactory
+## BeanFactory vs ApplicatioContext
 
 ```
 ㅁ Author: suktae.choi
@@ -8,13 +8,17 @@
 ```
 
 **Bean Factory**
+
 - Bean instantiation/wiring (IoC)
   - lazy initialization
 
 **Application Context**
+
 - Bean instantiation/wiring (IoC)
   - eager initialization
 - Automatic BeanPostProcessor registration
 - Automatic BeanFactoryPostProcessor registration
 - Access to messages in i18n-style, through the MessageSource interface.
 - Access to resources, such as URLs and files, through the ResourceLoader interface.
+
+> ApplicationContext inherits BeanFactory so It supports all features provided in BeanFactory.
