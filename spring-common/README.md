@@ -25,6 +25,7 @@
 - [RestTemplate](resttemplate)
 - [MessageSource](message-source)
 - [Profile](profile)
+- [ApplicationEvent](application-event)
 
 #### Series
 
