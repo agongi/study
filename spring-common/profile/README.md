@@ -25,11 +25,14 @@ You can preset profile in context-load phase.
 public static void main(String args[]) {
   ApplicationContext context = new AnnotationConfigApplicationContext();
   context.getEnvironment().setActiveProfiles("dev");
+  context.getEnvironment().setDefaultProfiles("dev");
+  
   context.refresh();
 }
 ```
 
 ```shell
 -Dspring.profiles.active=dev
+-Dspring.profiles.default=dev
 ```
 

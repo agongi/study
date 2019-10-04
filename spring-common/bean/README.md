@@ -9,6 +9,7 @@
 - [BeanFactory vs ApplicationContext](bean-factory-application-context)
 - [FactoryBean](factory-bean)
 - [BeanPostProcessor](bean-post-processor)
+- [Aware](aware)
 
 ### Cores
 
