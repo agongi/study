@@ -3,14 +3,20 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
 - https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
-- http://www.mkyong.com/spring/spring-aop-examples-advice/
+- https://www.mkyong.com/spring/spring-aop-examples-advice/
 - http://haviyj.tistory.com/33
 - https://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html
+- https://whiteship.tistory.com/1284
 ```
 
-### Cores
+#### Index
+
+- [AOP vs Interceptor](aop-interceptor)
+- [AspectJ](aspectj)
+- [@Configurable](configurable)
+- [Proxy](proxy)
+
 **Advice** the **Aspect** to **PointCut** target.
 
 - Advice - Inject when
@@ -20,7 +26,20 @@
 Here is brief example:
 
 ```java
+/**
+ * enable aspectJ
+ */
+@Configuration
+@EnableAspectJAutoProxy
+public class AspectJConfiguration {
+  // ...
+}
+
+/**
+ * use it
+ */
 @AspectJ
+@Component
 public class DefaultRestAspect {
   @Before(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))")
   public void before() {
@@ -42,6 +61,8 @@ public class DefaultRestAspect {
 }
 ```
 
+> @Aspect should be spring-bean
+
 #### PointCut
 
 - execution
@@ -61,66 +82,52 @@ public class DefaultRestAspect {
 
 #### Aspect
 
-The contents what to do.
+The contents what to do
 
-### Proxy
+### Order
 
-`Proxy` is wrapping the target class (a.k.a delegate) for adding extra features without modifying it.
-
-Proxy is categorized in two-way:
-
-- Runtime-weaving
-- Compile-weaving
-
-Spring's default proxy used runtime-weaving and it has following drawbacks:
-
-- Self-invocation doesn't work around because It will not come through proxy
-- Public method only affected
-- Method should not be final
-  - Proxy override target method to delegate but final keyword can't be make it
-
-<img src="images/aop-proxy-call.png" width="75%">
-
-#### JVM Dynamic Proxy
-- Runtime-weaving
-- springAOP default
-- Works in `interface`
-
-<img src="images/Picture2-4.png" width="75%">
-
-#### CGLIB Proxy
-- Runtime-weaving
-- enabled when `proxyTargetClass=true`
-- Works in `target class`
-
-<img src="images/Picture3-3.png" width="75%">
-
-#### AspectJ
-- Compile-weaving
-- JVM loadtime weaving using bytecode instrument
-- No limitations
-
-<img src="images/Picture5-2.png" width="75%">
-
-```xml
-  <aop:aspectj-autoproxy proxy-target-class="true"/>
-
-  <!-- bean define explicitly or
-       using component-scan with <context:include-filter> -->
-	<bean id="logAspect" class="com.aspect.LoggingAspect" />
-```
+If you need order to being executed among aspects, you can define order as following:
 
 ```java
-@Aspect
-public class LoggingAspect {
+public class AspectA implements Ordered {
+  public int getOrder() {
+    return 0;
+  }
 
-	@Before("execution(* com.repository.add(..))")
-	public void logBefore(JoinPoint joinPoint) {
-		System.out.println("before : " + joinPoint.getSignature().getName());
-	}
+  // .. something
+}
+
+@Order(1)
+public class AspectB {
+  // .. something
 }
 ```
 
-### AOP vs Interceptor
-- Interceptor - postHandle()/afterCompletion are not invoked when **exception thrown in target method**
-- AOP - @AfterThrowing/@After/@Around can handle it
+> lower value has high priority.
+
+### Reusable
+
+PointCut expression can be resued:
+
+```java
+@Aspect
+@Component
+public class AspectTest {
+
+  @Pointcut("execution(* *.*(...))")
+  private void loggingAdvice() {
+    // ...
+  }
+  
+  @Around("loggingAdvice()")
+  public Object loggingAround(ProceedingJoinPoint joinPoint) {
+    // ...
+  }
+}
+```
+
+### Weaving
+
+- Compile-time weaving : ajc를 이용하여 소스를 컴파일할 때 Weaving 작업을 진행하는 것을 의미한다.
+- Post-compile weaving : 이미 컴파일된 바이너리 클래스를 Weaving하는 것을 의미한다.
+- Load-time weaving (LTW) : Class Loader가 클래스를 Loading할 때 Weaving 작업을 진행한다. Weaving Agent 가 필요

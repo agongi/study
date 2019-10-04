@@ -20,3 +20,4 @@
 If you implements interface, this code is partial of spring-framework (strong-interest), then you code is coupled with spring's one.
 
 > Just need to use it? then @Autowire it not using aware- interfaces.
+

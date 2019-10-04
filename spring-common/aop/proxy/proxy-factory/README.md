@@ -6,7 +6,7 @@
 - https://blog.outsider.ne.kr/851
 ```
 
-Applicable of proxying bean programmatically
+Applicable of proxying bean programmatically (LTW, load-time-weaving).
 
 ```java
 ProxyFactory factory = new ProxyFactory(myBusinessInterfaceImpl);
@@ -15,3 +15,4 @@ factory.addAdvisor(myAdvisor);
 
 MyBusinessInterface tb = (MyBusinessInterface) factory.getProxy();
 ```
+

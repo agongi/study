@@ -20,12 +20,10 @@
 - [Spring Bootstrap](spring-bootstrap)
 - [Classpath](classpath)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
-- [ProxyFactory](proxy-factory)
 - [Static Provider](static-provider)
 - [ThreadLocal in Spring Bean](threadlocal-in-spring-bean)
 - [RestTemplate](resttemplate)
 - [MessageSource](message-source)
-- [AspectJ](aspectj)
 - [Profile](profile)
 
 #### Series
