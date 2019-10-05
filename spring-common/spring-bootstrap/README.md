@@ -64,29 +64,42 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
 ```
 
 ### Bootstrap
-### By Servlet Container
+#### By Servlet Container
 **ServletContainerInitializer** class will be loaded, instantiated and have its onStartup() method invoked `by any Servlet 3.0+ container` in bootstrap.
 
 ```java
-ServletContainerInitializer (javax) > WebApplicationInitializer >
-
--> SpringServletContainerInitializer // spring-framework
--> SpringBootServletInitializer // spring-boot
-
-@HandlesTypes(WebApplicationInitializer.class)
-public class SpringServletContainerInitializer implements ServletContainerInitializer {
-  ...
-}
+ServletContainerInitializer (javax) 
+-> @HandlesTypes(WebApplicationInitializer.class) SpringServletContainerInitializer (spring)
+-> WebApplicationInitializer
+	-> AbstractDispatcherServletInitializer ->
+	-> AbstractAnnotationConfigDispatcherServletInitializer	 // spring-framework
+	
+	and/or
+	
+  -> SpringBootServletInitializer // spring-boot
 ```
 
-- Spring-Framework
-
-**@Interface HandlesTypes** is used to declare the class types that a ServletContainerInitializer can handle, Servlet 3.0+ containers will automatically scan the classpath for implementations of Spring's `WebApplicationInitializer` interface.
+Class that inherits `SerlvetContainerInitializer` may be annotated `@HandleTypes` to point out next chains of initialize.
 
 ```java
 /**
- * @author 최석태 (suktae.choi@navercorp.com)
+ * <p>Implementations of this interface may be annotated with
+ * {@link javax.servlet.annotation.HandlesTypes HandlesTypes}, in order to
+ * receive (at their {@link #onStartup} method) the Set of application
+ * classes that implement, extend, or have been annotated with the class
+ * types specified by the annotation.
  */
+@HandlesTypes(WebApplicationInitializer.class)
+public class SpringServletContainerInitializer implements ServletContainerInitializer {
+	// ..
+}
+```
+
+Now Servlet 3.0+ containers will automatically scan the classpath for implementations of Spring's `WebApplicationInitializer` interface.
+
+**Spring-Framework**
+
+```java
 public class MyWebAppInitializer implements WebApplicationInitializer {
   @Override
   public void onStartup(ServletContext container) {
@@ -105,14 +118,11 @@ public class AppConfig {
 }
 ```
 
-- Spring-Boot
+**Spring-Boot**
 
 WebApplicationInitializer is raw-level interface to bootstrap, and It is not enough to initialize spring-boot features. Now boot supports its wrapper class to enable all spring-boot functions also.
 
 ```java
-/**
- * @author 최석태 (suktae.choi@navercorp.com)
- */
 public class BootInitializer extends SpringBootServletInitializer {
   @Override
   public void onStartup(ServletContext servletContext) throws ServletException {
@@ -128,7 +138,7 @@ public class BootInitializer extends SpringBootServletInitializer {
 
 #### By Itself
 
-- Spring-Framework
+**Spring-Framework**
 
 ```java
 public class Application {
@@ -140,12 +150,9 @@ public class Application {
   }
 ```
 
-- Spring-Boot
+**Spring-Boot**
 
 ```java
-/**
- * @author 최석태 (suktae.choi@navercorp.com)
- */
 @Import(ToyConfig.class)
 @SpringBootApplication
 public class ToyApplication {
