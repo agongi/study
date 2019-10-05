@@ -21,7 +21,6 @@
 - [Static Provider](static-provider)
 - [ThreadLocal in Spring Bean](threadlocal-in-spring-bean)
 - [RestTemplate](resttemplate)
-- [MessageSource](message-source)
 - [Profile](profile)
 - [ApplicationEvent](application-event)
 
@@ -30,7 +29,6 @@
 - [Spring Bootstrap](spring-bootstrap)
 - [MVC](mvc)
 - [Bean](bean)
-- [Binding & Validation](binding-validation)
 - [Transaction](transaction)
 - [Properties](properties)
 - [AOP](aop)
