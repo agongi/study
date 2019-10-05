@@ -10,7 +10,7 @@
  - http://www.javajigi.net/display/JAVA/Servlet+Life+Cycle
 ```
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/spring-flow/images/Screen%20Shot%202017-06-17%20at%2017.19.48.png">
+<img src="images/Screen%20Shot%202017-06-17%20at%2017.19.48.png">
 
 ### Term
 #### Servlet
