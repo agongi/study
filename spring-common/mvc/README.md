@@ -7,7 +7,7 @@
 
 #### Index
 
-- [Binding](validation)
+- [Binding](binding)
 - [Validation](validation)
 - [MessageSource](message-source)
 
@@ -300,4 +300,3 @@ public class ExcelXlsView extends AbstractPdfView {
   }
 }
 ```
-
