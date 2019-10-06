@@ -10,6 +10,7 @@
 
 - [Reactor](reactor)
 - [WebFlux](web-flux)
+- [WebClient](web-client)
 
 #### Blog
 

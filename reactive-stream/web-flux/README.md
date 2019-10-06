@@ -48,3 +48,4 @@ What if you do need to use a blocking library? Both Reactor and RxJava provide t
 - HttpHandler - Basic req/res handling model
 - WebHandler - higher abstraction of `HttpHandler`
 
+> Use WebClient. `AsyncRestTemplate` is not recommended since 5.x
