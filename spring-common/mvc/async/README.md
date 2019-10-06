@@ -50,5 +50,5 @@ public class TextSocketHandler extends TextWebSocketHandler {
 }
 ```
 
-### [WebFlux](../../reactive-stream)
+### [WebFlux](../../../reactive-stream)
 
