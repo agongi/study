@@ -229,33 +229,3 @@ public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
 @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
 private Date regDate;
 ```
-
-### Validation
-
-`BindingResult` is automatically created when the Controller params (ex. **RequestBody** or **ModelAttribute**) is binded.
-
-```java
-public void getUser(@RequestBody User user, BindingResult bindingResult) {
-	new Validator().validate(user, bindingResult);
-  
-  if (bindingResult.hasErrors()) {
-  	// .. handling
-  }
-}
-```
-
-or you can manually create it like this:
-
-```java
-public void getUser(@PathVariable String id) {
-  User user = userRepository.findById(id);
-	BindingResult bindingResult = new BeanPropertyBindingResult(user, "user");
-  
-	new Validator().validate(user, bindingResult);
-  
-  if (bindingResult.hasErrors()) {
-  	// .. handling
-  }
-}
-```
-
