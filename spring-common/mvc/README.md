@@ -10,6 +10,7 @@
 - [Binding](binding)
 - [Validation](validation)
 - [MessageSource](message-source)
+- [Async](async)
 
 ### Cores
 
@@ -118,7 +119,7 @@ public class BaseConfiguration extends WebMvcConfigurerAdapter {
 
 #### MessageConverters
 
-Configure Accepted requestBody types/
+Configure unmarshal response types
 
 ```java
 public class BaseConfiguration extends WebMvcConfigurerAdapter {
@@ -126,6 +127,7 @@ public class BaseConfiguration extends WebMvcConfigurerAdapter {
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     converters.add(new StringHttpMessageConverter());
     converters.add(new MappingJackson2HttpMessageConverter(new ObjectMapper());
+		converters.add(new Jaxb2RootElementHttpMessageConverter());
     converters.add(new ByteArrayHttpMessageConverter());
   }
 }
@@ -145,7 +147,48 @@ public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderCon
 }
 ```
 
-#### Exception
+#### MultipartResolver
+
+File uploading
+
+```java
+@Bean
+public MultipartResolver multipartResolver() {
+  CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+  multipartResolver.setDefaultEncoding(StandardCharsets.UTF_8.name());
+  return multipartResolver;
+}
+```
+
+#### MethodArgumentResolver
+
+Allows argument injected into controller from web requests.
+
+```java
+public class BaseConfiguration extends WebMvcConfigurerAdapter {
+  @Override
+  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    super.addArgumentResolvers(argumentResolvers);
+    // allows injecting {@link Pageable} instances into controller methods
+    PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+    resolver.setFallbackPageable(new PageRequest(0, 20));
+    argumentResolvers.add(resolver);
+  }
+}
+```
+
+#### MethodReturnValueHandler
+
+Return value hooks like `@After` in AspectJ.
+
+```java
+@Override
+public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+  // ...
+}
+```
+
+#### ExceptionResolver
 
 Configurable exceptionHandler
 
@@ -187,36 +230,6 @@ public class ExceptionHandlerAdvice {
     return ResponseEntity
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
       .body("Internal Server Error");
-  }
-}
-```
-
-#### Multipart
-
-File uploading
-
-```java
-@Bean
-public MultipartResolver multipartResolver() {
-  CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-  multipartResolver.setDefaultEncoding(StandardCharsets.UTF_8.name());
-  return multipartResolver;
-}
-```
-
-#### HandlerMethodArgumentResolver
-
-Allows argument injected into controller from web requests.
-
-```java
-public class BaseConfiguration extends WebMvcConfigurerAdapter {
-  @Override
-  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    super.addArgumentResolvers(argumentResolvers);
-    // allows injecting {@link Pageable} instances into controller methods
-    PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
-    resolver.setFallbackPageable(new PageRequest(0, 20));
-    argumentResolvers.add(resolver);
   }
 }
 ```
