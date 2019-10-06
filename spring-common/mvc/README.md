@@ -222,3 +222,82 @@ public class BaseConfiguration extends WebMvcConfigurerAdapter {
 ```
 
 #### Excel/PDF
+
+Excel is generated once contentNegotiation is supported in given web requests with header `Accept=application/vnd.ms-excel`.
+
+```properties
+compile "org.apache.poi.poi:x.y"
+```
+
+```java
+public class ExcelXlsView extends AbstractXlsView {
+  private static final String EXTENSION_NAME = ".xls";
+  private static final String fileName = "test-file" + EXTENSION_NAME;
+
+  @SuppressWarnings("unchecked")
+  @Override
+  protected void buildExcelDocument(
+    Map<String, Object> model,
+    Workbook workbook,
+    HttpServletRequest request,
+    HttpServletResponse response) throws Exception {
+
+    Collection<Object> datas = (Collection<Object>)model.get("datas");
+    
+    Sheet sheet = workbook.createSheet();
+    addHeaders(sheet);
+    addRows(sheet, datas);
+
+    setFileNameToResponse(response);
+  }
+	
+  /**
+   * https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Content-Disposition
+   */
+  private void setFileNameToResponse(HttpServletResponse response) {
+    response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+  }
+  
+  private void addHeaders(Sheet sheet) {
+  	Row header = sheet.createRow(0);
+    header.createCell((short)0).setCellValue("name");
+    header.createCell((short)0).setCellValue("age");
+  }
+  
+  private void addRows(Sheet sheet, Collection<Object> datas) {
+  	datas.forEach(o -> {
+      Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+	    row.createCell((short)0).setCellValue(o.getA());
+  	  row.createCell((short)0).setCellValue(o.getB());
+    });  
+  }
+}
+```
+
+You can even generate PDF using `AbstractPdfView`:
+
+```properties
+compile "com.lowagie.itext:x.y.z"
+```
+
+```java
+public class ExcelXlsView extends AbstractPdfView {
+  private static final String EXTENSION_NAME = ".pdf";
+  private static final String fileName = "test-file" + EXTENSION_NAME;
+
+  @SuppressWarnings("unchecked")
+  @Override
+  protected void buildPdfDocument(
+    Map<String, Object> model,
+    Document document,
+    PdfWriter writer,
+    HttpServletRequest request,
+    HttpServletResponse response) throws Exception {
+
+    Collection<Object> datas = (Collection<Object>)model.get("datas");
+    
+		// ... omitted
+  }
+}
+```
+
