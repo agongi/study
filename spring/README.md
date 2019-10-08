@@ -26,6 +26,9 @@
 
 #### Series
 
+- [Spring Boot](spring-boot)
+- [Spring Batch](spring-batch)
+- [Spring Test](spring-test)
 - [Spring Bootstrap](spring-bootstrap)
 - [MVC](mvc)
 - [Bean](bean)

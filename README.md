@@ -3,15 +3,10 @@
 - [Apache](apache)
 - [Tomcat](tomcat)
 
-### Framework
-- [Spring Common](spring-common)
-- [Spring Boot](spring-boot)
-- [Spring Batch](spring-batch)
-- [Spring Test](spring-test)
-
 ### Dev
 - BE
   - [Java](java)
+  - [Spring](spring)
   - [Java Concurrency](java-concurrency)
   - [Architecture](server-architect)
 - FE
@@ -19,10 +14,11 @@
   - [JavaScript](javascript)
   - React
 - [Persistence](persistence)
+- MQ
+  - Kakfa
 - Core
   - [Reactive Stream](reactive-stream)
   - [Servlet](servlet)
-  - Kakfa
 
 ### [Protocols](protocols)
 
