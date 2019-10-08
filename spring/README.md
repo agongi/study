@@ -29,6 +29,7 @@
 - [Spring Boot](spring-boot)
 - [Spring Batch](spring-batch)
 - [Spring Test](spring-test)
+- [Spring Security](spring-security)
 - [Spring Bootstrap](spring-bootstrap)
 - [MVC](mvc)
 - [Bean](bean)
