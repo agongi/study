@@ -1,9 +1,9 @@
-### WEB/WAS
+### Infras
 - Nginx
 - [Apache](apache)
 - [Tomcat](tomcat)
 
-### Dev
+### Develops
 - BE
   - [Java](java)
   - [Spring](spring)
