@@ -8,14 +8,16 @@
   - [Java](java)
   - [Spring](spring)
   - [Java Concurrency](java-concurrency)
-  - [Architecture](server-architect)
 - FE
   - [HTML](html)
   - [JavaScript](javascript)
   - React
 - [Persistence](persistence)
+  - [ORM](orm)
+  - [RDB](rdb)
+  - [MongoDB](mongodb)
 - MQ
-  - Kakfa
+  - [Kakfa](kafka)
 - Core
   - [Reactive Stream](reactive-stream)
   - [Servlet](servlet)
