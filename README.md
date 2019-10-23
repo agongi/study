@@ -7,7 +7,6 @@
 - BE
   - [Java](java)
   - [Spring](spring)
-  - [Java Concurrency](java-concurrency)
 - FE
   - [HTML](html)
   - [JavaScript](javascript)
@@ -23,6 +22,7 @@
 - Core
   - [Reactive Stream](reactive-stream)
   - [Servlet](servlet)
+  - [Java Concurrency](java-concurrency)
 
 ### [Protocols](protocols)
 
