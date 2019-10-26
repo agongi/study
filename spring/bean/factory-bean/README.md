@@ -1,12 +1,11 @@
 ## Factory Bean
-Create the `uncreatable`
+Create the `uncreatable.`
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.04.07
 ㅁ References:
- - http://whiteship.tistory.com/564
- - http://stackoverflow.com/questions/4970297/how-to-get-beans-created-by-factorybean-spring-managed
+- http://whiteship.tistory.com/564
+- http://stackoverflow.com/questions/4970297/how-to-get-beans-created-by-factorybean-spring-managed
 ```
 
 ### Scenario
@@ -53,55 +52,40 @@ public class JacksonFactory {
 }
 ```
 
+> You can instantiate it using JVM guaranteed enum-singleton pattern /wo double-locking check.
+
 #### JacksonFactoryBean
-```java
- /**
-  * @author suktae.choi
-  */
- public class JacksonFactoryBean implements FactoryBean<JacksonBean> {
-     private ApplicationContext applicationContext;
-     private JacksonBean jacksonBean;
 
-     @Override
-     public JacksonBean getObject() throws Exception {
-         if (jacksonBean == null) {
-             synchronized (JacksonBean.class) {
-                 this.jacksonBean = JacksonFactory.getInstance();
-                 // apply instance in applicationContext
-                 applicationContext.getAutowireCapableBeanFactory().autowireBean(jacksonBean);
-             }
-         }
-
-         return this.jacksonBean;
-     }
-
-     @Override
-     public Class<?> getObjectType() {
-         return JacksonBean.class;
-     }
-
-     @Override
-     public boolean isSingleton() {
-         return true;
-     }
- }
-```
-
-#### Register
-- applicationContext.xml
-```xml
-<bean id="jackson" class="com.games.model.jackson.JacksonFactoryBean" />
-```
-
-- @Autowired
 ```java
 /**
- * @author suktae.choi
- */
-@Component
-public class JacksonService {
-    @Autowired
-    private JacksonBean jacksonBean;
+  * @author suktae.choi
+  */
+public class JacksonFactoryBean implements FactoryBean<JacksonBean> {
+  private ApplicationContext applicationContext;
+  private JacksonBean jacksonBean;
+
+  @Override
+  public JacksonBean getObject() throws Exception {
+    if (jacksonBean == null) {
+      synchronized (JacksonBean.class) {
+        this.jacksonBean = JacksonFactory.getInstance();
+        // apply instance in applicationContext
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(jacksonBean);
+      }
+    }
+
+    return this.jacksonBean;
+  }
+
+  @Override
+  public Class<?> getObjectType() {
+    return JacksonBean.class;
+  }
+
+  @Override
+  public boolean isSingleton() {
+    return true;
+  }
 }
 ```
 
@@ -110,20 +94,19 @@ public class JacksonService {
 /**
  * @author suktae.choi
  */
- @Slf4j
- public class ApplicationTest {
+@Slf4j
+public class ApplicationTest {
+  public static void main(String args[]) {
+    AbstractApplicationContext context = new ClassPathXmlApplicationContext("applicationContext-test.xml");
+    // get target bean which factoryBean returned
+    JacksonBean jackson = (JacksonBean) context.getBean("jackson");
+    // get bean factoryBean itself
+    JacksonFactoryBean jacksonFactoryBean = (JacksonFactoryBean) context.getBean("&jackson");
 
-     public static void main(String args[]) {
-         AbstractApplicationContext container = new ClassPathXmlApplicationContext("applicationContext-test.xml");
-         // get target bean which factoryBean returned
-         JacksonBean jackson = (JacksonBean) container.getBean("jackson");
-         // get bean factoryBean itself
-         JacksonFactoryBean jacksonFactoryBean = (JacksonFactoryBean) container.getBean("&jackson");
+    log.debug("jackson={}", jackson);
+    log.debug("jacksonFactoryBean={}", jacksonFactoryBean);
 
-         log.debug("jackson={}", jackson);
-         log.debug("jacksonFactoryBean={}", jacksonFactoryBean);
-
-         container.registerShutdownHook();
-     }
- }
+    container.registerShutdownHook();
+  }
+}
 ```
