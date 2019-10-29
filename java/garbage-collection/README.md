@@ -3,8 +3,8 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- http://d2.naver.com/helloworld
-- http://javarevisited.blogspot.kr
+- https://perfectacle.github.io/2019/05/07/jvm-gc-basic/
+- https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
 - https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter
 - https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html
 ```
@@ -12,54 +12,56 @@
 #### Index
 
 - [Reference](reference)
+- [Safepoint](safe-point)
+- [Tri-color Marking](https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/)
 
 ### GC 유형
 
 #### Serial GC (-XX:+UseSerialGC)
 
-- Young 은 Eden / S0-S1 방식. Old 는 mark-sweep-compact 알고리즘
+- Young, Old 모두 Mark-Sweep 알고리즘
 - GC Thread 는 1개
-- Compaction 을 기본적으로 수행
+- Compaction 수행
 
 #### Parallel GC (-XX:+UseParallelGC)
 
-- Young 은 Eden / S0-S1 방식. Old 는 mark-sweep-compact 알고리즘
+- Young, Old 모두 Mark-Sweep 알고리즘
 - GC Thread 는 N개
-- Compaction 을 기본적으로 수행
+- Compaction 수행
 
 #### Parallel Old GC (-XX:+UseParallelOldGC)
 
-- Young 은 Eden / S0-S1 방식. Old 는 mark-summary-compact 알고리즘
+- Young 은 Mark-Sweep. Old 는 `Mark-Summary` 알고리즘
 - GC Thread 는 N개
-- Compaction 을 기본적으로 수행
+- Compaction 수행
 
 #### CMS GC (-XX:+UseConcMarkSweepGC)
 
-- Young 은 Eden / S0-S1 방식. Old 는 concurrent-mark-sweep 알고리즘
+- Young 은 ParNewGC. Old 는 Tri-color Marking 알고리즘
 - GC Thread 는 N개
-- Compaction 을 기본적으로 미 수행
+- Compaction `미수행`
 
-> 단편화되어 큰 객체가 들어갈 수 있는 공간이 없으면 Compaction 수행. 하지만 오랜시간이 걸린다.
+> 단편화로 인해 Compaction 필요한 경우, Parallel Old GC 가 수행된다.
 
 #### G1 GC (-XX:+UseG1GC)
 
-아래에 기술
+- 전체 Heap 이 아닌 Garbage Region 만을 대상으로 GC 를 수행한다.
+  - Garbage First!
+- Region 회수시 Compaction 수행
 
-### GC 동작원리
+### Features
 
 #### (Serial/Parallel/ParallelOld) GC
 
 <img src="images/Screen%20Shot%202017-08-15%20at%2003.02.19.png" width="75%">
+
+**Memory**
 
 - Young
   - Eden, From (S0), To (S1) 영역으로 구성
   - 새로 생성한 객체는 Eden 영역에 할당
 - Old
   - Young 영역에서 살아남은 객체가 존재
-- Permanent
-  - It is not considered as a part of the Java Heap space.
-  - `Class definitions` are stored here, as are `static instances`, `string pool` and `meta-data`
-  - Rarely `Full GC` also comes over here to clean up this area.
 
 **Minor GC**
 
@@ -72,49 +74,53 @@
 - 이 과정을 반복
 - Threshold 이상의 Age 객체는 Old 영역으로 이동하게 된다 - `Promotion`
 
-> Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다
+> Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.
+>
+> 객체의 크기가 Eden 보다 크면 바로 Old 영역으로 할당된다.
 
-> 객체의 크기가 Eden 보다 크면 바로 Old 영역으로 할당된다
+**Old GC**
 
-**Full GC**
-
-- Old 영역이 가득 차면 `Full GC` 발생
-  - `STW(stop-the-world)` 발생 구간이다
-
-> GC 튜닝이란 stop-the-world 시간을 줄이는 것이다
+- Old 영역이 가득 차면 `Full GC` 발생 (==`STW (stop-the-world)` 발생)
 
 #### CMS GC
 
 <img src="images/helloworld-1329-5.png" width="75%">
 
-Initial Mark 는 살아 있는 객체만 찾는다. (STW)
+CMS GC의 장점은 아래와 같다.
 
-Concurrent Mark 로 실제로 살았는지 확인 (**STOP 없음**)
+- Old GC 도중 STW 가 짧게 2번만 발생한다.
+- GC 도중이라도, 시스템이 멈추지않고 일부요청을 처리 할 수 있다.
 
-Remark 는 Concurrent Mark 단계에서 새로 추가되거나 참조가 끊긴 객체를 확인 (STW) 
+CMS GC의 단점은 아래와 같다.
 
-Concurrent Sweep 에서 객체 정리 (**STOP 없음**)
+- GC 풀 사이클 자체는 Parallel(Old)GC 보다 길다.
+- GC가 도는 도중에는 어플리케이션 스레드가 절반만 돌기 때문에 처리율이 감소한다.
+  - Less throughput
+- Mark-Sweep 알고리즘에 비해 하는 일도 많고 복잡하다보니 메모리, CPU를 더 많이 쓴다.
+  - Much resource usage
+- 메모리 Compaction을 수행하지 않으므로 단편화가 발생시, STW 가 길게 발생한다.
 
-STW 를 짧게 여러번 하는대신 아래의 단점이 존재한다.
-
-- 다른 GC 방식보다 메모리와 CPU를 더 많이 사용한다.
-- Compaction 단계가 기본적으로 제공되지 않는다.
-
-Compaction 을 기본적으로 수행하지 않아, 한번 수행되면 STW 가 길어진다
+> Old GC 수행도중 단편화로 인해 메모리가 충분히 확보되지 않으면 즉시 모든 작업을 멈추고
+>
+> Compaction 을 위해 ParallelOld 을 처음부터 수행한다.
 
 #### G1 GC
 
 <img src="images/Screen%20Shot%202017-08-15%20at%2001.02.19.gif" width="75%">
 
-모든 영역이 정해져 있지 않고, Region 이라는 작은 단위로 동적할당된다
+**Memory**
+
+모든 영역이 정해져 있지 않고, Region 이라는 작은 단위로 분리되어 있다.
 
 - Young (Eden, S0, S1), Old, Humongous, Unused 로 구성
-- Region의 목표 수치는 2048으로 분활된다. 즉, 8G의 Heap이라면 하나의 Region의 크기는 4MB
-- 8192MB/2048 = 4MB
+- Region의 목표 수치는 `2048개` 로 분활된다. 즉, 8G의 Heap이라면 하나의 Region의 크기는 4MB
+  - 8192 / 2048 = 4MB
 
-> 객체 크기가 Region의 1/2보다 큰 경우, humongous 영역으로 관리
+> 객체 크기가 Region의 1/2보다 큰 경우, humongous 영역에서 관리
 
-**Young GC (== Evacuation)**
+RSet 라는 테이블로 region status 를 관리하여, 즉시 garbage 의 추적이 필요할때 사용한다.
+
+**Minor GC (== Evacuation)**
 
 Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수행된다.
 
@@ -122,11 +128,11 @@ Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수�
   - Eden > Survivor
   - Survivor from <> to  - `Aging`
   - Survivor > Old - `Promotion`
-- Young GC (STW) 동안 Old GC 의 STW 이 발생하는 Phase 들을 조금씩 같이 수행한다
+- Young GC 수행시, Old GC 를 일부 같이 수행한다
 
 **Old GC**
 
-`-XX:InitiatingHeapOccupancyPercent` (IHOP) 에서 정한 수치가 넘어가면 동작한다. 모든 phase 가 병렬로 처리된다
+`-XX:InitiatingHeapOccupancyPercent` (IHOP) 에서 정한 수치가 넘어가면 동작한다. 모든 phase 가 병렬로 처리된다.
 
 - Initial mark `(STW)`
   - `Young GC` 때 같이 수행
@@ -134,7 +140,9 @@ Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수�
 - Concurrent marking
   - 별도의 Thread 로 수행 (Young GC 와 같이 수행되지 않음)
   - Mark empty region
-    - 이 때부터 Young GC 와 동시 실행 가능
+
+> 이 때부터 Young GC 와 동시 실행 가능
+
 - Remark `(STW)`
   - `Young GC` 때 같이 수행
   - Empty regions are removed and reclaimed. Region liveness is now calculated for all regions
@@ -144,18 +152,9 @@ Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수�
 - After Cleanup/Copying
   - Compaction
 
-> Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조
-
+> Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조.
+>
 > 조금씩 Young GC 때 Old region 이 같이 정리되는 개념이다
-
-**Full GC**
-
-Old GC 를 통해 필요한 Memory 를 확보하지 못하면, Full GC 수행
-
-- Single Thread
-- STW
-
-> 최대한 Young, Old 로 버티면서 Full GC 횟수를 줄이는 방식이지만, 한번 Full GC 가 발생하면 STW 가 길다
 
 ### Changes in JDK 8
 
