@@ -10,19 +10,86 @@
 - https://dzone.com/articles/a-guide-to-mocking-with-mockito
 ```
 
-### Overview
+`Mockito` is a framework for unit-test in java that mocking tastable fields or variables.
 
-Mockito is a framework for unit-test in java that mocking tastable fields or variables.
+- given: **when**(mock#method).thenReturn(T)
+- when: service invoke
+- then
+  - **verify**(mock).method(?, ?)
+  - **verify**(mock, times(N)).method(?, ?)
 
-- when(mock#method).thenReturn(T);
-- verify(mock).method();
+`MockitoBDD` (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior of the application.
 
-MockitoBDD (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior of the application.
+- given: **given**(mock#method).willReturn(T)
+- when: service invoke
+- then
+  - **then**(mock).should().methodI(?, ?)
+  - **then**(mock).should(times(N)).method(?, ?)
 
-- given(mock#method).willReturn(T);
-- then(mock).should().methodI();
+### Enable
 
-### Inject mock
+#### MockitoAnnotations.initMocks(this);
+
+Enable mockito framework in code.
+
+- Not running with applicationContext but pure-java
+
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+public class MockitoTestBase {
+  @Mock private LoginService loginService;
+  @InjectMocks private LoginFacade loginFacade;
+
+  @Before
+  public void before() {
+    // explicit inject
+    MockitoAnnotations.initMocks(this);
+  }
+}
+```
+
+#### @RunWith(MockitoJUnitRunner.class)
+
+Enable mockito framework over annotation.
+
+- Not running with applicationContext but pure-java
+
+```java
+// implicit inject
+@RunWith(MockitoJUnitRunner.class)
+public class MockitoTestBase {
+  @Mock private LoginService loginService;
+  @InjectMocks private LoginFacade loginFacade;
+  
+  // springRunner is not used. applicationContext is not available
+  @Autowire private LoginService loginService;
+}
+```
+
+#### MockitoJUnit.rule()
+
+Enable mockito with springContext
+
+- Running with applicationContext
+
+```java
+// spring + junit
+@RunWith(SpringJUnit4ClassRunner.class)
+public class ExampleTest {
+  // with mockito
+  @Rule public MockitoRule rule = MockitoJUnit.rule();
+
+  @Mock private LoginService loginService;
+  @InjectMocks private LoginFacade loginFacade;
+
+  @Test
+  public void dummyTest() {
+    System.out.println(loginService.getUser(123L));
+  }
+}
+```
+
+### Annotation
 
 #### @Mock
 - `All methods` are stubbed. (Override)
@@ -96,72 +163,9 @@ private LoginFacade loginFacade = new LoginFacade();
 
 > Spring-boot provides @MockBean and @SpyBean as well. The main difference is these are contained in applicationContext as bean (not POJO).
 
-### EnableMockito
-
-#### MockitoAnnotations.initMocks(this);
-
-Enable mockito framework in code.
-
-- Not running with applicationContext but pure-java
-
-```java
-@RunWith(SpringJUnit4ClassRunner.class)
-public class MockitoTestBase {
-  @Mock private LoginService loginService;
-  @InjectMocks private LoginFacade loginFacade;
-
-  @Before
-  public void before() {
-    // explicit inject
-    MockitoAnnotations.initMocks(this);
-  }
-}
-```
-
-#### @RunWith(MockitoJUnitRunner.class)
-
-Enable mockito framework over annotation.
-
-- Not running with applicationContext but pure-java
-
-```java
-// implicit inject
-@RunWith(MockitoJUnitRunner.class)
-public class MockitoTestBase {
-  @Mock private LoginService loginService;
-  @InjectMocks private LoginFacade loginFacade;
-  
-  // springRunner is not used. applicationContext is not available
-  @Autowire private LoginService loginService;
-}
-```
-
-#### MockitoJUnit.rule()
-
-Enable mockito with springContext
-
-- Running with applicationContext
-
-```java
-// spring + junit
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ExampleTest {
-  // with mockito
-  @Rule public MockitoRule rule = MockitoJUnit.rule();
-
-  @Mock private LoginService loginService;
-  @InjectMocks private LoginFacade loginFacade;
-
-  @Test
-  public void dummyTest() {
-    System.out.println(loginService.getUser(123L));
-  }
-}
-```
-
 ### Usage
 
-#### Verify void method /w `Captor`
+#### Method argument captor
 
 ```java
 public class CrudTest {
@@ -175,9 +179,10 @@ public class CrudTest {
   @Test
   public void CRUD_TEST() {
     // given
-    given(repository.findById(anyLong())).willReturn(Arrays.asList("001", "002"));
+    given(repository.findById(anyLong()))
+      .willReturn(Arrays.asList("001", "002"));
 
-    // when - 기존에 이미 저장된 id 는 제거후, repository#save 호출
+    // when
     service.create(Arrays.asList("002", "003"));
 
     // then
@@ -188,7 +193,7 @@ public class CrudTest {
 }
 ```
 
-#### Result returns mock
+#### Method returns mock
 
 ```java
 // testable
@@ -211,14 +216,15 @@ public class CrudTest {
   public void test() {
     // given
     Long id = 123456L;
-    User user = mock(User.class);
-    given(service.getLoginableSites()).willReturn(Arrays.asList(
+    User user = mock(User.class);	// or @Mock private User user;
+    given(user.getLoginableSites()).willReturn(Arrays.asList(
       new Site(1),
       new Site(2),
       new Site(3)
     ));
-    // result returns mock.
-    given(repository.findById(anyLong())).willReturn(user);
+    
+    given(repository.findById(anyLong()))
+      .willReturn(user);
 
     // when
     List<Site> sites = userService.getSites(id);
@@ -230,7 +236,7 @@ public class CrudTest {
 }
 ```
 
-#### Skip void method (a.k.a validate ignore)
+#### Method skip
 
 ```java
 PowerMockito.doNothing()
@@ -238,31 +244,44 @@ PowerMockito.doNothing()
   .check(anyLong(), any(ValidationType.class));
 ```
 
-#### T vs Class\<?\>
+#### Any argument
 
 ```java
-#method(any(Class.class));	// Class<?>
-#method(anyObject());	// instance
+#method(any(Class.class));		// Class<?>
+#method(any(UserType.class));	// Enum<?>
+#method(anyObject());					// Instance
 ```
 
-#### Static class mocking (== based-on powerMock)
+#### Static class mocking
 
 ```java
 @RunWith(PowerMockRunner.class)	// powerMock
 @PrepareForTest(StaticBeanProvider.class)
 public class TestClass {
-	@Mock private MockService mockService;
-  
+  @Mock private MockService mockService;
+
   @Test
   public void test() {
     // static class mock
     PowerMockito.mockStatic(StaticBeanProvider.class);
-    // static's behavior
-    given(StaticBeanProvider.getBean(MockService.class)).willReturn(mockService);
 
-    // define retured-mock's behavior
-    given(mockService.findOne(anyLong()).willReturn(new User("testName"));
-  }
+    // given
+    given(StaticBeanProvider.getBean(MockService.class))
+      .willReturn(mockService);
+
+    given(mockService.findOne(anyLong())
+          .willReturn(new User("testName"));
+	}
 }
+```
+
+#### Method invocation
+
+```java
+// then - Mockito
+verify(userService).leave(anyLong(), anyBoolean());
+
+// then - BDDMockito
+then(userService).should().leave(anyLong(), anyBoolean());
 ```
 
