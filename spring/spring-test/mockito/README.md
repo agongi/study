@@ -247,15 +247,16 @@ PowerMockito.doNothing()
 #### Any argument
 
 ```java
-#method(any(Class.class));		// Class<?>
+#method(any(Class.class));	// Class<?>
 #method(any(UserType.class));	// Enum<?>
-#method(anyObject());					// Instance
+#method(anyObject());	// Instance
 ```
 
 #### Static class mocking
 
 ```java
-@RunWith(PowerMockRunner.class)	// powerMock
+// EnablePowerMock
+@RunWith(PowerMockRunner.class)
 @PrepareForTest(StaticBeanProvider.class)
 public class TestClass {
   @Mock private MockService mockService;
