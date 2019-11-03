@@ -11,7 +11,7 @@
 
 Before TLS 1.3, TLS handshake are working as below:
 
-![Screen Shot 2019-11-03 at 20.18.53](images/Screen Shot 2019-11-03 at 20.18.53.png)
+![Screen Shot 2019-11-03 at 20.18.53](images/Screen%20Shot%202019-11-03%20at%2020.18.53.png)
 
 - Client Hello
   - Desired serverName (SNI) is included to derive proper server's certificate
@@ -26,7 +26,7 @@ Now Let us go How Encrypted SNI works:
 
 ### ESNI
 
-![Screen Shot 2019-11-03 at 20.18.57](images/Screen Shot 2019-11-03 at 20.18.57.png)
+![Screen Shot 2019-11-03 at 20.18.57](images/Screen%20Shot%202019-11-03%20at%2020.18.57.png)
 
 - DNS lookup
   - DNS Record already has `Public Key`
