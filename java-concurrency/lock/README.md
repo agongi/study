@@ -5,7 +5,7 @@
 - http://happinessoncode.com/2017/10/04/java-intrinsic-lock/
 ```
 
-###병렬성 (Parallelism)
+### 병렬성 (Parallelism)
 
 고전적인 예제지만, 아래 샘플을 다시한번 봐보자.
 
@@ -228,3 +228,5 @@ JVM 은 약한 메모리 모델을 선택했다.
 
 - Write: code block 을 벗어난 후 즉시 메인메모리에 반영하며
 - Read: thread local 을 보지않고, 메인메모리를 직접 바라보게 (== volatile)
+
+> 이런 이유로 read 시에도 다른 Thread 가 업데이트 한 내용을 바라보게 synchronized 를 사용해야함
