@@ -215,9 +215,9 @@ JVM 은 약한 메모리 모델을 선택했다.
 
 <img src="images/5.png" width="75%">
 
-> 강한모델은 H/W 레벨에서 미지원시 sw 로 각 예외처리를 다 해줘야 하는데, JVM 은 multi-run 을 지향.\
+> 강한모델은 H/W 레벨에서 미지원시 sw 로 각 예외처리를 필요함
 >
-> 모든 케이스를 감당할수 없음
+> JVM 은 multi-run 을 지향하므로 모든 예외 케이스를 감당할수 없음
 
 자바의 동기화는 `약한 메모리 모델` 이므로 야기되는 아래 케이스를 해결하는데 초점을 둔다:
 
@@ -229,4 +229,4 @@ JVM 은 약한 메모리 모델을 선택했다.
 - Write: code block 을 벗어난 후 즉시 메인메모리에 반영하며
 - Read: thread local 을 보지않고, 메인메모리를 직접 바라보게 (== volatile)
 
-> 이런 이유로 read 시에도 다른 Thread 가 업데이트 한 내용을 바라보게 synchronized 를 사용해야함
+> 이런 이유로 [read 시에도](https://d2.naver.com/helloworld/1326256) 다른 Thread 가 업데이트 한 내용을 바라보게 synchronized 를 사용해야함

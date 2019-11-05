@@ -12,7 +12,6 @@
 #### Index
 
 - [Reference](reference)
-- [Safepoint](safe-point)
 - [Tri-color Marking](https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/)
 
 ### GC 유형
