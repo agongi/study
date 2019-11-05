@@ -11,7 +11,7 @@
   - [HTML](html)
   - [JavaScript](javascript)
   - React
-- [Persistence](persistence)
+- Persistence
   - [ORM](orm)
   - [RDB](rdb)
   - [MongoDB](mongodb)

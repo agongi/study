@@ -1,4 +1,4 @@
-## Garbage Collection - Detail
+## Reference
 
 ```
 ㅁ Author: suktae.choi

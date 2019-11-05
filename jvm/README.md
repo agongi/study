@@ -9,7 +9,7 @@
 - [Garbage Collection](garbage-collection)
 
 #### Index
-- [JIT](jit)
+- [JIT Compiler](jit-compiler)
 - [Safe point](safe-point)
 
 #### Blog
