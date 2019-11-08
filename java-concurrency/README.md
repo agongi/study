@@ -17,6 +17,8 @@
 - [Executors](executors)
 - [Synchronized](synchronized)
 - [Lock](lock)
+- [CountDownLatch](countdown-latch)
+- [CyclicBarrier](cyclic-barrier)
 
 #### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)
