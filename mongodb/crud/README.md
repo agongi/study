@@ -141,3 +141,22 @@ The [transaction commit and abort operations](https://docs.mongodb.com/manual/co
 
 Bulk write operations that only consist of single-document only supported so cannot include multi-document ops, such as `updateMany`.
 
+### Text Search
+
+If document has text-specific values and you need to find all documents containging any of given terms
+
+```json
+db.stores.insert([
+  { _id: 1, name: "Java Hut", description: "Coffee and cakes" },
+  { _id: 2, name: "Burger Buns", description: "Gourmet hamburgers" },
+  { _id: 3, name: "Coffee Shop", description: "Just coffee" },
+  { _id: 4, name: "Clothes Clothes Clothes", description: "Discount clothing" },
+  { _id: 5, name: "Java Shopping", description: "Indonesian goods" }
+])
+
+# createIndex for text-searching
+db.stores.createIndex({name: "text", description: "text"})
+# find documents contains text-terms
+db.collection.find({$text: {$search: "java coffee shop"}})
+```
+
