@@ -12,13 +12,12 @@
 
 ```json
 db.collection.insert({...},
-	{writeConcern: {
-    	w: 3,
-			wtimeout: 150,
-			j: false
-		}
-	}
-)
+  {writeConcern: {
+    w: 3,
+    wtimeout: 150,
+    j: false
+  }
+})
 ```
 
 #### w
