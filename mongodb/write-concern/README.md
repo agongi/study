@@ -8,9 +8,9 @@
 
 ### Overview
 
-<img src="images/download.png">
+<img src="images/download.png" size="75%">
 
-```json
+```
 db.collection.insert({...},
   {writeConcern: {
     w: 3,
