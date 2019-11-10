@@ -8,7 +8,7 @@
 
 ### Overview
 
-<img src="images/download.png" size="75%">
+<img src="images/download.png" width="75%">
 
 ```
 db.collection.insert({...},
