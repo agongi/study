@@ -6,13 +6,13 @@
 - https://docs.mongodb.com/manual/reference/read-concern/
 ```
 
-<img src="images/download.png" width="75%">
+<img src="images/download.png" width="50%">
 
 ### Prerequisites
 
 #### Read Preferences
 
-##### Primary
+- ##### Primary
 
 Read from primary.
 
@@ -20,25 +20,25 @@ If primary is unavailable, then failed
 
 > Multi-Document transaction only works on this mode.
 
-##### PrimaryPreferred
+- ##### PrimaryPreferred
 
 Read from primary.
 
 If primary is unavailable, then read from secondary
 
-##### Secondary
+- ##### Secondary
 
 Read from secondary.
 
 If secondary is unavailable, then failed
 
-##### SecondaryPreferred
+- ##### SecondaryPreferred
 
 Read from secondary.
 
 If secondary is unavailable, then read from primary
 
-##### Nearest
+- ##### Nearest
 
 Read from the lowest network latency node.
 
@@ -48,13 +48,28 @@ Choose candidates that has less latency than maxStalenessSeconds randomly
 
 #### local
 
+현재 readPreference 로 지정된 node 의 recent document 를 가져온다. (== not major)
 
+Default in:
+
+- read from primary
+- read from secondary if it is associated with casual consistent
 
 #### available
 
-orphan document 에 대한 정리필요
+> orphan document 에 대한 정리필요
+
+지정된 replicaSets 에서 먼저 응답으로 온 document 를 가져온다. (== not major)
+
+Default in:
+
+- read from secondary if is not associated with casual consistent
+
+> Replica sets behave `local` and `available` identically
 
 #### majority
+
+지정된 replicaSets 에서 majority 를 만족하는 document 를 가져온다.
 
 PSA (Primary-Secondary-Arbiter) 모델사용시, majority 를 사용하면안됨
 

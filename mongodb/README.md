@@ -14,11 +14,11 @@
 - [ReadConcern](read-concern)
 - [How `_id` handled](how-id-handled)
 - [Non-blocking secondary read](non-blocking-secondary-read)
-- [Wildcard Index](wildcard-index)
 - [Atomicity and Transactions](atomicity-transactions)
 - [Index](index)
-- [ReplicaSet vs ShardCluster](replicaset-shardcluster)
 - [Query Plans](query-plan)
+- [Casual Consistency](casual-consistency)
+- [Sharded Cluster](sharded-cluster)
 
 #### Blog
 

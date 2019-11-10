@@ -4,6 +4,9 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://docs.mongodb.com/manual/indexes/
+- https://docs.mongodb.com/manual/core/index-wildcard/
+- https://www.mongodb.com/blog/post/coming-in-mongodb-42--1-wildcard-indexes
+- https://blog.ull.im/engineering/2019/06/19/wildcard-indexes.html
 ```
 
 ### Overview
@@ -143,3 +146,6 @@ db.user.find({}).limit(101);
 db.user.find({}).hint({name: 1, age: 1})
 ```
 
+Wildcard Index
+
+Supported since 4.2
