@@ -18,6 +18,7 @@
 - [Atomicity and Transactions](atomicity-transactions)
 - [Index](index)
 - [ReplicaSet vs ShardCluster](replicaset-shardcluster)
+- [Query Plans](query-plan)
 
 #### Blog
 
