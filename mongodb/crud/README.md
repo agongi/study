@@ -1,0 +1,143 @@
+### CRUD
+
+```
+ㅁ Author: suktae.choi
+ㅁ References:
+- https://docs.mongodb.com/manual/crud/
+```
+
+### Insert
+
+```json
+db.inventory.insert()
+db.inventory.insertOne()
+db.inventory.insertMany()
+
+-- example
+db.inventory.insertOne({item: "canvas", size: {h: 28, w: 35.5, uom: "cm"}})
+```
+
+> If the collection does not currently exist, insert operations will create the collection.
+
+### Query
+
+```
+db.inventory.find({status: "D"})
+db.inventory.find({status: {$in: ["A", "D"]}})
+```
+
+> Although you can express this query using the [`$or`](https://docs.mongodb.com/manual/reference/operator/query/or/#op._S_or) operator, use the [`$in`](https://docs.mongodb.com/manual/reference/operator/query/in/#op._S_in) operator rather than the [`$or`](https://docs.mongodb.com/manual/reference/operator/query/or/#op._S_or) operator when performing equality checks on the same field.
+
+- OR
+
+```json
+db.inventory.find({$or: [{status: "A"}, {qty: {$lt: 30}}]})
+```
+
+- AND
+
+```json
+db.inventory.find({status: "A"}, {qty: {$lt: 30}})
+```
+
+- AND and/or OR
+
+```json
+db.inventory.find( {
+     status: "A",
+     $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
+} )
+```
+
+- Embedded / Nested
+
+```json
+db.inventory.find({size: {w: 21, h: 14, uom: "cm"}})
+db.inventory.find({"size.uom": "in"})
+```
+
+- Null
+
+```json
+db.inventory.find({item: null})
+```
+
+- Projection
+
+```
+Derive specific fields only
+```
+
+- Cursor
+
+By default, the server will automatically close the cursor after 10 minutes of inactivity. Manually set is:
+
+```json
+var myCursor = db.users.find().noCursorTimeout();
+```
+
+### Update
+
+```json
+db.collection.updateOne()
+db.collection.updateMany()
+db.collection.replaceOne()
+
+-- example
+db.inventory.updateOne(
+   {item: "paper"},
+   {
+     $set: {"size.uom": "cm", status: "P"},
+     $currentDate: {lastModified: true}
+   }
+)
+```
+
+> If {upsert: true} also specified, will create document if non exist.
+
+### Delete
+
+```json
+TBD ...
+```
+
+### Bulk Write
+
+```json
+db.collection.bulkWrite([
+  {insertOne: {...}},
+  {deleteOne: {...}}
+])
+```
+
+- ordered: true  (default)
+  - Run in serial
+  - Once exception throws, remains not executed
+- ordered: false
+  - Run in parallel
+  - Once exception throws, remains keep executed
+
+### Retryable Write
+
+Retryable writes allow MongoDB drivers to automatically retry certain write operations `a single time` in driver level
+
+#### WriteConcern
+
+0 is not retryable
+
+#### Multi-Document
+
+The [transaction commit and abort operations](https://docs.mongodb.com/manual/core/transactions-in-applications/#transactions-retry) are retryable write operation `a single time` regardless of whether retryWrites option is set to **false.**
+
+> Operations in transactions are not individually retryable but whole are on it.
+
+| Methods     | Descriptions      |
+| ----------- | ----------------- |
+| #insertOne  | Supported         |
+| #updateOne  | Supported         |
+| #deleteOne  | Supported         |
+| #replaceOne | Supported         |
+| #updateMany | **Not supported** |
+
+Bulk write operations that only consist of single-document only supported so cannot include multi-document ops, such as `updateMany`.
+
