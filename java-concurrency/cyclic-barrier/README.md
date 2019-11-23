@@ -9,7 +9,7 @@
 
 지정한 threshold 에 도달할때까지 Thread 들은 await 하고, 도달하면 다음 로직을 같이 수행함.
 
-재사용가능하므로 cyclic 이 prefix 로 붙음.
+>  재사용가능하므로 cyclic 이 prefix 로 정의됨
 
 <img src="images/cyclic-barrier.png">
 
@@ -27,6 +27,7 @@ public static void main(String[] args) throws InterruptedException, BrokenBarrie
       e.printStackTrace();
     }
   };
+  
   for (int i = 0; i < 10; i++) {
     new Thread(runnable).start();
   }

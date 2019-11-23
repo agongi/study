@@ -7,13 +7,11 @@
 
 ### Overview
 
-Main thread 는 task 를 sub-thread 에 위임하고, 결과를 기다린 후 처리하는 방식.
+Main Thread 가 sub-task 의 종료가 보장 된 후, 다음을 처리하는 방식.
 
 CountDown 이 0 이 되면, block 되었던 main thread 가 resume 되어 작업을 이어서 수행한다.
 
-> reactive-stream 의 사상과 동일하다.
-
-<img src="images/Screen%20Shot%202019-11-09%20at%2001.20.06.png">
+<img src="images/Screen%20Shot%202019-11-09%20at%2001.20.06.png" width="50%">
 
 ```java
 public static void main(String[] args) throws InterruptedException {
