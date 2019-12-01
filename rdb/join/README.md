@@ -2,25 +2,25 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.20
 ㅁ References:
 - http://rapapa.net/?p=311
 - http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
 - http://www.jidum.com/jidums/view.do?jidumId=167
 - http://wiki.gurubee.net/pages/viewpage.action?pageId=26744652
+- http://wiki.gurubee.net/pages/viewpage.action?pageId=4948020
 ```
 
 <img src="images/Screen%20Shot%202017-07-23%20at%2012.38.04.png" width="75%">
 
 ### Join Types
-#### Inner Join (== Join)
+#### `Inner Join` (== Join)
 **Intersection** of both tables
 
 ```sql
 -- Explicit Inner Join
 mysql> select name, phone, selling
-from demo_people join demo_property
-on demo_people.pid = demo_property.pid;
+from demo_people 
+inner join demo_property on (demo_people.pid = demo_property.pid);
 
 +———–+————–+———————-+
 | name | phone | selling |
@@ -37,13 +37,13 @@ from demo_people, demo_property
 where demo_people.pid = demo_property.pid;
 ```
 
-#### Left Outer Join (== Left Join)
+#### Left Outer Join (== `Left Join`)
 All **left table's row must present** and fill-out with right table's column
 
 ```sql
 mysql> select name, phone, selling
-from demo_people left join demo_property
-on demo_people.pid = demo_property.pid;
+from demo_people 
+left join demo_property on (demo_people.pid = demo_property.pid);
 
 +————+————–+———————-+
 | name | phone | selling |
@@ -56,13 +56,13 @@ on demo_people.pid = demo_property.pid;
 +————+————–+———————-+
 ```
 
-#### Right Outer Join (== Right Join)
+#### Right Outer Join (== `Right Join`)
 All **right table's row must present** and fill-out with left table's column
 
 ```sql
 mysql> select name, phone, selling
-from demo_people right join demo_property
-on demo_people.pid = demo_property.pid;
+from demo_people 
+right join demo_property on (demo_people.pid = demo_property.pid);
 
 +———–+————–+———————-+
 | name | phone | selling |
@@ -80,8 +80,8 @@ on demo_people.pid = demo_property.pid;
 
 ```sql
 mysql> select name, phone, selling
-from demo_people outer join demo_property
-on demo_people.pid = demo_property.pid;
+from demo_people 
+outer join demo_property on (demo_people.pid = demo_property.pid);
 
 +———–+————–+———————-+
 | name | phone | selling |
@@ -105,7 +105,8 @@ on demo_people.pid = demo_property.pid;
 ```sql
 -- Explicit Cross Join
 mysql> select name, phone, selling
-from demo_people cross join demo_property
+from demo_people 
+cross join demo_property
 
 +———–+————–+———————-+
 | name | phone | selling |
@@ -136,11 +137,21 @@ from demo_people, demo_property
 #### Nested Loops
 <img src="images/Screen%20Shot%202017-09-19%20at%2002.02.14.png" width="75%">
 
-- 선행 테이블을 기준으로, 후행 테이블을 랜덤 액세스 하며 조인
-  - 선행(Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
-  - 후행(Driven) 테이블을 랜덤 액세스, 결과 집합이 많으면 수행속도가 저하됨
+- 선행 테이블 기준으로, 후행 테이블을 랜덤 액세스 하며 조인
+  - 선행 (Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
+  - 후행 (Driven) 테이블 `랜덤 액세스`
+- OLTP 에서 적합한 방식의 조인 (서비스는 일부의 조인결과를 사용하므로)
 
-> 실행속도 == 선행 테이블 사이즈 * 후행 테이블 접근횟수
+> Driven 을  index search 하며 1개씩 가져옴 (조인키는 인덱스여야함)
+
+```java
+// equivalent in code
+for (i=0; i<100; i++) {    -- driving
+  for (j=0; j<100; j++) {  -- driven
+    // ...
+  }
+}
+```
 
 ```sql
 select /*+ use_nl(b,a) */ a.dname, b.ename, b.sal
@@ -152,11 +163,20 @@ and b.deptno = a.deptno
 #### Sort Merge
 <img src="images/Screen%20Shot%202017-09-19%20at%2002.11.14.png" width="75%">
 
-- 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
-  - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율적
-  - 조인 연결고리의 비교 연산자가 범위 연산인 경우 Nested Loop 조인보다 유리
+- 선/후행 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
+  - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (완료시까지 기다려야함)
+    - 조인 연결고리의 `비교 연산자` 일 경우 유리
+  - 선/수행 테이블 순차 검색
 
-> 실행속도 == 정렬 cost
+```java
+List<String> a = new ArrayList<>();
+List<String> b = new ArrayList<>();
+
+a.sort();
+b.sort();
+
+// ...
+```
 
 ```sql
 select /*+ use_merge(a b) */ a.dname, b.empno, b.ename
@@ -165,9 +185,15 @@ where  a.deptno = b.deptno
 and    b.sal > 1000 ;
 ```
 
-#### Hash
-- 선행 테이블의 조인키를 Hash 해서 Bucket 생성
-- 수행 테이블의 조인키도 Hash 하며, 같은 해쉬값을 가진 키 중에서 실제로 같으면 조인 (충돌 있으므로)
+#### Hash Join
+
+<img src="images/2-8.jpg" width="75%">
+
+- 작은 테이블 기준으로, 조인키의 hash bucket 생성
+  - 큰 테이블은 조인키의 hash 값으로 검색
+  - `해시충돌`시, 순차탐색이 필요하므로 최대한 unique 가 보장되는 키의 선택필요
+- OLAP 에서 적합 (전체 테이블이 대상이면, random access 할 필요 없음)
+- 조인키가 index 가 아닐 경우 적합 (NL 을 쓰면 안됨)
 
 ```sql
 select /*+ use_hash(a b) */ a.dname, b.empno, b.ename
@@ -185,6 +211,21 @@ Table2 (3, 4, 5, 6)
 - Union
 ```sql
 Table1 UNION Table2
+
+id
+---
+1
+2
+3
+4
+5
+6
+```
+
+- Union all
+
+```sql
+Table1 UNION ALL Table2
 
 id
 ---
