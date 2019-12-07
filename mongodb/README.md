@@ -7,19 +7,23 @@
 - https://docs.mongodb.com/manual
 ```
 
-#### Index
+#### Reference
 
 - [CRUD](crud)
 - [WriteConcern](write-conern)
 - [ReadConcern](read-concern)
-- [How `_id` handled](how-id-handled)
-- [Non-blocking secondary read](non-blocking-secondary-read)
 - [Atomicity and Transactions](atomicity-transactions)
 - [Index](index)
+- Aggregation
+- ChangeStream
 - [Query Plans](query-plan)
-- [Casual Consistency](casual-consistency)
 - [Sharded Cluster](sharded-cluster)
 - [ReplicaSet](replica-set)
+
+#### Index
+
+- [How `_id` handled](how-id-handled)
+- [Non-blocking secondary read](non-blocking-secondary-read)
 
 #### Blog
 
