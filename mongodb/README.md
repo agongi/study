@@ -19,6 +19,7 @@
 - [Query Plans](query-plan)
 - [Casual Consistency](casual-consistency)
 - [Sharded Cluster](sharded-cluster)
+- [ReplicaSet](replica-set)
 
 #### Blog
 

@@ -10,7 +10,7 @@
 
 <img src="images/download.png" width="75%">
 
-```
+```json
 db.collection.insert({...},
   {writeConcern: {
     w: 3,

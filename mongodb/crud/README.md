@@ -19,7 +19,7 @@ db.inventory.insertOne({item: "canvas", size: {h: 28, w: 35.5, uom: "cm"}})
 
 > If the collection does not currently exist, insert operations will create the collection.
 
-### Query
+### Find
 
 ```
 db.inventory.find({status: "D"})
@@ -119,17 +119,11 @@ db.collection.bulkWrite([
 
 ### Retryable Write
 
-Retryable writes allow MongoDB drivers to automatically retry certain write operations `a single time` in driver level
+Retryable writes allow MongoDB drivers to automatically retry certain write operations `a single time` in driver level regardless of whether retryWrites option is set to **false.**
 
-#### WriteConcern
-
-0 is not retryable
+> Operations in transactions are not individually retryable but `whole are` on it.
 
 #### Multi-Document
-
-The [transaction commit and abort operations](https://docs.mongodb.com/manual/core/transactions-in-applications/#transactions-retry) are retryable write operation `a single time` regardless of whether retryWrites option is set to **false.**
-
-> Operations in transactions are not individually retryable but whole are on it.
 
 | Methods     | Descriptions      |
 | ----------- | ----------------- |
@@ -139,7 +133,7 @@ The [transaction commit and abort operations](https://docs.mongodb.com/manual/co
 | #replaceOne | Supported         |
 | #updateMany | **Not supported** |
 
-Bulk write operations that only consist of single-document only supported so cannot include multi-document ops, such as `updateMany`.
+Bulk write operations that only consists of single-document only supported so cannot include multi-document ops, such as `updateMany`.
 
 ### Text Search
 
@@ -160,3 +154,4 @@ db.stores.createIndex({name: "text", description: "text"})
 db.collection.find({$text: {$search: "java coffee shop"}})
 ```
 
+But performance is not pretty much good for text-search. Use ES
