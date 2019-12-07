@@ -7,7 +7,7 @@
 - https://docs.mongodb.com/manual
 ```
 
-#### Reference
+#### Index
 
 - [CRUD](crud)
 - [WriteConcern](write-conern)
@@ -20,7 +20,7 @@
 - [Sharded Cluster](sharded-cluster)
 - [ReplicaSet](replica-set)
 
-#### Index
+#### Extras
 
 - [How `_id` handled](how-id-handled)
 - [Non-blocking secondary read](non-blocking-secondary-read)
