@@ -1,4 +1,4 @@
-### Atomicity and Transactions
+### Transactions
 
 ```
 ㅁ Author: suktae.choi

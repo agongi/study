@@ -12,11 +12,10 @@
 - [CRUD](crud)
 - [WriteConcern](write-conern)
 - [ReadConcern](read-concern)
-- [Atomicity and Transactions](atomicity-transactions)
+- [Transactions](transactions)
 - [Index](index)
 - Aggregation
 - ChangeStream
-- [Query Plans](query-plan)
 - [Sharded Cluster](sharded-cluster)
 - [ReplicaSet](replica-set)
 
