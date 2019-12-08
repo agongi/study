@@ -9,6 +9,10 @@
 
 ### Balancer
 
+The balancer process is responsible for redistributing the chunks of a sharded collection evenly among the shards for every sharded collection.
+
+To address uneven chunk distribution for a sharded collection, the balancer [migrates chunks](https://docs.mongodb.com/manual/core/sharding-balancer-administration/#) from shards with more chunks to shards with a fewer number of chunks.
+
 ### Chunk Migration
 
 1개의 Chunk 는 최대 64MB (by default) 이다.
