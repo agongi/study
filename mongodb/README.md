@@ -10,7 +10,7 @@
 #### Index
 
 - [CRUD](crud)
-- [WriteConcern](write-conern)
+- [WriteConcern](write-concern)
 - [ReadConcern](read-concern)
 - [Transactions](transactions)
 - [Index](index)
@@ -45,9 +45,7 @@ Table 과 동일한 개념
 
 #### Document
 
-Collection 안의 Document 는 서로 다른 field 를 가질 수 있습니다.
-
-> 이러한 특징을 Dynamic shcema 라고 함
+Row 와 동일한 개념
 
 - Sample
 
@@ -76,3 +74,7 @@ Collection 안의 Document 는 서로 다른 field 를 가질 수 있습니다.
    ]
 }
 ```
+
+#### Write
+
+#### Read
