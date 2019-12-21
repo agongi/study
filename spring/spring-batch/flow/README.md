@@ -3,24 +3,25 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:brte:batch_core:flow_control
+- https://n1tjrgns.tistory.com/169
 ```
 
-Job 에서 조건에 따라 Step 의 실행자체를 결정필요할때, 분기처리가 가능하다
+Job 에서 조건에 따른 Step 실행이 필요할때, Flow 를 사용한다.
 
 ```java
+@Configuration
 public class TestJobConfig {
   @Bean
   public Job testJob() {
-    return jobBuilders.get(JOB_NAME)
+    return jobBuilders.get("jobName")
       .start(new FlowBuilder<Flow>("testFlow")
-             .from(decider()).on(FlowExecutionStatus.COMPLETED.getName())
-	             .to(step1())
-  	           .next(step2())
-    	         .next(step3())
-             .from(decider()).on(FlowExecutionStatus.FAILED.getName())
-      	       .to(step10())
-             .end()).build()
+      	.from(decider()).on(FlowExecutionStatus.COMPLETED.getName())
+	      	.to(step1())
+  	      .next(step2())
+    	    .next(step3())
+				.from(decider()).on(FlowExecutionStatus.FAILED.getName())
+					.to(step10())
+					.end().build())
       .build();
   }
 

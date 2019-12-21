@@ -30,28 +30,17 @@
 - R/P/W is **chunk-based** (== commit-internal) processing
 - Tasklet is bundle of these (== turnkey)
 
-#### Step
+#### Job
 
-- How to set terminate once condition meets
+- How to stop job once condition meet?
 
 ```java
-@Bean
-@StepScope
-public ChunkListener chunkListener() {
-  return new ChunkListenerSupport() {
-    @Override
-    public void afterChunk(ChunkContext context) {
-      StepExecution stepExecution = context.getStepContext().getStepExecution();
 
-      if (/* condition meets */) {
-        stepExecution.setTerminateOnly();          
-      }
-    }
-  };
-}
 ```
 
-- How many commit (== chunk) does it happen?
+#### Step
+
+- How many `commitCount` does it happen?
 
 ```java
 .listener(new ChunkListenerSupport() {
