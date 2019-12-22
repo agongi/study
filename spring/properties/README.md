@@ -102,7 +102,7 @@ private static class ResourceTest {
   private Resource resource1;
 
   public ResourceTest() throws FileNotFoundException {
-    Resource resource2 = new ClassPathResource("classpath:application.yml");
+    Resource resource2 = new ClassPathResource("application.yml");
     File file = ResourceUtils.getFile("classpath:application.yml");
     Properties prop1 = new Properties();
     Properties prop2 = new Properties();
@@ -126,9 +126,7 @@ private static class ResourceTest {
 
 #### ResourceUtils
 
-Spring providing ResourceUtils requires `location-prefix` to distinguish where to find from
-
-> Util is general usage such as classPath, fileSystem etc. so prefix is required.
+Spring providing ResourceUtils requires `location-prefix` to distinguish the type of resource.
 
 ```java
 /**
@@ -152,8 +150,18 @@ public static void main(String[] args) throws IOException {
 * Environment (and/or ApplicationContext)
 */
 public class LocaleConfig implements EnvironmentAware {
+	// value
   @Value("${title}")
-  private String title;
+  private String title1;
+  // value default
+  @Value("${title:defaultTitle}")
+  private String title2;
+  // SpEL
+  @Value("#{systemProperties['title']}")
+  private String title3;
+  // SpEL default
+  @Value("#{systemProperties['title'] ?: defaultTitle}")
+  private String title4;
   private Environment env;
 
   @Override
@@ -162,7 +170,7 @@ public class LocaleConfig implements EnvironmentAware {
   }
 
   public void init() {
-    String contents = env.getProperty("contents");
+    String title = env.getProperty("title");
   }
 }
 ```

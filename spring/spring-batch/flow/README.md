@@ -3,6 +3,7 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
+- https://jojoldu.tistory.com/328
 - https://n1tjrgns.tistory.com/169
 ```
 
@@ -15,12 +16,12 @@ public class TestJobConfig {
   public Job testJob() {
     return jobBuilders.get("jobName")
       .start(new FlowBuilder<Flow>("testFlow")
-      	.from(decider()).on(FlowExecutionStatus.COMPLETED.getName())
-	      	.to(step1())
-  	      .next(step2())
-    	    .next(step3())
-				.from(decider()).on(FlowExecutionStatus.FAILED.getName())
-					.to(step10())
+      	.from(decider()).on(FlowExecutionStatus.COMPLETED.getName())	// listen
+	      	.to(step1())	// if then 1st
+  	      .next(step2())	// next 2nd
+    	    .next(step3())	// next 3rd
+				.from(decider()).on(FlowExecutionStatus.FAILED.getName())	// listen
+					.to(step10())	// if then 1st
 					.end().build())
       .build();
   }
