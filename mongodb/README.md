@@ -23,6 +23,7 @@
 
 - [How `_id` handled](how-id-handled)
 - [Non-blocking secondary read](non-blocking-secondary-read)
+- [[19.12.03 ~ 12.05] 테크톡, 몽고DB](edu/20191203)
 
 #### Blog
 
@@ -77,4 +78,17 @@ Row 와 동일한 개념
 
 #### Write
 
+- write in buffer (memory, b-tree/raw)
+- write in journal (disk, sequential)
+- write done!
+- (later) write in db (disk, random/compressed)
+  - checkpoint (60s) 시점에 dirtyPage flush 수행
+
 #### Read
+
+- read from buffer (memory)
+- read from DB (disk) & store in buffer
+  - cache is over than 80% of physical memory, eviction started
+  - cache is over than 95% of physical memory, eviction started forcefully
+  - if deleted memory is dirty, store in `*.LAS` file
+  - LAS will be written in DB in future
