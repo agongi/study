@@ -9,9 +9,20 @@
 - https://blog.ull.im/engineering/2019/06/19/wildcard-indexes.html
 ```
 
-### Overview
+### Cores
 
-#### Index Creation
+인덱스는 아래의 특징이 있다:
+
+- Collection 은 `최대 64개`의 인덱스 가능
+- 1개의 인덱스는 `16KB 사이즈` 고정
+- TTL 인덱스는 (TimeUnit.MINUTES, 1) 로 수행
+
+Since 4.2:
+
+- \* (Wildcard) index 지원
+- 인덱스 생성시 DB lock -> Collection lock
+
+#### CRUD
 
 인덱스 생성은 아래 문법으로 가능하다:
 
@@ -20,8 +31,6 @@ db.user.createIndex({name:1, age:1, createDate:1})
 ```
 
 > 1: asc, -1: desc
->
-> Collection 은 최대 64개의 Index 를 가질 수 있다.
 
 생성 확인
 
@@ -60,7 +69,7 @@ db.user.createIndex({name:1, age:1, createDate:1})
 - db.user.find({}).sort({name: -1, age: 1}) :: nope
 ```
 
-#### Explain
+### Explain
 
 검색이 Index 를 타는지는 실행계획을 보면된다: [Explain Results](https://docs.mongodb.com/manual/reference/explain-results/)
 
@@ -138,14 +147,10 @@ db.user.find({}).limit(101);
 
 > 엉뚱한 인덱스를 타지 못하게 원천적으로 꼭 필요한 Index 만 지정필요
 
-#### Hint
+### Hint
 
 강제로 태울 인덱스를 지정가능
 
 ```json
 db.user.find({}).hint({name: 1, age: 1})
 ```
-
-Wildcard Index
-
-Supported since 4.2
