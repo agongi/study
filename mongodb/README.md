@@ -14,7 +14,7 @@
 - [ReadConcern](read-concern)
 - [Transactions](transactions)
 - [Index](index)
-- Aggregation
+- [Aggregation](aggregation)
 - ChangeStream
 - [Sharded Cluster](sharded-cluster)
 - [ReplicaSet](replica-set)
