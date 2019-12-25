@@ -15,9 +15,9 @@ To address uneven chunk distribution for a sharded collection, the balancer [mig
 
 ### Chunk Migration
 
-1개의 Chunk 는 최대 64MB (by default) 이다.
+1개의 Chunk 는 최대 `64MB` (by default) 이다.
 
-- Balancer 가 판단하기에, 청크불균형이라면 마이그레이션을 수행한다.
+- Balancer 가 판단하기에, 청크 불균형이라면 마이그레이션을 수행한다.
   - 절반으로 잘라서 다른 샤드로 분배함
 - 마이그 도중 CUD 는 Source 가 처리한다.
 - Target 은 들어오는 Chunk 에 대한 인덱스 생성
@@ -25,6 +25,5 @@ To address uneven chunk distribution for a sharded collection, the balancer [mig
 - 복사가 완료되면, 그동안의 변경분 delta 를 적용 by oplog (sync)
   - Blocking?
 - 완료후 Source 는 config 에 접근해서 shard-key 정보 갱신 (이젠 target 으로 라우팅되도록)
-- Source 에서 Mig 된 청크는 삭제처리  (async)
-
-> 이때 Source 에서 삭제되야 하는 Chunk 가 Source-Secondary 에 반영되지 않으면, 고아객체가 발생한다.
+- Source 에서 Mig 된 청크는 삭제처리
+  - 삭제는 async 하게 수행된다. 즉 source-secondary 에서는 `불일치 (== Orphan Document)` 가 발생 할 수 있다.

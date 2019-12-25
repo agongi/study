@@ -1,4 +1,4 @@
-### Query Plans
+### Sharded Cluster
 
 ```
 ㅁ Author: suktae.choi
