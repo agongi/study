@@ -13,6 +13,7 @@
 
 인덱스는 아래의 특징이 있다:
 
+- `_id` 는 무조건 p.k, 나머지는 s.k 로 고정이다
 - Collection 은 `최대 64개`의 인덱스 가능
 - 1개의 인덱스는 `16KB 사이즈` 고정
 - TTL 인덱스는 (TimeUnit.MINUTES, 1) 로 수행
@@ -52,6 +53,38 @@ db.user.createIndex({name:1, age:1, createDate:1})
 - createDate :: nope
 - name createDate :: nope
 ```
+
+#### Multikey Index
+
+CUD performance reduced based on the size of ratings array
+
+```json
+db.user.insert{ _id: 1, item: "ABC", ratings: [2, 9]}
+
+db.user.createIndex({ratings: 1})
+```
+
+#### Multikey + SubDocument
+
+```json
+db.user.insert{ _id: 1, item: "ABC", ratings: [
+  {name: "XXX", score: 100},
+  {name: "YYY", score: 99}]}
+
+db.user.createIndex({ratings.score: 1})
+```
+
+#### Unique Index
+
+중복없는 Index 의 보장이 필요할떄 지정.
+
+대신 shared-cluster 에서는 샤드키가 선행되어 포함되어야 생성가능
+
+> 샤드환경에서는 동일샤드에서의 유니크만 보장 가능하기 때문 (ex. 고아객체)
+
+#### Partial Index
+
+Nullable 한 field 의 인덱싱 YN
 
 #### Sort
 
