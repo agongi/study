@@ -12,8 +12,9 @@
   - 모든 write 연산은 primary 에서만 수행한다.
 - Secondary
   - oplog 를 받아서, 데이터를 복제해서 고가용성 유지
+  - read 를 secondary 에서 할 수 있다.
 - Arbiter
-  - dataset 은 없고, vote 만 참여
+  - dataSet 은 없고, vote 시 참여
 
 ### Oplog
 
@@ -30,6 +31,8 @@
 
 장애등으로 secondary 가 stale 상태로 되었다면 (and/or add, replace member) init sync 과정이 필요하다.
 
+> 동시성 이슈로 initSync 는 1-thread 로 수행한다.
+
 - By removing its data and performing an initial sync
 - copies all the data from one member of the replica set to another member.
 - You can capture the data files as either a `snapshot` or a `direct copy`. However, in most cases you cannot copy data files from a running mongod instance to another because the data files will change during the file copy operation.
@@ -37,18 +40,13 @@
 
 > mongodump can't be used but snapshot only.
 
-#### Replication
+#### Replica
 
-oplog 를 통해 primary -> secondary 로의 running changes apply 를 의미한다.
+Primary 가 생성한 oplog 를 secondary 에서 real-time/async/pull 방식으로 복제함을 의미한다.
 
 ### High Availability
 
-#### Election
-
-일정시간 (heartBeat: 10s) 동안 member 가 없다면 election 을 거쳐서 새로운 리더를 선출한다.
-
-복구된 primary 는 secondary 로 투입시 (startup2 상태로), initSync or oplog f/w 를 거쳐 secondary 로 재투입된다.
-
-#### FailOver
-
-Primary 가 죽어서 다시 replicaSet rejoin 시 (as a secondary), 새로 선출된 primary 에 미반영된 document 를 가지고 있다면 반영하지않고, 파일로 기록한다.
+- Primary 가 일정시간 (heartBeat: 10s) 동안 응답이 없으면, Election 을 통해 새로운 리더를 선출한다
+  - 이때 oplog 마저 유실되어, secondary 에서 pull 실패
+- 복구된 (구) primary 는 secondary 로 인입되어 (phase. startup2), initSync or oplog 추적이 완료된 후 재투입된다.
+- (구) primary 가 복구된 후, 새로 선출된 primary 에 없는 (== 본인만 가지고있던) document 가 있다면, 파일로 남긴다
