@@ -1,4 +1,4 @@
-## Spring Bootstrap
+## Bootstrap
 
 ```
 ㅁ Author: suktae.choi
@@ -12,7 +12,7 @@
 
 #### Index
 
-- [Spring Flow](spring-flow)
+- [Life Cycle](life-cycle)
 
 ### By-ServletContainer
 **ServletContainerInitializer** class will be loaded, instantiated and have its onStartup() method invoked `by any Servlet 3.0+ container` in bootstrap.

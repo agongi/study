@@ -9,7 +9,7 @@
 ```
 
 #### Index
-- [@Autowired vs @Inject vs @Resource](autowired-inject-resource)
+- [Bootstrap](bootstrap)
 - [Filter vs Interceptor](filter-interceptor)
 - [/* vs /](servlet-mapping)
 - [@Cacheable](cacheable)
@@ -30,7 +30,6 @@
 - [Spring Batch](spring-batch)
 - [Spring Test](spring-test)
 - [Spring Security](spring-security)
-- [Spring Bootstrap](spring-bootstrap)
 - [MVC](mvc)
 - [Bean](bean)
 - [Transaction](transaction)

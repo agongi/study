@@ -1,18 +1,17 @@
-## Spring Flow
+## Life Cycle
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.02
 ㅁ References:
- - http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
- - https://blog.outsider.ne.kr/902
- - http://devbox.tistory.com/entry/Spring-webxml-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95
- - http://www.javajigi.net/display/JAVA/Servlet+Life+Cycle
+- http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
+- https://blog.outsider.ne.kr/902
+- http://devbox.tistory.com/entry/Spring-webxml-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95
+- http://www.javajigi.net/display/JAVA/Servlet+Life+Cycle
 ```
 
 <img src="images/Screen%20Shot%202017-06-17%20at%2017.19.48.png">
 
-### Term
+### Cores
 #### Servlet
 The instance that Handles request from client to respond
 
@@ -38,6 +37,8 @@ The simple Map<String, Object> that manages all spring bean instances
 
 #### Spring IoC Container
 The Spring-Container is the Dispatcher Servlet that handles all spring-bean's life-cycle in applicationContext
+
+***
 
 ### Life Cycle
 - Tomcat **Coyote** is listening port 80 or 443 for any incoming packets.
