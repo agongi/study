@@ -16,7 +16,6 @@
 - [Index](index)
 - [Aggregation](aggregation)
 - ChangeStream
-- [Lock](lock)
 - [Sharded Cluster](sharded-cluster)
 - [ReplicaSet](replica-set)
 
