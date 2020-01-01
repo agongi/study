@@ -7,7 +7,7 @@
 - http://www.mybatis.org/spring/batch.html
 ```
 
-### Cursor
+### JDBC
 
 #### JdbcCursorItemReader
 
