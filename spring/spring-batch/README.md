@@ -35,7 +35,14 @@
 - How to stop job once condition meet?
 
 ```java
-
+.listener(new JobExecutionListenerSupport() {
+  @Override
+  public void beforeJob(JobExecution jobExecution) {
+    if (/* exitCondition: true */) {
+      jobExecution.stop();
+    }
+  }
+})
 ```
 
 #### Step
@@ -48,7 +55,7 @@
   public void afterChunk(ChunkContext context) {
     StepExecution stepExecution = context.getStepContext().getStepExecution();
     
-    if (stepExecution.getCommitCount() >= MAX_COMMIT_INTERVAL) {
+    if (/* exitCondition: true */) {
       stepExecution.setTerminateOnly();
     }
   }
