@@ -10,7 +10,7 @@
 Step 에서 처리하는 chunk (or tasklet 단위) 를 parallel 처리 가능하게함.
 
 - 파니셔닝 Step
-- Partial items 의 read/write 수행 Step
+- Partial items 의 read/write 수행 step
 
 으로 크게 구분된다.
 

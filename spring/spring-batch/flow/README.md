@@ -14,7 +14,7 @@ Job 에서 조건에 따른 Step 실행이 필요할때, Flow 를 사용한다.
 public class TestJobConfig {
   @Bean
   public Job testJob() {
-    return jobBuilders.get("jobName")
+    return jobBuilders.get("testJob")
       .start(new FlowBuilder<Flow>("testFlow")
       	.from(decider()).on(FlowExecutionStatus.COMPLETED.getName())	// listen
 	      	.to(step1())	// if then 1st
