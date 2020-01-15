@@ -8,6 +8,7 @@
 - https://jojoldu.tistory.com/226
 - https://www.baeldung.com/java-spring-mockito-mock-mockbean
 - https://dzone.com/articles/a-guide-to-mocking-with-mockito
+- https://juneyr.dev/2019-02-08/mockito-repo-save
 ```
 
 `Mockito` is a framework for unit-test in java that mocking tastable fields or variables.
@@ -234,6 +235,13 @@ public class CrudTest {
     assertTrue(sites.size(), 3);
   }
 }
+```
+
+#### Method returns arguments
+
+```java
+given(userRepository.save(any(User.class)))
+  .will(AdditionalAnswers.returnsFirstArg());
 ```
 
 #### Method skip
