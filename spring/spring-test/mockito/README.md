@@ -287,10 +287,8 @@ public class TestClass {
 #### Method invocation
 
 ```java
-// then - Mockito
-verify(userService).leave(anyLong(), anyBoolean());
-
 // then - BDDMockito
-then(userService).should().leave(anyLong(), anyBoolean());
+then(userService).should().joinSite(anyLong(), anyBoolean());
+then(userService).should(never()).joinSite(anyLong(), anyBoolean());
 ```
 
