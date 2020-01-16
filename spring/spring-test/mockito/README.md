@@ -288,7 +288,8 @@ public class TestClass {
 
 ```java
 // then - BDDMockito
-then(userService).should().joinSite(anyLong(), anyBoolean());
-then(userService).should(never()).joinSite(anyLong(), anyBoolean());
+then(userService).should().joinSite(anyLong(), anyBoolean()); // invoked
+then(userService).should(times(3)).joinSite(anyLong(), anyBoolean()); // 3-times invoked
+then(userService).should(never()).joinSite(anyLong(), anyBoolean());  // never invoked
 ```
 
