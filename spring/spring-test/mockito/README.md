@@ -279,8 +279,8 @@ public class TestClass {
       .willReturn(mockService);
 
     given(mockService.findOne(anyLong())
-          .willReturn(new User("testName"));
-	}
+      .willReturn(new User("testName"));
+  }
 }
 ```
 
