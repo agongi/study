@@ -8,6 +8,7 @@
 - https://jojoldu.tistory.com/226
 - https://www.baeldung.com/java-spring-mockito-mock-mockbean
 - https://dzone.com/articles/a-guide-to-mocking-with-mockito
+- https://juneyr.dev/2019-02-08/mockito-repo-save
 ```
 
 `Mockito` is a framework for unit-test in java that mocking tastable fields or variables.
@@ -236,6 +237,13 @@ public class CrudTest {
 }
 ```
 
+#### Method returns arguments
+
+```java
+given(userRepository.save(any(User.class)))
+  .will(AdditionalAnswers.returnsFirstArg());
+```
+
 #### Method skip
 
 ```java
@@ -271,18 +279,17 @@ public class TestClass {
       .willReturn(mockService);
 
     given(mockService.findOne(anyLong())
-          .willReturn(new User("testName"));
-	}
+      .willReturn(new User("testName"));
+  }
 }
 ```
 
 #### Method invocation
 
 ```java
-// then - Mockito
-verify(userService).leave(anyLong(), anyBoolean());
-
 // then - BDDMockito
-then(userService).should().leave(anyLong(), anyBoolean());
+then(userService).should().joinSite(anyLong(), anyBoolean()); // invoked
+then(userService).should(times(3)).joinSite(anyLong(), anyBoolean()); // 3-times invoked
+then(userService).should(never()).joinSite(anyLong(), anyBoolean());  // never invoked
 ```
 
