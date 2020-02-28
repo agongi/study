@@ -244,7 +244,7 @@ given(userRepository.save(any(User.class)))
   .will(AdditionalAnswers.returnsFirstArg());
 ```
 
-#### Method skip
+#### Method skip (Only void methods can doNothing())
 
 ```java
 PowerMockito.doNothing()
