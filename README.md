@@ -17,8 +17,8 @@
   - [MongoDB](mongodb)
 - MQ
   - [Kakfa](kafka)
-- Processor
-  - Spark
+- Infra
+  - Kubernetes & Docker
 - Core
   - [JVM](jvm)
   - [Servlet](servlet)
