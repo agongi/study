@@ -276,12 +276,11 @@ PowerMockito.doNothing()
   .check(anyLong(), any(ValidationType.class));
 ```
 
-> 기본적으로 Mock 은 별도 정의하지 않은 method 가 do nothing 이다.
+> 기본적으로 Mock 은 별도 given 으로 지정하지 않으면 method 는 do nothing 이다.
 
 #### Then
 
 - Invocation confirmed
-
 ```java
 // then - BDDMockito
 then(userService).should().joinSite(anyLong(), anyBoolean()); // invoked
