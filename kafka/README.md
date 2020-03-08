@@ -5,6 +5,7 @@
 ㅁ References:
 - https://kafka.apache.org/documentation
 - https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
+- https://www.popit.kr/author/peter5236
 ```
 
 #### Index
