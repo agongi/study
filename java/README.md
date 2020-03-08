@@ -48,7 +48,7 @@
 - [How to cast List\<Object\> to List\<T\>](https://stackoverflow.com/questions/1917844/how-to-cast-listobject-to-listmyclass)
 - [자바의 String과 인코딩 (UTF-8과 EUC-KR)](https://groups.google.com/forum/#!topic/clojure-kr/R1cRgy9Zugk)
 - [Java InterruptedException은 어따 쓰는겨?](http://happinessoncode.com/2017/10/09/java-thread-interrupt/)
-- [수퍼 타입 토큰](https://homoefficio.github.io/2016/11/30/클래스-리터럴-타입-토큰-수퍼-타입-토큰/)
+- [ParameterizedType](https://homoefficio.github.io/2016/11/30/클래스-리터럴-타입-토큰-수퍼-타입-토큰/)
 - [Java에서 외부 프로세스를 실행할 때](https://d2.naver.com/helloworld/1113548)
 
 ***

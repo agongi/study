@@ -8,6 +8,13 @@
 
 - [JUnit](junit)
 - [Mockito](mockito)
+- [Smoke test vs Sanity test](smoke-sanity)
+
+#### Blog
+
+- [Why You Should Not Use InjectMocks](https://tedvinke.wordpress.com/2014/02/13/mockito-why-you-should-not-use-injectmocks-annotation-to-autowire-fields)
+
+***
 
 ### Cores
 
@@ -206,8 +213,4 @@ public void testProcessRepeatedly() {
   // 10 times executed
 }
 ```
-
-#### Blog
-
-- [Why You Should Not Use InjectMocks](https://tedvinke.wordpress.com/2014/02/13/mockito-why-you-should-not-use-injectmocks-annotation-to-autowire-fields)
 
