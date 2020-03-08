@@ -24,6 +24,7 @@
   - [Servlet](servlet)
   - [Reactive Stream](reactive-stream)
   - [Java Concurrency](java-concurrency)
+- [Miscellaneous](miscellaneous)
 
 ### [Protocols](protocols)
 

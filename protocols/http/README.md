@@ -2,22 +2,21 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.01
 ㅁ References:
- - http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
- - http://stackoverflow.com/questions/246859/http-1-0-vs-1-1
- - https://libosong.appspot.com/spdy/index.html
- - https://http2.github.io/faq
- - https://en.wikipedia.org/wiki/Head-of-line_blocking
- - https://www.nginx.com/blog/http-keepalives-and-web-performance/
- - http://d2.naver.com/helloworld/140351
-
- - https://developers.google.com/web/fundamentals/performance/http2/#design_and_technical_goals
- - https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
+- http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
+- http://stackoverflow.com/questions/246859/http-1-0-vs-1-1
+- https://libosong.appspot.com/spdy/index.html
+- https://http2.github.io/faq
+- https://en.wikipedia.org/wiki/Head-of-line_blocking
+- https://www.nginx.com/blog/http-keepalives-and-web-performance/
+- http://d2.naver.com/helloworld/140351
+- https://developers.google.com/web/fundamentals/performance/http2/#design_and_technical_goals
+- https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
 ```
 
 #### Index
 - [HTTP Cache-Control](http/http-cache-control)
+- [HTTP Session](https://soon-devblog.tistory.com/2)
 
 ### HTTP/1.1
 #### Keep-alive
@@ -37,7 +36,7 @@ Client is able to create 2-TCP-Connections per domain to get over performance li
 #### Pipelining in connection
 Pipelining enables client to send all request in parallel before receives response. Server responses packet `in the same order` that the requests were received.
 
-<img src="https://github.com/agongi/study/blob/master/http/images/Zp2lf.png" width="75%">
+<img src="images/Zp2lf.png" width="75%">
 
 > It causes [Head-of-line blocking](https://en.wikipedia.org/wiki/Head-of-line_blocking) problem. (Output is occupied by first packet in line.)
 

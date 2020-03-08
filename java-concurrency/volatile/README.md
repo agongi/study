@@ -3,14 +3,11 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- http://thswave.github.io/java/2015/03/08/java-volatile.html
-- http://stackoverflow.com/questions/3519664/difference-between-volatile-and-synchronized-in-java
 - https://en.wikipedia.org/wiki/Java_memory_model
 ```
 
-On multiprocessor architectures, individual processors may have their own local caches that are out of sync with main memory. It is generally undesirable to require threads to remain perfectly in sync with one another because this would be too costly from a performance point of view. This means that at any given time, different threads may see different values for the same shared data.
+#### Blog
 
-### Volatile
-Volatile keyword guarantees that **all reads and writes** to a volatile variable are read/written **directly to main memory.**
+- [자바 volatile 키워드](https://parkcheolu.tistory.com/16)
+- [Java Volatile 의미](http://thswave.github.io/java/2015/03/08/java-volatile.html)
 
-> Volatile keyword is used in variable
