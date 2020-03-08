@@ -29,6 +29,8 @@
 
 - [Optimistic Locking](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template.optimistic-locking)
 
+***
+
 ### Overview
 
 | RDBMS       | Mongo                                                   |

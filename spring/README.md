@@ -8,7 +8,21 @@
 - http://haviyj.tistory.com/category/Back-End/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81
 ```
 
+#### Series
+
+- [Spring Boot](spring-boot)
+- [Spring Batch](spring-batch)
+- [Spring Test](spring-test)
+- [Spring Security](spring-security)
+- [MVC](mvc)
+- [Bean](bean)
+- [Transaction](transaction)
+- [Properties](properties)
+- [AOP](aop)
+- [JDBC](jdbc)
+
 #### Index
+
 - [Bootstrap](bootstrap)
 - [Filter vs Interceptor](filter-interceptor)
 - [/* vs /](servlet-mapping)
@@ -23,19 +37,6 @@
 - [RestTemplate](resttemplate)
 - [Profile](profile)
 - [ApplicationEvent](application-event)
-
-#### Series
-
-- [Spring Boot](spring-boot)
-- [Spring Batch](spring-batch)
-- [Spring Test](spring-test)
-- [Spring Security](spring-security)
-- [MVC](mvc)
-- [Bean](bean)
-- [Transaction](transaction)
-- [Properties](properties)
-- [AOP](aop)
-- [JDBC](jdbc)
 
 #### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
