@@ -15,7 +15,7 @@ Verity core (critical) functionalities are stable.
 ```java
 @Override
 public void setApplicationContext(ApplicationContext context) {
-	// smoke check
+  // smoke check
   if (context == null) {
     throws new RuntimeException("context must be loaded.");
   }
