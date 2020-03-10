@@ -11,6 +11,14 @@
 - https://juneyr.dev/2019-02-08/mockito-repo-save
 ```
 
+#### Index
+
+- [InjectMocks individually](injectmocks-individually)
+
+***
+
+### Concepts
+
 `Mockito` is a framework for unit-test in java that mocking tastable fields or variables.
 
 - given
@@ -21,9 +29,7 @@
   - **verify**(mock).method(?, ?)
   - **verify**(mock, times(N)).method(?, ?)
 
-***
-
-`MockitoBDD` (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior of the application.
+`MockitoBDD` (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior.
 
 - given
   - **given**(mock#method).willReturn(T)
@@ -33,7 +39,7 @@
   - **then**(mock).should().methodI(?, ?)
   - **then**(mock).should(times(N)).method(?, ?)
 
-### Configuration
+### Setup
 
 #### Pure Java
 
