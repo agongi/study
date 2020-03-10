@@ -133,7 +133,7 @@ public static boolean isEmpty(List<?> list) {
 #### Collection\<?> vs Collection\<Object>
 ```java
 public class MyTask {
-  public static void print(List<T> list) {
+  public <T> static void print(List<T> list) {
     // ...
   }
 
@@ -153,14 +153,12 @@ public class MyTask {
     List<Integer> list = Arrays.asList(1, 2, 3);
 
     MyTask.print(list);   // OK
-    MyTask.print2(list);  // compile-error: List<Object> (exact match) or Collection<Object>
+    MyTask.print2(list);  // compile-error: List<Object>. exact match or Collection<Object>
     MyTask.print3(list);  // OK
     MyTask.print4(list);  // OK
   }
 }
 ```
-
-> List<T>
 
 ### Features
 #### Producer - Consumer (PECS)
@@ -178,7 +176,7 @@ public static <T> void copy(List<? super T> dest, List<? extends T> src) {
 > Producer Extends, Consumer Super
 
 ### Restrictions
-#### Cannot Create Instances of Type Parameters
+#### Cannot create instances of type parameters
 ```java
 public static <E> void append(List<E> list) {
     E elem = new E();  // compile-time error
@@ -186,7 +184,7 @@ public static <E> void append(List<E> list) {
 }
 ```
 
-As a workaround, you can create an object of a type parameter through reflection :
+As a workaround, you can create an object of a type parameter through reflection:
 ```java
 public static <E> void append(List<E> list, Class<E> cls) throws Exception {
     E elem = cls.newInstance();   // OK
@@ -197,27 +195,52 @@ public static <E> void append(List<E> list, Class<E> cls) throws Exception {
 #### Cannot Declare Static Fields of Type Parameters
 ```java
 public class MobileDevice<T> {
-    private static T os;
+    private static T os;	// compile-time error
 
     // ...
 }
 ```
-static field represents class-level variables shared by all objects of the class. It can't have different types at the same time
+Static field represents class-level variables shared by all objects of the class. It can't have different types at the same time
 
-#### Cannot Use Casts or instanceof with Parameterized Types
-The Java compiler erases all type parameters in generic code in compile-time, you cannot verify which parameterized type for a generic type is being used at runtime:
+#### Type erasure
+The Java compiler `replace` all type parameters in compile-time, you cannot verify which parameterized type for a generic type is being used at runtime:
 
 ```java
-public static <E> void rtti(List<E> list) {
+public static <E> void isAssignable(List<E> list) {
     if (list instanceof ArrayList<Integer>) {  // compile-time error
         // ...
     }
 }
 ```
 
+```java
+/**
+ * type1=java.util.AbstractList<E>
+ * type2=E
+ * type3=java.util.ArrayList<java.lang.String>
+ * type4=class java.lang.String
+ */
+@Test
+public void actualArgumentTest() {
+  Object obj = new ArrayList<>();
+  
+  // compiler replaces generics in compile-time (type erasure)
+  Type type1 = ((ParameterizedType)obj.getClass().getGenericSuperclass());
+  Type type2 = ((ParameterizedType)obj.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+
+  Type type3 = new ArrayList<String>() {}.getClass().getGenericSuperclass();
+  Type type4 = ((ParameterizedType)new ArrayList<String>(){}.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+
+  log.info("type1={}", type1);
+  log.info("type2={}", type2);
+  log.info("type3={}", type3);
+  log.info("type4={}", type4);
+}
+```
+
 #### Cannot Create Arrays of Parameterized Types
+
 ```java
 E[] arrayOfLists = new E[];  // compile-time error
 ```
 
-#### Producer /
