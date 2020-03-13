@@ -35,7 +35,6 @@
 - [Jackson](jackson)
 - [Datetime](datetime)
 - [Number](number)
-- [Data Type](data-type)
 - [Pattern-Matcher](pattern-matcher)
 - [StopWatch](stop-watch)
 - [ThreadLocal](threadlocal)
