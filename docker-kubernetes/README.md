@@ -8,5 +8,5 @@
 
 - [Docker](docker)
 - [Kubernetes](k8s)
-- [Helm Charts](helm-charts])
+- [Helm Charts](helm-charts)
 
