@@ -184,21 +184,21 @@ pizzaToppings:
   - cheese
   - peppers
   - onions
-  
+
 # deployment.yaml
 data:
-	toppings:
-	  {{- range .Values.pizzaToppings }}
-	  - {{ . | quote }}
-  	{{- end }}
+toppings:
+  {{- range .Values.pizzaToppings }}
+  - {{ . | quote }}
+  {{- end }}
 
 # rendered
 data:
-	toppings:
-		- "mushrooms"
-    - "cheese"
-    - "peppers"
-    - "onions"
+toppings:
+  - "mushrooms"
+  - "cheese"
+  - "peppers"
+  - "onions"
 ```
 
 > 더 자세한 Charts scheme 은 레퍼런스 확인: https://helm.sh/docs/chart_template_guide/control_structures/
@@ -217,9 +217,9 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-	name: '{{ .Values.ncc.instance }}-{{ .Values.ncc.installation }}'
-	labels:
-		phase: prod
-		name: api-server
+  name: '{{ .Values.ncc.instance }}-{{ .Values.ncc.installation }}'
+  labels:
+    phase: prod
+    name: api-server
 ```
 
