@@ -8,19 +8,6 @@
 - http://haviyj.tistory.com/category/Back-End/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81
 ```
 
-#### Series
-
-- [Spring Boot](spring-boot)
-- [Spring Batch](spring-batch)
-- [Spring Test](spring-test)
-- [Spring Security](spring-security)
-- [MVC](mvc)
-- [Bean](bean)
-- [Transaction](transaction)
-- [Properties](properties)
-- [AOP](aop)
-- [JDBC](jdbc)
-
 #### Index
 
 - [Bootstrap](bootstrap)
@@ -49,3 +36,19 @@
 - [Inject value into static variables](https://www.mkyong.com/spring/spring-inject-a-value-into-static-variables/)
 - [Going Reactive with Spring, Coroutines and Kotlin Flow](https://spring.io/blog/2019/04/12/going-reactive-with-spring-coroutines-and-kotlin-flow)
 - [Memory footprint](https://spring.io/blog/2019/03/11/memory-footprint-of-the-jvm)
+
+***
+
+#### Series
+
+- [Spring Boot](spring-boot)
+- [Spring Batch](spring-batch)
+- [Spring Test](spring-test)
+- [Spring Security](spring-security)
+- [MVC](mvc)
+- [Bean](bean)
+- [Transaction](transaction)
+- [Properties](properties)
+- [AOP](aop)
+- [JDBC](jdbc)
+
