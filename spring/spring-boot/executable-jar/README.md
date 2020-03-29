@@ -224,7 +224,7 @@ Spring-Boot-Lib: BOOT-INF/lib/
 
 ### /META-INF/MANIFEST.MF
 
-java -jar 을 통해 프로그램을 실행하면, program main 의 위치를 알려줘야한다. jar 스펙은 MANIFEST.MF 의 값을 사용하거나 CLI arguments 로 직접 전달 가능하다.
+java -jar 을 통해 프로그램을 실행하면, program main 의 위치를 알려줘야한다. jar 스펙은 MANIFEST.MF 에 정의된 값을 사용하거나 실행시점에 argunemt 를 사용한다.
 
 - Manifest-Version: 필수값. 버전을 명시한다.
 - Main-Class: 필수값. 해당 클래스의 `public static void main()` 을 찾아서 실행한다.
