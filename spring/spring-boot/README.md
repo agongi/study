@@ -3,7 +3,13 @@
 ㅁ Author: suktae.choi
 ㅁ Origin: https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 ```
-### Index
+#### Index
+
+- [Executable Jar](executable-jar)
+
+***
+
+#### Legacy
 
  - [Spring Boot #11 Using Spring Boot:: Developing your first Spring Boot application](https://github.com/agongi/study/tree/master/spring-boot/%2311)
  - [Spring Boot #14-20 Using Spring Boot:: Structuring your code](https://github.com/agongi/study/tree/master/spring-boot/%2314-20)
