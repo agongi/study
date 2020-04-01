@@ -13,7 +13,7 @@ JDK 10 - http://openjdk.java.net/projects/jdk/10/
 
 ## [Local-Variable Type Inference](http://openjdk.java.net/jeps/286)
 
-변수 선언시 타입추론된 `var` 를 사용 가능합니다.
+지역변수 선언시 타입추론된 `var` 를 사용 가능합니다.
 
 ```java
 // local-variable
@@ -24,15 +24,18 @@ for (var x : xs) { ... }
 try (var x = ...) { ... } catch ...
 ```
 
-> local variable 에서만 사용가능
+대신 Generic 타입추론이 안되므로, 선언시 \<\> Generic Type 은 명시해야합니다.
 
-대신 Collection 선언시, generic type-inference 가 안되므로 선언시 \<\> Generic Type 을 생략하면 안됩니다.
+> 미지정시 Object 로 관리됨
 
 ```java
-// new ArrayList<>(); local-variable 을 보고 infer 가능
+// Generic type-infer
 List<String> users = new ArrayList<>();
 
-// new ArrayList<String>(); local-varible 에서 타입추론이 안되므로, 생성시 타입명시 필요
+// type-infer 못하므로, users 는 List<Object> 로 취급
+var users = new ArrayList<>();
+
+// 직접 명시해야함.
 var users = new ArrayList<String>();
 ```
 
@@ -48,7 +51,9 @@ GC 인터페이스를 만들어서 서로 다른 구현체들의 코드를 분�
 
 ### [Parallel Full GC for G1](http://openjdk.java.net/jeps/307)
 
-Young/Old 구분없는 G1 은 full-gc 빈도가 낮지만, 발생시 single-thread 로 mark-sweep 을 처리해서 STW 시간이 길었습니다. Mark-Sweep-Compact 알고리즘을 병렬로 수행할수있게 변경 되었습니다. (Young, Mixed GC 모두 동일하게 적용되는 병렬처리 값)
+Young/Old 구분없는 G1 은 full-gc 빈도가 낮지만, 발생시 single-thread 로 mark-sweep 을 처리해서 STW 시간이 길었습니다.
+
+이제는 Parallel 로 mark-sweep-compact 를 처리가능합니다. (Young, Mixed GC 모두 동일하게 적용되는 병렬처리 값)
 
 > -XX:ParallelGCThreads
 
@@ -60,15 +65,15 @@ JVM safepoint 는 GC 수행전 모든 쓰레드의 정지를 기다리는 메카
 
 대신 아래의 비효율이 있음:
 
-- thread 는 reasonable intervals 로 safepoint flag 를 polling 해야함
+- thread 는 `reasonable interval` 로 safepoint flag 를 polling 해야함
   - method entry/exit
   - 2 bytecodes execution
-  - ...
-- 그래서 GC 가 필요해서, safepoint flag = true; 로 설정하면 각각의 개별 쓰레드는 polling 하다가 산발적으로 스탑함
+  - infinite loop execution
+- 그래서 GC 가 필요해서, safepoint flag = true; 설정시, 각각의 개별 쓰레드는 polling 하다가 산발적으로 스탑됨
 - flag = false; 로 지정해도 즉시 thread stop 이 풀리지않고, 각 개별 쓰레드가 polling 하면서 산발적으로 재시작됨
-  - 이때는 time-based interval polling
+  - 이때는 `time-based interval` polling
 
-해당 플로우에 대한 튜닝으로 아래와 같이 처리함:
+polling 에 대한 효율적인 개선방법으로 아래의 handshake-callback 으로 Flow 를 변경 가능합니다:
 
 - thread 와 handshakes 를 통해, 콜백을 줄수있도록 세팅함
 - safepoint 가 필요한 시점에 callback 으로 thread-local::safepoint = true; 로 세팅
@@ -83,7 +88,7 @@ JVM safepoint 는 GC 수행전 모든 쓰레드의 정지를 기다리는 메카
 - 각 개별 thread 만 선별적으로 stop 시그널 줄수있는 mechanism 을 구축해놓음
   - 기존방식은 all or nothing 방식 (global flag)
 
-더 명확하게 확인하고싶어, JIRA proposal 의 명시된 [openjdk code](https://github.com/openjdk/jdk/blob/master/src/hotspot/cpu/sparc/macroAssembler_sparc.cpp#L238) 를 찾음
+더 명확하게 확인하려고, JIRA proposal 의 명시된 [openjdk code](https://github.com/openjdk/jdk/blob/master/src/hotspot/cpu/sparc/macroAssembler_sparc.cpp#L238) 를 체크
 
 ```cpp
 void MacroAssembler::safepoint_poll(Label& slow_path, bool a, Register thread_reg, Register temp_reg) {

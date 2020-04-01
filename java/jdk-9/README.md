@@ -51,10 +51,14 @@ public void processTest() {
 }
 
 // console log
-13:47:32.300 [main] INFO com.naver.metis.core.web.rest.ApiErrorResponseTest - pid=68048, info=[user: Optional[user], cmd: /Users/user/.sdkman/candidates/java/11.0.6.hs-adpt/bin/java, args: [-ea, -Didea.test.cyclic.buffer.size=8388608, -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=60474:/Applications/IntelliJ IDEA.app/Contents/bin, -Dfile.encoding=UTF-8, -classpath, /Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar:/Applications/IntelliJ IDEA.app/Contents/plugins/junit/lib/junit5-rt.jar, -ideVersion5, -junit5, com.naver.metis.core.web.rest.ApiErrorResponseTest,processTest], startTime: Optional[2020-04-01T04:47:31.090Z], totalTime: Optional[PT1.672758S]]
+13:47:32.300 [main] INFO  pid=68048, info=[user: Optional[user], cmd: /Users/user/.sdkman/candidates/java/11.0.6.hs-adpt/bin/java, args: [-ea, -Didea.test.cyclic.buffer.size=8388608, -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=60474:/Applications/IntelliJ IDEA.app/Contents/bin, -Dfile.encoding=UTF-8, -classpath, /Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar:/Applications/IntelliJ IDEA.app/Contents/plugins/junit/lib/junit5-rt.jar, -ideVersion5, -junit5, com.naver.metis.core.web.rest.ApiErrorResponseTest,processTest], startTime: Optional[2020-04-01T04:47:31.090Z], totalTime: Optional[PT1.672758S]]
 ```
 
 ## Resource References (try-with-resources)
+
+try-with-resource block 에 effective final or final variable 일 경우 레퍼런스가 가능해졌습니다.
+
+> 기존에는 무조건 해당 block 안에서 정의해야 사용 가능했었음
 
 ```java
 /**
@@ -62,7 +66,7 @@ public void processTest() {
 */
 @Test
 public void resourceReferenceTest() {
-  // resource should be defined in resource-block
+  // defines in block
   try (InputStream io = new ByteArrayInputStream(new byte[0])) {
     int read = io.read();
     // do something
@@ -89,6 +93,8 @@ public void resourceReferenceTest() {
 ```
 
 ## Interface Private Method
+
+인터페이스에 private method 사용가능
 
 ```java
 interface User {

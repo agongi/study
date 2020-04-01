@@ -36,17 +36,17 @@ public void lambdaInferenceType() {
 }
 ```
 
-Stream 에서 타입지정을 잘안하지만, 스펙이 들어간 목적은
+Stream 에서 타입지정을 잘안하지만, 스펙이 들어간 목적은:
 
-- Align the syntax of a formal parameter declaration in an implicitly typed lambda expression with the syntax of a local variable declaration.
+> Align the syntax of a formal parameter declaration in an implicitly typed lambda expression with the syntax of a local variable declaration.
 
-정리하면 람다에서도 표준스펙에 맞춰서 var 이 들어갈수있도록 지원한것.
+정리하면 람다에서도 표준스펙에 맞춰서 var 사용 가능하도록 지원한것.
 
 ## [HTTP Client (Standard)](https://openjdk.java.net/jeps/321)
 
-JDK 9 에서 추가된 HTTP 패키지가 정식으로 올라가고, 약간의 사용법이 변경됨
+JDK 9 에서 추가된 HTTP 패키지가 정식으로 올라가고, 약간의 사용법이 변경되었습니다.
 
-- java.incubator.http -> java.net.http
+- java.incubator.http -> `java.net.http`
 
 ```java
 @Test
