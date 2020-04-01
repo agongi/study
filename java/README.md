@@ -2,17 +2,11 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.04
 ㅁ References:
 - http://javarevisited.blogspot.com
 - https://docs.oracle.com/javase/tutorial/index.html
 - https://github.com/winterbe/java8-tutorial
 ```
-
-#### Series
-- [Collections](collections)
-- [NIO](nio)
-- [Generics](generics)
 
 #### Index
 - [String vs StringBuilder vs StringBuffer](string-stringbuilder-stringbuffer)
@@ -53,12 +47,18 @@
 
 ***
 
-#### Java 8
+#### What's New
 
-- [Stream](stream)
-- [CompletableFuture](completable-future)
-- [Closure](closure)
-- [Optional](optional)
+- [JDK 8](jdk-8)
+- [JDK 9](jdk-9)
+- [JDK 10](jdk-10)
+- [JDK 11](jdk-11)
+
+#### Series
+
+- [Collections](collections)
+- [NIO](nio)
+- [Generics](generics)
 
 #### Design Pattern
 
