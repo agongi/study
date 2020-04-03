@@ -119,8 +119,6 @@ $ java HelloWorld.java 1 2 3
 Hello, World! 1 2 3
 ```
 
-## 더 이상의 자세한 설명은 생략한다.
-
 ### [Nest-Based Access Control](https://openjdk.java.net/jeps/181)
 
 Nested-Class 관계에서 아래는 동작합니다.
@@ -240,12 +238,16 @@ public void nestmateTest() {
 }
 ```
 
-정리하면, 2가지 입니다.
+정리하면, 3가지 입니다.
 
 - private field, method 는 **본인 && nestmate 관계일때 접근가능**으로 자바스펙이 변경됨
 - nestmate 관계는 Outer/Inner 로 포함된 관계를 의미하고, 각각 Class\<?\> 레벨에서 메타데이타를 관리합니다.
   - Class.class.getNestMembers()
   - Class.class.getNestHost()
+- 그에 따라 기존 bridge-method 를 생성해서 접근가능하게 처리했던 compiler 의 bytecode 삽입과정이 삭제됨
+  - direct access 를 지원하므로
+
+## 더 이상의 자세한 설명은 생략한다.
 
 ### [Dynamic Class-File Constants](http://openjdk.java.net/jeps/309)
 

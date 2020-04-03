@@ -16,6 +16,7 @@
 
 - [Why You Should Not Use InjectMocks](https://tedvinke.wordpress.com/2014/02/13/mockito-why-you-should-not-use-injectmocks-annotation-to-autowire-fields)
 - [Why injecting by constructor should be preferred](http://pillopl.github.io/constructor-injection/)
+- [AssertJ](https://www.baeldung.com/introduction-to-assertj)
 
 ***
 
