@@ -106,12 +106,12 @@ public void updateUser(Long userId) {
 
       @Override
       public void afterCompletion(int status) {
-				// retain histories
+        // retain histories
       }
     });
   }
 }
 ```
 
-> This manual handling could be improved using [application-event desing](../application-event)
+> This manual handling could be improved using [application-event pattern](../../application-event)
 
