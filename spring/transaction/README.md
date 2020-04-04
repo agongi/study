@@ -15,13 +15,15 @@
 
 - [TransactionSynchronizationManager](transaction-synchronization-manager)
 
-### TransactionManager
+***
+
+## TransactionManager
 
 스프링의 트랜잭션 매니저는 모두 **PlatformTransactionManager** interface 를 구현한다.
 
 대표적인 구현체는 다음과 같다:
 
-#### DataSourceTransactionManager
+### DataSourceTransactionManager
 
 DataSource (JDBC) 에서 사용하는 매니저이다. 
 
@@ -30,23 +32,23 @@ DataSource (JDBC) 에서 사용하는 매니저이다.
 
 만 사용할 경우 정의한다.
 
-#### JpaTransactionManager
+### JpaTransactionManager
 
 JPA 를 사용한다면, 해당 매니저를 써야한다.
 
 JPA + DataSource (JDBC) API 도 같이 사용가능하다. (더 상위의 개념이니..)
 
-#### HibernateTransactionManager
+### HibernateTransactionManager
 
 Hibernate specific TransactionManager.
 
-#### JtaTransactionManager
+### JtaTransactionManager
 
 N 개의 DataSource 를 이용해서 글로벌(외부시스템)/분산(다른DB) 트랜잭션을 관리하기 위해 사용한다. Composite 의 개념
 
-### How to use
+## How to use
 
-#### TransactionManager
+### TransactionManager
 
 직접 관리하는 방식으로
 
@@ -87,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
 > Whatever It is not marked rollback-only programmatically, runtimeException is always being rollback by design
 
-#### TransactionTemplate
+### TransactionTemplate
 
 스프링에서 제공하는 template 을 사용하는 방식이다.
 
@@ -125,9 +127,9 @@ public class UserServiceImpl implements UserService {
 }
 ```
 
-### Features
+## Features
 
-#### Propagation
+### Propagation
 
 - **REQUIRED** - join existing, create new if no
 
@@ -149,7 +151,7 @@ public class UserServiceImpl implements UserService {
 - NOT_SUPPORTED - ignore if exist
 - NEVER - throw exception if exist
 
-#### Isolation
+### Isolation
 
 - **DEFAULT** - DB default
 - READ_UNCOMMITTED
@@ -157,7 +159,7 @@ public class UserServiceImpl implements UserService {
 - REPEATABLE_READ
 - SERIALIZABLE
 
-#### ReadOnly
+### ReadOnly
 
 Tx is working on read-only mode. The committed changes will be ignored implicitly.
 
@@ -165,9 +167,9 @@ Tx is working on read-only mode. The committed changes will be ignored implicitl
 @Transactional(readOnly = true)
 ```
 
-#### TimeOut
+### TimeOut
 
-#### Rollback
+### Rollback
 
 Specify exception for rollback conditionally
 
@@ -186,7 +188,7 @@ Specify exception for rollback conditionally
 
 #### @TransactionalEventListener
 
-ApplicationContext will regist the beans that contains method annotated of `@TransactionEventListener` on bootstrap. The event sent by **ApplicationContext#publishEvent** (that inherits EventPublisher) is held and put backed to the TransactionalEventListener methods.
+ApplicationContext will regist the beans that contains method annotated of `@TransactionEventListener` on bootstrap. The event sent by **ApplicationContext#publishEvent** (that inherits EventPublisher) is held and put backed `to the TransactionalEventListener annotated methods.`
 
 The examples:
 
