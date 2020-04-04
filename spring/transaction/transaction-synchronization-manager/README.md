@@ -8,9 +8,9 @@
 - https://translate.google.com/translate?hl=ko&sl=zh-CN&tl=en&u=https%3A%2F%2Fcodeday.me%2Fbug%2F20190405%2F884693.html
 ```
 
-### Status of transaction
+## Status of transaction
 
-When Tx is started, TransactionManager prepares transaction as following:
+When Transaction get started, TransactionManager prepares transaction as following:
 
 ```java
 /**
@@ -60,7 +60,6 @@ protected final SuspendedResourcesHolder suspend(Object transaction) {
 
 ```java
 protected final void resume(Object transaction, SuspendedResourcesHolder resourcesHolder) {
-
   if (resourcesHolder != null) {
     Object suspendedResources = resourcesHolder.suspendedResources;
     List<TransactionSynchronization> suspendedSynchronizations = resourcesHolder.suspendedSynchronizations;
@@ -91,5 +90,28 @@ Changed If transaction is completed due to completion and/or exception
 
 > Propagation.REQUIRES_NEW create a new transaction, and suspend the current transaction if one exists.
 
+## Action of Transaction
 
+```java
+@Transactional
+public void updateUser(Long userId) {
+  // .. CUD
+
+  if (TransactionSynchronizationManager.isActualTransactionActive()) {
+    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+      @Override
+      public void afterCommit() {
+        // send email/sms
+      }
+
+      @Override
+      public void afterCompletion(int status) {
+				// retain histories
+      }
+    });
+  }
+}
+```
+
+> This manual handling could be improved using [application-event desing](../application-event)
 
