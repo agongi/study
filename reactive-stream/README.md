@@ -4,6 +4,7 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://github.com/reactive-streams/reactive-streams-jvm
+- https://tech.kakao.com/2018/05/29/reactor-programming/
 ```
 
 #### Index
@@ -19,9 +20,9 @@
 - [Flux sequence](https://www.baeldung.com/flux-sequences-reactor)
 - [Spring 웹 애플리케이션에서 사용하지 않는 API를 찾아보자](http://woowabros.github.io/tools/2019/02/15/controller-log.html)
 
-### Overview
+***
 
-#### Why reactive?
+## Why reactive?
 
 The main purpose of Reactive Streams is to let the subscriber to `control how quickly or how slowly the publisher` produces data.
 
