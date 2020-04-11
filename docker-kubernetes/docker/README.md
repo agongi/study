@@ -15,9 +15,7 @@
 
 생성한 (push) or 가져온 (pull) 이미지는 `docker server` 에 저장되고, 그렇게 관리하는 이미지를 선택해서 `docker run` 수행시 container 가 생성되어 instance 가 동작하는 원리 입니다.
 
-## Terms
-
-### Dockerfile
+## Dockerfile
 
 이미지를 생성할 명세를 정의합니다.
 

@@ -12,6 +12,7 @@
 - [Networking](networking)
 - [Namespace](namespace)
 - [Policies](policies)
+- [HPA](hpa)
 
 #### Blog
 
