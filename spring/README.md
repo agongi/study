@@ -17,6 +17,7 @@
 - [@Pageable](pageable)
 - [@DateTimeFormat](date-time-format)
 - [@Configuration](configuration)
+- [@Import](import)
 - [Classpath](classpath)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [Static Provider](static-provider)
