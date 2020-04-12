@@ -12,7 +12,7 @@
 
 ```java
 public class UserEvent implements ApplicationEvent {
-	// fields, getter/setter
+  // fields, getter/setter
 }
 ```
 
@@ -23,16 +23,16 @@ public class UserEventPublisher implements ApplicationEventPublisherAware {
   private final ApplicationEventPublisher publisher1;
   @Autowire
   private ApplicationEventPublisher publisher2;
-	@Autowire
+  @Autowire
   private ApplicationContext context;  
-  
+
   @Override
   public void setApplicationEventPublisher(
-	  ApplicationEventPublisher publisher) {
-		
+    ApplicationEventPublisher publisher) {
+
     this.publisher1 = publisher;
   }
-  
+
   public void send() {
     publisher1.publishEvent(new UserEvent("name changed"));
     publisher2.publishEvent(new UserEvent("name changed"));
@@ -55,7 +55,7 @@ public class UserEventListener implements ApplicationListener<UserEvent> {
     // 모든 publisher 의 이벤트를 받음
   }
 
-	@EventListener(UserEvent.class)
+  @EventListener(UserEvent.class)
   public void onEvent(UserEvent event) {
     // 해당 타입의 이벤트만 받음 (topic)
   }
