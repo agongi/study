@@ -29,13 +29,13 @@ public @interface SpringBootTest { .. }
 
 으로 `SpringBootTestContextBootstrapper.class` 가 호출되고 classpath:// 전체를 스캔해서 의존성을 올립니다.
 
-범용적인 패턴이므로 Support 를 하나 만들어놨습니다.
+범용적으로 사용 가능하므로 abstract 로 의존을 선언해줍니다.
 
 ```java
 @ActiveProfiles("test")
 @SpringBootTest
 @TestExecutionListeners(
-    value = {AbstractSpringTestSupport.NoOpExecutionListener.class},
+    value = {customListener.class},
     mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS
 )
 public abstract class AbstractSpringTestSupport { ... }
@@ -90,7 +90,7 @@ class TestRestControllerTest {
 
 Mock 으로 생성할 Controller 를 어노테이션에 지정합니다. 그러면 해당 컨트롤러가 `MockMvc` 의 빈으로 등록이 되어 (mockBean) 테스트를 수행 할 수 있습니다.
 
-하지만 현재 프로젝트에 코드상 존재하는 Controller 만 등록가능하므로, 외부 API mocking 을 위해선 별도로 하나 만들어야하는 단점이 있습니다. 이 개념을 해결하는 것이 [WireMock](http://wiremock.org/docs/configuration/) 입니다. 간단히 설명하면 standalone and/or boot-integration 으로 뜨는 별도의 MVC 가 있고 응답을 classpath://xxx.json 에 저장해놓으면 해당값을 응답합니다.
+하지만 현재 프로젝트에 코드상 존재하는 Controller 만 등록가능하므로, 외부 API mocking 을 위해선 별도로 하나 만들어야하는 단점이 있습니다. 이 개념을 해결하는 것이 [WireMock](http://wiremock.org/docs/configuration/) 입니다. 간단히 설명하면 standalone and/or boot-integration 으로 뜨는 별도의 MVC 가 있고 응답으로 사용할 meta (classpath://xxx.json) 를 load 해서 요청이 오면 json 으로 응답합니다.
 
 WireMock 을 사용하면 외부 API 통신시 개발완료를 대기할 필요없이, 간단히 모킹해서 바로 후속작업을 진행 할 수 있습니다.
 
