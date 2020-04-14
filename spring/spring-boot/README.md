@@ -6,6 +6,7 @@
 #### Index
 
 - [Executable Jar](executable-jar)
+- [Boot Features Testing](boot-features-testing)
 
 ***
 

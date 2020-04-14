@@ -9,7 +9,6 @@
 - [JUnit](junit)
 - [Mockito](mockito)
 - [Smoke test vs Sanity test](smoke-sanity)
-- ReflectionTestUtils
 - [Set final field](set-final-field)
 
 #### Blog
