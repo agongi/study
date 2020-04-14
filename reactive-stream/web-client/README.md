@@ -3,37 +3,82 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://stackoverflow.com/questions/54680001/spring-webflux-flux-behavior-with-non-streaming-application-json
+- https://stackoverflow.com/questions/46235512/how-to-set-a-timeout-in-spring-5-webflux-webclient
+- https://resilience4j.readme.io/docs/getting-started-3
 ```
 
-### SerDes
+## Config
 
-#### application/json
+```java
+@Configuration
+public class CustomWebClientConfig {
 
-Buffering each chunk of Flux/Mono and flush once. 
+  private static final int CONNECTION_TIMEOUT_MILLIS = 2_000;
+  private static final int READ_TIMEOUT_MILLIS = 2_500;
 
-> This behavior still means async-nonblocking mechanism.
+  @Bean
+  public WebClient webClient(
+    @Value("${api.url}") String url) {
 
-*Request*
+    return WebClient.builder()
+      .baseUrl(url)
+      .defaultHeaders(headers -> {
+        headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+      })
+      .clientConnector(clientHttpConnector())
+      .build();
+  }
 
-- Accept: application/json
+  ReactorClientHttpConnector clientHttpConnector() {
+    return clientHttpConnector(CONNECTION_TIMEOUT_MILLIS, READ_TIMEOUT_MILLIS);
+  }
 
-```bash
-http get http://localhost:8080/web-client/user --stream
+  ReactorClientHttpConnector clientHttpConnector(int connectionTimeout, int readTimeout) {
+    TcpClient tcpClient = TcpClient.create()
+      .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, connectionTimeout)
+      .doOnConnected(conn -> conn
+				// https://www.hungrydiver.co.kr/bbs/detail/develop?id=7&scroll=comment
+        .addHandlerLast(NettyPipeline.ChunkedWriter, new ChunkedWriteHandler())
+				.addHandlerLast(new ReadTimeoutHandler(readTimeout, TimeUnit.MILLISECONDS))
+// .addHandlerLast(new WriteTimeoutHandler(WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) // 필요시 정의
+			);
+    
+    return new ReactorClientHttpConnector(HttpClient.from(tcpClient));
+  }
+}
 ```
 
-The JSON codec configured by default in Spring WebFlux will serialize to JSON and flush to the network in one go. It will buffer the `Flux<YourObject>` in memory and serialize it in one pass. This doesn't mean the operation is blocking, since the resulting `Flux<Databuffer>` is written in a reactive fashion to the network. nothing is blocking here.
+## Test
 
-#### application/stream+json
+```java
+@Test
+public void apiTest(@Autowire WebClient webClient) {
+  // given
+  String id = "1234";
 
-Emits each element of Flux/Mono using SSE (Server Sent Events).
+  // when
+  User response = getUser(webClient, id)
+    .blockOptional().orElse(null);
 
-*Request*
+  // then
+  assertThat(response).isNotNull();
+  assertThat(response.getId()).isEqualTo(id);
+}
 
-- Accept: application/stream-json
-
-```bash
-http get http://localhost:8080/web-client/user --event-stream
+Mono<User> getUser(WebClient webClient, String id) {
+  return webClient.get()
+    .uri(uriBuilder -> uriBuilder.path("/user")
+         .queryParam("id", id)
+         .build())
+    .retrieve()
+    .bodyToMono(User.class)
+    .doOnSuccess(res -> {
+      log.debug("res={}", res);
+    })
+    .onErrorMap(e -> {
+      log.error("AccountApiClient#getNextSalesDay", e);
+      // throws
+    });
+}
 ```
 
-The JSON codec configured by default in Spring WebFlux will serialize to JSON and flush on the network each element of the `Flux` input. This behavior is handy when the stream is infinite, or when you want to push information to the client as soon as it's available. Note that this has a performance cost, as calling the serializer and flushing multiple times takes resources.

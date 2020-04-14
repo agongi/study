@@ -38,28 +38,28 @@ https://javacan.tistory.com/search/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%A6%AC%EC%95
 
 ```java
 public interface Publisher<T> {
-    /**
-     * Request {@link Publisher} to start streaming data.
-     */
-    public void subscribe(Subscriber<? super T> s);
+  /**
+   * Request {@link Publisher} to start streaming data.
+   */
+  public void subscribe(Subscriber<? super T> s);
 }
 
 public interface Subscriber<T> {
-    /**
-     * Invoked after calling {@link Publisher#subscribe(Subscriber)}.
-     *
-     * No data will start flowing until {@link Subscription#request(long)} is invoked.
-     * It is the responsibility of this {@link Subscriber} instance to call {@link Subscription#request(long)} whenever more data is wanted.
-     */
-    public void onSubscribe(Subscription s);
-    public void onNext(T t);
-    public void onError(Throwable t);
-    public void onComplete();
+  /**
+   * Invoked after calling {@link Publisher#subscribe(Subscriber)}.
+   *
+   * No data will start flowing until {@link Subscription#request(long)} is invoked.
+   * It is the responsibility of this {@link Subscriber} instance to call {@link Subscription#request(long)} whenever more data is wanted.
+   */
+  public void onSubscribe(Subscription s);
+  public void onNext(T t);
+  public void onError(Throwable t);
+  public void onComplete();
 }
 
 public interface Subscription {
-    public void request(long n);
-    public void cancel();
+  public void request(long n);
+  public void cancel();
 }
 ```
 
