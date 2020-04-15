@@ -13,7 +13,7 @@
 
 #### Index
 
-- [InjectMocks individually](injectmocks-individually)
+- [InjectMocks](injectmocks)
 
 ***
 

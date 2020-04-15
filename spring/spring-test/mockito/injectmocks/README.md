@@ -1,4 +1,4 @@
-## InjectMocks Individually
+## InjectMocks
 
 ```
 ㅁ Author: suktae.choi
@@ -16,12 +16,12 @@ All mocks are injected annotated as @InjectMocks instance without any excuse.
 public class userTest {
   @Mock UserRepository userRepository;
   @InjectMocks UserService userService = new UserServiceImpl();
-  
+
   @Test
   public void test1() {
-  	// userService injects repository  
+    // userService injects repository  
   }
-  
+
   @Test
   public void test1() {
     // userService injects repository
@@ -40,13 +40,13 @@ You can programmatically control inject or not bean in target service.
 public class userTest {
   @Mock UserRepository userRepository;
   UserService userService = new UserServiceImpl();
-  
+
   @Test
   public void test1() {
-  	// userService injects repository
-		ReflectionTestUtils.setField(userService, "userRepository", userRepository);
+    // userService injects repository
+    ReflectionTestUtils.setField(userService, "userRepository", userRepository);
   }
-  
+
   @Test
   public void test1() {
     // userService use bean
