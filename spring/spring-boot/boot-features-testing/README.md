@@ -6,16 +6,164 @@
 - https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing
 ```
 
+## Configuration
+
+### Detecting
+
+기존 방식으로는 @ContextConfiguration 을 통해 import 할 @Configuration classes 를 지정해서 context 를 올릴수 있습니다.
+
+> 기존 spring test framework 동작원리
+
+### Mock Environment
+
+- server: not started
+- mock: enabled
+
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+class MockMvcExampleTests {
+  // @AutoConfigureMockMvc 로 인해 bean 이 생성됨
+  @Autowired MockMvc mvc;
+
+  @Test
+  void exampleTest() throws Exception {
+    mvc.perform(get("/"))
+      .andExpect(status().isOk())
+      .andExpect(content().string("Hello World"));
+  }
+}
+```
+
+- server: started
+- mock: disabled
+
+```java
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+class RandomPortWebTestClientExampleTests {
+  @Autowired WebTestClient webClient;
+
+  @Test
+  void exampleTest() throws Exception {
+    webClient.get()
+      .uri("/")
+      .exchange()
+      .expectStatus().isOk()
+      .expectBody(String.class).isEqualTo("Hello World");
+
+  }
+}
+```
+
+대신 실제 embedded tomcat 을 띄우므로, 테스트  module 에서 mvc 관련 의존 전체가 필요합니다. (boot-starter-mvc)
+
+submodule 로써 mvc 의존이 불필요한 jar 성격이라면 테스트를 위해 web 의존이 필요한데요, 별도 bootable-mock 서버로 떠서 테스트를 지원하는 wiremock 으로 대체할 수 있습니다.
+
+그러면 test context 에서는 mvc 의존이 필요없고, 별도로 뜨는 서버 (== wiremock) 을 통해 api mock 테스트가 가능합니다.
+
+### Mock Bean
+
+@MockBean, @SpyBean 의 사용을 의미합니다.
+
+기본적으로 @SpringBootTest 를 사용한다면 enabled 이고, 만약 별도 config 를 통한 테스트를 한다면, 명시적으로 활성화 하면됩니다.
+
+```java
+@TestExecutionListeners(MockitoTestExecutionListener.class)
+```
+
+## Annotations
+
+범용적인 test context 를 올리는 @SpringBootTest 가 존재하고 각각의 scope 에 맞춰서 include/exclude (== sliced) 를 적용한 어노테이션이 같이 제공됩니다.
+
+- Excludes
+
+TypeExcludeFilters 를 이용해서 include/exclude 를 직접 제어합니다. 
+
+```java
+// omitted ..
+@TypeExcludeFilters(WebMvcTypeExcludeFilter.class)
+public @interface WebMvcTest { .. }
+```
+
+WebMvcTypeExcludeFilter 내부를 보면
+
+```java
+public final class WebMvcTypeExcludeFilter extends StandardAnnotationCustomizableTypeExcludeFilter<WebMvcTest> {
+
+  private static final Class<?>[] NO_CONTROLLERS = {};
+
+  private static final String[] OPTIONAL_INCLUDES = {
+    "org.springframework.security.config.annotation.web.WebSecurityConfigurer" };
+
+  private static final Set<Class<?>> DEFAULT_INCLUDES;
+
+  static {
+    Set<Class<?>> includes = new LinkedHashSet<>();
+    includes.add(ControllerAdvice.class);
+    includes.add(JsonComponent.class);
+    includes.add(WebMvcConfigurer.class);
+    includes.add(javax.servlet.Filter.class);
+    includes.add(FilterRegistrationBean.class);
+    includes.add(DelegatingFilterProxyRegistrationBean.class);
+    includes.add(HandlerMethodArgumentResolver.class);
+    includes.add(HttpMessageConverter.class);
+    includes.add(ErrorAttributes.class);
+    includes.add(Converter.class);
+    includes.add(GenericConverter.class);
+    includes.add(HandlerInterceptor.class);
+    for (String optionalInclude : OPTIONAL_INCLUDES) {
+      try {
+        includes.add(ClassUtils.forName(optionalInclude, null));
+      }
+      catch (Exception ex) {
+        // Ignore
+      }
+    }
+    DEFAULT_INCLUDES = Collections.unmodifiableSet(includes);
+  }
+
+  @Override
+  protected Set<Class<?>> getDefaultIncludes() {
+    if (ObjectUtils.isEmpty(this.controllers)) {
+      return DEFAULT_INCLUDES_AND_CONTROLLER;
+    }
+    return DEFAULT_INCLUDES;
+  }
+
+  @Override
+  protected Set<Class<?>> getComponentIncludes() {
+    return new LinkedHashSet<>(Arrays.asList(this.controllers));
+  }
+}
+```
+
+빈으로 올릴 Type 목록을 관리하고, 이를 통해 test-context 에서 bean 으로 올린 type 을 정의했습니다.
+
+- Includes
+
+```java
+@AutoConfigureCache
+@AutoConfigureWebMvc
+@AutoConfigureMockMvc
+@ImportAutoConfiguration
+public @interface WebMvcTest {
+```
+
+`@AutoConfigure..` 를 통해 추가로 정의할 bean 을 추가합니다.
+
+- Categories
+
 | Annotation      | Desc                          | Bean Scan              |
 | :-------------- | :---------------------------- | :--------------------- |
 | @SpringBootTest | Integration Test              | 전체                   |
 | @WebMvcTest     | Unit Test, Controller         | MVC 관련 Bean          |
 | @WebFluxTest    | Unit Test, WebFlux Entrypoint | WebFlux 관련 Bean      |
 | @DataJpaTest    | Unit Test, JPA                | JPA 관련 Bean          |
+| @JdbcTest       | Unit Test, Jdbc               | JDBC 관련 Bean         |
 | @RestClientTest | Unit Test, RestClient         | RestTemplate 관련 Bean |
 | ~~@JsonTest~~   | Unit Test, Json               | Serdes 관련 Bean       |
 
-## SpringBootTest
+### SpringBootTest
 
 TestContext 로드 시점에 테스트 관련한 모든 의존성을 포함해서 bootStrap 합니다. 모든 종류의 테스트가 가능합니다.
 
@@ -47,7 +195,7 @@ class customTest extends AbstractSpringTestSupport {
 }
 ```
 
-## WebMvcTest
+### WebMvcTest
 
 context-load 시 의존에 포함되는 빈의 범위가 MVC 관련으로 한정됩니다.
 
@@ -94,7 +242,7 @@ Mock 으로 생성할 Controller 를 어노테이션에 지정합니다. 그러�
 
 WireMock 을 사용하면 외부 API 통신시 개발완료를 대기할 필요없이, 간단히 모킹해서 바로 후속작업을 진행 할 수 있습니다.
 
-## DataJpaTest
+### DataJpaTest
 
 context-load 시 의존에 포함되는 빈의 범위가 JPA (a.k.a repository, jdbc 등) 관련으로 한정됩니다.
 
@@ -122,7 +270,29 @@ class MemberRepositoryTest {
 }
 ```
 
-## RestClientTest
+### @JdbcTest
+
+DataSource 와 JdbcTemplate 만 올라가는 테스트입니다. spring-data 는 올라가지 않으므로 repository 는 사용할 수 없습니다.
+
+```java
+@AutoConfigureCache
+@AutoConfigureJdbc
+@AutoConfigureTestDatabase
+@ImportAutoConfiguration
+public @interface JdbcTest { .. }
+
+// dataSource 와 jdbcTemplate load
+@ConditionalOnClass({ DataSource.class, JdbcTemplate.class })
+@ConditionalOnSingleCandidate(DataSource.class)
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
+@EnableConfigurationProperties(JdbcProperties.class)
+@Import({ JdbcTemplateConfiguration.class, NamedParameterJdbcTemplateConfiguration.class })
+public class JdbcTemplateAutoConfiguration {
+	// ..
+}
+```
+
+### RestClientTest
 
 context-load 시 의존에 포함되는 빈이 RestClient, WebClient 으로 한정됩니다.
 
