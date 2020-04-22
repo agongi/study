@@ -1155,6 +1155,23 @@ public void testLog() {
 
 ### Advanced Features
 
+#### How Do I Wrap a Synchronous, Blocking Call?
+
+fromRunnable or fromCallable 로 감싼다.
+
+```java
+Mono<Boolean> files = Mono.fromCallable(() -> {
+  log.info("Mono1={}", Thread.currentThread().getName());
+  Path path = Paths.get("classpath:test.yaml");
+
+  return Files.deleteIfExists(path);
+}).subscribeOn(Schedulers.boundedElastic());
+
+Boolean result = files.blockOptional().orElse(null);
+```
+
+You should use `Schedulers.boundedElastic`, because it creates a dedicated thread to wait for the blocking resource without impacting other non-blocking processing, while also ensuring that there is a limit to the amount of threads that can be created, and blocking tasks that can be enqueued and deferred during a spike.
+
 #### Mutualizing Operator
 
 반복되는 연산을 function<T, V> 으로 묶어서 재사용 할수있으며, 아래의 예제는 동일한 결과가 나온다:
