@@ -14,11 +14,13 @@
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
 - [OSIV](osiv)
+- [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 
 #### Blog
 - [JPA에서 대량의 데이터를 삭제할때 주의해야할 점](https://jojoldu.tistory.com/235)
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
+- [JPA 프로그래밍 정리](https://github.com/cheese10yun/TIL/blob/master/Spring/jpa/jpa.md)
 
 ***
 
