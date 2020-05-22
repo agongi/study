@@ -8,6 +8,14 @@
 - https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose
 ```
 
+#### Index
+
+- [ARG vs ENV](arg-env)
+- [ENTRYPOINT vs CMD](entrypoint-cmd)
+- COPY vs ADD
+
+***
+
 **`Dockerfile` (or docker-compose.yml) 에 기술한 내용으로 `image` 를 만들고,** 
 **해당 이미지로 `container` 실행합니다.**
 
