@@ -8,7 +8,12 @@
 - https://www.baeldung.com/intro-to-querydsl
 ```
 
+#### Index
+
+- [JPAQuery vs SQLQuery vs JPASQLQuery](jpaquery-sqlquery-jpasqlquery)
+
 #### Blog
+
 - [JPASubQuery vs JPAExpressions](https://jojoldu.tistory.com/379?category=637935)
 - [연관관계 없이 Join 조회하기](https://jojoldu.tistory.com/396)
 
@@ -18,9 +23,9 @@
 
 ## 사용방법
 
-기본적으로 JPQL 을 정적 QClass 를 통해 작성한다고 보면된다.
+기본적으로 JPQL 을 정적 QClass 를 통해 작성한다. 라는 개념입니다.
 
-쿼리는 JPAQuery or HibernateQuery 를 통해 생성한다. XYZQuery 를 만들기위한 빌더인 XYZQueryFactory 의 사용이 권장된다.
+쿼리는 JPAQuery or HibernateQuery 를 통해 생성하고, XYZQuery 를 만들기위한 빌더인 XYZQueryFactory 의 사용이 권장된다.
 
 - JPQLQuery
   - JPAQuery
