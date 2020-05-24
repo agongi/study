@@ -23,6 +23,7 @@
 - [Static Provider](static-provider)
 - [ThreadLocal in Spring Bean](threadlocal-in-spring-bean)
 - [RestTemplate](resttemplate)
+- [JdbcTemplate](jdbctemplate)
 - [Profile](profile)
 - [ApplicationEvent](application-event)
 
@@ -51,5 +52,4 @@
 - [Transaction](transaction)
 - [Properties](properties)
 - [AOP](aop)
-- [JDBC](jdbc)
 
