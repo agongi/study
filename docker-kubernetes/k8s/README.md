@@ -24,6 +24,8 @@
 
 <img src='images/1.png'/>
 
+<img src='images/7.png'/>
+
 ### Master
 
 클러스터를 `최대한 바라는 상태를 유지`하는 책임을 담당한다. 
