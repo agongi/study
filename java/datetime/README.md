@@ -7,9 +7,163 @@
 - http://d2.naver.com/helloworld/645609
 ```
 
-### Timestamp vs Instant
+## LocalDateTime
+
+- now
+- from
+  - parse
+  - of
+  - ofInstant
+- to
+  - format
+  - toInstant
+
+```java
+@Test
+public void localDateTimeTest() {
+  // 1. now
+  assertNotNull(LocalDateTime.now());
+  // 2. of
+  assertNotNull(LocalDateTime.of(2020, 03, 15, 23, 59));
+
+  // 3. from
+  LocalDateTime.parse("202003152359", DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+  // 4. to
+  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE_TIME), "2020-03-15T23:59:00");
+  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE), "2020-03-15");
+
+  // plus, minus
+  assertEquals(dateTime.plusDays(1).toString(), "2020-03-16T23:59");
+  assertEquals(dateTime.minusYears(1).toString(), "2019-03-15T23:59");
+
+  // compare
+  assertTrue(dateTime.isBefore(dateTime.plusDays(1)));
+  assertTrue(dateTime.isAfter(dateTime.minusYears(1)));
+}
+```
+
+Instant 를 이용한 conversion 은 아래와 같습니다.
+
+```java
+// to
+localDateTime.toInstant(ZoneOffset.of("+09:00"));
+
+// from java.util.Date
+Date date = new Date();
+LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+```
+
+## ZonedDateTime
+
+- now
+- from
+  - parse
+  - of
+  - ofInstant
+- to
+  - format
+  - toInstant
+
+```java
+@Test
+public void zonedDateTimeTest() {
+  // 1. now
+  assertNotNull(ZonedDateTime.now());
+  // 2. of
+  assertNotNull(ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("Asia/Seoul")));
+
+  // 3. from
+  ZonedDateTime.parse("202003152359+09:00", DateTimeFormatter.ofPattern("yyyyMMddHHmmz"));
+  // 4. to
+  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE_TIME), "2020-03-15T23:59:00+09:00");
+  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE), "2020-03-15+09:00");
+
+  // plus, minus
+  assertEquals(dateTime.plusDays(1).toString(), "2020-03-16T23:59+09:00");
+  assertEquals(dateTime.minusYears(1).toString(), "2019-03-15T23:59+09:00");
+
+  // compare
+  assertTrue(dateTime.isBefore(dateTime.plusDays(1)));
+  assertTrue(dateTime.isAfter(dateTime.minusYears(1)));
+}
+```
+
+Instant 를 이용한 conversion 은 아래와 같습니다.
+
+```java
+// to
+zonedDateTime.toInstant();
+
+// from java.util.Date
+Date date = new Date();
+zonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+```
+
+## Instant
+
+```java
+@Test
+public void instantTest() {
+  // 1. now
+  assertNotNull(Instant.now());
+  // 2. of
+  assertNotNull(Instant.ofEpochMilli(1584284340000L));
+
+  // 3. from
+  Instant instant = Instant.parse("2020-03-15T14:59:00Z");
+  // 4. to
+  assertEquals(instant.toEpochMilli(), 1584284340000L);
+  assertEquals(instant.toString(), "2020-03-15T14:59:00Z");
+}
+```
+
+## Utility
+
+### Duration
+
+초/분/시 를 표현
+
+```java
+Duration duration = Duration.between(LocalDateTime.now(), LocalDateTime.now().minusHours(1));
+```
+
+### Period
+
+일/월/년 을 표현
+
+```java
+Period period = Period.between(LocalDate.now(), LocalDate.now().minusDays(1));
+```
+
+### ZoneRegion extends ZoneId
+
+Region 이나 UTC 기준으로 생성한다. public method 가 제공되지 않아 ZondId 를 통해 생성가능하다.
+
+```java
+ZoneId zoneId = ZoneId.of("Asia/Seoul");
+ZoneId zoneIdUTC = ZoneId.of("UTC+09:00");
+```
+
+### ZoneOffset extends ZoneId
+
+offset 을 제공해서 생성한다.
+
+```java
+ZoneId zoneOffset = ZoneOffset.of("+09:00");
+```
+
+둘의 차이점은 ZoneRules 의 유무이다. 각 region 마다 summer-time 같은 rule 이 존재 할수있는데
+
+- ZoneOffset: Rule 미포함
+- ZoneResion: Rule 포함
+
+## 차이점
+
+### Instant vs Timestamp
 
 \#toString 시 zone 의 유무만 다르고 정확하게 동일한 시간대를 의미
+
+> 대신 timestamp 는 int 라서 2038 이후의 시간을 표현하지 못함. instant 는 long
 
 ```java
 @Test
@@ -28,6 +182,11 @@ instant=2020-03-15T13:16:37.688885Z
 timestamp=2020-03-15 22:16:37.688885
 ```
 
+- Instant#toString
+  - UTC+0 의 시간으로 표시
+- Timestamp#toString
+  - SystemDefaultZone 의 시간으로 표시 (한국에선 +09:00)
+
 ### java.sql.Date vs java.util.Date
 
 - java.util.Date
@@ -45,96 +204,13 @@ timestamp=2020-03-15 22:16:37.688885
   - Equivalent DB `timestamp` type
   - **nanos included**
 
-### Usage
-
-```java
-@Test
-public void localDateTimeTest() {
-  // #now
-  assertNotNull(LocalDateTime.now());
-  // #of
-  assertNotNull(LocalDateTime.of(2020, 03, 15, 23, 59));
-
-  // String -> LocalDateTime
-  LocalDateTime dateTime = LocalDateTime.parse("202003152359", DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-  // LocalDateTime -> String
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE_TIME), "2020-03-15T23:59:00");
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE), "2020-03-15");
-
-  // plus, minus
-  assertEquals(dateTime.plusDays(1).toString(), "2020-03-16T23:59");
-  assertEquals(dateTime.minusYears(1).toString(), "2019-03-15T23:59");
-
-  // compare
-  assertTrue(dateTime.isBefore(dateTime.plusDays(1)));
-  assertTrue(dateTime.isAfter(dateTime.minusYears(1)));
-}
-
-@Test
-public void localDateTest() {
-  // #now
-  assertNotNull(LocalDate.now());
-  // #of
-  assertNotNull(LocalDate.of(2020, 03, 15));
-
-  // String -> LocalDate
-  LocalDate date = LocalDate.parse("202003152359", DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-  // LocalDate -> String
-  assertEquals(date.format(DateTimeFormatter.ISO_DATE), "2020-03-15");
-
-  // plus, minus
-  assertEquals(date.plusDays(1).toString(), "2020-03-16");
-  assertEquals(date.minusYears(1).toString(), "2019-03-15");
-
-  // compare
-  assertTrue(date.isBefore(date.plusDays(1)));
-  assertTrue(date.isAfter(date.minusYears(1)));
-}
-
-@Test
-public void zonedDateTimeTest() {
-  // #now
-  assertNotNull(ZonedDateTime.now());
-  // #of
-  assertNotNull(ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("Asia/Seoul")));
-
-  // String -> LocalDateTime
-  ZonedDateTime dateTime = ZonedDateTime.parse("202003152359+09:00", DateTimeFormatter.ofPattern("yyyyMMddHHmmz"));
-  // LocalDateTime -> String
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE_TIME), "2020-03-15T23:59:00+09:00");
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE), "2020-03-15+09:00");
-
-  // plus, minus
-  assertEquals(dateTime.plusDays(1).toString(), "2020-03-16T23:59+09:00");
-  assertEquals(dateTime.minusYears(1).toString(), "2019-03-15T23:59+09:00");
-
-  // compare
-  assertTrue(dateTime.isBefore(dateTime.plusDays(1)));
-  assertTrue(dateTime.isAfter(dateTime.minusYears(1)));
-}
-
-@Test
-public void instantTest() {
-  // #now
-  assertNotNull(Instant.now());
-  // #of
-  assertNotNull(Instant.ofEpochMilli(1584284340000L));
-
-  // String -> Instant
-  Instant instant = Instant.parse("2020-03-15T14:59:00Z");
-  // Instant -> String
-  assertEquals(instant.toEpochMilli(), 1584284340000L);
-  assertEquals(instant.toString(), "2020-03-15T14:59:00Z");
-}
-```
-
 ***
 
-Prior to JDK 8
+> Prior to JDK 8
 
-### Convert
+## Convert
 
-#### Date - String
+### Date - String
 ```java
 // date to string
 Date date = new Date();
@@ -160,7 +236,7 @@ private Date regDate;
 ```
 
 ### Operation
-#### Modification
+### Modification
 ```java
 Date date = new Date();
 
@@ -172,7 +248,7 @@ date = DateUtils.addMonths(date, -1);
 date = DateUtils.truncate(date, Calendar.MONTH); // truncate
 ```
 
-#### Comparison
+### Comparison
 ```java
 Date date1 = new Date();
 date1 = DateUtils.addMonths(date1, 1);
