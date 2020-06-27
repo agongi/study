@@ -8,9 +8,7 @@
 - https://blog.outsider.ne.kr/794
 ```
 
-### Cores
-
-#### Resource
+## Resource
 
 Resource is a physical file that stores key=pair values. Spring provides abstraction interface for better accessing as following:
 
@@ -21,7 +19,7 @@ Resource is a physical file that stores key=pair values. Spring provides abstrac
 - InputStreamResource
 - ByteArrayResource
 
-#### ResourceLoader
+## ResourceLoader
 
 All applicationContext (ex. AnnotationConfigWebApplicationContext, ClassPathXmlApplicationContext) implement ResourceLoader interface for providing resources that corresponds to type.
 
@@ -42,7 +40,7 @@ public interface ResourceLoaderAware {
 }
 ```
 
-#### System Properties
+## System Properties
 
 System properties are the values from environment variables and/or JVM launch options.
 
@@ -85,38 +83,41 @@ The table describes some of the system properties provided as default.
 | `"user.home"`       | User home directory                                          |
 | `"user.name"`       | User account name                                            |
 
-### Practices
+## Practices
 
-#### Resource
+### Resource
 
-Resource interface 의 구현클래스 (ex. ClassPathResource) 를 이용할때는 prefix 없이 바로 URI 만 입력한다.
+ResourceUtils 를 통해 가져올때는 prefix 가 필요하지만, 구현클래스를 직접 지정할때는 없어도 된다.
 
-> 특정 구현 클래스를 사용했다는 의미가 이미 prefix 를 명시한것이나 다름없음
+>특정 구현 클래스를 사용했다는 의미가 이미 prefix 를 명시한것이나 다름없음
+
+- Resource
+  - \#getFile
+  - \#getInputStream
+- File
+  - FileInputStream
 
 ```java
 /**
 * Spring#Resource 로 properties load
 */
 private static class ResourceTest {
-  @Value("{classpath:application.yml}")
-  private Resource resource1;
-
   public ResourceTest() throws FileNotFoundException {
-    Resource resource2 = new ClassPathResource("application.yml");
-    File file = ResourceUtils.getFile("classpath:application.yml");
-    Properties prop1 = new Properties();
-    Properties prop2 = new Properties();
-    Properties prop3;
-    Properties prop4;
+    Resource resource = new ClassPathResource("application.yml");
+    Properties prop = new Properties();
 
     try {
-      // traditional-approach
-      prop1.load(new FileInputStream(file));
-      // traditional-approach
-      prop2.load(new InputStreamReader(resource1.getInputStream(), "UTF-8"));
-      // by utils
-      prop3 = PropertiesLoaderUtils.loadProperties(resource1);
-      prop4 = PropertiesLoaderUtils.loadProperties(resource2);
+      // from resource#1
+      prop.load(new InputStreamReader(resource.getInputStream(), "UTF-8"));
+      // from resource#2
+      prop = PropertiesLoaderUtils.loadProperties(resource);
+
+      // from file#1
+      prop.load(new FileInputStream(resource.getFile()));
+      // from file#2
+      File file = ResourceUtils.getFile("classpath:application.yml");
+      prop.load(new FileInputStream(file));
+
     } catch (IOException e) {
       throw new BaseRuntimeException("properties load 실패");
     }
@@ -124,26 +125,16 @@ private static class ResourceTest {
 }
 ```
 
-#### ResourceUtils
+### PatternMatcher
 
-Spring providing ResourceUtils requires `location-prefix` to distinguish the type of resource.
+** 패턴을 인식하기위해선 (즉 directory 지정) patternResolver 가 필요하다.
 
 ```java
-/**
- * Spring#ResourceUtils 로 properties load
- */
-public static void main(String[] args) throws IOException {
-  File file = ResourceUtils.getFile("classpath:application.yml");
-
-  Properties prop1 = new Properties();
-  prop1.load(new FileInputStream(file));
-
-  Properties prop2 = new Properties();
-  prop2.load(new FileReader(file));
-}
+PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+Resource[] resources = resolver.getResources("classpath:/**/*.yml");
 ```
 
-#### Environment/@Value
+### Environment/@Value
 
 ```java
 /**
@@ -153,15 +144,16 @@ public class LocaleConfig implements EnvironmentAware {
 	// value
   @Value("${title}")
   private String title1;
-  // value default
   @Value("${title:defaultTitle}")
   private String title2;
+  
   // SpEL
   @Value("#{systemProperties['title']}")
   private String title3;
-  // SpEL default
   @Value("#{systemProperties['title'] ?: defaultTitle}")
   private String title4;
+  
+  // env
   private Environment env;
 
   @Override
@@ -175,7 +167,7 @@ public class LocaleConfig implements EnvironmentAware {
 }
 ```
 
-#### PlaceHolder
+### PlaceHolder
 
 ```java
 @BeforeClass
