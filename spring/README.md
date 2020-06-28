@@ -47,6 +47,7 @@
 - [Spring Batch](spring-batch)
 - [Spring Test](spring-test)
 - [Spring Security](spring-security)
+- [Spring Utils](spring-utils)
 - [MVC](mvc)
 - [Bean](bean)
 - [Transaction](transaction)
