@@ -36,6 +36,10 @@ ReflectionUtils.invokeMethod(method, new Demo());
 
 ## ClassUtils
 
+```
+... TDB
+```
+
 ## BeanUtils
 
 Bean instance (POJO 까지 포함해서) 에 대한 PropertyDescriptor 를 가져오는 유틸.
@@ -91,6 +95,12 @@ for (PropertyDescriptor descriptor : descriptors) {
 ```
 
 > null 을 직접 전달하면 NPE 발생
+
+## AnnotationUtils
+
+여러개의 경로에서 Annotation 을 찾는 utils
+
+<img src="images/1.png" width="75%"/>
 
 ## TypeUtils
 
