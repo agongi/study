@@ -28,7 +28,7 @@ All applicationContext (ex. AnnotationConfigWebApplicationContext, ClassPathXmlA
 ```java
 // applicationContext implements resourceLoader
 public interface ResourceLoader {
-    Resource getResource(String location);
+  Resource getResource(String location);
 }
 ```
 
@@ -36,7 +36,7 @@ ResourceLoader could be injected using ResourceLoaderAware.
 
 ```java
 public interface ResourceLoaderAware {
-   void setResourceLoader(ResourceLoader resourceLoader);
+  void setResourceLoader(ResourceLoader resourceLoader);
 }
 ```
 
@@ -141,18 +141,18 @@ Resource[] resources = resolver.getResources("classpath:/**/*.yml");
 * Environment (and/or ApplicationContext)
 */
 public class LocaleConfig implements EnvironmentAware {
-	// value
+  // value
   @Value("${title}")
   private String title1;
   @Value("${title:defaultTitle}")
   private String title2;
-  
+
   // SpEL
   @Value("#{systemProperties['title']}")
   private String title3;
   @Value("#{systemProperties['title'] ?: defaultTitle}")
   private String title4;
-  
+
   // env
   private Environment env;
 

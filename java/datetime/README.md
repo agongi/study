@@ -7,6 +7,23 @@
 - http://d2.naver.com/helloworld/645609
 ```
 
+## LocalDate
+
+Instant 를 이용한 conversion 은 아래와 같습니다.
+
+```java
+// to
+localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+// to java.util.Date
+Date date = new Date();
+date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+// from java.util.Date
+LocalDate localDate = LocalDate.now();
+Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+```
+
 ## LocalDateTime
 
 - now
@@ -29,16 +46,16 @@ public void localDateTimeTest() {
   // 3. from
   LocalDateTime.parse("202003152359", DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
   // 4. to
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE_TIME), "2020-03-15T23:59:00");
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE), "2020-03-15");
+  dateTime.format(DateTimeFormatter.ISO_DATE_TIME);	// 2020-03-15T23:59:00
+  dateTime.format(DateTimeFormatter.ISO_DATE);	// 2020-03-15
 
   // plus, minus
-  assertEquals(dateTime.plusDays(1).toString(), "2020-03-16T23:59");
-  assertEquals(dateTime.minusYears(1).toString(), "2019-03-15T23:59");
+  dateTime.plusDays(1).toString();	// 2020-03-16T23:59
+  dateTime.minusYears(1).toString();	// 2019-03-15T23:59
 
   // compare
-  assertTrue(dateTime.isBefore(dateTime.plusDays(1)));
-  assertTrue(dateTime.isAfter(dateTime.minusYears(1)));
+  dateTime.isBefore(dateTime.plusDays(1));	// true
+  dateTime.isAfter(dateTime.minusYears(1));	// true
 }
 ```
 
@@ -51,6 +68,10 @@ localDateTime.toInstant(ZoneOffset.of("+09:00"));
 // from java.util.Date
 Date date = new Date();
 LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+
+// to java.util.Date
+LocalDateTime localDateTime = LocalDateTime.now();
+Date.from(localDateTime.toInstant(ZoneOffset.ofHours(9)));
 ```
 
 ## ZonedDateTime
@@ -75,16 +96,16 @@ public void zonedDateTimeTest() {
   // 3. from
   ZonedDateTime.parse("202003152359+09:00", DateTimeFormatter.ofPattern("yyyyMMddHHmmz"));
   // 4. to
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE_TIME), "2020-03-15T23:59:00+09:00");
-  assertEquals(dateTime.format(DateTimeFormatter.ISO_DATE), "2020-03-15+09:00");
+	dateTime.format(DateTimeFormatter.ISO_DATE_TIME);	// 2020-03-15T23:59:00+09:00
+	dateTime.format(DateTimeFormatter.ISO_DATE);	// 2020-03-15+09:00
 
   // plus, minus
-  assertEquals(dateTime.plusDays(1).toString(), "2020-03-16T23:59+09:00");
-  assertEquals(dateTime.minusYears(1).toString(), "2019-03-15T23:59+09:00");
+	dateTime.plusDays(1).toString();	// 2020-03-16T23:59+09:00
+	dateTime.minusYears(1).toString(); //	2019-03-15T23:59+09:00
 
   // compare
-  assertTrue(dateTime.isBefore(dateTime.plusDays(1)));
-  assertTrue(dateTime.isAfter(dateTime.minusYears(1)));
+	dateTime.isBefore(dateTime.plusDays(1));	// true
+	dateTime.isAfter(dateTime.minusYears(1));	// true
 }
 ```
 
@@ -96,7 +117,11 @@ zonedDateTime.toInstant();
 
 // from java.util.Date
 Date date = new Date();
-zonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+
+// to java.util.Date
+ZonedDateTime zonedDateTime = ZonedDateTime.now();
+Date.from(zonedDateTime.toInstant());
 ```
 
 ## Instant
