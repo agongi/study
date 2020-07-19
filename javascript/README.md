@@ -19,6 +19,7 @@
 - CSS
   - less
   - sass
+- [CORS (Cross-Origin Resource Sharing)](https://evan-moon.github.io/2020/05/21/about-cors/)
 
 #### Blog
 - [jQuery - Ajax - crossdomain 이슈](http://igna.tistory.com/19)
