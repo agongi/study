@@ -10,8 +10,8 @@
 #### Index
 
 - [Reactor](reactor)
-- [WebFlux](web-flux)
-- [WebClient](web-client)
+- [WebFlux](webflux)
+- [WebClient](webclient)
 
 #### Blog
 

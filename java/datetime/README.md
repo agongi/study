@@ -16,12 +16,12 @@ Instant 를 이용한 conversion 은 아래와 같습니다.
 localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
 
 // to java.util.Date
-Date date = new Date();
-date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-// from java.util.Date
 LocalDate localDate = LocalDate.now();
 Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+// from java.util.Date
+Date date = new Date();
+date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 ```
 
 ## LocalDateTime
