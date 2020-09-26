@@ -33,6 +33,7 @@
 - [StopWatch](stop-watch)
 - [ThreadLocal](threadlocal)
 - [instanceof](instanceof)
+- [Remote Debug](remote-debug)
 
 #### Blog
 - [Java Enum 활용기](http://woowabros.github.io/tools/2017/07/10/java-enum-uses.html)
@@ -44,7 +45,6 @@
 - [Java InterruptedException은 어따 쓰는겨?](http://happinessoncode.com/2017/10/09/java-thread-interrupt/)
 - [ParameterizedType](https://homoefficio.github.io/2016/11/30/클래스-리터럴-타입-토큰-수퍼-타입-토큰/)
 - [Java에서 외부 프로세스를 실행할 때](https://d2.naver.com/helloworld/1113548)
-- [Guava Cache](https://www.baeldung.com/guava-cache)
 
 ***
 
