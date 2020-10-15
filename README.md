@@ -10,7 +10,7 @@
 - FE
   - [HTML](html)
   - [JavaScript](javascript)
-  - React
+  - [TypeScript](typescript)
 - Persistence
   - [ORM](orm)
   - [RDB](rdb)
