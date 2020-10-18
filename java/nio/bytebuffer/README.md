@@ -86,6 +86,8 @@ ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
 - \#put(byte)
 - \#get
 
+> ((DirectBuffer)directBuffer).cleaner().clean() 을 이용해서 명시적으로 DirectBuffer clear 도 가능하다.
+
 ### Convert
 #### String to byte[]
 
