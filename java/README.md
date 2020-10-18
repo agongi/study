@@ -43,7 +43,7 @@
 - [Datetime](datetime)
 - [Number](number)
 - [Pattern-Matcher](pattern-matcher)
-- [StopWatch](stop-watch)
+- [ElapsedTime](elapsed-time)
 - [ThreadLocal](threadlocal)
 - [instanceof](instanceof)
 - [Remote Debug](remote-debug)
