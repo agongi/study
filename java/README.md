@@ -27,8 +27,6 @@
 - [Primitive type vs Boxed type](primitive-boxed)
 - [Interface vs Abstract](interface-abstract)
 - [equals() and/or hashCode()](equals-hashcode)
-- [Comparable vs Comparator](comparable-comparator)
-- [Iterator vs foreach vs for](iterator-foreach-for)
 - [MessageFormat.format vs String.format](message-format-string-format)
 - [Nested Class](nested-class)
 - [How HashMap works](how-hashmap-works)
