@@ -78,7 +78,7 @@ public class UserEventListener {
 ## Listener - ApplicationListener
 
 ```java
-@Component
+@Component or META-INF/spring.factories
 public class UserEventListener implements ApplicationListener<UserEvent> {
   @Override
   public void onApplicationEvent(UserEvent event) {
@@ -86,3 +86,19 @@ public class UserEventListener implements ApplicationListener<UserEvent> {
   }
 }
 ```
+
+or
+
+```java
+public class UserEventListener implements ApplicationListener<UserEvent> {
+  @Override
+  public void onApplicationEvent(UserEvent event) {
+    // 해당 타입의 이벤트만 받음 (topic)
+  }
+}
+
+// META-INF/spring.factories
+org.springframework.context.ApplicationListener=\
+UserEventListener
+```
+
