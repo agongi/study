@@ -8,14 +8,9 @@
 
 ## ImportSelector
 
-@Import 에서 load 할 Class 를 동적으로 선택할 수 있다.
-
-> method return 이 String[]. 즉 무조건 import 할 className 을 전달해야한다.
+Enable~ 에서 import 할 @Configuration class 자체를 선택 할때 사용한다.
 
 ```java
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
 @Import(CustomImportSelector.class)
 public @interface EnableCustomFunc {
   String value();
@@ -24,48 +19,36 @@ public @interface EnableCustomFunc {
 
 ```java
 public class CustomImportSelector implements ImportSelector {
-
   @Override
   public String[] selectImports(AnnotationMetadata importingClassMetadata) {
     Map<String, Object> attrMap = importingClassMetadata.getAnnotationAttributes(EnableCustomFunc.class.getName());
     AnnotationAttributes attributes = AnnotationAttributes.fromMap(attrMap);
 
     var importName = attributes.getString("value");
-
     return new String[] {getMappingName(importName)};
   }
 
-	// select importing class based on params passing through field.value
   private String getMappingName(String importName) {
-    if (StringUtils.isBlank(importName)) {
-      throw new IllegalArgumentException();
-    }
-
-    Class<?> clz = null;
-    switch(importName) {
-      case "A":
-        clz = A.class;
-        break;
-      case "B":
-        clz = B.class;
-        break;
-    }
-
-    return clz.getName();
+    // if-else based on params
+    return CustomConfig.class.getName();
   }
 }
 ```
 
+```java
+@Configuration
+public class CustomConfig {
+  // ...
+}
+```
+
+> **DeferredImportSelector** that runs after all @Configuration beans have been processed
+
 ## ImportAware
 
-@Import 에 전달된 params 를 사용할때 필요함.
-
-> method schme 이 void 이므로, 결국 setter
+Enable~ 에서 import 한 @Configuration class 에서 annotation 의 value 를 가져올 때 사용한다.
 
 ```java
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
 @Import(CustomConfig.class)
 public @interface EnableCustomFunc {
   String value();
@@ -73,7 +56,7 @@ public @interface EnableCustomFunc {
 ```
 
 ```java
-@Configurationf
+@Configuration
 public class CustomConfig implements ImportAware {
   private String importClassName;
   
@@ -84,6 +67,36 @@ public class CustomConfig implements ImportAware {
 
     var importName = attributes.getString("value");
     this.importClassName = importName;
+  }
+}
+```
+
+## ImportBeanDefinitionRegistrar
+
+Enable~ 에서 import 한 class 에서 register bean programmatically (@Configuration class 가 아니다)
+
+```java
+@Import(CustomRegistrar.class)
+public @interface EnableCustomFunc {
+  String value();
+}
+```
+
+```java
+public class CustomRegistrar implements ImportBeanDefinitionRegistrar {
+  private final static String BEAN_NAME = "restTemplate";
+
+  @Override
+  public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+    Map<String, Object> attrMap = importingClassMetadata.getAnnotationAttributes(EnableCustomFunc.class.getName());
+    AnnotationAttributes attributes = AnnotationAttributes.fromMap(attrMap);
+
+    var importName = attributes.getString("value");
+
+    var beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RestTemplate.class)
+      .addConstructorArgValue(BeanUtils.instantiate(value))
+      .getBeanDefinition();
+    registry.registerBeanDefinition(BEAN_NAME, beanDefinition);
   }
 }
 ```
