@@ -1,4 +1,4 @@
-## ApplicationEvent
+## @EventListener - ApplicationListener
 
 ```
 ㅁ Author: suktae.choi
@@ -6,9 +6,7 @@
 - https://www.baeldung.com/spring-events
 ```
 
-## Flow
-
-### Event
+## Event
 
 ```java
 public class UserEvent implements ApplicationEvent {
@@ -16,7 +14,9 @@ public class UserEvent implements ApplicationEvent {
 }
 ```
 
-### Publisher
+***
+
+## Publisher
 
 ```java
 public class UserEventPublisher implements ApplicationEventPublisherAware {
@@ -41,23 +41,30 @@ public class UserEventPublisher implements ApplicationEventPublisherAware {
 }
 ```
 
-### Listener
+Publisher 는 제공되는 Annotation 방식이 없다.
+
+- 그에 대한 개선정리 https://supawer0728.github.io/2018/03/24/spring-event/
+
+***
+
+## Listener - @EventListener
 
 ```java
-public class UserEventListener implements ApplicationListener<UserEvent> {
-  @Override
-  public void onApplicationEvent(UserEvent event) {
-    // 모든 publisher 의 이벤트를 받음
-  }
-
+@Component
+public class UserEventListener {
   @EventListener
-  public void onEvent(UserEvent event) {
+  public void onEventAll(UserEvent event) {
     // 모든 publisher 의 이벤트를 받음
   }
 
   @EventListener(UserEvent.class)
-  public void onEvent(UserEvent event) {
+  public void onUserEvent(UserEvent event) {
     // 해당 타입의 이벤트만 받음 (topic)
+  }
+
+  @EventListener(condition = "#UserEvent.isAdult")
+  public void onUserEventIfAdult(UserEvent event) {
+    // conditional
   }
 
   // after tx, this listener invoked
@@ -68,21 +75,14 @@ public class UserEventListener implements ApplicationListener<UserEvent> {
 }
 ```
 
-ApplicationContext 는 ApplicationEventPublisher 를 상속하고있다. 그래서 #publishEvent 는 ApplicationContext 로 전달되고
+## Listener - ApplicationListener
 
-매칭되는 listener 로 메세지를 전달한다.
-
-> Listener 는 빈으로 등록해야 ctx 에서 매칭이 가능하다.
-
-매칭되는 Listener 의 기준은 아래와같다:
-
-- ApplicationListener#onApplicationEvent method
-- @EventListener 가 선언된 method
-- @EventListener(UserEvent.class) 로 발행된 event 와 동일한 타입을 선언한 method
-
-## AOP
-
-listener 는 annotation 이 있는데, publisher 는 아직 없다. 깔끔한 비지니스 로직을 원하면 send 를 AOP 로 감싸는 것도 방법이다.
-
-- links https://supawer0728.github.io/2018/03/24/spring-event/
-
+```java
+@Component
+public class UserEventListener implements ApplicationListener<UserEvent> {
+  @Override
+  public void onApplicationEvent(UserEvent event) {
+    // 해당 타입의 이벤트만 받음 (topic)
+  }
+}
+```

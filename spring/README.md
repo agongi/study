@@ -24,7 +24,7 @@
 - [RestTemplate](resttemplate)
 - [JdbcTemplate](jdbctemplate)
 - [Profile](profile)
-- [ApplicationEvent](application-event)
+- [@EventListener - ApplicationListener](eventlistener-applicationlistener)
 - [MVC](mvc)
 - [Bean](bean)
 - [Transaction](transaction)
