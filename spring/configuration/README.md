@@ -1,4 +1,4 @@
-## Configuration
+## @Configuration
 
 ```
 ㅁ Author: suktae.choi
@@ -6,7 +6,15 @@
 - http://haviyj.tistory.com/33
 ```
 
+#### Index
+
+- [@Import](import)
+- [@DependsOn - smartlifecycle](dependsn-smartlifecycle)
+
+***
+
 #### @Configuration
+
 It defines properties line XML-based settings
 
 #### @Primary
@@ -18,9 +26,15 @@ Bean is created once getBean() is invoked
 
 #### @DependsOn
 
+bean initialization must run after that bean
+
 #### @Import
 
+add more @configuration
+
 #### @ContextConfiguration
+
+test packages. declare @configuration or any context
 
 #### @Propertysources
 

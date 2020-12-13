@@ -17,7 +17,6 @@
 - [@Pageable](pageable)
 - [@DateTimeFormat](date-time-format)
 - [@Configuration](configuration)
-- [@Import](import)
 - [Classpath](classpath)
 - [SLF4J](https://sonegy.wordpress.com/2014/05/23/how-to-slf4j/)
 - [Static Provider](static-provider)
@@ -26,6 +25,11 @@
 - [JdbcTemplate](jdbctemplate)
 - [Profile](profile)
 - [ApplicationEvent](application-event)
+- [MVC](mvc)
+- [Bean](bean)
+- [Transaction](transaction)
+- [Properties](properties)
+- [AOP](aop)
 
 #### Blog
 - [Better application events](https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2)
@@ -48,9 +52,3 @@
 - [Spring Test](spring-test)
 - [Spring Security](spring-security)
 - [Spring Utils](spring-utils)
-- [MVC](mvc)
-- [Bean](bean)
-- [Transaction](transaction)
-- [Properties](properties)
-- [AOP](aop)
-
