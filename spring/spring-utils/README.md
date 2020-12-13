@@ -20,7 +20,14 @@ for (Method method : methods) {
 ## commons.lang3.reflect.FieldUtils
 
 ```java
-.. TBD
+List<Field> fields = FieldUtils.getFieldsListWithAnnotation(Demo.class, CustomTag.class);	// target fields
+
+for (Field field : fields) {
+  field.setAccessible(true);
+	// 2-ways
+  var test1 = (CustomField)ReflectionUtils.getField(field, ftpProperties);
+  var test2 = (CustomField)field.get(ftpProperties);
+}
 ```
 
 ## ReflectionUtils
@@ -34,11 +41,21 @@ Method method = null; // target method
 ReflectionUtils.invokeMethod(method, new Demo());
 ```
 
+***
+
+## commons.lang3.ClassUtils
+
+```
+... TDB
+```
+
 ## ClassUtils
 
 ```
 ... TDB
 ```
+
+***
 
 ## BeanUtils
 
