@@ -3,6 +3,9 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
+- https://docs.oracle.com/javase/tutorial/essential/io/file.html
+- https://mkyong.com/tutorials/java-io-tutorials/
+- https://dog-foot-story.tistory.com/45
 - http://palpit.tistory.com/640
 - https://javapapers.com/java/java-nio-file-read-write-with-channels/
 - http://eincs.com/2009/08/java-nio-bytebuffer-channel/
@@ -18,96 +21,130 @@
 
 <img src='images/1.png'/>
 
-| Stream                                           | Channel           |
-| ------------------------------------------------ | ----------------- |
-| one-way<br /> - InputStream<br /> - OutputStream | two-way           |
-| 보통은 byte[]                                    | 보통은 ByteBuffer |
+| Stream                                         | Channel           |
+| ---------------------------------------------- | ----------------- |
+| one-way<br/> - InputStream<br/> - OutputStream | two-way           |
+| 보통은 byte[]                                  | 보통은 ByteBuffer |
 
-### Write
+- Write
+  - ~~Files.write~~
+  - Files.newOutputStream
+  - Files.newBufferedWriter
+  - ~~(Channel 을 쓴다면) Files.newByteChannel#write~~
 
-- ~~Files.write~~
-- Files.newOutputStream
-- Files.newBufferedWriter
-- (Channel 을 쓴다면) Files.newByteChannel#write
+- Read
+  - ~~Files.readAllByte / Files.readAllLines~~
+  - Files.newInputStream
+  - Files.newBufferedReader
+  - ~~(Channel 을 쓴다면) Files.newByteChannel#read~~
 
-### Read
+### Resource - Files#lines
 
-- ~~Files.readAllByte / Files.readAllLines~~
-- Files.newInputStream
-- Files.newBufferedReader
-- (Channel 을 쓴다면) Files.newByteChannel#read
-
-> **Resource**
+Resource => String 을 통해 처리하는 방식이다.
 
 ```java
 public static void main(String[] args) throws IOException {
   Resource resource = new ClassPathResource("ips");
   Path path = Path.of(resource.getURI());
-  // stream
+  // input
   Stream<String> lines = Files.lines(path);
-
+  // consume
   lines.forEach(o -> {
     System.out.println(o);
   });
 }
 ```
 
-> **InputStream**
+### InputStream - Files#lines
 
-| 종류              | Data 형식                    | 비고    |      |
-| ----------------- | ---------------------------- | ------- | ---- |
-| InputStream       | byte                         | #read   |      |
-| InputStreamReader | char (string 단건)           | #read   |      |
-| BufferedReader    | string (string \n 만큼 읽음) | \#lines |      |
+InputStream => String 을 통해 처리하는 방식이다.
 
 ```java
 public static void main(String[] args) throws IOException {
   InputStream inputStream = ClassLoader.getSystemResourceAsStream("ips");
   BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-  // stream
+  // input
   Stream<String> lines = bufferedReader.lines();
-  
+  // consume
   lines.forEach(o -> {
     System.out.println(o);
   });
 }
 ```
 
-Resource 를 읽을때 1) ClassPath 2) Class 에서 읽을때의 경로 지정이 다르다.
+| 종류              | Data 형식                    | 비고    |
+| ----------------- | ---------------------------- | ------- |
+| InputStream       | byte                         | #read   |
+| InputStreamReader | char (string 단건)           | #read   |
+| BufferedReader    | string (string \n 만큼 읽음) | \#lines |
 
-```java
-public static void main(String[] args) throws IOException {
-  InputStream is1 = ClassLoader.getSystemResourceAsStream("ips");	// exists!
-  InputStream is2 = ClassLoader.getSystemResourceAsStream("/ips");
-  InputStream is3 = Test.class.getClassLoader().getResourceAsStream("ips"); // exists!
-  InputStream is4 = Test.class.getClassLoader().getResourceAsStream("/ips");
-  InputStream is5 = Test.class.getResourceAsStream("ips");
-  InputStream is6 = Test.class.getResourceAsStream("/ips"); // exists!
-}
-```
+### File - Files#lines
 
-ClassLoader 를 이용해서 읽을때는, 이미 absolute path 이므로 `/` 없이 지정해야한다.
-
-Class 로 부터 읽을때는, 클래스 기준에서의 relative path 이므로, `/` 지정이 필요하다.
-
-> File
+기존 패키지 호환을 위해 java.io.File 이 필요하면, 이렇게 처리하자.
 
 ```java
 public static void main(String[] args) throws IOException {
   File file = new File("any/path");
-  // File => Path
-  BufferedReader bufferedReader = Files.newBufferedReader(file.toPath());
-  // File => BufferedReader
-  BufferedReader bufferedReader1 = new BufferedReader(new FileReader(file));
-	
-  // stream
-  bufferedReader.lines().forEach(o -> {
+  // input
+  Stream<String> lines = Files.lines(file.toPath());
+  // consume
+  lines.forEach(o -> {
     System.out.println(o);
   });
 }
 ```
 
-Scanner 는 사용하지 말자. 그래서 정리하지 않음
+### InputStream - OutputStream
+
+Stream - Stream 으로 직접 이용할때는 아래로 일괄처리.
+
+```java
+public static void main(String[] args) throws IOException {
+  try (var in = new BufferedInputStream(Files.newInputStream(Path.of("any/path")));
+       var out = new BufferedOutputStream(Files.newOutputStream(Path.of("any/path")))) {
+    byte[] read = new byte[8192];
+    // input
+    if (in.read(read) != -1) {
+      // consume
+      out.write(read);
+    }
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+```
+
+해당 구현이 java 9 부터는 `InputStream#transferTo` 로 제공된다.
+
+```java
+public static void main(String[] args) throws IOException {
+  try (var in = Files.newInputStream(Path.of("any/path"));
+       var out = Files.newOutputStream(Path.of("any/path"))) {
+    in.transferTo(out);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+```
+
+## ClassLoader
+
+Resource 를 읽을때 1) ClassPath 2) Class 에서 읽을때의 경로 지정이 다르다.
+
+```java
+public static void main(String[] args) throws IOException {
+  InputStream is1 = ClassLoader.getSystemResourceAsStream("ips");
+  InputStream is2 = ClassLoader.getSystemResourceAsStream("/ips");	// error!
+  InputStream is3 = Test.class.getClassLoader().getResourceAsStream("ips");
+  InputStream is4 = Test.class.getClassLoader().getResourceAsStream("/ips");	// error!
+  
+  InputStream is5 = Test.class.getResourceAsStream("ips");	// error!
+  InputStream is6 = Test.class.getResourceAsStream("/ips");
+}
+```
+
+- ClassLoader 를 이용해서 읽을때는, 이미 absolute path 이므로 `/` 없이 지정해야한다.
+- Class 로 부터 읽을때는, 클래스 기준에서의 relative path 이므로, `/` 지정이 필요하다.
 
 ## Paths
 
@@ -132,7 +169,7 @@ public static Path of(URI uri) {
 }
 ```
 
-> File
+- File
 
 ```java
 public static void main(String[] args) throws IOException {
@@ -141,7 +178,7 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-> Resource
+- Resource
 
 ```java
 public static void main(String[] args) throws IOException {
