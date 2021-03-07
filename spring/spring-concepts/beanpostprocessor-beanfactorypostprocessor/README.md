@@ -1,21 +1,17 @@
-## BeanPostProcessor
-`BeanPostProcessor` that is notified when bean is instantiated **for all bean's life-cycle.**
+## BeanPostProcessor vs BeanFactoryPostProcessor
 
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://www.mkyong.com/java/java-custom-annotations-example/
-- https://deors.wordpress.com/2011/09/26/annotation-types/
-- http://javadevtips.blogspot.kr/2012/12/work-with-annotations-in-spring.html
-- https://dzone.com/articles/spring-annotation-processing-how-it-works
-- http://www.alexecollins.com/java-annotation-processor-tutorial/
-- http://snoopy81.tistory.com/171
-- http://www.programcreek.com/java-api-examples/index.php?api=org.springframework.core.annotation.AnnotationUtils
-- http://knight76.tistory.com/entry/spring-Spring-Utis%EC%9D%98-ReflectionUtils-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C
-- http://dev-ahn.tistory.com/130
+- http://wonwoo.ml/index.php/post/899
 ```
 
-### BeanPostProcessor
+## BeanPostProcessor
+
+- 각 bean 생성될때마다 호출 (즉 bean 의 개수만큼 호출됨)
+- 생성된 빈의 afterPropertiesSet 전/후 hooks
+
 #### Hello (== Target Class)
 ```java
 /**
@@ -96,7 +92,13 @@ public class Application {
 }
 ```
 
-### AspectJ
+## BeanFactoryPostProcessor
+
+- BeanFactory 는 ApplicationContext 의 부모로써, 1번만 호출됨
+- (아직 생성안된) bean 의 metadata 를 변경하기 위해 사용됨
+
+## AspectJ
+
 #### FruitAspect
 ```java
 @AspectJ
