@@ -42,13 +42,13 @@
 - [MVC](mvc)
 - [Transaction](transaction)
 - [Properties](properties)
-- [AOP](aop)
 - [AutoConfiguration](auto-configuration)
 
 #### Series
 
 - [Spring Boot](spring-boot)
 - [Spring Batch](spring-batch)
+- [Spring AOP](spring-aop)
 - [Spring Test](spring-test)
 - [Spring Security](spring-security)
 - [Spring Utils](spring-utils)
