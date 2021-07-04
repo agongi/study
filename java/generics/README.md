@@ -4,56 +4,40 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://docs.oracle.com/javase/tutorial/java/generics/index.html
-- https://stackoverflow.com/questions/745756/java-generics-wildcarding-with-multiple-classes
-- https://stackoverflow.com/questions/5207115/java-generics-t-vs-object
-- https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card
-- https://stackoverflow.com/questions/24391123/object-vs-classt-vs-class-in-java
-- http://ohgyun.com/51
+- https://rangken.github.io/blog/2015/effective-java-4/
 ```
 
-Generics is used to prevent being `java.lang.ClassCastException` in runtime and remove redundant type-casting
+#### Index
 
-<img src="images/Screen%20Shot%202017-09-09%20at%2014.55.03.gif" width="75%">
+- [Super type token](https://www.baeldung.com/java-super-type-tokens)
+- [Type erase](type-erase)
+- [\<T\> vs \<?\>](t-vs-question)
+- [Invariant vs Covariant](invariant-vs-covariant)
 
-### Type Parameters
+***
+
+### Type parameter
+
+- Upper Bounded
+
 ```java
 public class Box<T> {
-    // T stands for "Type"
-    private T t;
+  public <E extends Number> void inspect(E e) {
+    // ...
+  }
 
-    public void set(T t) { this.t = t; }
-    public T get() { return t; }
+  public static void main(String[] args) {
+    Box<Integer> box = new Box<Integer>();        
+    box.inspect("some text");  // compile-error
+  }
 }
 ```
 
-Naming Conventions
+- Lower Bounded
 
-- E - Element (used extensively by the Java Collections Framework)
-- K - Key
-- V - Value
-- N - Number
-- T - Type
-- S, U, V etc., - 2nd, 3rd, 4th types
-
-#### Upper Bounded Type Parameters
-```java
-public class Box<T> {
-    public <E extends Number> void inspect(E e){
-        // ...
-    }
-
-    public static void main(String[] args) {
-        Box<Integer> integerBox = new Box<Integer>();        
-        integerBox.inspect("some text");  // compile-error
-    }
-}
-```
-
-#### Lower Bounded Type Parameters
 It doesn't supported
 
-#### Multiple Bounds
-If one of the bounds is a class, it must be specified first
+- Multiple Bounds
 
 ```java
 Class A     { /* ... */ }
@@ -65,18 +49,11 @@ interface C { /* ... */ }
 ```
 
 ### Wildcards
-```java
-public class BoxUtils {
-  public Object get(List<?> list) {
-    return list.get(0);
-  }
-}
-```
 
 - read: `Object`
 - write: Not allowed except `null`
 
-> write is not permitted generally but using **capture\<?\>**
+> write 는 미지원이지만 **[capture\<?\>helper](https://docs.oracle.com/javase/tutorial/java/generics/capture.html)** 를 이용해서 가능
 
 ```java
 private void reverse(List<?> ids) {
@@ -84,163 +61,21 @@ private void reverse(List<?> ids) {
 }
 
 private void reverseHelper(/* capture<?> */ List<T> ids) {
-  for(...) {
-  	ids.add(i);	// List<?> is captured to List<T> and allowed to write
+  for (...) {
+    ids.add(i);	// List<?> is captured to List<T> and allowed to write
   }
 }
 ```
 
-#### Upper Bounded Wildcards
+#### Upper Bounded
 ```java
 List<? extends Custom>
 ```
 
-- read: `Custom` or casting with `@SuppressWarnings("uncheked")`
-- write: inherits or implements `Custom`
-
-#### Lower Bounded Wildcards
+#### Lower Bounded
 ```java
 List<? super Custom>
 ```
 
 #### Multiple Bounds
 It doesn't supported
-
-### Differences
-#### [\<T> vs \<?>](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
-```java
-// ensure dest, src represent exactly the same type
-public static <T extends Number> void copy(List<T> dest, List<T> src)
-
-// can't be ensured
-public static void copy(List<? extends Number> dest, List<? extends Number> src)
-```
-
-> \<T> is reusable, but \<?> can't
-
-```java
-public static <T> boolean isEmpty(List<T> list) {
-  return list.size() < 1;
-}
-
-public static boolean isEmpty(List<?> list) {
-  return list.size() < 1;
-}
-```
-
-> works the same that both never care about element but List<> itself
-
-#### Collection\<?> vs Collection\<Object>
-```java
-public class MyTask {
-  public <T> static void print(List<T> list) {
-    // ...
-  }
-
-  public static void print2(List<Object> list) {
-    // ...
-  }
-
-  public static void print3(List<?> list) {
-    // ...
-  }
-
-  public static void print4(List<? extends Object> list) {
-    // the same as List<?>
-  }
-
-  public static void main() {
-    List<Integer> list = Arrays.asList(1, 2, 3);
-
-    MyTask.print(list);   // OK
-    MyTask.print2(list);  // compile-error: List<Object>. exact match or Collection<Object>
-    MyTask.print3(list);  // OK
-    MyTask.print4(list);  // OK
-  }
-}
-```
-
-### Features
-#### Producer - Consumer (PECS)
-```java
-public static <T> void copy(List<? super T> dest, List<? extends T> src) {
-  // src is input <extends>
-
-  // dest is output <super>
-}
-```
-
-- Consumer: src is used in method -> \<? extends T>
-- Producer: dest is used out of method -> \<? super T>
-
-> Producer Extends, Consumer Super
-
-### Restrictions
-#### Cannot create instances of type parameters
-```java
-public static <E> void append(List<E> list) {
-    E elem = new E();  // compile-time error
-    list.add(elem);
-}
-```
-
-As a workaround, you can create an object of a type parameter through reflection:
-```java
-public static <E> void append(List<E> list, Class<E> cls) throws Exception {
-    E elem = cls.newInstance();   // OK
-    list.add(elem);
-}
-```
-
-#### Cannot Declare Static Fields of Type Parameters
-```java
-public class MobileDevice<T> {
-    private static T os;	// compile-time error
-
-    // ...
-}
-```
-Static field represents class-level variables shared by all objects of the class. It can't have different types at the same time
-
-#### Type erasure
-The Java compiler `replace` all type parameters in compile-time, you cannot verify which parameterized type for a generic type is being used at runtime:
-
-```java
-public static <E> void isAssignable(List<E> list) {
-    if (list instanceof ArrayList<Integer>) {  // compile-time error
-        // ...
-    }
-}
-```
-
-```java
-/**
- * type1=java.util.AbstractList<E>
- * type2=E
- * type3=java.util.ArrayList<java.lang.String>
- * type4=class java.lang.String
- */
-@Test
-public void actualArgumentTest() {
-  Object obj = new ArrayList<>();
-  
-  // compiler replaces generics in compile-time (type erasure)
-  Type type1 = ((ParameterizedType)obj.getClass().getGenericSuperclass());
-  Type type2 = ((ParameterizedType)obj.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
-  Type type3 = new ArrayList<String>() {}.getClass().getGenericSuperclass();
-  Type type4 = ((ParameterizedType)new ArrayList<String>(){}.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
-  log.info("type1={}", type1);
-  log.info("type2={}", type2);
-  log.info("type3={}", type3);
-  log.info("type4={}", type4);
-}
-```
-
-#### Cannot Create Arrays of Parameterized Types
-
-```java
-E[] arrayOfLists = new E[];  // compile-time error
-```
-
