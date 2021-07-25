@@ -1,0 +1,32 @@
+# intellij project file
+/**/*.iml
+
+# maven build target
+/**/target/
+
+# build output
+/**/out/
+/**/classes/
+/**/build/
+/**/dist/
+
+# idea querydsl generated qclass
+/**/generated/
+/**/generated_tests/
+
+# all hidden files and directories
+/**/.*
+
+# logs
+/**/*.log
+
+# node_modules files
+/**/node_modules/
+
+# except .gitignore file
+!/.gitignore
+!/**/.eslintrc
+!/.github
+!.gitmodules
+!.editorconfig
+!.dockerignore
