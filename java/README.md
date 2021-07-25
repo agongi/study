@@ -20,6 +20,7 @@
 - [Java 클래스로더 훑어보기](https://homoefficio.github.io/2018/10/13/Java-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A1%9C%EB%8D%94-%ED%9B%91%EC%96%B4%EB%B3%B4%EA%B8%B0/)
 - [Security Manager](https://docs.oracle.com/javase/tutorial/essential/environment/security.html)
 - [MDC Context 유지하기](https://blog.gangnamunni.com/post/mdc-context-task-decorator/)
+- [자바 JNI 개인정리](https://wiserloner.tistory.com/549?category=821930)
 
 ***
 
