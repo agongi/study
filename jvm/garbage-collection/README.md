@@ -6,7 +6,7 @@
 - https://perfectacle.github.io/2019/05/07/jvm-gc-basic/
 - https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
 - https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter
-- https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html
+- https://docs.oracle.com/javase/9/gctuning/garbage-first-garbage-collector.htm
 ```
 
 ### GC 유형
@@ -58,18 +58,18 @@
 #### G1 GC (-XX:+UseG1GC)
 
 - 알고리즘
-  - `Initial Mark (STW)`: GC Root가 참조하는 객체만 마킹
-  - `Concurrent Mark`: 참조하는 객체를 따라가며 지속적으로 마킹
+  - `Initial Mark`: GC Root가 참조하는 객체만 마킹
   - `Remark (STW)`: concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
-  - `Cleanup/Copying (STW)`: 해당 Region 전체 정리 및 미사용상태로 변경
-  - `Compact`: 메모리 fragmentation 정리
+  - `Cleanup (STW)`: empty region 제거
+  - `Compact`: 각 region 에 있는 객체를 적절히 재배치 후, empty region 제거
 - GC Thread
   - minor GC: N개
   - major GC: N개
-- (Region 회수시) `Compaction 수행`
+- `Compaction 수행`
 - 특징
-  - Young, Old 가 연속된 공간이 아닌 `개별 Region 이 필요에 따라` 유연하게 할당된다.
-  - Young and/or Old 전체영역이 아닌 `garbage region 만 GC 를 수행`한다. (minor GC 때 major GC 일부 수행)
+  - Young, Old 가 연속된 공간이 아닌 `개별 Region 이 필요에 따라` 유연하게 할당
+  - Young and/or Old 전체영역이 아닌 `garbage region 만 GC 수행`
+  - 주기적 and/or -XX:InitiatingHeapOccupancyPercent 수치도달시 Young,Old GC 가 같이 수행된다
 
 ### GC 구조
 
@@ -137,43 +137,23 @@
 
 > 객체 크기가 Region의 1/2보다 큰 경우, humongous 영역에서 관리
 
-RSet 라는 테이블로 region status 를 관리하여, 즉시 garbage 의 추적이 필요할때 사용한다.
+**Minor/Major GC**
 
-**Minor GC (== Evacuation)**
+주기적으로 or `-XX:InitiatingHeapOccupancyPercent` 에서 정한 수치가 넘어가면 동작한다. 
 
-Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수행된다.
+> minor/major GC 는 같이 수행된다. 조금씩 Young GC 때 Old region 이 같이 정리되는 개념이다
 
-- Reference 가 있는 객체는 (Live object) 다음 Phase 로 이동한다
-  - Eden > Survivor
-  - Survivor from <> to  - `Aging`
-  - Survivor > Old - `Promotion`
-- Young GC 수행시, Old GC 를 일부 같이 수행한다
-
-**Major GC**
-
-`-XX:InitiatingHeapOccupancyPercent` (IHOP) 에서 정한 수치가 넘어가면 동작한다. 모든 phase 가 병렬로 처리된다.
-
-- Initial mark `(STW)`
-  - `Young GC` 때 같이 수행
+- Initial mark
   - Initial marking of live object along with Young GC
-- Concurrent marking
-  - 별도의 Thread 로 수행 (Young GC 와 같이 수행되지 않음)
-  - Mark empty region
-
-> 이 때부터 Young GC 와 동시 실행 가능
-
 - Remark `(STW)`
-  - `Young GC` 때 같이 수행
   - Empty regions are removed and reclaimed. Region liveness is now calculated for all regions
-- Cleanup/Copying `(STW)`
-  - `Young GC` 때 같이 수행
+- Cleanup `(STW)`
   - G1 selects the regions with the lowest "liveness", those regions which can be collected the fastest
-- After Cleanup/Copying
-  - Compaction
+- Compact
+  - cleanup 에서 정리된 region 에 있던 object 를 별도의 region 으로 모으는 작업
 
 > Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조.
 >
-> 조금씩 Young GC 때 Old region 이 같이 정리되는 개념이다
 
 ### Changes in JDK 8
 
