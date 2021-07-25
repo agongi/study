@@ -18,20 +18,24 @@
 
 #### Serial GC (-XX:+UseSerialGC)
 
-- Young, Old 모두 Mark-Sweep 알고리즘
+- Young, Old 모두 Mark-Sweep-Compact 알고리즘
 - GC Thread 는 1개
 - Compaction 수행
 
 #### Parallel GC (-XX:+UseParallelGC)
 
-- Young, Old 모두 Mark-Sweep 알고리즘
-- GC Thread 는 N개
+- Young, Old 모두 Mark-Sweep-Compact 알고리즘
+- GC Thread
+  - minor GC N개 Thread
+  - major GC 1개 Thread
 - Compaction 수행
 
 #### Parallel Old GC (-XX:+UseParallelOldGC)
 
-- Young 은 Mark-Sweep. Old 는 `Mark-Summary` 알고리즘
-- GC Thread 는 N개
+- Young 은 Mark-Sweep-Compact. Old 는 `Mark-Summary-Compact` 알고리즘
+- GC Thread
+  - minor GC N개 Thread
+  - major GC N개 Thread
 - Compaction 수행
 
 #### CMS GC (-XX:+UseConcMarkSweepGC)
