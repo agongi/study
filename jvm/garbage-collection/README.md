@@ -9,12 +9,6 @@
 - https://www.oracle.com/technetwork/articles/java/g1gc-1984535.html
 ```
 
-#### Index
-
-- [Reference](reference)
-
-***
-
 ### GC 유형
 
 #### Serial GC (-XX:+UseSerialGC)
