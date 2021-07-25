@@ -12,53 +12,74 @@
 #### Index
 
 - [Reference](reference)
-- [Tri-color Marking](https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/)
+
+***
 
 ### GC 유형
 
 #### Serial GC (-XX:+UseSerialGC)
 
-- Young, Old 모두 Mark-Sweep-Compact 알고리즘
-- GC Thread 는 1개
-- Compaction 수행
+- 알고리즘
+  - Mark-Sweep-Compact
+- GC Thread
+  - minor GC: 1개
+  - major GC: 1개
+- `Compaction 수행`
 
 #### Parallel GC (-XX:+UseParallelGC)
 
-- Young, Old 모두 Mark-Sweep-Compact 알고리즘
+- 알고리즘
+  - Mark-Sweep-Compact
 - GC Thread
-  - minor GC N개 Thread
-  - major GC 1개 Thread
-- Compaction 수행
+  - `minor GC: N개`
+  - major GC: 1개
+- `Compaction 수행`
 
 #### Parallel Old GC (-XX:+UseParallelOldGC)
 
-- Young 은 Mark-Sweep-Compact. Old 는 `Mark-Summary-Compact` 알고리즘
+- 알고리즘
+  - (Young) Mark-Sweep-Compact
+  - (Old) Mark-Summary-Compact
 - GC Thread
-  - minor GC N개 Thread
-  - major GC N개 Thread
-- Compaction 수행
+  - minor GC: N개
+  - `major GC: N개`
+- `Compaction 수행`
 
 #### CMS GC (-XX:+UseConcMarkSweepGC)
 
-- Young 은 ParNewGC. Old 는 Tri-color Marking 알고리즘
-- GC Thread 는 N개
-- Compaction `미수행`
-
-> 단편화로 인해 Compaction 필요한 경우, Parallel Old GC 가 수행된다.
+- 알고리즘
+  - `Initial Mark (STW)`: GC Root가 참조하는 객체만 마킹
+  - `Concurrent Mark`: 참조하는 객체를 따라가며 지속적으로 마킹
+  - `Remark (STW)`: concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
+  - `Concurrent Sweep`: 접근할 수 없는 객체를 제거
+- GC Thread
+  - minor GC: N개
+  - major GC: N개
+- `Compaction 미수행`
+- 특징
+  - 알고리즘이 복잡해서 `리소스를 많이` 사용한다
+  - (Compat 를 하지않고) STW 를 `짧게 2번 끊어서, 소요시간이 짧다`
+  - (Compact 를 하지않아) STW 가 짧지만, `단편화 발생시 ParallelGC` 가 수행되고 이때는 STW 가 길다
 
 #### G1 GC (-XX:+UseG1GC)
 
-- 전체 Heap 이 아닌 Garbage Region 만을 대상으로 GC 를 수행한다.
-  - Garbage First!
-- Region 회수시 Compaction 수행
+- 알고리즘
+  - `Initial Mark (STW)`: GC Root가 참조하는 객체만 마킹
+  - `Concurrent Mark`: 참조하는 객체를 따라가며 지속적으로 마킹
+  - `Remark (STW)`: concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
+  - `Cleanup/Copying (STW)`: 해당 Region 전체 정리 및 미사용상태로 변경
+  - `Compact`: 메모리 fragmentation 정리
+- GC Thread
+  - minor GC: N개
+  - major GC: N개
+- (Region 회수시) `Compaction 수행`
+- 특징
+  - Young, Old 가 연속된 공간이 아닌 `개별 Region 이 필요에 따라` 유연하게 할당된다.
+  - Young and/or Old 전체영역이 아닌 `garbage region 만 GC 를 수행`한다. (minor GC 때 major GC 일부 수행)
 
-### Features
-
-#### (Serial/Parallel/ParallelOld) GC
+### GC 구조
 
 <img src="images/Screen%20Shot%202017-08-15%20at%2003.02.19.png" width="75%">
-
-**Memory**
 
 - Young
   - Eden, From (S0), To (S1) 영역으로 구성
@@ -79,39 +100,40 @@
 
 > Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.
 >
-> 객체의 크기가 Eden 보다 크면 바로 Old 영역으로 할당된다.
+> 객체의 크기가 Eden 보다 크면, 바로 Old 영역으로 할당된다.
 
-**Old GC**
+**Major GC**
 
 - Old 영역이 가득 차면 `Full GC` 발생 (==`STW (stop-the-world)` 발생)
 
+### GC 알고리즘
+
+#### Serial GC
+
+<img src="images/1.png" width="75%">
+
+#### Parallel/ParallelOld GC
+
+<img src="images/2.png" width="75%">
+
 #### CMS GC
 
-<img src="images/helloworld-1329-5.png" width="75%">
+<img src="images/3.png" width="75%">
 
-CMS GC의 장점은 아래와 같다.
+- 장점
+  - Major GC 수행시 `STW 가 짧게 2번` 발생한다.
+  - GC 도중이라도, 시스템이 멈추지않고 일부요청을 처리 할 수 있다.
+- 단점
+  - GC가 도는 도중에는 어플리케이션 스레드가 절반만 돌기 때문에 `서비스 처리율이 감소`한다.
+  - Mark-Sweep 알고리즘에 비해 하는 일도 많고 복잡해서 `메모리, CPU를 더 많이` 쓴다.
+  - 메모리 Compaction을 수행하지 않으므로 `단편화`가 발생시, STW 가 길게 발생한다.
 
-- Old GC 도중 STW 가 짧게 2번만 발생한다.
-- GC 도중이라도, 시스템이 멈추지않고 일부요청을 처리 할 수 있다.
-
-CMS GC의 단점은 아래와 같다.
-
-- GC 풀 사이클 자체는 Parallel(Old)GC 보다 길다.
-- GC가 도는 도중에는 어플리케이션 스레드가 절반만 돌기 때문에 처리율이 감소한다.
-  - Less throughput
-- Mark-Sweep 알고리즘에 비해 하는 일도 많고 복잡하다보니 메모리, CPU를 더 많이 쓴다.
-  - Much resource usage
-- 메모리 Compaction을 수행하지 않으므로 단편화가 발생시, STW 가 길게 발생한다.
-
-> Old GC 수행도중 단편화로 인해 메모리가 충분히 확보되지 않으면 즉시 모든 작업을 멈추고
+> Old GC 수행도중 단편화로 인해 메모리가 충분히 확보되지 않으면 즉시 모든 작업을 멈추고, Compaction 을 위해 ParallelOldGC 을 처음부터 수행한다.
 >
-> Compaction 을 위해 ParallelOld 을 처음부터 수행한다.
 
 #### G1 GC
 
-<img src="images/Screen%20Shot%202017-08-15%20at%2001.02.19.gif" width="75%">
-
-**Memory**
+<img src="images/4.png" width="75%">
 
 모든 영역이 정해져 있지 않고, Region 이라는 작은 단위로 분리되어 있다.
 
@@ -133,7 +155,7 @@ Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수�
   - Survivor > Old - `Promotion`
 - Young GC 수행시, Old GC 를 일부 같이 수행한다
 
-**Old GC**
+**Major GC**
 
 `-XX:InitiatingHeapOccupancyPercent` (IHOP) 에서 정한 수치가 넘어가면 동작한다. 모든 phase 가 병렬로 처리된다.
 
@@ -162,9 +184,8 @@ Young GC 는 Heap 이 일정 용량 이상으로 점유시 Parallel 하게 수�
 ### Changes in JDK 8
 
 - Perm 사라짐 (MetaSpace 영역으로 바뀜 - native memory)
-- PermGen 영역이 삭제되어 heap 영역에서 사용할 수 있는 메모리가 늘어났다.
-- PermGen 영역을 삭제하기 위해 존재했던 여러 복잡한 코드들이 삭제
-- PermGen영역을 스캔 하기 위해 소모되었던 시간이 감소되어 GC 성능이 향상 되었다.
+  - PermGen 영역이 삭제되어 heap 영역에서 사용할 수 있는 메모리 증가
+  - PermGen영역을 스캔 하기 위해 소모되었던 시간이 감소되어 GC 성능이 향상 되었다.
 
 #### Before JDK 8
 
