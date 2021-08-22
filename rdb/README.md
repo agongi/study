@@ -3,10 +3,17 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://dev.mysql.com/doc/refman/5.7/en
+- https://dev.mysql.com/doc/refman/8.0/en/
 ```
 
+#### Blog
+
+- https://use-the-index-luke.com/sql/preface
+
+***
+
 #### Index
+
 - [JDBC vs DBCP](jdbc-dbcp)
 - [Data Type](datatype)
 - [Execution Plan](execution-plan)
@@ -17,7 +24,7 @@
 - [Join](join)
 - [Query Optimizer](http://sungsoo.github.io/2014/05/24/query-optimizer.html)
 
-### Query
+#### Query
 
 - [INSERT INTO SELECT](insert-into-select)
 - [Duplicate Primary Key](duplicate-primary-key)
