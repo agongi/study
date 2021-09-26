@@ -1,4 +1,4 @@
-## Spring Common
+## Spring
 
 ```
 ㅁ Author: suktae.choi
@@ -39,7 +39,6 @@
 - [RestTemplate](resttemplate)
 - [JdbcTemplate](jdbctemplate)
 - [Profile](profile)
-- [MVC](mvc)
 - [Transaction](transaction)
 - [Properties](properties)
 - [AutoConfiguration](auto-configuration)
@@ -49,6 +48,7 @@
 - [Spring Boot](spring-boot)
 - [Spring Batch](spring-batch)
 - [Spring AOP](spring-aop)
+- [Spring MVC](spring-mvc)
 - [Spring Test](spring-test)
 - [Spring Security](spring-security)
 - [Spring Utils](spring-utils)
