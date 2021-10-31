@@ -3,10 +3,7 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
- - https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html
- - http://choko11.tistory.com/entry/%EC%9D%B8%EB%8D%B1%EC%8A%A4-1-%EA%B0%9C%EB%85%90%EC%A2%85%EB%A5%98%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD
- - http://www.dba-oracle.com/t_difference_between_btree_and_bitmap_index.htm
- - http://mikyung.net/451
+- https://12bme.tistory.com/138?category=682920
 ```
 
 ### Overview

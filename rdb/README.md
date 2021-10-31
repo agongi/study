@@ -17,12 +17,12 @@
 - [JDBC vs DBCP](jdbc-dbcp)
 - [Data Type](datatype)
 - [Execution Plan](execution-plan)
+- [Query Optimizer](http://sungsoo.github.io/2014/05/24/query-optimizer.html)
 - [Isolation](isolation)
 - [Locks](locks)
 - [Index](index)
 - [Prepared statement](prepared-statement)
 - [Join](join)
-- [Query Optimizer](http://sungsoo.github.io/2014/05/24/query-optimizer.html)
 
 #### Query
 
