@@ -15,3 +15,4 @@
 | INSERT **IGNORE** INTO person VALUES ('', '')                             | Hold old record                             |
 | **REPLACE** INTO person VALUES ('', '')                                   | Replace old to new record                   |
 | INSERT INTO person VALUES ('', '') **ON DUPLICATE KEY UPDATE** id = #{id} | Update user specified value and hold others |
+
