@@ -4,15 +4,12 @@
 ㅁ Author: suktae.choi
 ㅁ References:
 - https://www.baeldung.com/spring-batch-partitioner
+- https://jojoldu.tistory.com/550?category=902551
 - https://jobjava00.github.io/language/java/framework/spring-batch/partitioner/
 ```
 
-Step 에서 처리하는 chunk (or tasklet 단위) 를 parallel 처리 가능하게함.
-
-- 파니셔닝 Step
-- Partial items 의 read/write 수행 step
-
-으로 크게 구분된다.
+- 하나의 Step 을 gridSize 만큼 각각의 StepExecution 으로 나눠서 수행 (독립적)
+- StepExecution 이 독립적이므로, reader/processor/writer 의 thread-safe 불필요
 
 ```java
 public class TestJobConfig {
@@ -30,7 +27,7 @@ public class TestJobConfig {
     return stepBuilders.get("partitionStep")
       .partitioner("partitionStep", partitioner(null))
       // partitionHandler 에서 지정하거나
-      .partitionHandler()
+      .partitionHandler(partitionHandler())
       // step-level 에서 직접 지정할수있음
       .gridSize(10)
       .taskExecutor(asyncTaskExecutor)
