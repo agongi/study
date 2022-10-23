@@ -6,7 +6,7 @@
 - https://perfectacle.github.io/2019/05/07/jvm-gc-basic/
 - https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
 - https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter
-- https://docs.oracle.com/javase/9/gctuning/garbage-first-garbage-collector.htm
+- https://docs.oracle.com/en/java/javase/11/gctuning/garbage-first-g1-garbage-collector1.html
 ```
 
 ### GC 유형
@@ -35,11 +35,13 @@
   - (Young) Mark-Sweep-Compact
   - (Old) Mark-Summary-Compact
 - GC Thread
-  - minor GC: N개
+  - `minor GC: N개`
   - `major GC: N개`
 - `Compaction 수행`
 
 #### CMS GC (-XX:+UseConcMarkSweepGC)
+
+GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 파편화시 ParallelGC 로 compact 수행)
 
 - 알고리즘
   - `Initial Mark (STW)`: GC Root가 참조하는 객체만 마킹
@@ -47,8 +49,8 @@
   - `Remark (STW)`: concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
   - `Concurrent Sweep`: 접근할 수 없는 객체를 제거
 - GC Thread
-  - minor GC: N개
-  - major GC: N개
+  - `minor GC: N개`
+  - `major GC: N개`
 - `Compaction 미수행`
 - 특징
   - 알고리즘이 복잡해서 `리소스를 많이` 사용한다
