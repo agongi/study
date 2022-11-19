@@ -55,14 +55,7 @@
 - [Collections](collections)
 - [NIO](nio)
 - [Generics](generics)
-
-#### What's New
-
-- [JDK 6](jdk-6)
-- [JDK 8](jdk-8)
-- [JDK 9](jdk-9)
-- [JDK 10](jdk-10)
-- [JDK 11](jdk-11)
+- [Versions](versions)
 
 #### Design Patterns
 
