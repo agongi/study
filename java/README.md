@@ -28,7 +28,6 @@
 
 - [String vs StringBuilder vs StringBuffer](string-stringbuilder-stringbuffer)
 - [Primitive type vs Boxed type](primitive-boxed)
-- [Interface vs Abstract](interface-abstract)
 - [equals() and/or hashCode()](equals-hashcode)
 - [MessageFormat.format vs String.format](message-format-string-format)
 - [Nested Class](nested-class)
