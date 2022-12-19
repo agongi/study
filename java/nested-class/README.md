@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.14
 ㅁ Origin: https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
 ㅁ References:
  - http://javarevisited.blogspot.kr/2012/12/inner-class-and-nested-static-class-in-java-difference.html
