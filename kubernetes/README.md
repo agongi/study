@@ -5,6 +5,7 @@
 ㅁ References:
 - https://kubernetes.io/ko/docs/concepts/
 - https://github.com/grepsean/k8skr-study-architecture
+- https://github.com/sungsu9022/study-kubernetes-in-action/issues
 ```
 
 #### Index
@@ -13,6 +14,7 @@
 - [Namespace](namespace)
 - [Policies](policies)
 - [HPA](hpa)
+- [Helm Charts](helm-charts)
 
 #### Blog
 

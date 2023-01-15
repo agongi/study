@@ -7,7 +7,6 @@
   - [Java](java)
   - [Spring](spring)
 - FE
-  - [HTML](html)
   - [JavaScript](javascript)
   - [TypeScript](typescript)
 - Persistence
@@ -17,7 +16,8 @@
 - MQ
   - [Kakfa](kafka)
 - Infra
-  - [Docker & Kubernetes](docker-kubernetes)
+  - [Docker](docker)
+  - [Kubernetes](kubernetes)
 - Core
   - [JVM](jvm)
   - [Servlet](servlet)
