@@ -12,6 +12,7 @@
 
 - [Networking](networking)
 - [Namespace](namespace)
+- [Label & Annotation](label-annotation)
 - [Policies](policies)
 - [HPA](hpa)
 - [Helm Charts](helm-charts)
@@ -196,6 +197,10 @@ spec:
 
 Controller 는 N 개의 Pod 을 생성/운영하는 단위이다. Pod 이나 Node 장애시 failover 처리등을 스케쥴링 한다.
 
+**DaemonSet**
+
+replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다. (ReplicaSet 과의 차이점: 현재 클러스터의 모든(또는 일부) 노드에 POD 생성 보장)
+
 **ReplicaSet**
 
 replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다.
@@ -204,7 +209,7 @@ replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다.
 
 하지만 더 상위개념인 **Deployment 의 사용이 권장**된다.
 
-**Deployement**
+**Deployment**
 
 ReplicaSet 을 포함하는 개념으로, Replication & Pod 업데이트 & 스케일링 & Canary 배포  등을 지원하는 그룹이다.
 
@@ -214,22 +219,11 @@ ReplicaSet 을 포함하는 개념으로, Replication & Pod 업데이트 & 스�
 
 **StatefulSet**
 
-Deployment 와 같지만, pod 의 배포/삭제 순서 보장이 필요 할 경우 사용한다.
+Deployment 와 같지만, pod 의 배포/삭제 순서 보장 and/or 상태를 가지는 인프라의 성격이다.
 
 - 배포(생성): 0 -> 1 -> 2
 - 삭제: 2 -> 1 -> 0
-
-**DaemonSet**
-
-Node 단위에서 (전체 or 일부) `동일한 1개의 Pod 을 운영`하는 개념.
-
-- filebeat exporter
-- prometheus node-exporter
-- systemd
-
-Pod 에서 직접 daemon process 를 실행해도 되지만, 하나의 관심사만 수행하는 Pod 의 개념과는 맞지않다.
-
-하지만 그만큼 시스템 복잡도가 증가하니 판단이 필요하다.0
+- jenkins, elasticsearch, airflow 등
 
 **CronJob**
 
