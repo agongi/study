@@ -3,7 +3,7 @@
 ```
 ㅁ Author: suktae.choi
 ㅁ References:
-- https://kubernetes.io/ko/docs/concepts/services-networking/network-policies/
+- https://kubernetes.io/docs/concepts/services-networking/network-policies/
 ```
 
 #### Index
