@@ -10,7 +10,7 @@ Controller 는 N 개의 Pod 을 생성/운영하는 단위이다. Pod 이나 Nod
 
 ### liveness vs readiness
 - liveness: 주기적으로 컨테이너 상태를 체크해 응답이 없으면 컨테이너를 자동으로 재시작
-- readiness: 응답이 없거나 실패 응답을 보낼 경우 서비스에 제거, 정상 응답인 경우 서비스에 추가
+- readiness: 응답이 없거나 실패 응답을 보낼 경우 서비스에 제거, 정상 응답인 경우 서비스에 추가 (pod 자체를 kill 하진 않음)
 
 ### ReplicationController -> ReplicaSet
 

@@ -17,7 +17,7 @@
 - [HPA](hpa)
 - [Helm Charts](helm-charts)
 - [Controllers](controllers)
-- [Ingress](ingress)
+- [Service](service)
 
 #### Blog
 
