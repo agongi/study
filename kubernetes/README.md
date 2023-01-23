@@ -18,6 +18,8 @@
 - [Helm Charts](helm-charts)
 - [Controllers](controllers)
 - [Service](service)
+- [ConfigMap & Secrets](configmap-secrets)
+- [API](api)
 
 #### Blog
 
