@@ -12,7 +12,7 @@
 
 - [ARG vs ENV](arg-env)
 - [ENTRYPOINT vs CMD](entrypoint-cmd)
-- COPY vs ADD
+- [COPY vs ADD](copy-add)
 
 ***
 
