@@ -24,6 +24,7 @@
 #### Blog
 
 - [Pod Lifecycle](https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/)
+- [Dive into managing Kubernetes computational resources](https://hmh.engineering/dive-into-managing-kubernetes-computational-resources-73283c048360)
 
 ***
 
