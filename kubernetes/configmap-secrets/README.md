@@ -8,8 +8,39 @@
 ```
 
 ### ConfigMap
-yaml 에 환경변수 or ARGS 로 전달할때 phase 에 따라 분기처리필요함
-그때 configmap 을 통해 처리가능 (아니면 helpers.tpl 로 매크로 작성)
+key-value resource
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fortune-config
+data:
+  sleep-interval: "25"
+```
+
+```shell
+# from args
+kubectl create configmap myconfigmap --from-literal=foo=bar --from-literal=bar=baz --from-literal=one=two
+
+# from file 
+kubectl create configmap my-config --from-file=config-file.conf
+
+# from directory
+kubectl create configmap my-config --from-file=/path/to/dir
+```
+
+```yaml
+spec:
+  containers:
+  - image: some-image
+    envForm:
+    - prefix: CONFIG_ # 모든 환경변수는 CONFIG_ prefix로 설정됨.
+        configMapRef: # my-config-map 이름의 컨피그맵 참조
+          name: my-config-map
+```
+
+<img src="images/1.png" width="50%">
 
 ### Secrets
 configmap 과 동일하지만 credentials 처럼 민감정보 저장하는 key-value resource
