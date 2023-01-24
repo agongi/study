@@ -13,12 +13,36 @@
 $ docker run --entrypoint="echo hello" app
 ```
 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample
+spec:
+  containers:
+    - image: some/image
+      command: ["/bin"/commend"] # docker ENTRYPOINT 와 동일기능
+      args: ["arg1", "arg2", "arg3"]
+```
+
 - CMD
   - ENTRYPOINT에 전달되는 인자를 정의
 
 ```bash
 # 각각 $1, $2 로 바인딩
 $ docker run app foo bar
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample
+spec:
+  containers:
+    - image: some/image
+      command: ["/bin"/commend"]
+      args: ["arg1", "arg2", "arg3"] # docker cmd 와 동일기능
 ```
 
 ### EXEC VS SH
