@@ -5,15 +5,13 @@ Java design pattern of Singleton.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.05
-ㅁ References:
- - http://changsuk.me/?p=1433
- - http://blog.jdm.kr/10
- - http://seotory.tistory.com/25
- - http://stackoverflow.com/questions/24538509/does-the-java-classloader-load-inner-classes
- - http://javarevisited.blogspot.jp/2012/07/when-class-loading-initialization-java-example.html
- - http://javarevisited.blogspot.sg/2011/03/10-interview-questions-on-singleton.html
- - https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+- http://changsuk.me/?p=1433
+- http://blog.jdm.kr/10
+- http://seotory.tistory.com/25
+- http://stackoverflow.com/questions/24538509/does-the-java-classloader-load-inner-classes
+- http://javarevisited.blogspot.jp/2012/07/when-class-loading-initialization-java-example.html
+- http://javarevisited.blogspot.sg/2011/03/10-interview-questions-on-singleton.html
+- https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
 ```
 
 ### 1. Basic

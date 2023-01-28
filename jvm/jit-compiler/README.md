@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.oracle.com/technical-resources/articles/java/architect-evans-pt1.html
 - https://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm
 ```

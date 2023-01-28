@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://haviyj.tistory.com/33
 - https://blog.outsider.ne.kr/869
 - http://lng1982.tistory.com/128

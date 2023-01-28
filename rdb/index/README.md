@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://12bme.tistory.com/138?category=682920
 ```
 

@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.26
-ㅁ References:
- - http://www.mybatis.org/mybatis-3/dynamic-sql.html
+- http://www.mybatis.org/mybatis-3/dynamic-sql.html
 ```
 
 ### \<foreach\>

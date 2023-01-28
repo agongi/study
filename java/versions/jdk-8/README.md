@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://github.com/winterbe/java8-tutorial
 ```
 

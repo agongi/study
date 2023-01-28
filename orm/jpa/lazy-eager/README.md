@@ -2,8 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.09.25
-ㅁ References:
 - https://doohwan-yoo.github.io/data-jpa-3/
 ```
 

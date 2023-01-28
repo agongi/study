@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/10
 - https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/09
 ```

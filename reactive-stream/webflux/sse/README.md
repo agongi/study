@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://stackoverflow.com/questions/54680001/spring-webflux-flux-behavior-with-non-streaming-application-json
 - https://javacan.tistory.com/entry/spring-webflux-server-sent-event-1?category=489498
 ```

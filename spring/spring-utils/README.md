@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://spring.io/blog/2017/03/29/spring-tips-the-spring-framework-utils-classes
 - https://blog.woniper.net/343
 ```

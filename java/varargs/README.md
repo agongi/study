@@ -5,9 +5,7 @@ Java fundamental of Varargs.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.14
-ㅁ References:
- - https://en.wikipedia.org/wiki/Hash_table
+- https://en.wikipedia.org/wiki/Hash_table
 ```
 
 **When to use Varargs**

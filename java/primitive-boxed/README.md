@@ -5,12 +5,10 @@ Java conceptual comparison between Primitive type and Boxed Primitives.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.18
-ㅁ References:
- - https://msdn.microsoft.com/en-us/library/yz2be5wk.aspx
- - http://www.jpstory.net/2013/02/primitive-vs-boxed-primitives/
- - http://truepia.tistory.com/185.
- - http://javarevisited.blogspot.kr/2012/07/auto-boxing-and-unboxing-in-java-be.html
+- https://msdn.microsoft.com/en-us/library/yz2be5wk.aspx
+- http://www.jpstory.net/2013/02/primitive-vs-boxed-primitives/
+- http://truepia.tistory.com/185.
+- http://javarevisited.blogspot.kr/2012/07/auto-boxing-and-unboxing-in-java-be.html
 ```
 
 #### 1. Primitive type

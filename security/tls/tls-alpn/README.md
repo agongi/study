@@ -5,10 +5,8 @@ NPN and ALPN are TLS extensions to negotiate Application-Layer protocol in TLS h
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.02.10
-ㅁ References:
- - https://tools.ietf.org/html/rfc7301
- - https://tools.ietf.org/id/draft-agl-tls-nextprotoneg-03.html
+- https://tools.ietf.org/html/rfc7301
+- https://tools.ietf.org/id/draft-agl-tls-nextprotoneg-03.html
 ```
 
 ### NPN (Next Protocol Negotiation)

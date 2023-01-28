@@ -2,14 +2,12 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.08.23
-ㅁ References:
-  - https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html
-  - https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html
-  - https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
-  - http://blog.sapzil.org/2017/04/01/do-not-trust-sql-transaction/
-  - http://arisu1000.tistory.com/27756
-  - http://notemusic.tistory.com/49
+- https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html
+- https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html
+- https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
+- http://blog.sapzil.org/2017/04/01/do-not-trust-sql-transaction/
+- http://arisu1000.tistory.com/27756
+- http://notemusic.tistory.com/49
 ```
 
 ### Read Phenomena

@@ -5,10 +5,7 @@ Java conceptual comparison between equals() and hashCode() method.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.25
-ㅁ Origin: Effective Java 2nd
-ㅁ References:
- - http://stackoverflow.com/questions/17027777/relationship-between-hashcode-and-equals-method-in-java
+- http://stackoverflow.com/questions/17027777/relationship-between-hashcode-and-equals-method-in-java
 ```
 
 **Principle**

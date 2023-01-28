@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://kubernetes.io/docs/concepts/workloads/pods/downward-api
 - https://coffeewhale.com/apiserver
 ```

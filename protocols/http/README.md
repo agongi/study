@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
 - http://stackoverflow.com/questions/246859/http-1-0-vs-1-1
 - https://libosong.appspot.com/spdy/index.html

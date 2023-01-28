@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.10.24
-ㅁ References:
- - http://okky.kr/article/286428
+- http://okky.kr/article/286428
 ```
 
 ### classpath: vs classpath\*:

@@ -5,8 +5,7 @@ OAuth is an open standard for authorization, commonly used as a way for Internet
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
- - https://msdn.microsoft.com/en-us/library/office/dn631818.aspx
+- https://msdn.microsoft.com/en-us/library/office/dn631818.aspx
 ```
 
 #### 1. Implicit grant flow

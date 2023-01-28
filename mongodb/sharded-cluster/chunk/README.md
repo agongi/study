@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.mongodb.com/manual/tutorial/migrate-chunks-in-sharded-cluster/
 - https://docs.mongodb.com/manual/core/sharding-data-partitioning/
 ```

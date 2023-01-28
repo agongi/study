@@ -5,11 +5,9 @@ forward secrecy (FS; also known as perfect forward secrecy[1]) is a property of 
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.03.14
-ㅁ References:
- - https://en.wikipedia.org/wiki/Forward_secrecy
- - http://blogs.technet.com/b/erezs_iis_blog/archive/2013/08/22/perfect-secrecy-in-an-imperfect-world.aspx
- - https://www.bpak.org/blog/2014/10/%EA%B7%B8%EA%B2%83%EC%9D%B4-%EC%95%8C%EA%B3%A0%EC%8B%B6%EB%8B%A4-e2e-pfs/
+- https://en.wikipedia.org/wiki/Forward_secrecy
+- http://blogs.technet.com/b/erezs_iis_blog/archive/2013/08/22/perfect-secrecy-in-an-imperfect-world.aspx
+- https://www.bpak.org/blog/2014/10/%EA%B7%B8%EA%B2%83%EC%9D%B4-%EC%95%8C%EA%B3%A0%EC%8B%B6%EB%8B%A4-e2e-pfs/
 ```
 
 <img src="images/kakao_4.png">

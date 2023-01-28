@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://www.querydsl.com/static/querydsl/4.0.1/reference/ko-KR/html_single
 - https://joont92.github.io/jpa/QueryDSL
 - https://www.baeldung.com/intro-to-querydsl

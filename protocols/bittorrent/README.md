@@ -5,12 +5,10 @@ BitTorrent is a `communications protocol of peer-to-peer file sharing` which is 
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.05.29
-ㅁ References:
- - http://www.netmanias.com/ko/post/techdocs/5185/p2p-bittorrent/understanding-of-the-bittorrent-protocol
- - http://ninetin.tistory.com/27
- - https://en.wikipedia.org/wiki/BitTorrent
- - https://wiki.theory.org/BitTorrentSpecification
+- http://www.netmanias.com/ko/post/techdocs/5185/p2p-bittorrent/understanding-of-the-bittorrent-protocol
+- http://ninetin.tistory.com/27
+- https://en.wikipedia.org/wiki/BitTorrent
+- https://wiki.theory.org/BitTorrentSpecification
 ```
 
 #### 1. Download .torrent file

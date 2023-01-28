@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://jojoldu.tistory.com/347?category=635883
 ```
 

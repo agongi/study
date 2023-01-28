@@ -1,8 +1,7 @@
 ## Profile
 
 ```
-ㅁ Author: suktae.choi
-ㅁ References:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+ㅁ Author: suktae.choi                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 ```
 
 Configuration could be loaded in specific `active-profile` by programmatic:

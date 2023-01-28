@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.mongodb.com/blog/post/mongodb-40-nonblocking-secondary-reads
 ```
 

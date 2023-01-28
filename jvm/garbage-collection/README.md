@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://perfectacle.github.io/2019/05/07/jvm-gc-basic/
 - https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
 - https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter

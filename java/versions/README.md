@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.marcobehler.com/guides/a-guide-to-java-versions-and-features
 - https://docs.oracle.com/javase/tutorial/index.html
 ```

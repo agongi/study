@@ -5,9 +5,7 @@ Java fundamental of Cloneable.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.09.13
-ㅁ References:
- - https://docs.oracle.com/javase/7/docs/api/java/lang/Cloneable.html
+- https://docs.oracle.com/javase/7/docs/api/java/lang/Cloneable.html
 ```
 
 #### Application.java

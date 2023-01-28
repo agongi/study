@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.mongodb.com/manual/core/sharding-shard-key/
 ```
 

@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://jaehun2841.github.io/2019/12/22/2019-12-22-spring-import/#%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-4-importselector%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%84%A0%ED%83%9D%EC%A0%81-configuration-%EC%82%AC%EC%9A%A9
 ```
 

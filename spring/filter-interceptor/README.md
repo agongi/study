@@ -3,11 +3,9 @@ Filter is invoked **before dispatcherServlet** but interceptor handles **after i
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.17
-ㅁ References:
- - http://changpd.blogspot.kr/2013/03/spring.html
- - http://dev-eido.tistory.com/entry/Interceptor-filter-AOP%EC%9D%98-%EC%B0%A8%EC%9D%B4
- - http://javacan.tistory.com/entry/58
+- http://changpd.blogspot.kr/2013/03/spring.html
+- http://dev-eido.tistory.com/entry/Interceptor-filter-AOP%EC%9D%98-%EC%B0%A8%EC%9D%B4
+- http://javacan.tistory.com/entry/58
 ```
 
 <img src="https://github.com/agongi/study/blob/master/spring-common/filter-interceptor/images/89101625_26c5be9fd9.jpg" width="75%">

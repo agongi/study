@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.oracle.com/javase/tutorial/collections/implementations/set.html
 - http://tutorials.jenkov.com/java-collections/set.html
 - http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html

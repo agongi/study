@@ -1,7 +1,7 @@
 ## Serializable
+
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://woowabros.github.io/experience/2017/10/17/java-serialize.html
 - http://javarevisited.blogspot.kr/2011/04/top-10-java-serialization-interview.html
 - http://blog.naver.com/PostView.nhn?blogId=kkson50&logNo=220564273220&categoryNo=0&parentCategoryNo=18&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView

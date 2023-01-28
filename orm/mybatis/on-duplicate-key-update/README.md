@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.07.04
-ㅁ References:
- - https://okky.kr/article/318516
+- https://okky.kr/article/318516
 ```
 
 - Values are about to be inserted but there is duplicate P.K in table

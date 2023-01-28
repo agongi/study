@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://kubernetes.io/docs/concepts/configuration/configmap
 - https://kubernetes.io/docs/concepts/configuration/secret
 ```

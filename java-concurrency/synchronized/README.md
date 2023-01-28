@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://javarevisited.blogspot.kr/2011/04/synchronization-in-java-synchronized.html
 ```
 

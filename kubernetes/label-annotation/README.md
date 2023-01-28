@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ```

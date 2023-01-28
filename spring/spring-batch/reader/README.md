@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://jojoldu.tistory.com/336?category=635883
 - http://www.mybatis.org/spring/batch.html
 ```

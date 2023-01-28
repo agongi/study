@@ -2,10 +2,9 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
- - https://www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/
- - http://www.baeldung.com/jackson-annotations
- - https://www.mkyong.com/java/java-convert-object-to-map-example/
+- https://www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/
+- http://www.baeldung.com/jackson-annotations
+- https://www.mkyong.com/java/java-convert-object-to-map-example/
 ```
 
 ### Blog

@@ -5,10 +5,8 @@ Java design pattern of Builder.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.12
-ㅁ References:
- - http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
- - http://cleancodes.tistory.com/m/post/15
+- http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
+- http://cleancodes.tistory.com/m/post/15
 ```
 
 **Person.java**

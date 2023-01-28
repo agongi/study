@@ -5,10 +5,8 @@ Java fundamental of final keyword.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.18
-ㅁ References:
- - http://stackoverflow.com/questions/4012167/java-final-modifier
- - http://stackoverflow.com/questions/2435163/why-can-final-object-be-modified
+- http://stackoverflow.com/questions/4012167/java-final-modifier
+- http://stackoverflow.com/questions/2435163/why-can-final-object-be-modified
 ```
 
 #### Primitive

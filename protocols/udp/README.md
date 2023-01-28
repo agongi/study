@@ -5,8 +5,6 @@ It has no handshaking dialogues, and thus exposes the user's program to any unre
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.03.16
-ㅁ References:
- - http://chimera.labs.oreilly.com/books/1230000000545/ch03.html
- - https://en.wikipedia.org/wiki/User_Datagram_Protocol
+- http://chimera.labs.oreilly.com/books/1230000000545/ch03.html
+- https://en.wikipedia.org/wiki/User_Datagram_Protocol
 ```

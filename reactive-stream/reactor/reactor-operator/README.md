@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://wonwoo.ml/index.php/post/2442
 - https://luvstudy.tistory.com/100
 ```

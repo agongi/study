@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.guru99.com/smoke-sanity-testing.html
 ```
 

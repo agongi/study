@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
 ```
 

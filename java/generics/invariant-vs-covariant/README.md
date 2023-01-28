@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://jackjeong.tistory.com/54?category=802500
 ```
 

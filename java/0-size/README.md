@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.baeldung.com/java-collection-toarray-methods
 ```
 

@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.12.05
-ㅁ References:
- - http://d2.naver.com/helloworld/4911107
+- http://d2.naver.com/helloworld/4911107
 ```
 
 ### Terms

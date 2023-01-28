@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.slideshare.net/topcredu/jpajpa-querydsl-jpaquery-jpaquery-jpasqlquery-sqlquery-sqlqueryfactory
 ```
 

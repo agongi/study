@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.14
-ㅁ References:
- - https://stackoverflow.com/questions/21827548/spring-get-current-applicationcontext
+- https://stackoverflow.com/questions/21827548/spring-get-current-applicationcontext
 ```
 
 ### Static Bean / Property Provider

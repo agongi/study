@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://javarevisited.blogspot.kr/2012/11/difference-between-beanfactory-vs-applicationcontext-spring-framework.html
 - https://stackoverflow.com/questions/243385/beanfactory-vs-applicationcontext
 ```

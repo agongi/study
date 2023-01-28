@@ -5,10 +5,8 @@ It is a technique used for controlling errors in data transmission over unreliab
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.08.20
-ㅁ References:
- - https://en.wikipedia.org/wiki/Forward_error_correction
- - http://egloos.zum.com/sorachi/v/2954919
+- https://en.wikipedia.org/wiki/Forward_error_correction
+- http://egloos.zum.com/sorachi/v/2954919
 ```
 
  - Pros

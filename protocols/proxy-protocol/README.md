@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://www.haproxy.org/download/1.7/doc/proxy-protocol.txt
 - https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/
 - https://www.haproxy.com/blog/preserve-source-ip-address-despite-reverse-proxies/

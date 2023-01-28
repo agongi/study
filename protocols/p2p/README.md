@@ -5,11 +5,9 @@ Peer-To-Peer communication contrast to traditional Client-To-Server model.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.05.11 ~ 6.30
-ㅁ References:
- - http://gamedevforever.com/62
- - http://www.netmanias.com/ko/?m=view&id=blog&no=6264
- - http://www.netmanias.com/ko/?m=view&id=blog&no=6263
+- http://gamedevforever.com/62
+- http://www.netmanias.com/ko/?m=view&id=blog&no=6264
+- http://www.netmanias.com/ko/?m=view&id=blog&no=6263
 ```
 
 #### NAT

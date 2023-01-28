@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.07.04
-ㅁ References:
- - https://www.w3schools.com/sql/sql_insert_into_select.asp
+- https://www.w3schools.com/sql/sql_insert_into_select.asp
 ```
 
 ```sql

@@ -5,10 +5,8 @@ Java conceptual comparison among String, StringBuilder and StringBuffer keyword.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.14
-ㅁ References:
- - http://javahungry.blogspot.com/2013/06/difference-between-string-stringbuilder.html
- - http://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder
+- http://javahungry.blogspot.com/2013/06/difference-between-string-stringbuilder.html
+- http://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder
 ```
 
 #### 1. String

@@ -2,17 +2,16 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
- - https://en.wikipedia.org/wiki/WebSocket
- - http://www.joinc.co.kr/w/man/12/websocket
- - https://dzone.com/refcardz/html5-websocket
- - https://tools.ietf.org/html/rfc6455
- - http://stackoverflow.com/questions/2681267/what-is-the-fundamental-difference-between-websockets-and-pure-tcp
- - http://stackoverflow.com/questions/19568432/why-websocket-needs-an-opening-handshake-using-http-why-cant-it-be-an-independ/19569871?noredirect=1#19569871
- - http://stackoverflow.com/questions/16945345/differences-between-tcp-sockets-and-web-sockets-one-more-time
- - http://coding.debuntu.org/c-linux-socket-programming-tcp-simple-http-client
- - http://ohgyun.com/436
- - http://www.gamedevforever.com/210
+- https://en.wikipedia.org/wiki/WebSocket
+- http://www.joinc.co.kr/w/man/12/websocket
+- https://dzone.com/refcardz/html5-websocket
+- https://tools.ietf.org/html/rfc6455
+- http://stackoverflow.com/questions/2681267/what-is-the-fundamental-difference-between-websockets-and-pure-tcp
+- http://stackoverflow.com/questions/19568432/why-websocket-needs-an-opening-handshake-using-http-why-cant-it-be-an-independ/19569871?noredirect=1#19569871
+- http://stackoverflow.com/questions/16945345/differences-between-tcp-sockets-and-web-sockets-one-more-time
+- http://coding.debuntu.org/c-linux-socket-programming-tcp-simple-http-client
+- http://ohgyun.com/436
+- http://www.gamedevforever.com/210
 ```
 
 #### Why WebSocket?

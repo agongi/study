@@ -2,10 +2,8 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.08.23
-ㅁ References:
- - https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html
- - https://dev.mysql.com/doc/refman/5.7/en/innodb-next-key-locking.html
+- https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html
+- https://dev.mysql.com/doc/refman/5.7/en/innodb-next-key-locking.html
 ```
 
 #### Record Locks

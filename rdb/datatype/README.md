@@ -2,11 +2,9 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.23
-ㅁ References:
- - https://zetawiki.com/wiki/MySQL_%EC%9E%90%EB%A3%8C%ED%98%95
- - https://stackoverflow.com/questions/144283/what-is-the-difference-between-varchar-and-nvarchar
- - https://zetawiki.com/wiki/MySQL_datetime,_timestamp_%EC%B0%A8%EC%9D%B4
+- https://zetawiki.com/wiki/MySQL_%EC%9E%90%EB%A3%8C%ED%98%95
+- https://stackoverflow.com/questions/144283/what-is-the-difference-between-varchar-and-nvarchar
+- https://zetawiki.com/wiki/MySQL_datetime,_timestamp_%EC%B0%A8%EC%9D%B4
 ```
 
 ### Index

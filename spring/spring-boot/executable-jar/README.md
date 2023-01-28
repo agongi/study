@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
 - https://java.ihoney.pe.kr/523
 - https://www.baeldung.com/gradle-fat-jar

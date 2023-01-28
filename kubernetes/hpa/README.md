@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale/
 - https://github.com/kubernetes-sigs/metrics-server
 ```

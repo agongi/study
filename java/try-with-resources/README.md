@@ -5,10 +5,8 @@ Java fundamental of try-with-resources.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.05.19
-ㅁ References:
- - https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
- - http://d2.naver.com/helloworld/1219
+- https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+- http://d2.naver.com/helloworld/1219
 ```
 
 ### 1. Concept

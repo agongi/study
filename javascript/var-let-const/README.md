@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://gist.github.com/LeoHeo/7c2a2a6dbcf80becaaa1e61e90091e5d
 - https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90
 - https://evan-moon.github.io/2019/06/18/javascript-let-const/

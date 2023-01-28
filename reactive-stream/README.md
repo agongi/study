@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://github.com/reactive-streams/reactive-streams-jvm
 - https://tech.kakao.com/2018/05/29/reactor-programming/
 ```

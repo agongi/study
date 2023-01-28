@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://www.mkyong.com/java/java-custom-annotations-example/
 - http://wonwoo.ml/index.php/post/899
 ```

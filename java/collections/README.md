@@ -2,9 +2,8 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
- - https://en.wikipedia.org/wiki/Java_collections_framework
- - http://tutorials.jenkov.com/java-collections/index.html
+- https://en.wikipedia.org/wiki/Java_collections_framework
+- http://tutorials.jenkov.com/java-collections/index.html
 ```
 
 <img src="images/Screen%20Shot%202016-02-14%20at%2018.31.04.png" width="100%">

@@ -5,10 +5,8 @@ Internet service providers(ISPs) and peer-to-peer(P2P) software to `optimize pee
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.06.09
-ㅁ References:
- - https://en.wikipedia.org/wiki/Proactive_network_provider_participation_for_P2P
- - http://www.netmanias.com/ko/?m=view&id=techdocs&no=5201
+- https://en.wikipedia.org/wiki/Proactive_network_provider_participation_for_P2P
+- http://www.netmanias.com/ko/?m=view&id=techdocs&no=5201
 ```
 
 #### Background

@@ -2,13 +2,11 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.10.25
-ㅁ References:
- - http://eincs.com/2009/08/java-nio-bytebuffer-channel/
- - http://aoruqjfu.fun25.co.kr/index.php/post/567
- - https://www.mkyong.com/java/how-do-convert-byte-array-to-string-in-java/
- - http://a07274.tistory.com/281
- - http://darksilber.tistory.com/entry/ByteBuffer-%EB%B0%94%EC%9D%B4%ED%8A%B8%EB%B2%84%ED%8D%BC
+- http://eincs.com/2009/08/java-nio-bytebuffer-channel/
+- http://aoruqjfu.fun25.co.kr/index.php/post/567
+- https://www.mkyong.com/java/how-do-convert-byte-array-to-string-in-java/
+- http://a07274.tistory.com/281
+- http://darksilber.tistory.com/entry/ByteBuffer-%EB%B0%94%EC%9D%B4%ED%8A%B8%EB%B2%84%ED%8D%BC
 ```
 
 ### Cores

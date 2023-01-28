@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://blog.ragozin.info/2012/10/safepoints-in-hotspot-jvm.html
 - https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766
 ```

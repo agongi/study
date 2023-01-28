@@ -2,8 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.04.13
-ㅁ References:
 - http://www.mybatis.org/mybatis-3/getting-started.html
 ```
 

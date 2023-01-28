@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://stackoverflow.com/questions/46235512/how-to-set-a-timeout-in-spring-5-webflux-webclient
 - https://resilience4j.readme.io/docs/getting-started-3
 ```

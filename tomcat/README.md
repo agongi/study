@@ -5,10 +5,8 @@ JavaSE 기반 웹서비스를 개발/운영 하기 위해 반드시 필요한 Co
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2015.07.01 ~ 07.22
-ㅁ Origin: https://www.youtube.com/watch?v=P3H-7G_Y3rI
-ㅁ References:
- - http://www.slideshare.net/jieunsys/ss-56543446
+- https://www.youtube.com/watch?v=P3H-7G_Y3rI
+- http://www.slideshare.net/jieunsys/ss-56543446
 ```
 
 #### Lecture

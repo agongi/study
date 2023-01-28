@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://kubernetes.io/ko/docs/concepts/
 - https://github.com/grepsean/k8skr-study-architecture
 - https://github.com/sungsu9022/study-kubernetes-in-action/issues
@@ -20,6 +19,7 @@
 - [Service](service)
 - [ConfigMap & Secrets](configmap-secrets)
 - [API](api)
+- [StatefulSets](statefulsets)
 
 #### Blog
 

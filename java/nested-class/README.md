@@ -2,14 +2,12 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Origin: https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
-ㅁ References:
- - http://javarevisited.blogspot.kr/2012/12/inner-class-and-nested-static-class-in-java-difference.html
- - http://stackoverflow.com/questions/70324/java-inner-class-and-static-nested-class
- - http://stackoverflow.com/questions/1353309/java-static-vs-non-static-inner-class
- - http://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
- - http://dicky-programmingjoy.blogspot.kr/2007/04/why-use-private-static-method.html
- - https://stackoverflow.com/questions/1953530/why-does-java-prohibit-static-fields-in-inner-classes
+- http://javarevisited.blogspot.kr/2012/12/inner-class-and-nested-static-class-in-java-difference.html
+- http://stackoverflow.com/questions/70324/java-inner-class-and-static-nested-class
+- http://stackoverflow.com/questions/1353309/java-static-vs-non-static-inner-class
+- http://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
+- http://dicky-programmingjoy.blogspot.kr/2007/04/why-use-private-static-method.html
+- https://stackoverflow.com/questions/1953530/why-does-java-prohibit-static-fields-in-inner-classes
 ```
 
 <img src="https://github.com/agongi/study/blob/master/java/nested-class/images/Screen%20Shot%202017-06-09%20at%2001.22.27.png">

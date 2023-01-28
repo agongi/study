@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://marobiana.tistory.com/60
 - https://github.com/mybatis/mybatis-3/wiki/FAQ#what-is-the-difference-between--and-
 ```

@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://arahansa.github.io/docs_spring/jpa.html
 - https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 - https://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/Hibernate_User_Guide.html

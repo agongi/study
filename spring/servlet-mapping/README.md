@@ -2,10 +2,8 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.19
-ㅁ References:
- - http://lng1982.tistory.com/97
- - https://okky.kr/article/145481
+- http://lng1982.tistory.com/97
+- https://okky.kr/article/145481
 ```
 
 #### Spec

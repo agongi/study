@@ -3,10 +3,8 @@ TCP Fast Open (TFO) is an extension to speed up the opening of TCP three-way-han
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.06.20
-ㅁ References:
- - https://en.wikipedia.org/wiki/TCP_Fast_Open
- - http://knight76.tistory.com/entry/%EA%B5%AC%EA%B8%80-TCP-Fast-Open-paper-TFO%EB%A5%BC-%EC%9D%BD%EA%B3%A0
+- https://en.wikipedia.org/wiki/TCP_Fast_Open
+- http://knight76.tistory.com/entry/%EA%B5%AC%EA%B8%80-TCP-Fast-Open-paper-TFO%EB%A5%BC-%EC%9D%BD%EA%B3%A0
 ```
 
 <img src="images/Screen%20Shot%202017-09-02%20at%2014.55.03.png" width="75%">

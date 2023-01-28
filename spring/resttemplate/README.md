@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - http://blog.saltfactory.net/using-resttemplate-in-spring
 - http://cakas.tistory.com/9
 ```

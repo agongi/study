@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://kafka.apache.org/22/documentation/streams/quickstart
 - https://kimseunghyun76.tistory.com/464?category=757035
 ```

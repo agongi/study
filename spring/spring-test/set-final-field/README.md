@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://stackoverflow.com/questions/51521837/spring-reflectiontestutils-does-not-set-static-final-field
 ```
 

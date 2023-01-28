@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.oracle.com/javase/tutorial/java/generics/index.html
 - https://rangken.github.io/blog/2015/effective-java-4/
 ```

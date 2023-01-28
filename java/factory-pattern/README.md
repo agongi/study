@@ -5,9 +5,7 @@ Java design pattern of Factory.
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.02.13
-ㅁ References:
- - http://blog.jdm.kr/180
+- http://blog.jdm.kr/180
 ```
 
 `public static factory pattern` is especially useful when there is needs of making different instance with the same input parameters. Constructor never separate it but it is simple to make it different with factory pattern as following :

@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://en.wikipedia.org/wiki/Java_memory_model
 ```
 

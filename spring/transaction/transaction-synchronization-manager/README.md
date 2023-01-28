@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/transaction/support/TransactionSynchronizationManager.html
 - https://stackoverflow.com/questions/32524327/spring-transactionsynchronizationmanager-isactualtransactionactive-and-getcurr
 - https://translate.google.com/translate?hl=ko&sl=zh-CN&tl=en&u=https%3A%2F%2Fcodeday.me%2Fbug%2F20190405%2F884693.html

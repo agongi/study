@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://helm.sh/docs/intro/quickstart/
 - https://cloud.ibm.com/docs/containers?topic=containers-helm&locale=ko
 - https://www.slideshare.net/skanddh/kubernetes-helm

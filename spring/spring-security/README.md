@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 ```
 
 Spring Security is easily enabled using providing `AbstractSecurityWebApplicationInitializer`:

@@ -2,7 +2,6 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ References:
 - https://medium.com/@flaviomata/using-reflectiontestutils-to-mock-autowired-methods-in-java-b97595a414a0
 - https://howtodoinjava.com/spring-boot2/testing/testing-support/
 ```

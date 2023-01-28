@@ -1,12 +1,8 @@
 ## Diffie–Hellman
 Diffie–Hellman key exchange (D–H) is a specific method of securely exchanging cryptographic keys over a public channel.
 
->###### Simply let me compare each of HTTP and SPDY .
-
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2016.03.01
-ㅁ References:
  - https://ko.wikipedia.org/wiki/%EB%94%94%ED%94%BC-%ED%97%AC%EB%A7%8C_%ED%82%A4_%EA%B5%90%ED%99%98
 ```
 

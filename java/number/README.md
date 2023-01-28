@@ -2,9 +2,7 @@
 
 ```
 ㅁ Author: suktae.choi
-ㅁ Date: 2017.06.12
-ㅁ References:
- - https://docs.oracle.com/javase/tutorial/java/data/converting.html
+- https://docs.oracle.com/javase/tutorial/java/data/converting.html
 ```
 
 ### Classes
