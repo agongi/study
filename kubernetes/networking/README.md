@@ -8,7 +8,7 @@
 
 #### Blog
 - [쿠버네티스 네트워킹 이해하기](https://coffeewhale.com/k8s/network/2019/04/19/k8s-network-01/)
-- [Securing Kubernetes Cluster Networking](https://ahmet.im/blog/kubernetes-network-policy/)
+- [\[번역\]쿠버네티스 패킷의 삶](https://coffeewhale.com/packet-network1)
 
 ***
 
