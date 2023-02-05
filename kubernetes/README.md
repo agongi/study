@@ -8,7 +8,6 @@
 ```
 
 #### Index
-
 - [Networking](networking)
 - [Namespace](namespace)
 - [Label & Annotation](label-annotation)
@@ -20,21 +19,35 @@
 - [ConfigMap & Secrets](configmap-secrets)
 - [API](api)
 - [StatefulSets](statefulsets)
+- [Resources](resources)
 
 #### Blog
-
 - [Pod Lifecycle](https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/)
-- [Dive into managing Kubernetes computational resources](https://hmh.engineering/dive-into-managing-kubernetes-computational-resources-73283c048360)
 
 ***
 
 **Kubernetes 는 `최대한 바라는 상태` (== spec) 로 컨테이너화된 `앱` (== object) 의 `실제 상태` (== status) 를 조율하는 플랫폼이다.**
 
-<img src='images/1.png'/>
+<img src='images/1.png' width="50%"/>
 
-<img src='images/7.png'/>
+<img src='images/7.png' width="50%"/>
 
-### Master
+### 구성요소
+**Node**
+
+컨테이너화된 어플리케이션을 실행하는 단위 (VM and/or PM).
+
+> 어플리케이션의 구성요소인 Pod 을 호스팅한다.
+
+- kubelet
+  - master 와 통신을 담당
+- kube-proxy
+  - kube service 의 구현체 이다. (a.k.a. network-proxy)
+  - iptables, port-forwarding 등
+
+<img src='images/4.png' width="50%"/>
+
+**Master**
 
 클러스터를 `최대한 바라는 상태를 유지`하는 책임을 담당한다. 
 
@@ -51,21 +64,8 @@ kubectl (CLI), HTTP 등의 인터페이스를 통한 상호작용은 master 와 
 - etcd
   - key-value storage
 
-### Node
-
-컨테이너화된 어플리케이션을 실행하는 단위 (VM and/or PM).
-
-> 어플리케이션의 구성요소인 Pod 을 호스팅한다.
-
-- kubelet
-  - master 와 통신을 담당
-- kube-proxy
-  - kube service 의 구현체 이다. (a.k.a. network-proxy)
-  - iptables, port-forwarding 등
-
-<img src='images/4.png'/>
-
-## Terms
+**Worker**
+TBU
 
 ### Objects
 
@@ -96,104 +96,3 @@ public class Pod {
   private Collection<Container> containers;	
 }
 ```
-
-**Service**
-
-Pod 의 endpoint 를 제공합니다.
-
-> Pod 은 자동종료/재시작 될수있어, IP 가 동적으로 변경됨
-
-그래서 Pod 의 외부노출이 필요할때, Service 를 통해 고정된 VIP 를 제공합니다.
-
-```java
-public class Service {
-  @Getter
-  private Collection<Pod> pods;
-
-  private static class Pod {
-    @OneToMany
-    private Collection<Container> containers;	
-  }
-}
-```
-
-**ConfigMap**
-
-다른 오브젝트에서 사용할 config (== properties) 를 관리.
-
-```bash
-$ cat << EOF > boot-configmap.conf
-project=boot-deployment
-cluster=cluster-name
-namespace=alpha
-EOF
-
-$ kubectl create configmap boot-configmap --from-file=./boot-configmap.conf
-```
-
-코드로 표현하면 이런 느낌이겠지?
-
-```java
-public interface ConfigMap {
-  String project = "boot-deployment";
-  String cluster = "cluster-name";
-  String namespace = "alpha";
-}
-```
-
-**Secret**
-
-ConfigMap 으로 관리하기 어려운 credentials 을 관리하는 별도의 오브젝트.
-
-***
-
-오브젝트는 아래와 같은 yaml 를 통해 생성한다.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: 'boot-deployment'
-  # object labels
-  labels:
-    name: api-server
-    phase: alpha
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      name: api-server
-  template:
-    # resource labels
-    metadata:
-      labels:
-        name: api-server
-        phase: alpha
-    spec:
-      # pods 은 N 개의 containers 를 가질 수 있다.
-      containers:
-        # springboot as container
-        - name: 'boot-app'
-          image: 'public.registry.com/boot-app'
-          imagePullPolicy: Always
-          ports:
-            - protocol: TCP
-              containerPort: 8080
-              name: http
-        # nginx as container
-        - name: 'boot-nginx'
-          image: 'public.registry.com/boot-nginx'
-          command: ["nginx", "-c", "nginx.conf", "-g", "daemon off;"]
-          ports:
-            - protocol: TCP
-              containerPort: 80
-              name: http
-            - protocol: TCP
-              containerPort: 443
-              name: https
-```
-
-- apiVersion: kube API version (현재는 v1.x 이므로, v1)
-- kind: 오브젝트의 종류
-- metadata: 오브젝트의 identifier
-- spec: 의도한 상태
