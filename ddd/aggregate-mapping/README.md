@@ -1,7 +1,7 @@
 ## Aggregate Mapping
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.popit.kr/jpa-%ec%97%b0%ea%b4%80-%ea%b4%80%ea%b3%84-%ec%a1%b0%ed%9a%8c-%ea%b7%b8%eb%a6%ac%ea%b3%a0-msa
 - https://www.popit.kr/id%EB%A1%9C-%EB%8B%A4%EB%A5%B8-%EC%95%A0%EA%B7%B8%EB%A6%AC%EA%B2%8C%EC%9E%87%EC%9D%84-%EC%B0%B8%EC%A1%B0%ED%95%98%EB%9D%BC/
 ```

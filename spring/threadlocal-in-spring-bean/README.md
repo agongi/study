@@ -1,7 +1,7 @@
 ## ThreadLocal in Spring Bean
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/37332219/questions-about-using-threadlocal-in-a-spring-singleton-scoped-service
 ```
 

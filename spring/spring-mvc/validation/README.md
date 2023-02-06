@@ -1,8 +1,7 @@
 ## Validation
 
 ```
-ㅁ Author: suktae.choi
-ㅁ Reference:
+@author: suktae.choi
 - https://blog.outsider.ne.kr/825
 - https://engkimbs.tistory.com/738
 ```

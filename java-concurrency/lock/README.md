@@ -1,7 +1,7 @@
 ## Lock
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://happinessoncode.com/2017/10/04/java-intrinsic-lock/
 ```
 

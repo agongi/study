@@ -2,7 +2,7 @@
 Filter is invoked **before dispatcherServlet** but interceptor handles **after it.**
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://changpd.blogspot.kr/2013/03/spring.html
 - http://dev-eido.tistory.com/entry/Interceptor-filter-AOP%EC%9D%98-%EC%B0%A8%EC%9D%B4
 - http://javacan.tistory.com/entry/58

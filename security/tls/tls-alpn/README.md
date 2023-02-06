@@ -4,7 +4,7 @@ NPN and ALPN are TLS extensions to negotiate Application-Layer protocol in TLS h
 > **Server responds** supported protocol list to client in NPN, **client requests** with the list to server in ALPN.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://tools.ietf.org/html/rfc7301
 - https://tools.ietf.org/id/draft-agl-tls-nextprotoneg-03.html
 ```

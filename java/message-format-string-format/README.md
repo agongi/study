@@ -1,7 +1,7 @@
 ## MessageFormat.format() vs String.format()
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/2809633/difference-between-messageformat-format-and-string-format-in-jdk1-5
 ```
 

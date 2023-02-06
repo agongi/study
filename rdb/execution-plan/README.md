@@ -1,7 +1,7 @@
 ## Execution Plan
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://devse.tistory.com/entry/MYSQL-%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D-%EB%B6%84%EC%84%9D-%EB%B0%A9%EB%B2%95-%EC%9A%94%EC%95%BD
 - https://12bme.tistory.com/73?category=682920
 ```

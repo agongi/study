@@ -1,7 +1,7 @@
 ## JUnit
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 ### Intro

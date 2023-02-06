@@ -1,7 +1,7 @@
 ## Static Provider
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/21827548/spring-get-current-applicationcontext
 ```
 

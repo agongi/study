@@ -4,7 +4,7 @@ Internet service providers(ISPs) and peer-to-peer(P2P) software to `optimize pee
 >###### P2P tries to increase network performance based on **nearby peer location** to get over random selection mechanism in P2P.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://en.wikipedia.org/wiki/Proactive_network_provider_participation_for_P2P
 - http://www.netmanias.com/ko/?m=view&id=techdocs&no=5201
 ```

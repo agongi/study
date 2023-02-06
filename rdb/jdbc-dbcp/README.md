@@ -2,7 +2,7 @@
 `JDBC (Java DB Connectivity)` is a **java interface** to define method to connect to DB using driver. `DBCP (DB Connection Pool)` is a **connection pool** for application.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://d2.naver.com/helloworld/1321
 ```
 

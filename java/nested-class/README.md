@@ -1,7 +1,7 @@
 ## Nested Class
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javarevisited.blogspot.kr/2012/12/inner-class-and-nested-static-class-in-java-difference.html
 - http://stackoverflow.com/questions/70324/java-inner-class-and-static-nested-class
 - http://stackoverflow.com/questions/1353309/java-static-vs-non-static-inner-class

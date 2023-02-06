@@ -1,7 +1,7 @@
 ## Isolation
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html
 - https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html
 - https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html

@@ -1,7 +1,7 @@
 ## WebSocket
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://en.wikipedia.org/wiki/WebSocket
 - http://www.joinc.co.kr/w/man/12/websocket
 - https://dzone.com/refcardz/html5-websocket

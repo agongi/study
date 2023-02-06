@@ -1,7 +1,6 @@
 ## Spring Boot
 ```
-ㅁ Author: suktae.choi
-ㅁ Origin: https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+@author: suktae.choi
 ```
 #### Index
 

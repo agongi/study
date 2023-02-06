@@ -1,8 +1,7 @@
 ## Binding & Validation
 
 ```
-ㅁ Author: suktae.choi
-ㅁ Reference:
+@author: suktae.choi
 - https://www.baeldung.com/spring-mvc-custom-property-editor
 - https://blog.outsider.ne.kr/825
 - https://engkimbs.tistory.com/738

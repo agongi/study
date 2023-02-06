@@ -1,7 +1,7 @@
 ### Write Concern
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.mongodb.com/manual/reference/write-concern/
 ```
 

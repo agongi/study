@@ -1,7 +1,7 @@
 ## @DateTimeFormat
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/15164864/how-to-accept-date-params-in-a-get-request-to-spring-mvc-controller
 - https://stackoverflow.com/questions/37871033/spring-datetimeformat-configuration-for-java-time
 - https://jojoldu.tistory.com/361?category=635883

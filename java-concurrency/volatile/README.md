@@ -1,7 +1,7 @@
 ## Volatile
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://en.wikipedia.org/wiki/Java_memory_model
 ```
 

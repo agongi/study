@@ -4,7 +4,7 @@ Java conceptual comparison between equals() and hashCode() method.
 >###### Objects which are `.equals() == true` MUST have the same `.hashCode() == true`.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://stackoverflow.com/questions/17027777/relationship-between-hashcode-and-equals-method-in-java
 ```
 

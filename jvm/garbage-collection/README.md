@@ -1,7 +1,7 @@
 ## Garbage Collection
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://perfectacle.github.io/2019/05/07/jvm-gc-basic/
 - https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
 - https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter

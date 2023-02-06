@@ -8,7 +8,7 @@ The Transport Layer Security (TLS) Handshake Protocol is responsible for the aut
 > Simply SSL is the out-dated name of TLS.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://msdn.microsoft.com/en-us/library/windows/desktop/aa380513.aspx
 - http://www.moserware.com/2009/06/first-few-milliseconds-of-https.html
 - https://en.wikipedia.org/wiki/Cipher_suite

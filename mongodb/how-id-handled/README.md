@@ -1,7 +1,7 @@
 ## How _id handled
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html
 ```
 

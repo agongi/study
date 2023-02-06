@@ -1,7 +1,7 @@
 ## StatefulSets
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 ```
 

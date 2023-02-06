@@ -1,7 +1,7 @@
 ## TLS
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://tools.ietf.org/html/draft-ietf-tls-tls13-28
 ```
 

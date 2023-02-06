@@ -1,7 +1,7 @@
 ## Spring Test
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 #### Index

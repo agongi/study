@@ -4,7 +4,7 @@ Java conceptual comparison among String, StringBuilder and StringBuffer keyword.
 >###### String is immutable and fast, It is good choice to use `String` when modifier operation is not needed.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javahungry.blogspot.com/2013/06/difference-between-string-stringbuilder.html
 - http://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder
 ```

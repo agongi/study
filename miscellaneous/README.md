@@ -1,7 +1,7 @@
 ## Miscellaneous
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 #### Encoding

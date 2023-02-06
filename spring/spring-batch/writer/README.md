@@ -1,7 +1,7 @@
 ## Writer
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://jojoldu.tistory.com/339?category=635883
 - http://www.mybatis.org/spring/batch.html
 ```

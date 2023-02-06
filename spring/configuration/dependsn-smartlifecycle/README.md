@@ -1,7 +1,7 @@
 ## @DependsOn - SmartLifeCycle
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.baeldung.com/spring-depends-on
 ```
 

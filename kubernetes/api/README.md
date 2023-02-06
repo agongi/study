@@ -1,7 +1,7 @@
 ## API
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://kubernetes.io/docs/concepts/workloads/pods/downward-api
 - https://coffeewhale.com/apiserver
 ```

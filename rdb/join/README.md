@@ -1,7 +1,7 @@
 ## Join
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://rapapa.net/?p=311
 - http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
 - http://www.jidum.com/jidums/view.do?jidumId=167

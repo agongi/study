@@ -1,7 +1,7 @@
 ## Mockito
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://static.javadoc.io/org.mockito/mockito-core/2.23.4/org/mockito/Mockito.html
 - https://stackoverflow.com/questions/15976008/using-mockito-to-stub-and-execute-methods-for-testing
 - https://jojoldu.tistory.com/226

@@ -1,7 +1,7 @@
 ## Spring Security
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 Spring Security is easily enabled using providing `AbstractSecurityWebApplicationInitializer`:

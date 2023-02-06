@@ -1,7 +1,7 @@
 ## Multi-thread
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://jojoldu.tistory.com/493
 ```
 

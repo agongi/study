@@ -1,7 +1,7 @@
 ## Promise
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/17308172/deferred-versus-promise
 - https://xebia.com/blog/promises-and-design-patterns-in-angularjs/
 ```

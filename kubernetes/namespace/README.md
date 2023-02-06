@@ -1,7 +1,7 @@
 ## Namespace
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://kubernetes.io/docs/tasks/administer-cluster/namespaces
 ```
 

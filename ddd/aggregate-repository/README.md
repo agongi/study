@@ -1,7 +1,7 @@
 ## Aggregate Repository
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.popit.kr/%ec%97%90%ea%b7%b8%eb%a6%ac%ea%b2%8c%ec%9e%87-%ed%95%98%eb%82%98%ec%97%90-%eb%a6%ac%ed%8c%8c%ec%a7%80%ed%86%a0%eb%a6%ac-%ed%95%98%eb%82%98/
 ```
 

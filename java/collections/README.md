@@ -1,7 +1,7 @@
 ## Java Collections
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://en.wikipedia.org/wiki/Java_collections_framework
 - http://tutorials.jenkov.com/java-collections/index.html
 ```

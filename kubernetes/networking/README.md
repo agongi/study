@@ -1,7 +1,7 @@
 ## Networking
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://kubernetes.io/docs/concepts/services-networking/network-policies/
 - https://kubernetes.io/ko/docs/concepts/architecture/control-plane-node-communication/
 ```

@@ -1,7 +1,7 @@
 ## Books
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 #### Major

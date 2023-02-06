@@ -1,7 +1,7 @@
 ## Classpath
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://okky.kr/article/286428
 ```
 

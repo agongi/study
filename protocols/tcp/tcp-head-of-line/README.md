@@ -4,7 +4,7 @@ TCP guarantees in-order delivery, retransmission, flow-control and congestion co
 > All subsequent packages are held in receiver's side until the lost package is retransmitted and arrives at the receiver.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://en.wikipedia.org/wiki/Head-of-line_blocking
 - http://www.netmanias.com/ko/post/qna/2607
 - https://hpbn.co/building-blocks-of-tcp/

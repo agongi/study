@@ -1,8 +1,7 @@
 ## Web Worker
 
 ```
-ㅁ Author: suktae.choi
-ㅁ References
+@author: suktae.choi
 - https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API
 ```
 

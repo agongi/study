@@ -1,7 +1,7 @@
 ## Spring
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.spring.io/spring/docs/current/spring-framework-reference/
 - https://blog.outsider.ne.kr/search?q=spring%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4
 - http://haviyj.tistory.com/category/Back-End/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81

@@ -1,7 +1,7 @@
 ## Kubernetes
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://kubernetes.io/ko/docs/concepts/
 - https://github.com/grepsean/k8skr-study-architecture
 - https://github.com/sungsu9022/study-kubernetes-in-action/issues

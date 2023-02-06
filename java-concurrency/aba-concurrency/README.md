@@ -1,7 +1,7 @@
 ## ABA Concurrency
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.baeldung.com/cs/aba-concurrency
 ```
 

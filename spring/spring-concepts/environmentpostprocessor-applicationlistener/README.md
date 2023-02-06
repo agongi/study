@@ -1,7 +1,7 @@
 ## EnvironmentPostProcessor vs ApplicationListener\<ApplicationEnvironmentPreparedEvents\>
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://blog.kingbbode.com/39
 ```
 

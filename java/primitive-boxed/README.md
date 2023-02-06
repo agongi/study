@@ -4,7 +4,7 @@ Java conceptual comparison between Primitive type and Boxed Primitives.
 >###### Use primitive type unless boxed primitives is required in certain cases.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://msdn.microsoft.com/en-us/library/yz2be5wk.aspx
 - http://www.jpstory.net/2013/02/primitive-vs-boxed-primitives/
 - http://truepia.tistory.com/185.

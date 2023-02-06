@@ -1,7 +1,7 @@
 ## Closure
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://d2.naver.com/helloworld/4911107
 ```
 

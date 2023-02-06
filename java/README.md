@@ -1,7 +1,7 @@
 ## JAVA
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javarevisited.blogspot.com
 - https://docs.oracle.com/javase/tutorial/index.html
 ```

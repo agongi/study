@@ -4,7 +4,7 @@ OAuth is an open standard for authorization, commonly used as a way for Internet
 >###### The way to get resource from A from B without user of B credential using access token.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://msdn.microsoft.com/en-us/library/office/dn631818.aspx
 ```
 

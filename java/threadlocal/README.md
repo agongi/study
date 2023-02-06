@@ -1,7 +1,7 @@
 ## ThreadLocal
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/43851389/if-thread-local-map-contains-a-weak-reference-to-the-threadlocal-object-then-wh
 - https://stackoverflow.com/questions/2784009/why-should-java-threadlocal-variables-be-static
 - https://stackoverflow.com/questions/17968803/threadlocal-memory-leak

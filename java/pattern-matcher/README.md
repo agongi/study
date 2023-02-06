@@ -1,7 +1,7 @@
 ## Pattern/Matcher
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 ```java

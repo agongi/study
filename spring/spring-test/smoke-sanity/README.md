@@ -1,7 +1,7 @@
 ## Smoke Test vs Sanity Test
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.guru99.com/smoke-sanity-testing.html
 ```
 

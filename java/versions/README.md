@@ -1,7 +1,7 @@
 ## Java Versions
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.marcobehler.com/guides/a-guide-to-java-versions-and-features
 - https://docs.oracle.com/javase/tutorial/index.html
 ```

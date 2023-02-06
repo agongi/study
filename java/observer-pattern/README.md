@@ -2,7 +2,7 @@
 Observer pattern is listening interesting changes from particular instance.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javarevisited.blogspot.com/2011/12/observer-design-pattern-java-example.html
 - http://egloos.zum.com/iilii/v/3902774
 ```

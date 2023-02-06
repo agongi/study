@@ -1,7 +1,7 @@
 ## #{...} vs ${...}
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://marobiana.tistory.com/60
 - https://github.com/mybatis/mybatis-3/wiki/FAQ#what-is-the-difference-between--and-
 ```

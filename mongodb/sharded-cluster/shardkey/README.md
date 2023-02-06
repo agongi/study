@@ -1,7 +1,7 @@
 ### ShardKey
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.mongodb.com/manual/core/sharding-shard-key/
 ```
 

@@ -1,7 +1,7 @@
 ## Kafka Connect
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.confluent.io/current/connect/concepts.html
 - https://www.baeldung.com/kafka-connectors-guide
 - https://swalloow.github.io/kafka-connect

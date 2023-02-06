@@ -4,7 +4,7 @@ Java fundamental of final keyword.
 > keyword final has miscellaneous meaning in each locations. e.g. primitive, object, class and method.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://stackoverflow.com/questions/4012167/java-final-modifier
 - http://stackoverflow.com/questions/2435163/why-can-final-object-be-modified
 ```

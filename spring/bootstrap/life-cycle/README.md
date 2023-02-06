@@ -1,7 +1,7 @@
 ## Life Cycle
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
 - https://blog.outsider.ne.kr/902
 - http://devbox.tistory.com/entry/Spring-webxml-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95

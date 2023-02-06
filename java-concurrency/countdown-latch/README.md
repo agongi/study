@@ -1,7 +1,7 @@
 ## CountDownLatch
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 ### Overview

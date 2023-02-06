@@ -1,7 +1,7 @@
 ## RDB
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://dev.mysql.com/doc/refman/8.0/en/
 ```
 

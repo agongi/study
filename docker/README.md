@@ -1,7 +1,7 @@
 ## Docker
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.docker.com/reference/
 - https://www.pyrasis.com/archive.html
 - https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose

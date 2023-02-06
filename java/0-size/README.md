@@ -1,7 +1,7 @@
 ## new T\[0\] vs new T\[size\]
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.baeldung.com/java-collection-toarray-methods
 ```
 

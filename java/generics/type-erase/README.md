@@ -1,7 +1,7 @@
 ## Type erase
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.oracle.com/javase/tutorial/java/generics/genTypes.html
 ```
 

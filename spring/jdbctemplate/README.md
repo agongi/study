@@ -1,7 +1,7 @@
 ## JdbcTemplate
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://github.com/benelog/spring-jdbc-tips/blob/master/spring-jdbc-core.md
 - https://blog.outsider.ne.kr/882
 - https://homoefficio.github.io/2020/01/25/Spring-Data%EC%97%90%EC%84%9C-Batch-Insert-%EC%B5%9C%EC%A0%81%ED%99%94/

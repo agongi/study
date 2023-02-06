@@ -2,7 +2,7 @@
 It is a `{key - value}` data structure which insert and/or select values based on **hashCode of key**
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://en.wikipedia.org/wiki/Hash_table
 - http://d2.naver.com/helloworld/831311
 - http://bcho.tistory.com/1072

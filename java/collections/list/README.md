@@ -1,7 +1,7 @@
 ## List
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.oracle.com/javase/tutorial/collections/implementations/list.html
 - http://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist
 - http://www.javatpoint.com/difference-between-arraylist-and-linkedlist

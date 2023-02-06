@@ -1,7 +1,7 @@
 ## Cyclic Barrier
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 ### Overview

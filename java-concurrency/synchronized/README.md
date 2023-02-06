@@ -1,7 +1,7 @@
 ## Synchronized
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javarevisited.blogspot.kr/2011/04/synchronization-in-java-synchronized.html
 ```
 

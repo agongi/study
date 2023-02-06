@@ -1,7 +1,7 @@
 ## Index
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://12bme.tistory.com/138?category=682920
 ```
 

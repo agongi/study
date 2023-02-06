@@ -1,7 +1,7 @@
 ### Sharded Cluster
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.mongodb.com/manual/sharding/
 ```
 

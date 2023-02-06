@@ -1,7 +1,7 @@
 ## JDK 9
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://medium.com/@goinhacker/java-9%EC%9D%98-%EB%B3%80%ED%99%94%EC%99%80-%ED%8A%B9%EC%A7%95-%EB%8C%80%EC%B6%A9-%EC%A0%95%EB%A6%AC-fca77cee88f2
 - http://openjdk.java.net/projects/jigsaw/quick-start
 ```

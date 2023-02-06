@@ -1,8 +1,7 @@
 ## EnumCodeConverter
 
 ```
-ㅁ Author: suktae.choi
-ㅁ Date: 2018.01.09
+@author: suktae.choi
 ```
 
 Generic EnumCode Converter

@@ -1,8 +1,7 @@
 ## Transpiler
 
 ```
-ㅁ Author: suktae.choi
-ㅁ References
+@author: suktae.choi
 ```
 
 그냥 단순히 keyword 만 나열합니다.

@@ -2,7 +2,7 @@
 Create the `uncreatable.`
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://whiteship.tistory.com/564
 - http://stackoverflow.com/questions/4970297/how-to-get-beans-created-by-factorybean-spring-managed
 ```

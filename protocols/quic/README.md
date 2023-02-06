@@ -1,7 +1,7 @@
 ## QUIC
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
 - https://evan-moon.github.io/2019/10/08/what-is-http3/
 ```

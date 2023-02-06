@@ -1,7 +1,7 @@
 ## JDK 8
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://github.com/winterbe/java8-tutorial
 ```
 

@@ -1,7 +1,7 @@
 ## \<selectKey\>
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://www.mybatis.org/mybatis-3/sqlmap-xml.html#insert_update_and_delete
 ```
 

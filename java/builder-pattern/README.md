@@ -4,7 +4,7 @@ Java design pattern of Builder.
 >###### It is useful when a number of parameters of instance constructor is more than 3 or above.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
 - http://cleancodes.tistory.com/m/post/15
 ```

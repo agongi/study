@@ -4,7 +4,7 @@ BitTorrent is a `communications protocol of peer-to-peer file sharing` which is 
 >###### Tracker is responsible for managing peer-list of large-file, and responds to client with peer IP/PORT address. Client request to tracker for getting information of file and P2P connect to each other based on response of tracker.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://www.netmanias.com/ko/post/techdocs/5185/p2p-bittorrent/understanding-of-the-bittorrent-protocol
 - http://ninetin.tistory.com/27
 - https://en.wikipedia.org/wiki/BitTorrent

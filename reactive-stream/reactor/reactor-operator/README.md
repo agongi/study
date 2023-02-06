@@ -1,7 +1,7 @@
 ## Reactor Operator
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://wonwoo.ml/index.php/post/2442
 - https://luvstudy.tistory.com/100
 ```

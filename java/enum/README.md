@@ -1,7 +1,7 @@
 ## Java Enumerations
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://stackoverflow.com/questions/11575376/why-use-enums-instead-of-constants
 - http://stackoverflow.com/questions/2229297/java-enumerations-vs-static-constants
 - http://www.nextree.co.kr/p11686/

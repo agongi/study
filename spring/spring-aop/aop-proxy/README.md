@@ -1,7 +1,7 @@
 ## AOP Proxy
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://gmoon92.github.io/spring/aop/2019/04/20/jdk-dynamic-proxy-and-cglib.html
 - https://www.baeldung.com/cglib
 - https://www.baeldung.com/java-dynamic-proxies

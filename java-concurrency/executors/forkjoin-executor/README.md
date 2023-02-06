@@ -1,7 +1,7 @@
 ## ForkJoin vs Executor
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javarevisited.blogspot.kr/2016/12/difference-between-executor-framework-and-ForkJoinPool-in-Java.html
 ```
 

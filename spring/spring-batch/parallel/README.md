@@ -1,7 +1,7 @@
 ## Parallel
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.spring.io/spring-batch/docs/current/reference/html/scalability.html#scalability
 ```
 

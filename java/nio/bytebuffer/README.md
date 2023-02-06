@@ -1,7 +1,7 @@
 ## ByteBuffer
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://eincs.com/2009/08/java-nio-bytebuffer-channel/
 - http://aoruqjfu.fun25.co.kr/index.php/post/567
 - https://www.mkyong.com/java/how-do-convert-byte-array-to-string-in-java/

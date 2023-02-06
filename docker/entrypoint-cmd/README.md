@@ -1,7 +1,7 @@
 ## ENTRYPOINT vs CMD
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://stackoverflow.com/questions/40902445/using-variable-interpolation-in-string-in-docker
 ```
 

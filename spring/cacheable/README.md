@@ -1,7 +1,7 @@
 ## @Cacheable
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://blog.outsider.ne.kr/1094
 - http://dev.anyframejava.org/docs/anyframe/plugin/optional/cache/1.0.3/reference/html/ch01.html
 - https://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html#cache-annotations

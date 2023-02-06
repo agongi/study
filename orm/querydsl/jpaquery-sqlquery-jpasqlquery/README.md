@@ -1,7 +1,7 @@
 ## JPAQuery vs SQLQuery vs JPASQLQuery
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.slideshare.net/topcredu/jpajpa-querydsl-jpaquery-jpaquery-jpasqlquery-sqlquery-sqlqueryfactory
 ```
 

@@ -1,7 +1,7 @@
 ## COPY VS ADD
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/10
 - https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/09
 ```

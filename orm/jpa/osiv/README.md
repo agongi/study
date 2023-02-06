@@ -1,7 +1,7 @@
 ## OSIV
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 ```
 
 #### Blog

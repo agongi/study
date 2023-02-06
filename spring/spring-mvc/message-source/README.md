@@ -1,7 +1,7 @@
 ## MessageSource
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://devks.tistory.com/42
 ```
 

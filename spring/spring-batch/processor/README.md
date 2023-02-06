@@ -1,7 +1,7 @@
 ## Processor
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://jojoldu.tistory.com/347?category=635883
 ```
 

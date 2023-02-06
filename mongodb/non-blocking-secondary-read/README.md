@@ -1,7 +1,7 @@
 ## Non-blocking Secondary Reads
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.mongodb.com/blog/post/mongodb-40-nonblocking-secondary-reads
 ```
 

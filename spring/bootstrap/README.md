@@ -1,7 +1,7 @@
 ## Bootstrap
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
 - http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
 - http://stackoverflow.com/questions/18578143/about-multiple-containers-in-spring-framework

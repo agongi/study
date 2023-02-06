@@ -1,7 +1,7 @@
 ### Chunk
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.mongodb.com/manual/tutorial/migrate-chunks-in-sharded-cluster/
 - https://docs.mongodb.com/manual/core/sharding-data-partitioning/
 ```

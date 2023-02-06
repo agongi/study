@@ -1,7 +1,7 @@
 ## Java Generics
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.oracle.com/javase/tutorial/java/generics/index.html
 - https://rangken.github.io/blog/2015/effective-java-4/
 ```

@@ -1,7 +1,7 @@
 ### Majority
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.mongodb.com/manual/reference/read-concern-majority/
 ```
 

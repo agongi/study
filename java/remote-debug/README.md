@@ -1,7 +1,7 @@
 ## Remote Debug
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.baeldung.com/spring-debugging
 ```
 

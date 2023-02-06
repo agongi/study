@@ -1,7 +1,7 @@
 ## INSERT INTO SELECT
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.w3schools.com/sql/sql_insert_into_select.asp
 ```
 

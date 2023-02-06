@@ -1,7 +1,7 @@
 ## Boot Features Testing
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing
 ```
 

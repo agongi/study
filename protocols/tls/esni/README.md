@@ -1,7 +1,7 @@
 ## ESNI
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://brunch.co.kr/@sokoban/22
 ```
 

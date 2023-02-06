@@ -4,7 +4,7 @@ JavaSE 기반 웹서비스를 개발/운영 하기 위해 반드시 필요한 Co
 평소에 무심결에 Tomcat을 사용했는데, 좋은 강의가 있어 이 기회에 같이 정리해보려 한다.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.youtube.com/watch?v=P3H-7G_Y3rI
 - http://www.slideshare.net/jieunsys/ss-56543446
 ```

@@ -1,8 +1,7 @@
 ## @Pageable
 
 ```
-ㅁ Author: suktae.choi
-ㅁ Date: 2017.08.01
+@author: suktae.choi
 ```
 
 **Request**

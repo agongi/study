@@ -1,7 +1,7 @@
 ## OCSP Stapling
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 ```
 

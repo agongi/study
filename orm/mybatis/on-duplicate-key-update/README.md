@@ -1,7 +1,7 @@
 ## ON DUPLICATE KEY UPDATE
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://okky.kr/article/318516
 ```
 

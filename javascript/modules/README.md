@@ -1,8 +1,7 @@
 ## Modules
 
 ```
-ㅁ Author: suktae.choi
-ㅁ References
+@author: suktae.choi
 - https://d2.naver.com/helloworld/12864
 ```
 

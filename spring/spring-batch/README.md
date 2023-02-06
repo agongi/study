@@ -1,7 +1,7 @@
 ## Spring Batch
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.spring.io/spring-batch/trunk/reference/htmlsingle
 - https://godekdls.github.io/Spring%20Batch/contents/
 - http://becko.tistory.com/category/Spring-Batch

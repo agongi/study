@@ -1,7 +1,7 @@
 ## Encrypted SNI
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://blog.mozilla.org/security/2018/10/18/encrypted-sni-comes-to-firefox-nightly/
 - https://tools.ietf.org/html/draft-ietf-tls-esni-01
 - https://blog.cloudflare.com/encrypted-sni/

@@ -1,7 +1,7 @@
 ## Queue
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
 ```
 

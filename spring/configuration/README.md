@@ -1,7 +1,7 @@
 ## @Configuration
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://haviyj.tistory.com/33
 ```
 

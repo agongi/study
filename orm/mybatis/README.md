@@ -1,7 +1,7 @@
 ## MyBatis
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://www.mybatis.org/mybatis-3/getting-started.html
 ```
 

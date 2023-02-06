@@ -1,7 +1,7 @@
 ## JDK 11
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://futurecreator.github.io/2018/09/29/java-11-released/
 - https://meetup.toast.com/posts/171
 - https://mkyong.com/java/java-11-nest-based-access-control/

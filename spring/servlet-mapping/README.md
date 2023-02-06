@@ -1,7 +1,7 @@
 ## /* vs /
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://lng1982.tistory.com/97
 - https://okky.kr/article/145481
 ```

@@ -1,7 +1,7 @@
 ## FetchType.Lazy vs Eager
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://doohwan-yoo.github.io/data-jpa-3/
 ```
 

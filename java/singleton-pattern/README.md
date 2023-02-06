@@ -4,7 +4,7 @@ Java design pattern of Singleton.
 > The design pattern to generate `ONLY ONE` object.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://changsuk.me/?p=1433
 - http://blog.jdm.kr/10
 - http://seotory.tistory.com/25

@@ -1,7 +1,7 @@
 ## Duplicate Primary Key
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://jason-heo.github.io/mysql/2014/03/05/manage-dup-key2.html
 - https://dev.mysql.com/doc/refman/5.7/en/insert-on-duplicate.html
 - http://stackoverflow.com/questions/2714587/mysql-on-duplicate-key-update-for-multiple-rows-insert-in-single-query

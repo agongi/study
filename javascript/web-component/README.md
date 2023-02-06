@@ -1,8 +1,7 @@
 ## Web Component
 
 ```
-ㅁ Author: suktae.choi
-ㅁ References
+@author: suktae.choi
 - https://developer.mozilla.org/en-US/docs/Web/Web_Components
 ```
 

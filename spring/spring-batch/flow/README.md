@@ -1,7 +1,7 @@
 ## Flow
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://jojoldu.tistory.com/328
 - https://n1tjrgns.tistory.com/169
 ```

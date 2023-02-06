@@ -1,7 +1,7 @@
 ## Object-Oriented Query Language
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://ithub.tistory.com/27
 ```
 

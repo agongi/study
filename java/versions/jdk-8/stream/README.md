@@ -1,7 +1,7 @@
 ## Java 8 Stream
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://d2.naver.com/helloworld/4911107
 - http://iloveulhj.github.io/posts/java/java-stream-api.html
 - https://www.mkyong.com/java8/java-8-flatmap-example/

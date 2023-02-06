@@ -1,7 +1,7 @@
 ## Double Checked Locking
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://javarevisited.blogspot.kr/2014/05/double-checked-locking-on-singleton-in-java.html
 ```
 

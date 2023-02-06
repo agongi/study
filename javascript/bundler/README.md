@@ -1,8 +1,7 @@
 ## Bundler
 
 ```
-ㅁ Author: suktae.choi
-ㅁ References
+@author: suktae.choi
 ```
 
 ## [Webpack](https://d2.naver.com/helloworld/0239818)

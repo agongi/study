@@ -1,7 +1,7 @@
 ## Invariant vs Covariant
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - https://jackjeong.tistory.com/54?category=802500
 ```
 

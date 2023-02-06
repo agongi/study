@@ -4,7 +4,7 @@ Peer-To-Peer communication contrast to traditional Client-To-Server model.
 >###### `STUN` is for checking IP, PORT of client running behind a NAT from incoming request. `TURN` is simply relaying all packet from A to B based on destination IP, PORT. `UDP Hole Punching` is a technique helping each peers sending or receiving packets directly even if running behind a NAT.
 
 ```
-ㅁ Author: suktae.choi
+@author: suktae.choi
 - http://gamedevforever.com/62
 - http://www.netmanias.com/ko/?m=view&id=blog&no=6264
 - http://www.netmanias.com/ko/?m=view&id=blog&no=6263
