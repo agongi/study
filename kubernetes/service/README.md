@@ -7,14 +7,14 @@
 ```
 
 ### NodePort
-<img src='images/1.png' width='50%'/>
+<img src='1.png' width='50%'/>
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: kubia-nodeport
-spec:
+spec: 
   type: NodePort
   ports:
   - port: 80 # 서비스 클러스터 IP 포트
@@ -23,6 +23,26 @@ spec:
   selector:
     app: kubia
 ```
+
+### HostPort - Service 의 유형이 아님
+<img src='5.png' width='50%'/>
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-host-network
+spec:
+  hostNetwork: true # 호스트 노드 네트워크 네임스페이스 사용
+  containers:
+  - name: main
+    image: alpine
+    command: ["/bin/sleep", "999999"]
+```
+
+- spec.hostNetwork (== HostPort) 는 Kind: Service 이 아닌 Node 의 포드가 직접 1개의 Pod 으로 전달
+  - Node -- Pod 으로 포트가 1:1 로 바인딩 
+- spec.type: NodePort 는 Kind: Service 를 통해 spec.matchLabel 이 동일한 임의의 Pod 으로 전달된다
 
 ### LoadBalancer
 L4 LB
@@ -41,7 +61,7 @@ spec:
     app: kubia
 ```
 
-<img src='images/2.png' width='50%'/>
+<img src='2.png' width='50%'/>
 
 ```yaml
 spec:
@@ -54,8 +74,8 @@ L7 LB (Ingress Controller 가 필요함)
 - Ingress: 정책 resource
 - Ingress Controller: Ingress (정책) 을 참조하여 동작하는 구현체 (ex. ingress-nginx)
 
-<img src='images/3.png' width='50%'/>
-<img src='images/4.png' width='50%'/>
+<img src='3.png' width='50%'/>
+<img src='4.png' width='50%'/>
 
 ```yaml
 spec:
