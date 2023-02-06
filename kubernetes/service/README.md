@@ -95,3 +95,18 @@ spec:
   selector:
     app: kubia
 ```
+
+### Istio
+L7 LB + 필요한 부가적인 resources 를 번들로 묶은 CR 로 통합 제공
+
+- istio <- ingress 대체 (ingress)
+- envoy <- nginx 대체 (ingress controller)
+- Virtual Service <- Service 대체 (endpoint)
+
+> envoy 에 대한 설정을 nginx.conf 와 달리, k8s resource.spec 으로 정의
+
+Istio 는 아래의 역할들을 처리할 수 있음
+
+- canary 배포 (A/B)
+- L7 기반 route (path, cookie)
+- discovery (weight)
