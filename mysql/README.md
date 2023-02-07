@@ -1,18 +1,11 @@
-## RDB
+## MySQL
 
 ```
 @author: suktae.choi
 - https://dev.mysql.com/doc/refman/8.0/en/
 ```
 
-#### Blog
-
-- https://use-the-index-luke.com/sql/preface
-
-***
-
 #### Index
-
 - [JDBC vs DBCP](jdbc-dbcp)
 - [Data Type](datatype)
 - [Execution Plan](execution-plan)
@@ -22,9 +15,10 @@
 - [Index](index)
 - [Prepared statement](prepared-statement)
 - [Join](join)
-
-#### Query
-
 - [INSERT INTO SELECT](insert-into-select)
 - [Duplicate Primary Key](duplicate-primary-key)
 
+#### Blog
+- https://use-the-index-luke.com/sql/preface
+
+***

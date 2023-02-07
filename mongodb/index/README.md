@@ -22,7 +22,7 @@ Since 4.2:
 - \* (Wildcard) index 지원
 - 인덱스 생성시 DB lock -> Collection lock
 
-#### CRUD
+### CRUD
 
 인덱스 생성은 아래 문법으로 가능하다:
 
@@ -38,7 +38,7 @@ db.user.createIndex({name:1, age:1, createDate:1})
 db.user.getIndexes()
 ```
 
-#### Index Prefix
+### Index Prefix
 
 Compound Index 의 경우 partial match 에 대해 신경써야함
 
@@ -53,7 +53,7 @@ db.user.createIndex({name:1, age:1, createDate:1})
 - name createDate :: nope
 ```
 
-#### Multikey Index
+### Multikey Index
 
 CUD performance reduced based on the size of ratings array
 
@@ -63,7 +63,7 @@ db.user.insert{ _id: 1, item: "ABC", ratings: [2, 9]}
 db.user.createIndex({ratings: 1})
 ```
 
-#### Multikey + SubDocument
+### Multikey + SubDocument
 
 ```json
 db.user.insert{ _id: 1, item: "ABC", ratings: [
@@ -73,7 +73,7 @@ db.user.insert{ _id: 1, item: "ABC", ratings: [
 db.user.createIndex({ratings.score: 1})
 ```
 
-#### Unique Index
+### Unique Index
 
 중복없는 Index 의 보장이 필요할떄 지정.
 
@@ -81,11 +81,11 @@ db.user.createIndex({ratings.score: 1})
 
 > 샤드환경에서는 동일샤드에서의 유니크만 보장 가능하기 때문 (ex. 고아객체)
 
-#### Partial Index
+### Partial Index
 
 Nullable 한 field 의 인덱싱 YN
 
-#### Sort
+### Sort
 
 생성된 Index 에 따른 정렬방향이 `매우` 중요하다:
 
