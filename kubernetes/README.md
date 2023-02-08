@@ -20,6 +20,7 @@
 - [API](api)
 - [StatefulSets](statefulsets)
 - [Resources](resources)
+- [Isolations](isolations)
 
 #### Blog
 - [Pod Lifecycle](https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/)
