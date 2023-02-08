@@ -1,11 +1,11 @@
-## MySQL
+# MySQL
 
 ```
 @author: suktae.choi
 - https://dev.mysql.com/doc/refman/8.0/en/
 ```
 
-#### Index
+### Index
 - [JDBC vs DBCP](jdbc-dbcp)
 - [Data Type](datatype)
 - [Execution Plan](execution-plan)
@@ -17,8 +17,7 @@
 - [Join](join)
 - [INSERT INTO SELECT](insert-into-select)
 - [Duplicate Primary Key](duplicate-primary-key)
+- [MMM](mmm)
 
-#### Blog
+### Blog
 - https://use-the-index-luke.com/sql/preface
-
-***
