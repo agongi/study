@@ -1,4 +1,4 @@
-## Kubernetes
+# Kubernetes
 
 ```
 @author: suktae.choi
@@ -7,7 +7,7 @@
 - https://github.com/sungsu9022/study-kubernetes-in-action/issues
 ```
 
-#### Index
+### Index
 - [Networking](networking)
 - [Namespace](namespace)
 - [Label & Annotation](label-annotation)
@@ -22,17 +22,17 @@
 - [Resources](resources)
 - [Isolations](isolations)
 
-#### Blog
+### Blog
 - [Pod Lifecycle](https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/)
 
 ***
 
 **Kubernetes 는 `최대한 바라는 상태` (== spec) 로 컨테이너화된 `앱` (== object) 의 `실제 상태` (== status) 를 조율하는 플랫폼이다.**
 
-### 구성요소
+## 구성요소
 <img src='1.png' width="50%"/>
 
-**Node**
+### Node
 
 컨테이너화된 어플리케이션을 실행하는 단위 (VM and/or PM).
 
@@ -40,8 +40,7 @@
 
 <img src='3.png' width="50%"/>
 
-**Master**
-
+### Master Node
 클러스터의 상태를 관리하는 단위
 
 - **kube-apiserver**
@@ -54,8 +53,7 @@
   - distributed key-value storage
   - kube-api 는 etcd 의 변경을 감지하여, controller 에게 통보한다
 
-**Worker**
-
+### Worker Node
 kube-api 에서 CMD 를 전달받아, container 를 실행하는 단위
 
 - **kubelet**
@@ -66,7 +64,13 @@ kube-api 에서 CMD 를 전달받아, container 를 실행하는 단위
 - containerd
   - 실제 docker image 를 runtime 실행 
 
-### Objects
+### Cluster
+master-worker 의 단위가 아닌 cluster 구축시 필요한 요소들
+
+- [kube-dns](https://cloud.google.com/kubernetes-engine/docs/how-to/kube-dns?hl=ko#architecture)
+  - cluster 내부에서의 DNS 서비스 (CoreDNS 가 현재는 kube-dns 를 대체)
+
+## Objects
 
 영속성을 가지는 객체 (== Persistent Entity). 클러스터의 상태를 표현한다.
 
@@ -75,13 +79,11 @@ kube-api 에서 CMD 를 전달받아, container 를 실행하는 단위
 - spec: 의도한 상태
 - status: 현재 상태
 
-<img src='2.png'/>
-
-**Container**
+### Container
 
 docker image 로 동작하는 실행단위
 
-**Pod**
+### Pod
 
 kube 애플리케이션의 기본 실행 단위. `일반적 시스템에서 1대의 서버단위`로 보면된다.
 
