@@ -1,11 +1,11 @@
-## Resources
+# Resources
 
 ```
 @author: suktae.choi
 - https://hmh.engineering/dive-into-managing-kubernetes-computational-resources-73283c048360
 ```
 
-### 가용성
+## 가용성
 <img src="1.png" width="50%">
 
 - kube-api
@@ -20,7 +20,7 @@
 
 <img src="2.png" width="50%">
 
-### requests
+## requests
 CPU 요청을 지정하지 않으면 컨테이너에서 실행중인 프로세스에 할당되는 CPU시간에 신경쓰지 않는다는 것과 같다. 
 
 최악의 경우 CPU 시간을 전혀 할당받지 못할수도 있다.
@@ -35,7 +35,7 @@ requests 는 node 총합을 초과할 수 없다 (scheduler 는 requests 를 만
 
 > 이미 배포된 파드에 대한 리소스 requests 를 보장하기 위함
 
-### limits
+## limits
 requests 를 지정하지 않으면, limits 와 같은 값이 설정
 
 limits 은 node 의 총합을 초과할 수 있다 (overcommitted 가능)
@@ -52,10 +52,10 @@ limits 은 node 의 총합을 초과할 수 있다 (overcommitted 가능)
 
 ```
 
-### LimitRange
+## LimitRange
 모든 컨테이너에 리소스 요청,제한을 설정하는 대신 LimitRage 리소스를 생성해 이를 수행할 수 있다.
 
 대신 namespace 의 총합을 제한하진 않는다 (개별 container 의 manifest 만 관리)
 
-### ResourceQuota
+## ResourceQuota
 namespace 의 총합을 제한한다

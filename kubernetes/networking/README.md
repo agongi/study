@@ -1,4 +1,4 @@
-## Networking
+# Networking
 
 ```
 @author: suktae.choi
@@ -6,11 +6,25 @@
 - https://kubernetes.io/ko/docs/concepts/architecture/control-plane-node-communication/
 ```
 
-#### Blog
+### Blog
 - [쿠버네티스 네트워킹 이해하기](https://coffeewhale.com/k8s/network/2019/04/19/k8s-network-01/)
 - [\[번역\]쿠버네티스 패킷의 삶](https://coffeewhale.com/packet-network1)
 
 ***
+
+## kube-dns
+https://mrkaran.dev/posts/ndots-kubernetes/
+
+DNS resolution is configured in Kubernetes cluster through CoreDNS. The kubelet configures each Pod's /etc/resolv.conf to use the coredns pod as the nameserver. You can see the contents of /etc/resolv.conf inside any pod, they'll look something like:
+
+```
+search hello.svc.cluster.local svc.cluster.local cluster.local
+nameserver 10.152.183.10
+options ndots:5
+```
+
+
+
 
 11.5 kube-proxy 서비스와 (노드의) pod 을 연결 (POD 이 N 개인 경우 LB 의 역할도 수행)
 서비스는 가상의 ip:port 를 할당받지만 실질적으로는 더미이다

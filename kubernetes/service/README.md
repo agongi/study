@@ -1,4 +1,4 @@
-## Service
+# Service
 
 ```
 @author: suktae.choi
@@ -6,7 +6,7 @@
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 ```
 
-### NodePort
+## NodePort
 <img src='1.png' width='50%'/>
 
 ```yaml
@@ -24,7 +24,7 @@ spec:
     app: kubia
 ```
 
-### HostPort - Service 의 유형이 아님
+## HostPort - Service 의 유형이 아님
 <img src='5.png' width='50%'/>
 
 ```yaml
@@ -44,7 +44,7 @@ spec:
   - Node -- Pod 으로 포트가 1:1 로 바인딩 
 - spec.type: NodePort 는 Kind: Service 를 통해 spec.matchLabel 이 동일한 임의의 Pod 으로 전달된다
 
-### LoadBalancer
+## LoadBalancer
 L4 LB
 
 ```yaml
@@ -68,7 +68,7 @@ spec:
   externalTrafficPolicy: Local (ClientIP)
 ```
 
-### Ingress
+## Ingress
 L7 LB (Ingress Controller 가 필요함)
 
 - Ingress: 정책 resource
@@ -116,7 +116,7 @@ spec:
     app: kubia
 ```
 
-### Istio
+## Istio
 L7 LB + 필요한 부가적인 resources 를 번들로 묶은 CR 로 통합 제공
 
 - istio <- ingress 대체 (ingress)
