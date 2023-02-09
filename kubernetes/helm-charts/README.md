@@ -1,4 +1,4 @@
-## Helm Charts
+# Helm Charts
 
 ```
 @author: suktae.choi
@@ -19,7 +19,7 @@
 
 이러한 Kubernetes 리소스 작업을 Helm 을 통해 자동으로 적용하고, 버전관리를 할 수 있습니다.
 
-<img src='images/1.png'>
+<img src='1.png'>
 
 즉 Helm 은 아래의 역할을 수행합니다:
 
@@ -75,7 +75,7 @@ NAME     REVISION        UPDATED               STATUS      CHART   APP VERSION  
 boot-app    3     Mon Mar 16 23:10:38 2020    DEPLOYED    app-0.9.1                default
 ```
 
-### Deployment.yaml
+## Deployment.yaml
 
 ```yaml
 apiVersion: apps/v1
@@ -203,8 +203,7 @@ toppings:
 > 더 자세한 Charts scheme 은 레퍼런스 확인: https://helm.sh/docs/chart_template_guide/control_structures/
 
 ### Scheme
-
-**label & annotation**
+#### label & annotation
 
 쿠버네티스 오브젝트에서 사용할 metadata 를 지정하는 방법이다. 기본적으로 key-value 형식이다.
 

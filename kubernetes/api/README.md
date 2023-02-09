@@ -1,4 +1,4 @@
-## API
+# API
 
 ```
 @author: suktae.choi
@@ -6,10 +6,10 @@
 - https://coffeewhale.com/apiserver
 ```
 
-### Downward API
+## Downward API
 기본적인 k8s metadata 는 downwardAPI 로 제공되고 pod 은 `resourceFieldRef` 을 통해 가져올 수 있다
 
-<img src="images/1.png" width="75%">
+<img src="1.png" width="75%">
 
 ```yaml
 apiVersion: v1
@@ -32,11 +32,11 @@ spec:
           fieldPath: status.podIP
 ```
 
-### Kubernetes API
+## Kubernetes API
 https://kubernetes.io/docs/concepts/overview/kubernetes-api/ 에 정의된 명세대로 kube-api 서버와 rest 통신
 
-### kubectl
+## kubectl
 shell client
 
-### SDK
+## SDK
 programmatic client

@@ -1,4 +1,4 @@
-## ConfigMap & Secrets
+# ConfigMap & Secrets
 
 ```
 @author: suktae.choi
@@ -6,7 +6,7 @@
 - https://kubernetes.io/docs/concepts/configuration/secret
 ```
 
-### ConfigMap
+## ConfigMap
 key-value resource
 
 ```yaml
@@ -39,7 +39,7 @@ spec:
           name: my-config-map
 ```
 
-<img src="images/1.png" width="50%">
+<img src="1.png" width="50%">
 
-### Secrets
+## Secrets
 configmap 과 동일하지만 credentials 처럼 민감정보 저장하는 key-value resource
