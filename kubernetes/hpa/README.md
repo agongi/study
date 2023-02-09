@@ -36,6 +36,8 @@ management:
 ```
 
 ## nginx
+<img src="2.png" width="50%">
+
 nginx 의 connection 을 보여주는 `stub_status` module 을 설치후, 해당 정보를 prometheus format 으로 노출하는 nginx-prometheus-exporter 를 설정합니다
 
 ```groovy
