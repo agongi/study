@@ -1,4 +1,4 @@
-## MongoDB
+# MongoDB
 
 ```
 @author: suktae.choi
@@ -6,31 +6,25 @@
 - https://docs.mongodb.com/manual
 ```
 
-#### Index
-
+### Index
+- [_id](_id)
 - [CRUD](crud)
 - [WriteConcern](write-concern)
 - [ReadConcern](read-concern)
 - [Transactions](transactions)
 - [Index](index)
-- [Aggregation](aggregation)
+- [Aggregate](aggregate)
 - ChangeStream
 - [Sharded Cluster](sharded-cluster)
 - [ReplicaSet](replica-set)
-
-#### Extras
-
-- [How `_id` handled](how-id-handled)
 - [Non-blocking secondary read](non-blocking-secondary-read)
 - [[19.12.03 ~ 12.05] 테크톡, 몽고DB](edu/20191203)
 
-#### Blog
 
+### Blog
 - [Optimistic Locking](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template.optimistic-locking)
 
 ***
-
-### Overview
 
 | RDBMS       | Mongo                                                   |
 | ----------- | ------------------------------------------------------- |
@@ -41,15 +35,11 @@
 | Column      | Field                                                   |
 | Table Join  | Embedded Documents                                      |
 
-#### Collection
-
+## Collection
 Table 과 동일한 개념
 
-#### Document
-
+## Document
 Row 와 동일한 개념
-
-- Sample
 
 ```json
 {
@@ -77,16 +67,14 @@ Row 와 동일한 개념
 }
 ```
 
-#### Write
-
+## Write
 - write in buffer (memory, b-tree/raw)
 - write in journal (disk, sequential)
 - write done!
 - (later) write in db (disk, random/compressed)
   - checkpoint (60s) 시점에 dirtyPage flush 수행
 
-#### Read
-
+## Read
 - read from buffer (memory)
 - read from DB (disk) & store in buffer
   - cache is over than 80% of physical memory, eviction started

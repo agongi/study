@@ -1,4 +1,4 @@
-## How _id handled
+# _id
 
 ```
 @author: suktae.choi
@@ -11,4 +11,3 @@ String or BigInteger `_id` is converted into `ObjectId` by default.
 - Field name is id
 - Default generated id inserted
 - @MongoId is used to control over more specific case
-

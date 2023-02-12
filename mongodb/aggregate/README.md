@@ -1,11 +1,11 @@
-## Aggregation
+# Aggregate
 
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/aggregation/
 ```
 
-### Cores
+## Cores
 
 | SQL      | Aggregation           |
 | -------- | --------------------- |
@@ -28,7 +28,7 @@ aggregation 은 pipeline 으로 순차 a|b|c 로 수행됨. 즉 $match 로 맨�
   - 대신 allowDiskUse: true 하면 shard-replicaSet 의 primary 가 담당 (random)
   - \$out, \$lookup 가 포함되었으면 one-of-shard-primary 가 부하담당
 
-### Tips
+## Tips
 
 - $match 를 먼저 사용하여, aggregation 되는 document 를 filtering 
 
