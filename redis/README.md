@@ -5,3 +5,6 @@
 - https://github.com/redis-study/redis-summary
 ```
 
+### Index
+- skiplist vs ziplist
+- AOF vs RDB
