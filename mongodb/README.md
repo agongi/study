@@ -7,18 +7,23 @@
 ```
 
 ### Index
-- [_id](_id)
+- - [_id](_id)
+- [Sharded Cluster](sharded-cluster)
+- [ReplicaSet](replica-set)
 - [CRUD](crud)
 - [WriteConcern](write-concern)
 - [ReadConcern](read-concern)
 - [Transactions](transactions)
 - [Index](index)
-- [Aggregate](aggregate)
+- [Query Plans](query-plans)
+- [Aggregation](aggregation)
 - ChangeStream
-- [Sharded Cluster](sharded-cluster)
-- [ReplicaSet](replica-set)
 - [Non-blocking secondary read](non-blocking-secondary-read)
 - [[19.12.03 ~ 12.05] 테크톡, 몽고DB](edu/20191203)
+- MongoDB 4.2
+- MongoDB 4.4
+- MongoDB 5.0
+- MongoDB 6.0
 
 
 ### Blog
@@ -27,13 +32,13 @@
 ***
 
 | RDBMS       | Mongo                                                   |
-| ----------- | ------------------------------------------------------- |
+| ----------- |---------------------------------------------------------|
 | Database    | Database                                                |
 | Primary key | Primary key (Default key _id provided if not specified) |
 | Table       | Collection                                              |
 | Tuple/Row   | Document                                                |
 | Column      | Field                                                   |
-| Table Join  | Embedded Documents                                      |
+| Table Join  | Embedded Documents (or using $lookup to join)           |
 
 ## Collection
 Table 과 동일한 개념
