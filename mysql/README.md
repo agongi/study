@@ -6,18 +6,17 @@
 ```
 
 ### Index
-- [JDBC vs DBCP](jdbc-dbcp)
 - [Data Type](datatype)
 - [Execution Plan](execution-plan)
-- [Query Optimizer](http://sungsoo.github.io/2014/05/24/query-optimizer.html)
 - [Isolation](isolation)
 - [Locks](locks)
 - [Index](index)
-- [Prepared statement](prepared-statement)
+- [Clustered Index](clustered-index)
 - [Join](join)
+- [MMM](mmm)
+- [Prepared statement](prepared-statement)
 - [INSERT INTO SELECT](insert-into-select)
 - [Duplicate Primary Key](duplicate-primary-key)
-- [MMM](mmm)
 
 ### Blog
 - https://use-the-index-luke.com/sql/preface
