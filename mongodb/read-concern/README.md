@@ -1,52 +1,31 @@
-### Read Concern
+# Read Concern
 
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/reference/read-concern/
 ```
 
-<img src="images/download.png" width="50%">
+## local
+해당 node 기준으로 up-to-date 인 data 를 반환한다
 
-#### Index
+- majority 가 보장되지 않는 데이터 반환 가능
+- available in current node
 
-- [local](local)
-- [available](available)
-- [majority](majority)
-- linearizable
-- snapshot
+## available
+최소 1개의 노드에서 응답한 데이터까지 반환한다
 
-### Read Preferences
+- majority 가 보장되지 않는 데이터 반환 가능
+- available at-least one node
 
-#### Primary
+replicaSet 인 경우 local, available 의 동일은 동일하다
 
-Read from primary.
+## majority
+과반수 이상의 replicaSet 이 응답한 데이터를 반홥합니다.
+현재 w:majority 작업이 있는경우, 대기하지 않고 바로 반홥합니다.
 
-If primary is unavailable, then failed
+## linearizable
+과반수 이상의 replicaSet 이 응답한 데이터를 반홥합니다.
+현재 w:majority 작업이 있는경우, 작업완료까지 대기후 응답에 포함해서 반환합니다.
 
-> Multi-Document transaction only works on this mode.
-
-#### PrimaryPreferred
-
-Read from primary.
-
-If primary is unavailable, then read from secondary
-
-#### Secondary
-
-Read from secondary.
-
-If secondary is unavailable, then failed
-
-#### SecondaryPreferred
-
-Read from secondary.
-
-If secondary is unavailable, then read from primary
-
-#### Nearest
-
-Read from the lowest network latency node.
-
-Choose candidates that has less latency than maxStalenessSeconds randomly.
-
-> Useful in multi-region circumstance.
+## snapshot
+RDB 의 repeatable-read 와 동일함

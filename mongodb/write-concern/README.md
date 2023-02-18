@@ -1,13 +1,9 @@
-### Write Concern
+# Write Concern
 
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/reference/write-concern/
 ```
-
-### Overview
-
-<img src="images/download.png" width="75%">
 
 ```json
 db.collection.insert({...},
@@ -19,7 +15,7 @@ db.collection.insert({...},
 })
 ```
 
-#### w
+## w
 
 The number of nodes that must be written before returning success
 
@@ -27,12 +23,12 @@ The number of nodes that must be written before returning success
 - 2: primary + any of one secondary
 - majority: members more than half
 
-#### j
+## j
 
 The committed should be written in journal (a.k.a disk) not only in-memory
 
 - true/false
 
-#### wtimeout
+## wtimeout
 
 timeout milliseconds
