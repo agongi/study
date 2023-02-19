@@ -1,12 +1,11 @@
-### ReplicaSet
+# ReplicaSet
 
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/replication/
 ```
 
-### Members
-
+## Members
 - Primary
   - 모든 write 연산은 primary 에서만 수행한다.
 - Secondary
@@ -15,8 +14,7 @@
 - Arbiter
   - dataSet 은 없고, vote 시 참여
 
-### Oplog
-
+## Oplog
 - Primary 는 write 발생시 oplog 에 기록
 - Secondary 는 주기적으로 oplog (default: 10s) 를 가져와서, async 하게 반영한다.
   - 자신의 `local.oplog.rs` collection 에 복사본을 만듬
@@ -24,9 +22,8 @@
 
 > node 가 투입되었을때, oplog 로그로 모든 변경을 따라갈 수 있다면 바로 init sync 과정을 피할수 있다.
 
-### Synchronization
-
-#### Init Sync
+## Synchronization
+### Init Sync
 
 장애등으로 secondary 가 stale 상태로 되었다면 (and/or add, replace member) init sync 과정이 필요하다.
 
@@ -39,12 +36,10 @@
 
 > mongodump can't be used but snapshot only.
 
-#### Replica
-
+## Replicas
 Primary 가 생성한 oplog 를 secondary 에서 real-time/async/pull 방식으로 복제함을 의미한다.
 
-### High Availability
-
+## High Availability
 - Primary 가 일정시간 (heartBeat: 10s) 동안 응답이 없으면, Election 을 통해 새로운 리더를 선출한다
   - 이때 oplog 마저 유실되어, secondary 에서 pull 실패
 - 복구된 (구) primary 는 secondary 로 인입되어 (phase. startup2), initSync or oplog 추적이 완료된 후 재투입된다.
