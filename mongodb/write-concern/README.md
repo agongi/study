@@ -16,7 +16,6 @@ db.collection.insert({...},
 ```
 
 ## w
-
 The number of nodes that must be written before returning success
 
 - 1 (default): primary only
@@ -24,11 +23,6 @@ The number of nodes that must be written before returning success
 - majority: members more than half
 
 ## j
-
 The committed should be written in journal (a.k.a disk) not only in-memory
 
 - true/false
-
-## wtimeout
-
-timeout milliseconds
