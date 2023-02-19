@@ -17,8 +17,10 @@
 - [Index](index)
 - [Query Plans](query-plans)
 - [Aggregation](aggregation)
+- [Orphan Documents](orphan-documents)
 - ChangeStream
 - [Non-blocking secondary read](non-blocking-secondary-read)
+- [Causal Consistency](causal-consistency)
 - [[19.12.03 ~ 12.05] 테크톡, 몽고DB](edu/20191203)
 - MongoDB 4.2
 - MongoDB 4.4
