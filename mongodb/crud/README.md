@@ -1,11 +1,11 @@
-### CRUD
+# CRUD
 
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/crud/
 ```
 
-### Insert
+## Insert
 
 ```json
 db.inventory.insert()
@@ -18,7 +18,7 @@ db.inventory.insertOne({item: "canvas", size: {h: 28, w: 35.5, uom: "cm"}})
 
 > If the collection does not currently exist, insert operations will create the collection.
 
-### Find
+## Find
 
 ```
 db.inventory.find({status: "D"})
@@ -75,7 +75,7 @@ By default, the server will automatically close the cursor after 10 minutes of i
 var myCursor = db.users.find().noCursorTimeout();
 ```
 
-### Update
+## Update
 
 ```json
 db.collection.updateOne()
@@ -94,13 +94,13 @@ db.inventory.updateOne(
 
 > If {upsert: true} also specified, will create document if non exist.
 
-### Delete
+## Delete
 
 ```json
 TBD ...
 ```
 
-### Bulk Write
+## Bulk Write
 
 ```json
 db.collection.bulkWrite([
@@ -116,13 +116,13 @@ db.collection.bulkWrite([
   - Run in parallel
   - Once exception throws, remains keep executed
 
-### Retryable Write
+## Retryable Write
 
 Retryable writes allow MongoDB drivers to automatically retry certain write operations `a single time` in driver level regardless of whether retryWrites option is set to **false.**
 
 > Operations in transactions are not individually retryable but `whole are` on it.
 
-#### Multi-Document
+### Multi-Document
 
 | Methods     | Descriptions      |
 | ----------- | ----------------- |
@@ -133,24 +133,3 @@ Retryable writes allow MongoDB drivers to automatically retry certain write oper
 | #updateMany | **Not supported** |
 
 Bulk write operations that only consists of single-document only supported so cannot include multi-document ops, such as `updateMany`.
-
-### Text Search
-
-If document has text-specific values and you need to find all documents containging any of given terms
-
-```json
-db.stores.insert([
-  { _id: 1, name: "Java Hut", description: "Coffee and cakes" },
-  { _id: 2, name: "Burger Buns", description: "Gourmet hamburgers" },
-  { _id: 3, name: "Coffee Shop", description: "Just coffee" },
-  { _id: 4, name: "Clothes Clothes Clothes", description: "Discount clothing" },
-  { _id: 5, name: "Java Shopping", description: "Indonesian goods" }
-])
-
-# createIndex for text-searching
-db.stores.createIndex({name: "text", description: "text"})
-# find documents contains text-terms
-db.collection.find({$text: {$search: "java coffee shop"}})
-```
-
-But performance is not pretty much good for text-search. Use ES
