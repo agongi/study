@@ -7,7 +7,8 @@
 ```
 
 ## 리더선출
-- 특정시점까지 heartbeat 을 받지 못한다면 (leader to follower)
+- 모든 node 는 2초마다 heartbeat 발송
+- 10초까지 heartbeat 을 받지 못했다면 (leader to follower)
 - 투표시작
   - follower 는 해당 회차에 한번의 투표만 가능
   - follower 는 random time-interval 로 투표 시작요청 (self-voted 상태로 투표요청)
