@@ -7,4 +7,9 @@
 
 ### Index
 - skiplist vs ziplist
-- AOF vs RDB
+- [Persistence](persistence)
+  - AOF vs RDB
+
+***
+
+TBD
