@@ -1,30 +1,26 @@
-## Isolation
+# Isolation
 
 ```
 @author: suktae.choi
-- https://dev.mysql.com/doc/refman/5.7/en/innodb-transaction-isolation-levels.html
-- https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html
-- https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
-- http://blog.sapzil.org/2017/04/01/do-not-trust-sql-transaction/
-- http://arisu1000.tistory.com/27756
-- http://notemusic.tistory.com/49
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html
 ```
 
-### Read Phenomena
-#### dirty reads
+## 증상
+### dirty reads
 - See uncommitted data
 
-#### non-repeatable reads
-- transaction 도중 다른 트랜잭션의 **[update 로]** select 결과가 달라지는 현상
+### non-repeatable reads
+- transaction 도중 다른 트랜잭션의 **[update 로]**select 결과가 달라지는 현상
 
-#### phantom reads
-- transaction 도중 다른 트랜잭션의 **[insert or delete 로]** select 결과가 달라지는 현상
+### phantom reads
+- transaction 도중 다른 트랜잭션의 **[insert 로]**select 결과가 달라지는 현상
 
-### Isolation Levels
-#### READ UNCOMMITTED
+## Isolation Levels
+### READ UNCOMMITTED
 - .. All read phenomena!
 
-#### READ COMMITTED
+### READ COMMITTED
 - No dirty reads
 - Inconsistent read
   - Non locking read can the see data that is committed by another transaction after the current transaction started
@@ -34,7 +30,7 @@
 
 <img src="images/Screen%20Shot%202017-08-23%20at%2002.37.01.png" width="75%">
 
-#### REPEATABLE READ
+### REPEATABLE READ
 - This is the `default` isolation level for InnoDB
 - No dirty reads
 - [Consistent read](https://dev.mysql.com/doc/refman/5.7/en/glossary.html#glos_consistent_read)
@@ -43,6 +39,8 @@
 - Locks level
   - record locks - update .. where, delete .. where
   - gap locks, next-key locks - locking read, lock in share mode
+  
+mysql 은 repeatable-read 에도 next-key lock (row + gap lock) 을 걸어서 phantom read 가 발생하지 않는다
 
-#### SERIALIZABLE
-- ... Strict!
+### SERIALIZABLE
+모든 select 가 select ... for share 로 변경된다
