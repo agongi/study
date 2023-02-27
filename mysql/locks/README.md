@@ -1,12 +1,12 @@
-## Locks
+# Locks
 
 ```
 @author: suktae.choi
-- https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html
-- https://dev.mysql.com/doc/refman/5.7/en/innodb-next-key-locking.html
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html
+- https://suhwan.dev/2019/06/09/transaction-isolation-level-and-lock/
 ```
 
-#### Record Locks
+## Record Locks
 - locks exact one record literally
 - prevent **unrepeatable read**
 
@@ -17,7 +17,7 @@ update record [2]
       record-lock
 ```
 
-#### Gap Locks
+## Gap Locks
 - A lock on a gap between index records, or a lock on the gap **before the first** or **after the last** index record
 
 ```
@@ -31,7 +31,7 @@ or
 gap-lock                                      gap-lock
 ```
 
-#### Next-key Locks
+## Next-key Locks
 - record lock + gap lock
 - prevent **phantom read**
 
@@ -42,7 +42,6 @@ update record [2]
       record-lock
    gap-lock   gap-lock
 ```
-
 
 - 테이블에서 어떤 인덱스(pk포함)가 가장 큰 row를 update, delete할때 그보다 큰 값의 insert가 lock 걸린다
 - id는 증가되는 값으로 발행된다
