@@ -16,7 +16,6 @@
 - [Transactions](transactions)
 - [Index](index)
 - [Query Plans](query-plans)
-- [Oplog](oplog)
 - [Aggregation](aggregation)
 - [Orphan Documents](orphan-documents)
 - ChangeStream
