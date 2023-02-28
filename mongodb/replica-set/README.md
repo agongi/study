@@ -5,42 +5,53 @@
 - https://docs.mongodb.com/manual/replication/
 ```
 
-## Members
-- Primary
-  - 모든 write 연산은 primary 에서만 수행한다.
-- Secondary
-  - oplog 를 받아서, 데이터를 복제해서 고가용성 유지
-  - read 를 secondary 에서 할 수 있다.
-- Arbiter
-  - dataSet 은 없고, vote 시 참여
+<img src="1.png" width="50%"/>
 
-## Oplog
+## Members
+### Primary
+- 모든 write 연산은 primary 에서만 수행
+
+### Secondary
+- oplog 를 받아서 데이터 복제 (replication)
+- read 연산은 secondary 에서도 가능
+
+### Arbiter
+- replication 은 하지 않고 election 에만 참여
+
+### Multiple Arbiter
+arbiter 가 election 에 참여할때 secondary 는 본인의 latest offset 을 기준으로 next-primary 를 선정하는데 arbiter 는 그냥 무조건 먼저온 응답에 대해 OK 합니다.
+
+따라서 뒤쳐진 secondary 가 primary 로 선정될수 있고 이는 rollback 을 야기합니다. 이를 방지하기 위해 arbiter 는 최대1개만 유지하는게 좋습니다.
+
+## Oplog (Collection)
+The oplog (operations log) is `a special capped collection` that keeps a rolling record of all operations that modify the data stored in your databases.
+
 - Primary 는 write 발생시 oplog 에 기록
-- Secondary 는 주기적으로 oplog (default: 10s) 를 가져와서, async 하게 반영한다.
+- Secondary 는 주기적으로 oplog 를 가져와서 반영한다. (async)
   - 자신의 `local.oplog.rs` collection 에 복사본을 만듬
-  - default oplog 는 5% of disk size
+  - (default) size: 5% of disk/time: 24-hours
 
 > node 가 투입되었을때, oplog 로그로 모든 변경을 따라갈 수 있다면 바로 init sync 과정을 피할수 있다.
 
 ## Synchronization
-### Init Sync
+MongoDB uses two forms of data synchronization: initial sync to populate new members with the full data set, and replication to apply ongoing changes to the entire data set.
 
-장애등으로 secondary 가 stale 상태로 되었다면 (and/or add, replace member) init sync 과정이 필요하다.
+### Initial Sync
+replicaSet 의 member 에서 전체 데이터를 복사 하는 개념이다 (설정으로 `initialSyncSource` 지정가능)
 
-> 동시성 이슈로 initSync 는 1-thread 로 수행한다.
+- initialSourceSync 로 지정된 member 로 부터 모든 collection 을 카피
+- index 카피
+- initial sync 가 진행되는 동안 변경된 내역은 oplog 를 통해 catch-up
 
-- By removing its data and performing an initial sync
-- copies all the data from one member of the replica set to another member.
-- You can capture the data files as either a `snapshot` or a `direct copy`. However, in most cases you cannot copy data files from a running mongod instance to another because the data files will change during the file copy operation.
-- 그후 oplog 로 따라갈수있을 만큼은 기존내역이 복사되어야함
+대신 traffic 을 받는 member 의 성능이 저하되므로, 백업파일을 통해 initial sync 수행후 oplog 를 catch-up 하는 방식으로 하는게 좋다
 
-> mongodump can't be used but snapshot only.
+### Replication
+Initial Sync 가 완료된 이후 ongoing changes 를 가져오는 방식을 의미한다 (secondary 에서 async/pull 해서 가져옴)
 
-## Replicas
-Primary 가 생성한 oplog 를 secondary 에서 real-time/async/pull 방식으로 복제함을 의미한다.
+- Streaming
+  - TBD  
+- Multithreaded
+  - TBD
 
-## High Availability
-- Primary 가 일정시간 (heartBeat: 10s) 동안 응답이 없으면, Election 을 통해 새로운 리더를 선출한다
-  - 이때 oplog 마저 유실되어, secondary 에서 pull 실패
-- 복구된 (구) primary 는 secondary 로 인입되어 (phase. startup2), initSync or oplog 추적이 완료된 후 재투입된다.
-- (구) primary 가 복구된 후, 새로 선출된 primary 에 없는 (== 본인만 가지고있던) document 가 있다면, 파일로 남긴다
+### Elections
+raft protocol 을 통한 리더선출을 수행합니다.
