@@ -3,15 +3,22 @@
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/aggregation/
+- https://www.practical-mongodb-aggregations.com/guides/sharding.html
 ```
 
-- 몽고 쿼리는 (include aggregation) 메모리 100MB 이상 사용시, 무조건 exception
-- aggregation 부하는 mongos 가 부담한다
-  - broadcast 발생 쿼리는, 최종적으로 mongos 에서 정렬
-  - 대신 allowDiskUse: true 하면 shard-replicaSet 의 primary 가 담당 (random)
-  - $out, $lookup 가 포함되었으면 one-of-shard-primary 가 부하담당
+<img src="1.png" width="50%">
 
+- 몽고 쿼리는 (include aggregation) 메모리 `100MB` 이상 사용시, 무조건 exception
+- aggregation pipeline 은 shardPart (shard 에서 직접 수행하는 part) mergePart (그 결과를 조합하는 part) 로 구분됩니다
+- mergePart 의 수행은 decision tree 에 의해 결정됩니다. (ex. $group, $sort 등이 포함된 pipeline)
+  - primaryShard: unsharded collection $lookup (join) 이 포함된 경우 (unsharded collection 은 primary shard 에 존재)
+  - targetedShard: aggregation pipeline 대상 shard key 가 특정 샤드에만 존재할 경우
+  - anyShard: `allowDiskUse:true` 인 경우
+  - mongos: 나머지 (mongos 는 DISK 를 사용하지 않는 순수 router)
 
+<img src="2.png" width="50%">
+
+  
 | SQL      | Aggregation          |
 |----------|----------------------|
 | select   | $project             |
@@ -71,3 +78,4 @@ db.users.aggregate([
   likes : "racquetball"
 }
 ```
+
