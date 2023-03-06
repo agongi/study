@@ -3,21 +3,24 @@
 ```
 @author: suktae.choi
 - https://docs.mongodb.com/manual/reference/read-concern/
+- https://www.youtube.com/watch?v=14BwYGaohhI
 ```
 
 ## local
 해당 node 기준으로 up-to-date 인 data 를 반환한다
 
 - majority 가 보장되지 않는 데이터 반환 가능
-- available in current node
+- available `in current node`
+- (shard cluster) config server 와 통신해서 route info 확인 O
 
-## available
+> orphan document 가 발생하지 않음
+
+## available (shard cluster only)
 최소 1개의 노드에서 응답한 데이터까지 반환한다
 
 - majority 가 보장되지 않는 데이터 반환 가능
-- available at-least one node
-
-replicaSet 인 경우 local, available 의 동작은 동일하다
+- available `at-most one node`
+- (shard cluster) config server 와 통신해서 route info 확인 X
 
 ## majority
 과반수 이상의 replicaSet 이 응답한 데이터를 반환합니다.
