@@ -1,4 +1,4 @@
-## Kafka Stream
+# Kafka Stream
 
 ```
 @author: suktae.choi

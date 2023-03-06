@@ -1,4 +1,4 @@
-## Kafka Connect
+# Kafka Connect
 
 ```
 @author: suktae.choi
@@ -15,9 +15,7 @@
 - Worker: joint connectors to broker
 
 ## Worker
-
 ### Standalone
-
 단독 worker 로 connectors 를 broker 에 연결한다.
 
 ```properties
@@ -42,8 +40,7 @@ $ ./connect-standalone \
 ./connect-file-sink.properties
 ```
 
-### Distribued
-
+### Distributed
 Standalone 은 단독서버에서 worker 가 동작하는 모드이다. SPOF 가 되므로 분산시켜보자.
 
 ```bash
@@ -51,8 +48,7 @@ $ ./connect-distributed \
 ./connect-distributed.properties \
 ```
 
-## SourceConnector
-
+## Source Connectors
 ```properties
 name=local-file-source
 connector.class=FileStreamSource
@@ -61,8 +57,7 @@ topic=connect-test
 file=test.txt
 ```
 
-## SinkConnector
-
+## Sink Connectors
 ```properties
 name=local-file-sink
 connector.class=FileStreamSink

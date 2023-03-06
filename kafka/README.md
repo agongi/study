@@ -1,4 +1,4 @@
-## Kafka
+# Kafka
 
 ```
 @author: suktae.choi
@@ -8,24 +8,20 @@
 - https://bysssss.tistory.com/46
 ```
 
-#### Index
-
+### Index
 - APIs
 - [Kafka Stream](kafka-stream)
 - [Kafka Connect](kafka-connect)
+- [Transactions](transactions)
 
-#### Blog
-
+### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
 - [Schema Registry](https://medium.com/@gaemi/kafka-%EC%99%80-confluent-schema-registry-%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%8A%A4%ED%82%A4%EB%A7%88-%EA%B4%80%EB%A6%AC-1-cdf8c99d2c5c)
 - KSQL
 
 ***
 
-## Kafka
-
-### Topic/Partition
-
+## Topic/Partition
 토픽은 N 개의 파티션으로 분산됨
 
 파티션단위의 순서는 보장됨
@@ -36,8 +32,7 @@
 
 <img src='images/2.png' width='75%'>
 
-### Replication
-
+## Replication
 해당 토픽의 카프카 리더가 R/W 를 모두 담당함
 
 카프카리더의 데이터를 Fellow 가 주기적으로 pull 해서 replication 유지
@@ -46,8 +41,7 @@
 
 <img src='images/1.png' width='75%'>
 
-### Election
-
+## Election
 **[Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller)**
 
 브로커들의 liveness 관리.
@@ -69,8 +63,7 @@
 
 Controller 는 주키퍼 확인후 (ISR 브로커중에서), 기본적으로 RR 로 새 리더를 선출한다.
 
-### Failover
-
+## Failover
 전면장애시 정책은 `unclean.leader.election.enable` 를 통해 설정가능
 
 - false: ISR 에서만 leader 를 기다림
@@ -84,8 +77,7 @@ Consumer 에게 Heartbeat 를 받고, 일정주기 동안 없으면 Rebalancing 
 
 - 전송방법: record polling, offset commit 이 오면 heartbeat 를 받았다고 판단
 
-### Files
-
+## Files
 **Retention**
 
 Record 를 저장하는 파일의 보관주기
@@ -117,9 +109,7 @@ $ sysctl -p
 ```
 
 ## Producer
-
 ### Acks
-
 - 0: no ack from leader
 - 1: ack from leader
 - all: ack from all ISR members
@@ -146,9 +136,7 @@ public class ProducerRecord<K, V> {
 - value: payload
 
 ## Consumer
-
 ### Consumer Group
-
 **Rebalancing**
 
 그룹안에서 Consumer 추가/삭제시 rebalancing 발생
@@ -156,7 +144,6 @@ public class ProducerRecord<K, V> {
 - 리밸런싱이 일어나는 동안은 STW
 
 ### Commit
-
 Consumer group 에서 kafka 에 offset 을 기록하는 과정
 
 - auto commit
@@ -175,13 +162,11 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
 > 중복가능성이 있으니, 멱등성이 유지되는게 중요하다.
 
 ### Offset
-
 토픽 (정확하게는 파티션) offset 을 Consumer group 단위로 관리한다.
 
 > 예전에는 zookeeper 에서, 지금은 kafka 자체가 저장
 
 ### Push vs Pull
-
 **Push (kafka to consumer)**
 
 - pros
@@ -200,7 +185,6 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
   - failover: 나중에 살아났을때 next offset 부터 가져가면됨
 
 ## Advanced
-
 ### ACID
 
 - Kafka: ISR 그룹 전체에 메세지가 복제되면, 그것을 commit 으로 간주한다.
