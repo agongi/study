@@ -28,5 +28,3 @@ Multi-document transactions that contain read operations `must use read preferen
 ## Write Concern
 - w: 1
 - w: majority
-
-multi-document tx 에서 sharded-cluster 는 readConcern: snapshot 으로 해야한다 (새한님 내용 정리)
