@@ -103,10 +103,12 @@ P.K 순서대로 디스크에 저장되고, 세컨더리 인덱스는 레코드�
 TBD
 
 ### 잠금 없는 일관된 읽기 (Non-Locking Consistent Read)
-TBD
+non-locking select (isolation: Serializable 이 아닌경우) 는 `현재 record lock 이 잡혀있더라도` UNDO 를 통해 대기없이 select 를 수행할 수 있습니다
+
+<img src='8.png' width="50%">
 
 ## Buffer
-read/write cache
+read cache 및 delayed write 의 목적으로 사용합니다
 
 ### Read
 <img src='6.png' width="50%">
@@ -139,8 +141,6 @@ Redo 는 주기적인 checkpoint 이벤트가 발행되면 최종적으로 disk 
 - B, C: commit 완료 및 undo 저장
 
 이런 상황에서 (undo 로그에서) A 가 보는 TxID 는 오래전 데이터 이므로, old undo 는 정리되지 않습니다.
-
-// TODO - 그림추가
 
 ## Hash index
 B-Tree 의 탐색 단점을 극복하기 위한 Hash-Table 인덱스 (자주 조회하는 page 의 키값으로 해시 인덱스 생성후 즉시 조회)
