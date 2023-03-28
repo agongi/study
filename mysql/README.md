@@ -8,11 +8,11 @@
 
 ### Index
 - [Data Type](datatype)
-- [Execution Plan](execution-plan)`
+- [Execution Plan](execution-plan)
 - [Isolation](isolation)
 - [Locks](locks)
 - [Index](index)
-- [Clustered Index](clustered-index)```````
+- [Clustered Index](clustered-index)
 - [Join](join)
 - [MMM](mmm)
 - [GTID](gtid)
@@ -25,7 +25,6 @@
 ### Blog
 - https://use-the-index-luke.com/sql/preface
 - [Index Dive 비용 최적화](https://medium.com/daangn/index-dive-%EB%B9%84%EC%9A%A9-%EC%B5%9C%EC%A0%81%ED%99%94-1a50478f7df8)
-- [MySQL Online-DDL](https://medium.com/daangn/mysql-online-ddl-faf47439084c)
 - [mysql inverse-index](#)
 
 ***
@@ -76,6 +75,7 @@ binlog 형식을 크게 2가지 방식이 있습니다.
 row
 statement
 ```
+// TODO - 각각의 장단점 정리
 
 ### 쿼리캐시
 쿼리의 결과를 캐시하는 기능 -> 8.x 에서 제거됨
@@ -88,15 +88,22 @@ statement
 record 기반 잠금을 제공합니다
 
 ### Clustering
-모든 테이블은 기본적으로 clustering index 를 기준으로 클러스터링되어 저장됩니다.
+모든 테이블은 기본적으로 clustering index 를 기준으로 정렬됩니다.
 - PK
 - or unique key
 - or 자동생성 key
 
-P.K 순서대로 디스크에 저장되고, 세컨더리 인덱스는 레코드의 주소 대신 프라이머리 키의 값을 논리적인 주소로 사용합니다
+> secondary index 는 레코드의 주소 (== ROWID) 대신 primary key 를 저장합니다
 
 ```
-해당 이유에 대한 글 정리 (link 대체)
+그 이유는 아래와 같습니다:
+-> insert/delete 이 실행되면 clustering index 기준으로 정렬된 ROWID 가 변경
+
+- pros
+ - secondary index 가 실제 ROWID 를 가지고 있다면 -> 모든 인덱스의 변경이 필요하므로 CUD 성능이 떨어집니다
+ - ROWID 가 아닌 PK 를 저장하면 영향이 없습니다
+- cons
+ - select 시 secondary index -> clustering index 로의 2번탐색 비효율이 있습니다 
 ```
 
 ### MVCC (Multi Version Concurrency Control)
