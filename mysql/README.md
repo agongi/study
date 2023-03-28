@@ -70,12 +70,14 @@
   - background thread 에서 relaylog 수행
   
 ```
-binlog 형식을 크게 2가지 방식이 있습니다.
+binlog 형식은 2가지 방식이 있습니다.
+- ROW 포맷
+- STATEMENT 포맷
 
-row
-statement
+MySQL 8.x 부터 binlog 의 포맷이 ROW 가 기본값이 되었고 이해한 내용을 정리하면
+- insert into select ... 처럼 동적인 결과로 insert 쿼리가 발생하면 (그리고 NOW() 문구도 포함해서)
+- master/replicas 의 결과가 100% 동일하다고 보장할 수 없습니다 
 ```
-// TODO - 각각의 장단점 정리
 
 ### 쿼리캐시
 쿼리의 결과를 캐시하는 기능 -> 8.x 에서 제거됨

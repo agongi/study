@@ -16,7 +16,7 @@
 ### phantom reads
 - transaction 도중 다른 트랜잭션의 **[insert 로]**select 결과가 달라지는 현상
 
-## Isolation Levels
+## 종류
 ### READ UNCOMMITTED
 - .. All read phenomena!
 
@@ -27,8 +27,7 @@
 - Locks level
   - record lock - update .. where, delete .. where, [locking read (select .. for update)](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html), lock in share mode
   - gap locks, next-key locks - not supported (== phantom reads occur)
-
-<img src="images/Screen%20Shot%202017-08-23%20at%2002.37.01.png" width="75%">
+  
 
 ### REPEATABLE READ
 - This is the `default` isolation level for InnoDB

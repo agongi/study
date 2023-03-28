@@ -6,34 +6,41 @@
 - https://suhwan.dev/2019/06/09/transaction-isolation-level-and-lock/
 ```
 
+<img src="1.png" width="50%">
+
 ## Record Locks
-- locks exact one record literally
-- prevent **unrepeatable read**
+레코드 (정확히는 index) 자체만을 잠그는 lock 입니다.
 
 ```
 update record [2]
 
 [1]--------[2]---------[3]---------[4]
-      record-lock
+       record-lock
+```
+
+```text
+why innodb record lock actually locks index?
+
+InnoDB uses index locks to lock records because InnoDB uses indexes to reference records.
+Record locks are locks on index records. For example, SELECT c1 FROM t WHERE c1 = 10 FOR UPDATE; prevents any other transaction from inserting, updating, or deleting rows where the value of t.c1 is 10.
+Record locks always lock index records, even if a table is defined with no indexes1.
+
 ```
 
 ## Gap Locks
-- A lock on a gap between index records, or a lock on the gap **before the first** or **after the last** index record
+레코드와 인접한 prev/next 레코드의 사이의 lock 입니다.
 
 ```
 update record [2]
 
 [1]--------[2]---------[3]---------[4]
                gap-lock
-or
-
-        [1]--------[2]---------[3]---------[4]
-gap-lock                                      gap-lock
 ```
 
+> phantom read 를 방지하기 위함
+
 ## Next-key Locks
-- record lock + gap lock
-- prevent **phantom read**
+record lock + gap lock 입니다.
 
 ```
 update record [2]
@@ -41,10 +48,18 @@ update record [2]
 [1]--------[2]---------[3]---------[4]
       record-lock
    gap-lock   gap-lock
+   ~~~next-key lock~~~~
 ```
 
-- 테이블에서 어떤 인덱스(pk포함)가 가장 큰 row를 update, delete할때 그보다 큰 값의 insert가 lock 걸린다
-- id는 증가되는 값으로 발행된다
-  - 최신에 발급된 id "A"에 대해 index (PK 포함)인 row를 update를 할 경우, 그보다 나중에 가입된 유저의("A"보다 더 큰) 데이터의 insert가 lock이 걸린다.
+DML 쿼리가 어떤 인덱스를 사용하냐에 따라 사용되는 lock 의 종류도 달라집니다
+- P.K or unique index
+  - record lock
+- secondary index
+  - gap lock or next-key lock
+  
+중복되는 record 가 존재하는지에 따른 동작 차이입니다
+- 중복이 없다면 -> 해당 record 에만 lock 을 잡아도 이슈없음
+- 중복이 있다면 (secondary index) -> DML 도중에 phantom 발생 가능하므로, gap lock 을 잡아서 방지함
 
-신규유저 생성시 오래걸릴 경우 다음생성되는 유저도 lock이 걸려 확인한 건데, 유저 생성시 update도 있기 때문에 lock이 걸림
+## Auto increment Locks
+테이블 수준의 lock 이지만 트랙잭션과 관계없이 INSERT 쿼리에서 `AUTO_INCREMENT 값을 가져오는 순간`만 락이 걸렸다가 즉시 해제됩니다.
