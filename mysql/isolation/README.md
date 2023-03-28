@@ -7,39 +7,28 @@
 ```
 
 ## 증상
-### dirty reads
-- See uncommitted data
+### DIRTY READ
+커밋되지 않은 내용까지 조회되는 현상 입니다
 
-### non-repeatable reads
-- transaction 도중 다른 트랜잭션의 **[update 로]**select 결과가 달라지는 현상
+### NON-REPEATABLE READ
+transaction 도중 다른 tx 의 **[update 가 반영되어]** 재조회 했을때 결과가 달라지는 현상 입니다
 
-### phantom reads
-- transaction 도중 다른 트랜잭션의 **[insert 로]**select 결과가 달라지는 현상
+### PHANTOM READ
+transaction 도중 다른 tx 의 **[insert 가 반영되어]** 재조회 했을때 결과가 달라지는 현상 입니다
 
 ## 종류
 ### READ UNCOMMITTED
-- .. All read phenomena!
+DIRTY READ + NON-REPEATABLE READ + PHANTOM READ 발생가능
 
 ### READ COMMITTED
-- No dirty reads
-- Inconsistent read
-  - Non locking read can the see data that is committed by another transaction after the current transaction started
-- Locks level
-  - record lock - update .. where, delete .. where, [locking read (select .. for update)](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html), lock in share mode
-  - gap locks, next-key locks - not supported (== phantom reads occur)
-  
+NON-REPEATABLE READ + PHANTOM READ 발생가능
 
 ### REPEATABLE READ
-- This is the `default` isolation level for InnoDB
-- No dirty reads
-- [Consistent read](https://dev.mysql.com/doc/refman/5.7/en/glossary.html#glos_consistent_read)
-  - [Non locking read](https://dev.mysql.com/doc/refman/5.7/en/innodb-consistent-read.html) within the same transaction read snapshot established by the first regardless of changes performed by other transactions running at the same time
-  - This can be done by reading [undo log](https://dev.mysql.com/doc/refman/5.7/en/glossary.html#glos_undo_log)
-- Locks level
-  - record locks - update .. where, delete .. where
-  - gap locks, next-key locks - locking read, lock in share mode
+PHANTOM READ 발생가능
   
-mysql 은 repeatable-read 에도 next-key lock (row + gap lock) 을 걸어서 phantom read 가 발생하지 않는다
+- mysql 은 REPEATABLE READ 에도 gap/next-key lock 을 잡아서 PHANTOM READ 가 발생하지 않습니다
 
 ### SERIALIZABLE
-모든 select 가 select ... for share 로 변경된다
+모든 select 가 select ... for share 로 변경됩니다 (모든 증상이 발생하지 않음)
+
+> 즉 select 실행시 DML 은 대기함

@@ -8,6 +8,22 @@
 
 <img src="1.png" width="50%">
 
+## Shared Locks
+read lock 입니다.
+
+- 다른 shared lock 허용 (== 다른 조회는 허용)
+- 다른 exclusive lock 미허용 (== 다른 DML 은 미허용)
+
+> select ... for share
+
+## Exclusive Locks
+write lock 입니다.
+
+- 다른 shared lock 미허용 (== 다른 조회는 미허용)
+- 다른 exclusive lock 미허용 (== 다른 DML 은 미허용)
+
+> select ... for update
+
 ## Record Locks
 레코드 (정확히는 index) 자체만을 잠그는 lock 입니다.
 
@@ -62,4 +78,4 @@ DML 쿼리가 어떤 인덱스를 사용하냐에 따라 사용되는 lock 의 �
 - 중복이 있다면 (secondary index) -> DML 도중에 phantom 발생 가능하므로, gap lock 을 잡아서 방지함
 
 ## Auto increment Locks
-테이블 수준의 lock 이지만 트랙잭션과 관계없이 INSERT 쿼리에서 `AUTO_INCREMENT 값을 가져오는 순간`만 락이 걸렸다가 즉시 해제됩니다.
+테이블 수준의 lock 이지만 트랙잭션과 관계없이 INSERT 쿼리에서 `AUTO_INCREMENT 값을 가져오는 순간`만 락이 걸렸다가 즉시 해제됩니다
