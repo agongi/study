@@ -5,10 +5,13 @@
 - https://github.com/redis-study/redis-summary
 ```
 
-### Index
+### Indexes
 - skiplist vs ziplist
 - [Persistence](persistence)
-  - AOF vs RDB
+- AOF vs RDB
+
+### Blogs
+- [MGET](https://brunch.co.kr/@springboot/359)
 
 ***
 
