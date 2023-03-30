@@ -16,8 +16,6 @@
 - [Join](join)
 - [MMM](mmm)
 - [GTID](gtid)
-- [Redo](redo)
-- [Undo](undo)
 - [Prepared statement](prepared-statement)
 - [INSERT INTO SELECT](insert-into-select)
 - [Duplicate Primary Key](duplicate-primary-key)
