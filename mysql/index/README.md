@@ -1,13 +1,34 @@
-## Index
+# Index
 
 ```
 @author: suktae.choi
 - https://12bme.tistory.com/138?category=682920
+- https://wslog.dev/mysql-index#4c8551fdf047448290cb393ad7cd51c6
 ```
 
-### Overview
+## Clustered Indexes
+Mysql 은 데이터를 `페이지단위 (기본: 16KB)` 로 관리하고, RID 는 페이지의 주소이다.
 
-#### [단일 vs 다중 인덱스](https://jojoldu.tistory.com/243)
+<img src="4.png" width="50%">
+
+- clustered-index
+  - leaf node 는 RID (== ROWID) 를 가짐 (페이지의 시작주소)
+- secondary-index
+  - leaf node 는 primary-key 를 가짐
+
+> Clustered index 로 지정한 컬럼에 맞춰서 실제 데이터를 정렬함
+
+- CUD 발생
+- 데이터의 정렬진행 (clustered-index 로 지정된 컬럼에 맞춰서)
+- (CUD 된 데이터로 인해) `페이지 분할`이 발생하면, 각 데이터의 RID 가 변경됨
+  - `a(rowid:1)-b(2)-x(3)-y(4)-z(5)` 로 정렬된 상태에서 c 가 들어오면 -> `a(rowid:1)-b(2)-c-(3)-x(4)-y(5)-z(6)`
+- 그에 따라 clustered-index 가 가지고 있는 RID 도 전체 갱신 (즉 인덱스 갱신이 발생)
+
+> 하지만 secondary-index 는 RID 가 아닌 primary-index 를 참조 하므로 갱신 스킵
+
+즉 select 이득보다, craete/insert/delete 시 잃는 성능이 더 크므로 secondary-index 는 leaf node 에 p.k 를 참조합니다.
+
+## [단일 vs 다중 인덱스](https://jojoldu.tistory.com/243)
 
 ```
 INDEX A asc, B asc, C asc 
@@ -32,11 +53,9 @@ INDEX A asc, B asc, C asc
 - A 컬럼이 조건에 없다면, 해당 트리는 사용불가
 - C A 라면, A 로 우선 인덱스는 탄 후 나머지 트리의 full scan
 
-<img src="images/Screen Shot 2019-06-28 at 00.48.14.png">
+<img src="1.png">
 
-### Discussion
-
-#### Why `IN` is not good
+## Why `IN` is not good
 
 `=`, `in` 은 인덱스를 사용합니다.
 
@@ -44,25 +63,24 @@ INDEX A asc, B asc, C asc
 - 단, `in`은 인자값으로 상수가 포함되면 문제 없지만, **서브쿼리를 넣게되면 성능상 이슈가 발생**합니다.
 - `in`의 인자로 **서브쿼리가 들어가면 서브쿼리의 외부가 먼저 실행**되고, `in` 은 체크조건으로 실행되기 때문입니다.
 
-### 자료구조
+## 자료구조
+### B-Tree
 
-#### B-Tree
-
-<img src="images/Screen%20Shot%202017-09-02%20at%2014.55.16.jpg" width="75%">
+<img src="2.jpg" width="75%">
 
 - 범위 검색: 첫번째 범위의 left node 로 간 후, 리프노드만을 따라가며 검색
 - 데이터블록: 노드에서 저장할수 있는 인덱스 크기
   - 추가: overflow 발생시, 새로운 블록 생성 및 깊이 증가. 한쪽으로 불균형 대칭이 되면 인덱스 재빌딩 (Full GC)
   - 삭제: 해당 인덱스에 flag 설정, 일정 이상되면 기존 블록과 병합 진행. 불균형 되면 인덱스 재빌딩
 
-#### Bitmap
+### Bitmap
 
-<img src="images/Screen%20Shot%202017-09-02%20at%2014.44.16.jpg" width="75%">
+<img src="3.jpg" width="75%">
 
 - Data Structure: 2-dimensional array
 - 검색: 해당 배열을 쭉 읽는다 (e.g. array[1]\[\])
 
-#### Why B-Tree is commonly used?
+### Why B-Tree is commonly used?
 
 - 트리가 균형이 잡혔을다고 가정하면, 거의 대부분의 select 에서 동일한 응답 속도를 보장해 준다. (같은 Depth)
   - B-Tree 의 시간복잡도는 트리의 깊이(Depth) 에 결정됨, 균형잡힌 트리는 동일한 depth 로 구성되어 있음

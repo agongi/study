@@ -12,7 +12,6 @@
 - [Isolation](isolation)
 - [Locks](locks)
 - [Index](index)
-- [Clustered Index](clustered-index)
 - [Join](join)
 - [MMM](mmm)
 - [GTID](gtid)
