@@ -1,4 +1,4 @@
-## QueryDSL
+# QueryDSL
 
 ```
 @author: suktae.choi
@@ -7,24 +7,17 @@
 - https://www.baeldung.com/intro-to-querydsl
 ```
 
-#### Index
-
-- [JPAQuery vs SQLQuery vs JPASQLQuery](jpaquery-sqlquery-jpasqlquery)
-
-#### Blog
-
+### Blog
 - [JPASubQuery vs JPAExpressions](https://jojoldu.tistory.com/379?category=637935)
 - [연관관계 없이 Join 조회하기](https://jojoldu.tistory.com/396)
 
 ***
 
-<img src="images/Screen%20Shot%202017-10-14%20at%2018.37.01.png" width="75%">
-
-## 사용방법
+<img src="1.png" width="75%">
 
 기본적으로 JPQL 을 정적 QClass 를 통해 작성한다. 라는 개념입니다.
 
-쿼리는 JPAQuery or HibernateQuery 를 통해 생성하고, XYZQuery 를 만들기위한 빌더인 XYZQueryFactory 의 사용이 권장된다.
+쿼리는 JPAQuery or HibernateQuery 를 통해 생성하고, XYZQuery 를 만들기위한 빌더인 XYZQueryFactory 의 사용이 권장됩니다.
 
 - JPQLQuery
   - JPAQuery
@@ -33,6 +26,7 @@
   - JPAQueryFactory
   - HibernateQueryFactory
 
+## Factory 를 사용한 방식
 ### R (Select)
 
 ```java
@@ -62,8 +56,7 @@ queryFactory.delete(user)
   .execute();
 ```
 
-Factory 를 이용하지 않은 직접사용은 아래와 같다:
-
+## Factory 를 사용하지 않는 방식
 ### R (Select)
 
 ```java
@@ -91,11 +84,7 @@ new JPADeleteClause(em, QMember.member)
 ```
 
 ## [Projections](https://icarus8050.tistory.com/5)
-
-links - http://www.querydsl.com/static/querydsl/latest/reference/html/ch03s02.html
-
-### QClass 가 있는 Entity
-
+### Tuple binding
 ```java
 List<Tuple> result = query
   .select(employee.firstName, employee.lastName)
@@ -118,8 +107,7 @@ for (Tuple row : result) {
 }}
 ```
 
-Tuple 응답이 내려오므로, Entity 를 직접 생성하는 방법을 찾아보자
-
+### Entity binding
 ```java
 @Entity
 class Employee {
@@ -139,9 +127,9 @@ List<Customer> dtos = query.select(QEmployee.create(employee.firstName, employee
   .from(employee).fetch();
 ```
 
-> 생성되는 create method 는 Projections.constructor 를 사용한다. 즉 직접사용도 가능
+> 생성되는 create method 는 Projections.constructor 를 사용합니다. 즉 직접사용도 가능
 
-### QClass 가 없는 DTO
+### DTO binding
 
 - 생성자
 
