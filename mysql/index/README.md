@@ -8,9 +8,16 @@
 
 인덱스는 CUD 성능은 희생하고, R 속도를 높이는 기능입니다.
 
+인덱스크기: 16KB
+사용판단: 전체의 20-25% 이상을 조회한다면 table full-scan 이 유리
+
+// TODO - 기타 공통적인 인덱스 특성 정리
+
 ## 알고리즘
 ### B-Tree
 B-Tree 는 불균형이 아니라면 대부분의 select 는 동일한 응답 속도를 보장합니다. (depth 로 인한 성능저하)
+
+// TODO - B-Tree 에 대한 일반적인 특성 더 정리
 
 <img src="2.jpg" width="75%">
 
@@ -19,36 +26,18 @@ B-Tree 는 불균형이 아니라면 대부분의 select 는 동일한 응답 �
   - 추가: overflow 발생시, 새로운 블록 생성 및 깊이 증가. 한쪽으로 불균형 대칭이 되면 인덱스 재빌딩 (Full GC)
   - 삭제: 해당 인덱스에 flag 설정, 일정 이상되면 기존 블록과 병합 진행. 불균형 되면 인덱스 재빌딩
 
-### Hash
-TBD
+- index range scan
+- index full scan
+- loose index scan
+- index skip scan
 
-## 종류
-### Clustered Indexes
-Mysql 은 데이터를 `페이지단위 (기본: 16KB)` 로 관리하고, RID 는 페이지의 주소이다.
+인덱스 스캔방향
+- asc
+- desc
 
-<img src="4.png" width="50%">
+// TODO - 8.x 에서 reverse 방향성에 대한 정식지원 정리
 
-- clustered-index
-  - leaf node 는 RID (== ROWID) 를 가짐 (페이지의 시작주소)
-- secondary-index
-  - leaf node 는 primary-key 를 가짐
-
-> Clustered index 로 지정한 컬럼에 맞춰서 실제 데이터를 정렬함
-
-- CUD 발생
-- 데이터의 정렬진행 (clustered-index 로 지정된 컬럼에 맞춰서)
-- (CUD 된 데이터로 인해) `페이지 분할`이 발생하면, 각 데이터의 RID 가 변경됨
-  - `a(rowid:1)-b(2)-x(3)-y(4)-z(5)` 로 정렬된 상태에서 c 가 들어오면 -> `a(rowid:1)-b(2)-c-(3)-x(4)-y(5)-z(6)`
-- 그에 따라 clustered-index 가 가지고 있는 RID 도 전체 갱신 (즉 인덱스 갱신이 발생)
-
-> 하지만 secondary-index 는 RID 가 아닌 primary-index 를 참조 하므로 갱신 스킵
-
-즉 select 이득보다, craete/insert/delete 시 잃는 성능이 더 크므로 secondary-index 는 leaf node 에 p.k 를 참조합니다.
-
-## Secondary Indexes
-TBD
-
-## 방법
+가용성 및 효율성
 ### [단일 vs 다중 인덱스](https://jojoldu.tistory.com/243)
 
 ```
@@ -83,3 +72,35 @@ INDEX A asc, B asc, C asc
 - `in`은 결국 **= 을 여러번 실행**한 것이기 때문입니다.
 - 단, `in`은 인자값으로 상수가 포함되면 문제 없지만, **서브쿼리를 넣게되면 성능상 이슈가 발생**합니다.
 - `in`의 인자로 **서브쿼리가 들어가면 서브쿼리의 외부가 먼저 실행**되고, `in` 은 체크조건으로 실행되기 때문입니다.
+
+
+### Hash
+TBD
+
+## 종류
+### Clustered Indexes
+Mysql 은 데이터를 `페이지단위 (기본: 16KB)` 로 관리하고, RID 는 페이지의 주소이다.
+
+<img src="4.png" width="50%">
+
+- clustered-index
+  - leaf node 는 RID (== ROWID) 를 가짐 (페이지의 시작주소)
+- secondary-index
+  - leaf node 는 primary-key 를 가짐
+
+> Clustered index 로 지정한 컬럼에 맞춰서 실제 데이터를 정렬함
+
+- CUD 발생
+- 데이터의 정렬진행 (clustered-index 로 지정된 컬럼에 맞춰서)
+- (CUD 된 데이터로 인해) `페이지 분할`이 발생하면, 각 데이터의 RID 가 변경됨
+  - `a(rowid:1)-b(2)-x(3)-y(4)-z(5)` 로 정렬된 상태에서 c 가 들어오면 -> `a(rowid:1)-b(2)-c-(3)-x(4)-y(5)-z(6)`
+- 그에 따라 clustered-index 가 가지고 있는 RID 도 전체 갱신 (즉 인덱스 갱신이 발생)
+
+> 하지만 secondary-index 는 RID 가 아닌 primary-index 를 참조 하므로 갱신 스킵
+
+즉 select 이득보다, craete/insert/delete 시 잃는 성능이 더 크므로 secondary-index 는 leaf node 에 p.k 를 참조합니다.
+
+### Secondary Indexes
+TBD
+
+### Unique Indexes
