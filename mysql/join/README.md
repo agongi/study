@@ -1,4 +1,4 @@
-## Join
+# Join
 
 ```
 @author: suktae.choi
@@ -9,10 +9,10 @@
 - http://wiki.gurubee.net/pages/viewpage.action?pageId=4948020
 ```
 
-<img src="images/Screen%20Shot%202017-07-23%20at%2012.38.04.png" width="75%">
+<img src="1.png" width="75%">
 
-### Join Types
-#### `Inner Join` (== Join)
+## Join Types
+### `Inner Join` (== Join)
 **Intersection** of both tables
 
 ```sql
@@ -36,7 +36,7 @@ from demo_people, demo_property
 where demo_people.pid = demo_property.pid;
 ```
 
-#### Left Outer Join (== `Left Join`)
+### Left Outer Join (== `Left Join`)
 All **left table's row must present** and fill-out with right table's column
 
 ```sql
@@ -55,7 +55,7 @@ left join demo_property on (demo_people.pid = demo_property.pid);
 +————+————–+———————-+
 ```
 
-#### Right Outer Join (== `Right Join`)
+### Right Outer Join (== `Right Join`)
 All **right table's row must present** and fill-out with left table's column
 
 ```sql
@@ -74,7 +74,7 @@ right join demo_property on (demo_people.pid = demo_property.pid);
 +———–+————–+———————-+
 ```
 
-#### Outer Join (== Left + Right join)
+### Outer Join (== Left + Right join)
 **Combination** of both right and left join
 
 ```sql
@@ -94,12 +94,12 @@ outer join demo_property on (demo_people.pid = demo_property.pid);
 +———–+————–+———————-+
 ```
 
-#### Cross Join
+### Cross Join
 **Multiply** table A and B. The result set is N * M
 
 **Join key** clauses are **not specified** in cross join
 
-<img src="images/Screen%20Shot%202017-12-18%20at%2002.11.14.png" width="75%">
+<img src="2.png" width="75%">
 
 ```sql
 -- Explicit Cross Join
@@ -132,9 +132,9 @@ mysql> select name, phone, selling
 from demo_people, demo_property
 ```
 
-### [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
-#### Nested Loops
-<img src="images/Screen%20Shot%202017-09-19%20at%2002.02.14.png" width="75%">
+## [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
+### Nested Loops
+<img src="3.png" width="75%">
 
 - 선행 테이블 기준으로, 후행 테이블을 랜덤 액세스 하며 조인
   - 선행 (Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
@@ -159,8 +159,8 @@ where a.loc = 'NEW YORK'
 and b.deptno = a.deptno
 ```
 
-#### Sort Merge
-<img src="images/Screen%20Shot%202017-09-19%20at%2002.11.14.png" width="75%">
+### Sort Merge
+<img src="4.png" width="75%">
 
 - 선/후행 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
   - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (완료시까지 기다려야함)
@@ -184,9 +184,8 @@ where  a.deptno = b.deptno
 and    b.sal > 1000 ;
 ```
 
-#### Hash Join
-
-<img src="images/2-8.jpg" width="75%">
+### Hash Join
+<img src="5.jpg" width="75%">
 
 - 작은 테이블 기준으로, 조인키의 hash bucket 생성
   - 큰 테이블은 조인키의 hash 값으로 검색

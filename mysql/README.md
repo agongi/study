@@ -14,7 +14,6 @@
 - [Index](index)
 - [Join](join)
 - [MMM](mmm)
-- [GTID](gtid)
 - [Prepared statement](prepared-statement)
 - [INSERT INTO SELECT](insert-into-select)
 - [Duplicate Primary Key](duplicate-primary-key)
