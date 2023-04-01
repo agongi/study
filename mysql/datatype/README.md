@@ -1,4 +1,4 @@
-## Data Type
+# Data Type
 
 ```
 @author: suktae.choi
@@ -7,7 +7,7 @@
 - https://zetawiki.com/wiki/MySQL_datetime,_timestamp_%EC%B0%A8%EC%9D%B4
 ```
 
-### Index
+## Index
 The most common used:
 - tinyint
 - int
@@ -17,7 +17,7 @@ The most common used:
 
 - varchar
 
-### char vs varchar
+## char vs varchar
 Use varchar to use storage efficiently
 
 - char
@@ -27,7 +27,7 @@ Use varchar to use storage efficiently
 
 > nchar & nvarchar support Unicode and need 2-times more space.
 
-### datetime vs timestamp
+## datetime vs timestamp
 Use **datetime**
 
 - datetime
@@ -36,7 +36,7 @@ Use **datetime**
 - timestamp
   - 1970-01-01 00:00:00 ~ 2037-12-31 23:59:59
 
-### Overflow int
+## Overflow int
 Convert to **bigint**
 
 - int

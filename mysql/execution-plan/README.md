@@ -1,4 +1,4 @@
-## Execution Plan
+# Execution Plan
 
 ```
 @author: suktae.choi
@@ -6,10 +6,10 @@
 - https://12bme.tistory.com/73?category=682920
 ```
 
-### Usage
 ```sql
 EXPLAIN SELECT * FROM categories
 ```
+
 ```sql
 ********************** 1. row **********************
            id: 1
@@ -29,4 +29,4 @@ possible_keys: NULL
   - index - index full scan
   - all - table full scan
 
-<img src="images/MySQL-%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B6%84%EC%84%9D%20%EB%B0%A9%EB%B2%95.png">
+<img src="1.png">
