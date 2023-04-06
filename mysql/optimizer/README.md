@@ -4,11 +4,11 @@
 @author: suktae.choi
 ```
 
-## 방식
+## [방식](/mysql/execution-plan)
 - rule-based
 - cost-based
 
-기본적으로 cose-based 로 옵티마이저가 동작합니다.
+기본적으로 cost-based (통계정보) 로 옵티마이저가 동작합니다.
 
 ## FULL SCAN
 - table full scan
