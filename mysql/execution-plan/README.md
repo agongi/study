@@ -50,6 +50,7 @@ selct * from order where last_name = 'lee';
 실행계획에 표시되는 각 칼럼의 의미는 [LINK](https://zzang9ha.tistory.com/436) 로 대체합니다.
 
 - 통계/히스토그램 기반으로 예측된 실행계획
+  - `EXPLAIN FORMAT=TREE ...` 으로 출력포맷을 변경하면 DEPTH 가 포함되어 실제 실행된 순서를 알 수 있습니다
 
 ```sql
 EXPLAIN SELECT * FROM employee WHERE emp_no BETWEEN 100001 AND 200000;
