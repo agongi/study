@@ -1,4 +1,4 @@
-## Transactions
+# Transactions
 
 ```
 @author: suktae.choi
@@ -7,7 +7,6 @@
 - https://gunju-ko.github.io/kafka/2018/03/31/Kafka-Transaction.html
 ```
 
-## Transaction
 - Producer 가 메세지 발행 시 begin transaction;
   - Transaction#open
   - Send messages (actually sent to broker & persisted)
@@ -22,17 +21,17 @@
 
 이런식으로 트랜잭션이 진행됩니다. 아래에서는 Phase 별 동작을 설명하겠습니다.
 
-### Atomic multi-partition writes
+## Atomic multi-partition writes
 N 개의 파티션에 N 개의 메세지를 atomic 하게 보내는 개념입니다.
 
 즉 Producer 에서 각 파티션별 메세지를 발행하고, 일괄 commit 을 하면 동시 반영되는 개념
 
-### Reading Transactional Messages
+## Reading Transactional Messages
 Consumer 는 메세지를 읽을때, broker 에 메세지가 있지만 상태가 committed 인 메세지만 가져옵니다.
 
 > `isolation.level=read_committed` 일때 해당함
 
-### Read-Process-Write
+## Read-Process-Write
 Consumer 는 가져간 메세지의 처리 후, commit 을 broker 에 전송합니다.
 
 그러면 메세지의 상태는 consumed 로 변경되고, offset 에 반영됩니다.

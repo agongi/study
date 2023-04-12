@@ -11,6 +11,7 @@
 ### Index
 - [Kafka Stream](kafka-stream)
 - [Kafka Connect](kafka-connect)
+- [MirrorMaker 2.0](mm2)
 - [Transactions](transactions)
 
 ### Blog
