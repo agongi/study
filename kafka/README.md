@@ -9,109 +9,25 @@
 ```
 
 ### Index
+
 - [Kafka Stream](kafka-stream)
 - [Kafka Connect](kafka-connect)
 - [MirrorMaker 2.0](mm2)
+- [Schema Registry](schema-registry)
+- [KSQL](ksql)
 - [Transactions](transactions)
 
 ### Blog
+
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
 - [Schema Registry](https://medium.com/@gaemi/kafka-%EC%99%80-confluent-schema-registry-%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%8A%A4%ED%82%A4%EB%A7%88-%EA%B4%80%EB%A6%AC-1-cdf8c99d2c5c)
 
 ***
 
-카프카는 모두 로그파일에 넣고 -> OS 페이징캐시를 이용해서 조회성능을 가져온다 (별도의 캐시구간 없음)
-(용어) 세그먼트 -> 브로커에 저장되는 메세지의 (물리적인) 로그파일 명칭
-
-## Topic/Partition
-토픽은 N 개의 파티션으로 분산됨
-
-파티션단위의 순서는 보장됨
-
-1개의 파티션은 consumer group 단위로, 그룹안에 1개의 consumer 만 구독가능
-
-> 동시처리 방지위해
-
-<img src='2.png' width='75%'>
-
-## Replication
-해당 토픽의 카프카 리더가 R/W 를 모두 담당함
-
-카프카리더의 데이터를 Fellow 가 주기적으로 pull 해서 replication 유지
-
-> 이런 관계를 ISR (In Sync Replicas) 이라고 부름
-
-<img src='1.png' width='75%'>
-
-## Election
-### [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller)
-
-브로커들의 liveness 관리.
-
-브로커중에서 bootstrap 시점 주키퍼 `/controller` 임시노드를 먼저 생성한 브로커가 컨트롤러로 선정되고, 나머지는 watching
-
-- 브로커가 중단되면, 해당 브로커가 리더였던 파티션의 새로운 리더 선출담당
-
-> (TBD) Controller Broker 의 재선출과정은?
-
-### ISR (In Sync Replicas)
-
-브로커 down 시, 해당 브로커가 리더였던 파티션의 새 리더는 ISR 그룹안에서 선정한다.
-
-- Leader - 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외
-- Follower - 주기적으로 Leader 의 data pull
-
-> 즉 ISR 내에서는 fresh 보장됨
-
-Controller 는 주키퍼 확인후 (ISR 브로커중에서), 기본적으로 RR 로 새 리더를 선출한다.
-
-## Failover
-장애시 정책은 `unclean.leader.election.enable` 를 통해 설정가능
-
-- false: ISR 에서만 leader 를 기다림
-  - 가용성낮음, 유실낮음
-- true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
-  - 가용성높음, 유실높음
-
-### GroupCoordinator Broker
-
-Consumer 에게 Heartbeat 를 받고, 일정주기 동안 없으면 Rebalancing 을 수행
-
-- 전송방법: record polling, offset commit 이 오면 heartbeat 를 받았다고 판단
-
-## Files
-### Retention
-
-Record 를 저장하는 파일의 보관주기
-
-- 시간: 특정시간이 지난 파일 삭제 (default. 7 days)
-- 사이즈: 특정사이즈가 오버되면 파일 삭제 (default. 1G)
-
-### Segment
-
-카프카에서 파티션을 나누는 단위
-
-- 세그먼트의 제한 크기나 보존 기간에 도달하면, 해당 파일을 닫고 새로운 세그먼트에 쓰기를 진행
-- 카프카 브로커는 모든 파티션의 모든 세그먼트에 대해 각각 하나의 열린 파일 핸들을 유지
-  - 따라서 OS 의 File Descriptor 는 [충분한 숫자](https://docs.confluent.io/current/kafka/deployment.html#file-descriptors-and-mmap)로 잡아야한다.
-
-```bash
-Kafka uses a very large number of files and a large number of sockets to communicate with the clients. All of this requires a relatively high number of available file descriptors.
-
-Many modern Linux distributions ship with only 1,024 file descriptors allowed per process. This is too low for Kafka.
-
-#!/bin/bash
-# current opened socket counts
-$ find /{kafka_home} -name '*index' | wc -l
-
-# FD increased
-$ echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
-# apply
-$ sysctl -p
-```
-
 ## Producer
+
 ### Acks
+
 - 0: no ack from leader
 - 1: ack from leader
 - all: ack from all ISR members
@@ -138,7 +54,9 @@ public class ProducerRecord<K, V> {
 - value: payload
 
 ## Consumer
+
 ### Consumer Group
+
 consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분됩니다.
 
 ### Rebalancing
@@ -148,6 +66,7 @@ consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분�
 - 리밸런싱이 일어나는 동안은 STW
 
 ### Commit
+
 Consumer group 에서 kafka 에 offset 을 기록하는 과정
 
 - auto commit
@@ -166,11 +85,13 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
 > 중복가능성이 있으니, 멱등성이 유지되는게 중요하다.
 
 ### Offset
+
 토픽 (정확하게는 파티션) offset 을 Consumer group 단위로 관리한다.
 
 > 예전에는 zookeeper 에서, 지금은 kafka 자체가 저장
 
 ### Push vs Pull
+
 - Push (kafka to consumer)
   - pros
     - No latency to receive record from broker
@@ -184,8 +105,104 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
   - cons
     - backpressure: 부하가 있다면 다음 메세지를 천천히 가져가면됨
     - failover: 나중에 살아났을때 next offset 부터 가져가면됨
+    -
+
+## Topic/Partition
+
+토픽은 N 개의 파티션으로 분산됨
+
+파티션단위의 순서는 보장됨
+
+1개의 파티션은 consumer group 단위로, 그룹안에 1개의 consumer 만 구독가능
+
+> 동시처리 방지위해
+
+<img src='2.png' width='75%'>
+
+## Replication
+
+해당 토픽의 카프카 리더가 R/W 를 모두 담당함
+
+카프카리더의 데이터를 Fellow 가 주기적으로 pull 해서 replication 유지
+
+> 이런 관계를 ISR (In Sync Replicas) 이라고 부름
+
+<img src='1.png' width='75%'>
+
+## Election
+
+### [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller)
+
+브로커들의 liveness 관리.
+
+브로커중에서 bootstrap 시점 주키퍼 `/controller` 임시노드를 먼저 생성한 브로커가 컨트롤러로 선정되고, 나머지는 watching
+
+- 브로커가 중단되면, 해당 브로커가 리더였던 파티션의 새로운 리더 선출담당
+
+> (TBD) Controller Broker 의 재선출과정은?
+
+### ISR (In Sync Replicas)
+
+브로커 down 시, 해당 브로커가 리더였던 파티션의 새 리더는 ISR 그룹안에서 선정한다.
+
+- Leader - 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외
+- Follower - 주기적으로 Leader 의 data pull
+
+> 즉 ISR 내에서는 fresh 보장됨
+
+Controller 는 주키퍼 확인후 (ISR 브로커중에서), 기본적으로 RR 로 새 리더를 선출한다.
+
+## Failover
+
+장애시 정책은 `unclean.leader.election.enable` 를 통해 설정가능
+
+- false: ISR 에서만 leader 를 기다림
+  - 가용성낮음, 유실낮음
+- true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
+  - 가용성높음, 유실높음
+
+### GroupCoordinator Broker
+
+Consumer 에게 Heartbeat 를 받고, 일정주기 동안 없으면 Rebalancing 을 수행
+
+- 전송방법: record polling, offset commit 이 오면 heartbeat 를 받았다고 판단
+
+## Files
+
+### Retention
+
+Record 를 저장하는 파일의 보관주기
+
+- 시간: 특정시간이 지난 파일 삭제 (default. 7 days)
+- 사이즈: 특정사이즈가 오버되면 파일 삭제 (default. 1G)
+
+### Segment
+
+카프카에서 파티션을 나누는 단위이고, 브로커에 저장되는 메세지의 (물리적인) 로그파일 명칭 입니다.
+
+> 카프카는 모두 로그파일에 넣고 -> OS 페이징캐시만을 이용해서 IO 를 관리합니다. (별도로 카프카 내부에서의 캐싱 없음)
+
+- 세그먼트의 제한 크기나 보존 기간에 도달하면, 해당 파일을 닫고 새로운 세그먼트에 쓰기를 진행
+- 카프카 브로커는 모든 파티션의 모든 세그먼트에 대해 각각 하나의 열린 파일 핸들을 유지
+  - 따라서 OS 의 File Descriptor 는 [충분한 숫자](https://docs.confluent.io/current/kafka/deployment.html#file-descriptors-and-mmap)로 잡아야한다.
+
+```bash
+Kafka uses a very large number of files and a large number of sockets to communicate with the clients. All of this requires a relatively high number of available file descriptors.
+
+Many modern Linux distributions ship with only 1,024 file descriptors allowed per process. This is too low for Kafka.
+
+#!/bin/bash
+# current opened socket counts
+$ find /{kafka_home} -name '*index' | wc -l
+
+# FD increased
+$ echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
+# apply
+$ sysctl -p
+```
 
 ## Advanced
+
 ### ACID
 
 - Kafka: ISR 그룹 전체에 메세지가 복제되면, 그것을 commit 으로 간주한다.
