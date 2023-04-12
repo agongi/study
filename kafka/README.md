@@ -9,7 +9,6 @@
 ```
 
 ### Index
-- APIs
 - [Kafka Stream](kafka-stream)
 - [Kafka Connect](kafka-connect)
 - [Transactions](transactions)
@@ -17,9 +16,11 @@
 ### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
 - [Schema Registry](https://medium.com/@gaemi/kafka-%EC%99%80-confluent-schema-registry-%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%8A%A4%ED%82%A4%EB%A7%88-%EA%B4%80%EB%A6%AC-1-cdf8c99d2c5c)
-- KSQL
 
 ***
+
+카프카는 모두 로그파일에 넣고 -> OS 페이징캐시를 이용해서 조회성능을 가져온다 (별도의 캐시구간 없음)
+(용어) 세그먼트 -> 브로커에 저장되는 메세지의 (물리적인) 로그파일 명칭
 
 ## Topic/Partition
 토픽은 N 개의 파티션으로 분산됨
@@ -30,7 +31,7 @@
 
 > 동시처리 방지위해
 
-<img src='images/2.png' width='75%'>
+<img src='2.png' width='75%'>
 
 ## Replication
 해당 토픽의 카프카 리더가 R/W 를 모두 담당함
@@ -39,10 +40,10 @@
 
 > 이런 관계를 ISR (In Sync Replicas) 이라고 부름
 
-<img src='images/1.png' width='75%'>
+<img src='1.png' width='75%'>
 
 ## Election
-**[Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller)**
+### [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller)
 
 브로커들의 liveness 관리.
 
@@ -52,7 +53,7 @@
 
 > (TBD) Controller Broker 의 재선출과정은?
 
-**ISR (In Sync Replicas)**
+### ISR (In Sync Replicas)
 
 브로커 down 시, 해당 브로커가 리더였던 파티션의 새 리더는 ISR 그룹안에서 선정한다.
 
@@ -64,28 +65,28 @@
 Controller 는 주키퍼 확인후 (ISR 브로커중에서), 기본적으로 RR 로 새 리더를 선출한다.
 
 ## Failover
-전면장애시 정책은 `unclean.leader.election.enable` 를 통해 설정가능
+장애시 정책은 `unclean.leader.election.enable` 를 통해 설정가능
 
 - false: ISR 에서만 leader 를 기다림
   - 가용성낮음, 유실낮음
 - true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
   - 가용성높음, 유실높음
 
-**GroupCoordinator Broker**
+### GroupCoordinator Broker
 
 Consumer 에게 Heartbeat 를 받고, 일정주기 동안 없으면 Rebalancing 을 수행
 
 - 전송방법: record polling, offset commit 이 오면 heartbeat 를 받았다고 판단
 
 ## Files
-**Retention**
+### Retention
 
 Record 를 저장하는 파일의 보관주기
 
 - 시간: 특정시간이 지난 파일 삭제 (default. 7 days)
 - 사이즈: 특정사이즈가 오버되면 파일 삭제 (default. 1G)
 
-**Segment**
+### Segment
 
 카프카에서 파티션을 나누는 단위
 
@@ -118,14 +119,14 @@ $ sysctl -p
 
 ```java
 public class ProducerRecord<K, V> {
-  private final String topic;
-  private final Integer partition;
-  private final Headers headers;
-  private final K key;
-  private final V value;
-  private final Long timestamp;
+    private final String topic;
+    private final Integer partition;
+    private final Headers headers;
+    private final K key;
+    private final V value;
+    private final Long timestamp;
 
-  // ...
+    // ...
 }
 ```
 
@@ -137,7 +138,9 @@ public class ProducerRecord<K, V> {
 
 ## Consumer
 ### Consumer Group
-**Rebalancing**
+consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분됩니다.
+
+### Rebalancing
 
 그룹안에서 Consumer 추가/삭제시 rebalancing 발생
 
@@ -167,22 +170,19 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
 > 예전에는 zookeeper 에서, 지금은 kafka 자체가 저장
 
 ### Push vs Pull
-**Push (kafka to consumer)**
-
-- pros
-  - No latency to receive record from broker
-- cons
-  - Failover: 복잡함. 컨슈머가 죽었을때 retry or discard 등 모든 컨슈머에 대해 meta 관리해야함
-  - Backpressure: 어려움. 필요하면 그런것도 다 broker 에서 관리해야함
-
-**Pull (consumer)**
-
-- pros
-  - Some latency to receive record from broker
-  - long polling: time-based, size-based 등으로 나름 빠르게 대응할 수 있음
-- cons
-  - backpressure: 부하가 있다면 다음 메세지를 천천히 가져가면됨
-  - failover: 나중에 살아났을때 next offset 부터 가져가면됨
+- Push (kafka to consumer)
+  - pros
+    - No latency to receive record from broker
+  - cons
+    - Failover: 복잡함. 컨슈머가 죽었을때 retry or discard 등 모든 컨슈머에 대해 meta 관리해야함
+    - Backpressure: 어려움. 필요하면 그런것도 다 broker 에서 관리해야함
+- Pull (consumer)
+  - pros
+    - Some latency to receive record from broker
+    - long polling: time-based, size-based 등으로 나름 빠르게 대응할 수 있음
+  - cons
+    - backpressure: 부하가 있다면 다음 메세지를 천천히 가져가면됨
+    - failover: 나중에 살아났을때 next offset 부터 가져가면됨
 
 ## Advanced
 ### ACID
@@ -190,12 +190,9 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
 - Kafka: ISR 그룹 전체에 메세지가 복제되면, 그것을 commit 으로 간주한다.
 - Consumer: polling 시, 커밋된 메세지만 가져온다. (== 모든 ISR 에 동기화된)
 
-**Cluster Mirroring**
+### Cluster Mirroring
 
 동일 클러스터 내 에서의 복제는 Replicas
 
 클러스터 단위의 복제는 Mirroring
 
-> 솔루션은 MirrorMaker 가 있음
-
-UseCase 가 없음. 정말 필요한지 고민해보길
