@@ -24,39 +24,17 @@
 
 ***
 
-## Broker
+## 기본 개념
 
 ### Topic/Partition
 
-토픽은 N 개의 파티션으로 분산됨
+1개의 토픽은 N 개의 파티션으로 분산되어 처리 가능합니다.
 
-파티션단위의 순서는 보장됨
+토픽은 (정확하게는 파티션) Broker 에 저장되며 파티션 리더만을 통해 CRUD 가 발생합니다. 즉 Producer, Consumer 는 파티션 리더하고만 통신합니다.
 
-1개의 파티션은 consumer group 단위로, 그룹안에 1개의 consumer 만 구독가능
-
-> 동시처리 방지위해
-
-<img src='2.png' width='75%'>
-
-### Replication
-
-해당 토픽의 카프카 리더가 R/W 를 모두 담당함
-
-카프카리더의 데이터를 Fellow 가 주기적으로 pull 해서 replication 유지
-
-> 이런 관계를 ISR (In Sync Replicas) 이라고 부름
+> 파티션단위의 순서는 보장됨
 
 <img src='1.png' width='75%'>
-
-### Election
-
-[Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커들의 liveness 를 관리합니다
-
-브로커는 bootstrap 시점에 주키퍼 `/controller` 임시노드를 먼저 생성한 브로커가 컨트롤러로 선정되고, 나머지는 watching
-
-- 브로커가 중단되면, 해당 브로커가 리더였던 파티션의 새로운 리더 선출담당
-
-> (TBD) Controller Broker 의 재선출과정은?
 
 ### Segment (== file)
 
@@ -99,16 +77,37 @@ consumer-group 이 이미 fetch 한 offset 은 __consumer__offsets 토픽에 저
 
 > 최신 1개만 남겨도 되는 케이스 일때만 사용가능. 모든 이벤트의 history 를 기록하는 성격이라면 compaction 사용시 유실
 
-### ISR (In Sync Replicas)
+## Broker
 
-브로커 down 시, 해당 브로커가 리더였던 파티션의 새 리더는 ISR 그룹안에서 선정한다.
+### Replication
+
+카프카는 파티션 리더가 모든 CRUD 를 담당하므로, 팔로어는 주기적으로 segment 을 fetch 해서 replication 을 수행합니다.
+
+```
+// TODO - 해당 과정에 대한 그림 필요
+
+우선 데이터 보내고 나중에 commit 유무 알려줌 (next fetch 에서)
+리더는 모든 ISR 이 복제를 완료한 데이터만 (즉 commit 된 데이터를 의미함) consumer 가 읽어가도록 보장한다
+```
+
+replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-sync 가 아닌 팔로어를 ISR (InSyncReplica) 로 관리합니다.
 
 - Leader - 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외
-- Follower - 주기적으로 Leader 의 data pull
+- Follower - 주기적으로 Leader 의 data fetch
 
-> 즉 ISR 내에서는 fresh 보장됨
+### Controller
 
-Controller 는 주키퍼 확인후 (ISR 브로커중에서), 기본적으로 RR 로 새 리더를 선출한다.
+[Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
+
+- 목적: (브로커) 장애시 해당 브로커에 속하던 `파티션 리더 선출`
+- 플로우: ISR 에서 raft 를 통해 리더를 선출합니다
+
+### Coordinator
+
+[Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
+
+- 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `다른 consumer-group 선` 
+- 플로우: ...
 
 ## Producer
 
