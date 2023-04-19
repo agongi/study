@@ -3,6 +3,7 @@
 ```
 @author: suktae.choi
 - https://kafka.apache.org/documentation
+- https://www.conduktor.io/kafka/
 - https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
 - https://www.popit.kr/author/peter5236
 - https://bysssss.tistory.com/46
@@ -92,8 +93,8 @@ consumer-group 이 이미 fetch 한 offset 은 __consumer__offsets 토픽에 저
 
 replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-sync 가 아닌 팔로어를 ISR (InSyncReplica) 로 관리합니다.
 
-- Leader - 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외
-- Follower - 주기적으로 Leader 의 data fetch
+- leader: 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외
+- follower: 주기적으로 Leader 의 data fetch
 
 ### Controller
 
@@ -106,14 +107,29 @@ replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-syn
 
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
-- 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `다른 consumer-group 선` 
-- 플로우: ...
+- 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `다른 consumer-group 선정`
+- 플로우: 기본적으로 heartbeat 로 체크하고 record polling, offset commit 이 오면 heartbeat 를 받았다고 판단합니다
 
 ## Producer
 
+메세지를 전송하는 단위 입니다.
+
+### send 흐름
+
+<img src='3.png' width='75%'>
+
+- send
+- partitioner
+- accumulator
+- sender
+
+// TODO - 각 kafka options 의미 설명
+
 ### Acks
 
-- 0: no ack from leader
+<img src='4.png' width='75%'>
+
+- 0: no ack from leader (== async)
 - 1: ack from leader
 - all: ack from all ISR members
 
@@ -123,7 +139,9 @@ replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-syn
 public class ProducerRecord<K, V> {
     private final String topic;
     private final Integer partition;
+    // metadata 저장. key-value pair
     private final Headers headers;
+    // (optional) 파티션을 결정하는 식별단위 (key 의 hash 로 partition 결정, 없으면 RR)
     private final K key;
     private final V value;
     private final Long timestamp;
@@ -132,17 +150,63 @@ public class ProducerRecord<K, V> {
 }
 ```
 
-- headers: metadata 저장. key-value pair
-- key: (생락가능) used to determine which partition to assign
-  - 있으면 - key 의 hash 로 파티션 구분
-  - 없으면 - RR 로 공평하게 돌림
-- value: payload
+### send 유형
+
+- at-least once
+  - acks 를 기다리고 실패시 재전송
+- at-mose once
+  - acks 를 기다리지 않음
+- exactly once (== transaction)
+  - PID (producerID) & sequence 의 조합
+  - `enable.idempotence=true`
+
+exactly-once 는 transaction 을 지원한다는 의미이고, Producer 에서의 처리는 같습니다:
+
+```java
+KafkaProducer<String, String> producer = new KafkaProducer<>(configs);
+
+producer.initTransactions();
+producer.beginTransaction();
+    try {
+        producer.send(record);
+        producer.flush();
+        producer.commitTransaction();
+    } catch(Exception e) {
+        producer.abortTransaction();
+    } finally {
+        producer.close();
+    }
+```
+
+- send 된 message 는 broker 에 저장 (offset++)
+- 그후 commit 수행 (offset++)
+  - 즉 transaction committed 마킹하는 record 가 추가로 전송됨
+- consumer 는 `read_committed` 으로 설정하고, latest-commit 마킹 이전의 record 만 fetch
+  - consumer 는 commit 된 메세지를 가져간다. 까지만 보장하고 exactly-once 를 보장하진 않습니다 (fetch 했지만 acks 실패 등)
+
+즉 일반적인 사용성에서 kafka transaction 은 
+- producer: commit record 를 추가로 보내면서 exactly-once 보장
+- consumer: coommit 된 record 만 fetch 까지만 보장 (중복가능)
 
 ## Consumer
 
+메세지를 소비하는 단위 입니다.
+
+### fetch 흐름
+
+<img src='5.png' width='75%'>
+
+- fetcher
+- coordinator
+- assigner
+
+// TODO - 각 kafka options 의미 설명
+
 ### Consumer Group
 
-consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분됩니다.
+consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분됩니다. 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer__offsets` 토픽으로 관리합니다.
+
+- consumer-group:partition:offsets 으로 관리
 
 ### Rebalancing
 
@@ -169,12 +233,6 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
 
 > 중복가능성이 있으니, 멱등성이 유지되는게 중요하다.
 
-### Offset
-
-토픽 (정확하게는 파티션) offset 을 Consumer group 단위로 관리한다.
-
-> 예전에는 zookeeper 에서, 지금은 kafka 자체가 저장
-
 ### Push vs Pull
 
 - Push (kafka to consumer)
@@ -200,12 +258,6 @@ Consumer group 에서 kafka 에 offset 을 기록하는 과정
   - 가용성낮음, 유실낮음
 - true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
   - 가용성높음, 유실높음
-
-### GroupCoordinator Broker
-
-Consumer 에게 Heartbeat 를 받고, 일정주기 동안 없으면 Rebalancing 을 수행
-
-- 전송방법: record polling, offset commit 이 오면 heartbeat 를 받았다고 판단
 
 ## Advanced
 
