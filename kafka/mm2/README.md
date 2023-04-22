@@ -6,4 +6,4 @@
 - https://learn.microsoft.com/ko-kr/azure/hdinsight/kafka/kafka-mirrormaker-2-0-guide
 ```
 
-TBD
+<img src="1.png" width="75%">

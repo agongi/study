@@ -3,65 +3,62 @@
 ```
 @author: suktae.choi
 - https://docs.confluent.io/current/connect/concepts.html
-- https://www.baeldung.com/kafka-connectors-guide
-- https://swalloow.github.io/kafka-connect
-- https://kimseunghyun76.tistory.com/463
 ```
 
-**Kafka Connect is a framework for connecting Kafka with external systems.**
+<img src="1.png" width="75%">
 
-- SourceConnector: (external) to kafka
-- SinkConnector: kafka to (external)
-- Worker: joint connectors to broker
+## Mode
 
-## Worker
 ### Standalone
-단독 worker 로 connectors 를 broker 에 연결한다.
 
-```properties
-$ cat << EOF > connect-standalone.properties
-bootstrap.servers=localhost:9092
-key.converter=org.apache.kafka.connect.json.JsonConverter
-value.converter=org.apache.kafka.connect.json.JsonConverter
-key.converter.schemas.enable=false
-value.converter.schemas.enable=false
-offset.storage.file.filename=/tmp/connect.offsets
-offset.flush.interval.ms=10000
-plugin.path=/share/java
-EOF
-```
-
-각각의 properties 는 reference 참조하고, 실행은 아래와 같다.
-
-```bash
-$ ./connect-standalone \
-./connect-standalone.properties \
-./connect-file-source.properties \
-./connect-file-sink.properties
-```
+1개의 워커로 동작하는 모드 입니다. 메타 정보를 local disk 에 저장합니다.
 
 ### Distributed
-Standalone 은 단독서버에서 worker 가 동작하는 모드이다. SPOF 가 되므로 분산시켜보자.
+
+N개의 워커로 동작하는 모드 입니다. 메타 정보를 kafka topic 에 저장합니다.
+
+## 구성요소
+
+### Worker
+
+worker 는 실행되는 서버단위이고 connect, task 를 포함하고 있습니다.
+
+<img src="2.png" width="75%">
+
+- source 를 적절한 파티션으로 분할하고 (connector)
+- 파티션단위의 작업을 실제 전송 (task)
+
+connector 조회/추가/삭제하는 REST API 를 제공합니다.
+
+- connect-configs
+- connect-offsets
+- connect-status
+
+변경된 설정은 `config.refresh.interval.ms: 60s` 의 주기로 변경 감지되어 worker 에 전파됩니다. 
+
+### Connector
+
+source or sink 에 연결 및 작업을 정의합니다. mysql-source-connector, mongodb-sink-connector 등이 있습니다
 
 ```bash
-$ ./connect-distributed \
-./connect-distributed.properties \
+{
+  "name": "my-source-connect",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:mysql://localhost:3306/test",
+    "connection.user":"root",
+    "connection.password":"비밀번호",
+    "mode":"incrementing",
+    "incrementing.column.name" : "id",
+    "table.whitelist" : "users",
+    "topic.prefix" : "example_topic_",
+    "tasks.max" : "1"
+  }
+}
+
+curl -XPOST -d @- http://localhost:8083/connectors --header "content-Type:application/json"
 ```
 
-## Source Connectors
-```properties
-name=local-file-source
-connector.class=FileStreamSource
-tasks.max=1
-topic=connect-test
-file=test.txt
-```
+### Task
 
-## Sink Connectors
-```properties
-name=local-file-sink
-connector.class=FileStreamSink
-tasks.max=1
-file=test.sink.txt
-topics=connect-test
-```
+커넥터가 정의한 작업을 직접 수행하는 작업 주체 입니다.
