@@ -89,3 +89,31 @@ Row 와 동일한 개념
   - cache is over than 95% of physical memory, eviction started forcefully
   - if deleted memory is dirty, store in `*.LAS` file
   - LAS will be written in DB in future
+
+## BSON
+
+몽고는 내부적으로 BSON 으로 document 를 저장합니다.
+
+- binary format 이므로 사이즈가 작고
+- 필드의 type 을 지정가능
+
+<img src="images/1.png" width="75%">
+
+```json
+{"hello": "world"} ->
+\x16\x00\x00\x00           // total document size
+\x02                       // 0x02 = type String
+hello\x00                  // field name
+\x06\x00\x00\x00world\x00  // field value
+\x00                       // 0x00 = type EOO ('end of object')
+ 
+{"BSON": ["awesome", 5.05, 1986]} ->
+\x31\x00\x00\x00
+ \x04BSON\x00
+ \x26\x00\x00\x00
+ \x02\x30\x00\x08\x00\x00\x00awesome\x00
+ \x01\x31\x00\x33\x33\x33\x33\x33\x33\x14\x40
+ \x10\x32\x00\xc2\x07\x00\x00
+ \x00
+ \x00
+```
