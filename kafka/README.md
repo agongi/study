@@ -3,6 +3,7 @@
 ```
 @author: suktae.choi
 - https://kafka.apache.org/documentation
+- https://docs.confluent.io/kafka/introduction.html
 - https://www.conduktor.io/kafka/
 - https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
 - https://www.popit.kr/author/peter5236
@@ -29,30 +30,44 @@
 
 ### Topic/Partition
 
-1개의 토픽은 N 개의 파티션으로 분산되어 처리 가능합니다.
+1개의 토픽은 N 개의 파티션으로 분산되어 저장됩니다.
 
-토픽은 (정확하게는 파티션) Broker 에 저장되며 파티션 리더만을 통해 CRUD 가 발생합니다. 즉 Producer, Consumer 는 파티션 리더하고만 통신합니다.
+파티션은 Broker 에 로그파일 (==segment) 로 저장되며 파티션 리더만을 통해 CRUD 가 발생합니다. 즉 Producer, Consumer 는 파티션 리더와 통신합니다.
 
 > 파티션단위의 순서는 보장됨
 
 <img src='1.png' width='75%'>
 
+### Page cache
+
+카프카는 모든 IO 에 OS 레벨의 page cache 를 활용합니다. (별도로 카프카 내부에서의 캐싱 없음)
+
+<img src='1-1.png' width='75%'>
+
+https://docs.confluent.io/platform/current/kafka/deployment.html#memory 의 가이드에 따르면
+
+- 카프카 자체에 대한 -Xmx -Xms 는 5G 정도면 충분
+- 나머지는 모두 OS 가 사용하도록 (page cache) 메모리는 충분히 여유있게 유지
+
+해야합니다.
+
+### Zero copy (== Direct memory or DMA)
+
+page cache 를 통해 memory 에 있는 record 는
+
+- producer -- broker
+- broker -- consumer
+
+간의 통신에서 zero-copy 를 통해 수신/전송 됩니다. 이를 통해 JVM heap 의 사용률을 줄일 수 있고 불필요한 복사비용이 감소합니다.
+
 ### Segment (== file)
 
-카프카에서 파티션을 나누는 단위이고, 브로커에 저장되는 메세지의 (물리적인) 로그파일 명칭 입니다.
+브로커에 저장되는 레코드의 (물리적인) 로그파일 입니다.
 
-> 카프카는 모두 로그파일에 넣고 -> OS 페이징캐시만을 이용해서 IO 를 관리합니다. (별도로 카프카 내부에서의 캐싱 없음)
-
-- 세그먼트의 제한 크기나 보존 기간에 도달하면, 해당 파일을 닫고 새로운 세그먼트에 쓰기를 진행
-- 카프카 브로커는 모든 파티션의 모든 세그먼트에 대해 각각 하나의 열린 파일 핸들을 유지
-  - 따라서 OS 의 File Descriptor 는 [충분한 숫자](https://docs.confluent.io/current/kafka/deployment.html#file-descriptors-and-mmap)로 잡아야한다.
+- 브로커는 파티션의 모든 세그먼트에 대해 각각 하나의 열린 파일 핸들러를 유지 합니다
+- 따라서 OS File Descriptor 는 [충분한 숫자](https://docs.confluent.io/current/kafka/deployment.html#file-descriptors-and-mmap) 로 설정해야 합니다
 
 ```bash
-Kafka uses a very large number of files and a large number of sockets to communicate with the clients. All of this requires a relatively high number of available file descriptors.
-
-Many modern Linux distributions ship with only 1,024 file descriptors allowed per process. This is too low for Kafka.
-
-#!/bin/bash
 # current opened socket counts
 $ find /{kafka_home} -name '*index' | wc -l
 
@@ -62,25 +77,32 @@ $ echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
 $ sysctl -p
 ```
 
-### Segment.Retention
+### Log Retention
 
-Record 를 저장하는 파일의 보관주기
+Record 를 저장하는 파일의 보관주기는 아래와 같습니다:
 
 - 시간: 특정시간이 지난 파일 삭제 (default. 7-days)
 - 사이즈: 특정사이즈가 오버되면 파일 삭제 (default. 1G)
 - 주기: retention 체크 주기 (default. 5-mins)
 
-### Segment.Compaction
+### Log Compaction
 
-카프카에서의 compaction 은 압축을 한다는 의미가 아닌 latest 만 남긴다는 의미입니다.
+Log compaction ensures that Apache Kafka will always `retain at least the last known value` for `each message key` within the log of data for a `single topic partition`.
 
-consumer-group 이 이미 fetch 한 offset 은 __consumer__offsets 토픽에 저장되어 있으므로, 해당 key 로 발행된 value (message) 는 최신1개만 남기고 제거하는 동작입니다
+<img src='1-1.png' width='75%'>
 
-> 최신 1개만 남겨도 되는 케이스 일때만 사용가능. 모든 이벤트의 history 를 기록하는 성격이라면 compaction 사용시 유실
+- kafka-key 를 기준으로 message compaction 을 진행하므로, compaction 사용시 key 는 필수값 입니다
+  - record 의 key 는 원래 비필수
+- 각 파티션에서의 unique 만 보장합니다 (global unique 하지 않음)
+  - 그에 따라 파티션 rebalancing 으로 개수가 증가하는 경우 중복키가 발생 할 수 있습니다
+
+```json
+log.cleanup.policy=compact
+```
 
 ## Broker
 
-### Replication
+### [Replication](https://docs.confluent.io/kafka/design/replication.html)
 
 카프카는 파티션 리더가 모든 CRUD 를 담당하므로, 팔로어는 주기적으로 segment 을 fetch 해서 replication 을 수행합니다.
 
@@ -163,18 +185,19 @@ public class ProducerRecord<K, V> {
 exactly-once 는 transaction 을 지원한다는 의미이고, Producer 에서의 처리는 같습니다:
 
 ```java
-KafkaProducer<String, String> producer = new KafkaProducer<>(configs);
+KafkaProducer<String, String> producer=new KafkaProducer<>(configs);
 
-producer.initTransactions();
-producer.beginTransaction();
-    try {
-        producer.send(record);
-        producer.flush();
-        producer.commitTransaction();
-    } catch(Exception e) {
-        producer.abortTransaction();
-    } finally {
-        producer.close();
+    producer.initTransactions();
+    producer.beginTransaction();
+
+    try{
+    producer.send(record);
+    producer.flush();
+    producer.commitTransaction();
+    }catch(Exception e){
+    producer.abortTransaction();
+    }finally{
+    producer.close();
     }
 ```
 
@@ -184,7 +207,8 @@ producer.beginTransaction();
 - consumer 는 `read_committed` 으로 설정하고, latest-commit 마킹 이전의 record 만 fetch
   - consumer 는 commit 된 메세지를 가져간다. 까지만 보장하고 exactly-once 를 보장하진 않습니다 (fetch 했지만 acks 실패 등)
 
-즉 일반적인 사용성에서 kafka transaction 은 
+즉 일반적인 사용성에서 kafka transaction 은
+
 - producer: commit record 를 추가로 보내면서 exactly-once 보장
 - consumer: coommit 된 record 만 fetch 까지만 보장 (중복가능)
 
@@ -214,61 +238,22 @@ consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분�
 
 - 리밸런싱이 일어나는 동안은 STW
 
-### Commit
-
-Consumer group 에서 kafka 에 offset 을 기록하는 과정
-
-- auto commit
-  - enable.auto.commit=true, time-interval 로 주기적으로 commit
-  - 아직 처리못했는데 (장애) auto.commit 해버리면 **유실발생**
-- manual commit
-  - enable.auto.commit=false, \#commitSync 이 호출되야 commit
-  - #commitSync 는 동기방식이므로, 카프카에서 응답올때까지 **STW**
-  - commit 전에 장애발생시 리밸런싱 이후 **중복가능**
-- async-manual commit
-  - enable.auto.commit=false, \#commitAsync 이 호출되야 commit
-  - 응답을 기다리지 않으므로, STW 없음
-  - commit 전에 장애발생시 리밸런싱 이후 **더 많은 중복가능**
-    - async 로 처리하니, local 처리량이 sync 방식보다 더 많으므로
-
-> 중복가능성이 있으니, 멱등성이 유지되는게 중요하다.
-
-### Push vs Pull
-
-- Push (kafka to consumer)
-  - pros
-    - No latency to receive record from broker
-  - cons
-    - Failover: 복잡함. 컨슈머가 죽었을때 retry or discard 등 모든 컨슈머에 대해 meta 관리해야함
-    - Backpressure: 어려움. 필요하면 그런것도 다 broker 에서 관리해야함
-- Pull (consumer)
-  - pros
-    - Some latency to receive record from broker
-    - long polling: time-based, size-based 등으로 나름 빠르게 대응할 수 있음
-  - cons
-    - backpressure: 부하가 있다면 다음 메세지를 천천히 가져가면됨
-    - failover: 나중에 살아났을때 next offset 부터 가져가면됨
-    -
-
-## Failover
-
-장애시 정책은 `unclean.leader.election.enable` 를 통해 설정가능
-
-- false: ISR 에서만 leader 를 기다림
-  - 가용성낮음, 유실낮음
-- true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
-  - 가용성높음, 유실높음
-
 ## Advanced
 
 ### ACID
 
-- Kafka: ISR 그룹 전체에 메세지가 복제되면, 그것을 commit 으로 간주한다.
-- Consumer: polling 시, 커밋된 메세지만 가져온다. (== 모든 ISR 에 동기화된)
+- producer: replication.factor (즉 ISR) 을 만족하면 그것을 commit 으로 간주합니다
+  - transaction 을 사용한다면 -> commit record 를 명시적으로 한번 더 보내는 과정이 추가
+- consumer: polling 시 커밋된 메세지만 가져옵니다 (== 모든 ISR 에 동기화된 record)
+  - transaction 을 사용한다면 -> commit 마킹된 record 만 pull
 
-### Cluster Mirroring
+## 가용성 vs 내구성
 
-동일 클러스터 내 에서의 복제는 Replicas
+`unclean.leader.election.enable` 옵션을 통해 결정됩니다.
 
-클러스터 단위의 복제는 Mirroring
-
+- false: ISR 에서만 leader 를 선출합니다
+  - 가용성 낮음
+  - 내구성 높음
+- true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
+  - 가용성 높음
+  - 내구성 낮음
