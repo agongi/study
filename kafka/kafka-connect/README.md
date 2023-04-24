@@ -3,6 +3,7 @@
 ```
 @author: suktae.choi
 - https://docs.confluent.io/current/connect/concepts.html
+- https://medium.com/clay-one/kafka-connect-cluster-an-introduction-26522e72a9af
 ```
 
 <img src="1.png" width="75%">
@@ -21,7 +22,7 @@ N개의 워커로 동작하는 모드 입니다. 메타 정보를 kafka topic �
 
 ### Worker
 
-worker 는 실행되는 서버단위이고 connect, task 를 포함하고 있습니다.
+Workers are just simple Linux (or any other OS) processes and contains connect, task
 
 <img src="2.png" width="75%">
 
