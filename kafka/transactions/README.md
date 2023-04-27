@@ -7,37 +7,42 @@
 - https://gunju-ko.github.io/kafka/2018/03/31/Kafka-Transaction.html
 ```
 
-- Producer 가 메세지 발행 시 begin transaction;
-  - Transaction#open
-  - Send messages (actually sent to broker & persisted)
-    - 즉 일단 메세지는 무조건 brokder 로 전송되서 저장됨
-  - Commit; or Rollback;
-    - Once committed, sent messages are marked committed or not
-- Abort 하더라도 앞서 보낸건 들어가긴 함. 대신 commit 으로 마킹되지 않음
-- Consumer 는 committed 상태인 메세지만 가져감
-  - `isolation.level=read_committed`
-- 메세지 처리 후, consumer 는 commit 을 전송
-- Broker 에서 offset 증가. (즉 offset 하위에 있는 모든 메세지는 consumed 로 처리)
+exactly-once 는 transaction 을 지원한다는 의미이고, Producer 에서의 처리는 같습니다:
 
-이런식으로 트랜잭션이 진행됩니다. 아래에서는 Phase 별 동작을 설명하겠습니다.
+```java
+KafkaProducer<String, String> producer=new KafkaProducer<>();
+public void send(){
+    producer.initTransactions();
+    producer.beginTransaction();
 
-## Atomic multi-partition writes
+    try{
+    producer.send(record);
+    producer.flush();
+    producer.commitTransaction();
+    }catch(Exception e){
+    producer.abortTransaction();
+    }finally{
+    producer.close();
+    }
+    }
+```
 
-N 개의 파티션에 N 개의 메세지를 atomic 하게 보내는 개념입니다.
+- producer
+  - transaction#open
+  - send messages
+    - 메세지는 우선 brokder 로 전송되서 저장됩니다
+  - commit; or rollback;
+    - transaction commit 마킹하는 record 을 추가로 전송합니다
+    - 롤백시 저장된 record 는 commit 으로 마킹되지 않습니다
+- consumer
+  - `isolation.level=read_committed` 설정이 된 consumer 는 committed 레코드만 fetch 합니다
+  - 가져간 레코드 처리후 commit 을 보내 __consumer_offsets 에 기록합니다
+  - consumer 입장에서 transaction 은 committed record 를 가져간다. 만 보장하고 exactly-once 를 보장하진 않습니다 (fetch 했지만 acks 실패 등)
 
-즉 Producer 에서 각 파티션별 메세지를 발행하고, 일괄 commit 을 하면 동시 반영되는 개념
+즉 일반적인 사용성에서 kafka transaction 은
 
-## Reading Transactional Messages
-
-Consumer 는 메세지를 읽을때, broker 에 메세지가 있지만 상태가 committed 인 메세지만 가져옵니다.
-
-> `isolation.level=read_committed` 일때 해당함
-
-## Read-Process-Write
-
-Consumer 는 가져간 메세지의 처리 후, commit 을 broker 에 전송합니다.
-
-그러면 메세지의 상태는 consumed 로 변경되고, offset 에 반영됩니다.
+- producer: commit record 를 추가로 보내면서 exactly-once 보장
+- consumer: coommit 된 record 만 fetch 까지만 보장 (중복가능)
 
 ## Zombie fencing
 
@@ -61,16 +66,16 @@ timeout 등으로 producer 가 ack 를 받지못하면, retry 하는데 해당 �
 - 유실없음
 - 중복가능
 
-### Exactly Once
-
-Producer 가 발행하는 message 는 고유의 identifier 를 가지고있습니다. 그래서 retry 메세지가 들어와도 Broker 는 id 로 식벽해서 중복은 discard 처리합니다.
-
-- 유실없음
-- 중복없음
-
 ### At least Once
 
 그냥 비동기로 메세지 전송하는 개념입니다. ack 를 기대하지 않고 무조건 발행합니다.
 
 - 유실가능
+- 중복없음
+
+### Exactly Once
+
+Producer 가 발행하는 message 는 고유의 identifier 를 가지고있습니다. 그래서 retry 메세지가 들어와도 Broker 는 id 로 식벽해서 중복은 discard 처리합니다.
+
+- 유실없음
 - 중복없음

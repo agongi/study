@@ -94,7 +94,7 @@ Log compaction ensures that Apache Kafka will always `retain at least the last k
 - kafka-key 를 기준으로 message compaction 을 진행하므로, compaction 사용시 key 는 필수값 입니다
   - record 의 key 는 원래 비필수
 - 각 파티션에서의 unique 만 보장합니다 (global unique 하지 않음)
-  - 그에 따라 파티션 rebalancing 으로 개수가 증가하는 경우 중복키가 발생 할 수 있습니다
+  - 그에 따라 파티션 rebalancing or 추가시 중복이 발생 할 수 있습니다
 
 ```json
 log.cleanup.policy=compact
@@ -136,81 +136,47 @@ replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-syn
 
 메세지를 전송하는 단위 입니다.
 
-### send 흐름
+### 구성요소
 
 <img src='3.png' width='75%'>
 
-- send
-- partitioner
-- accumulator
-- sender
+- kafkaProducer
+  - serialization
+  - partitioning
+  - compression
+- RecordAccumulator
+  - serdes -- partition -- compression 이 완료된 record 가 저장되는 버퍼 입니다
+  - 주기적으로 Sender 가 fetch 합니다
+- Sender
+  - (비동기) Accumulator 에 저장된 record 를 broker 에 전송합니다
 
-// TODO - 각 kafka options 의미 설명
+### 옵션
 
-### Acks
+<img src='3-1.png' width='75%'>
 
-<img src='4.png' width='75%'>
+- acks
+  - 0: no ack from leader (== async)
+  - 1: ack from leader
+  - all: ack from all ISR members
+- compression.type
+- enable.idempotence/transaction.id
+  - exactly-once 를 위해 사용하는 옵션
+- max.in.flight.requests.per.connection
+  - 하나의 커넥션에서 ACK 없이 전송할 수 있는 요청수 (1보다 크게 설정하면 순서보장되지 않음)
 
-- 0: no ack from leader (== async)
-- 1: ack from leader
-- all: ack from all ISR members
+acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
 
-### ProducerRecord
+<img src='3-2.png' width='75%'>
 
-```java
-public class ProducerRecord<K, V> {
-    private final String topic;
-    private final Integer partition;
-    // metadata 저장. key-value pair
-    private final Headers headers;
-    // (optional) 파티션을 결정하는 식별단위 (key 의 hash 로 partition 결정, 없으면 RR)
-    private final K key;
-    private final V value;
-    private final Long timestamp;
-
-    // ...
-}
-```
-
-### send 유형
+### 전송방식
 
 - at-least once
   - acks 를 기다리고 실패시 재전송
 - at-mose once
   - acks 를 기다리지 않음
-- exactly once (== transaction)
+- exactly once ([transaction](transactions) 과 연관있음)
   - PID (producerID) & sequence 의 조합
   - `enable.idempotence=true`
-
-exactly-once 는 transaction 을 지원한다는 의미이고, Producer 에서의 처리는 같습니다:
-
-```java
-KafkaProducer<String, String> producer=new KafkaProducer<>(configs);
-
-    producer.initTransactions();
-    producer.beginTransaction();
-
-    try{
-    producer.send(record);
-    producer.flush();
-    producer.commitTransaction();
-    }catch(Exception e){
-    producer.abortTransaction();
-    }finally{
-    producer.close();
-    }
-```
-
-- send 된 message 는 broker 에 저장 (offset++)
-- 그후 commit 수행 (offset++)
-  - 즉 transaction committed 마킹하는 record 가 추가로 전송됨
-- consumer 는 `read_committed` 으로 설정하고, latest-commit 마킹 이전의 record 만 fetch
-  - consumer 는 commit 된 메세지를 가져간다. 까지만 보장하고 exactly-once 를 보장하진 않습니다 (fetch 했지만 acks 실패 등)
-
-즉 일반적인 사용성에서 kafka transaction 은
-
-- producer: commit record 를 추가로 보내면서 exactly-once 보장
-- consumer: coommit 된 record 만 fetch 까지만 보장 (중복가능)
 
 ## Consumer
 
