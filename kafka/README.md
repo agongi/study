@@ -162,7 +162,7 @@ replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-syn
 - enable.idempotence/transaction.id
   - exactly-once 를 위해 사용하는 옵션
 - max.in.flight.requests.per.connection
-  - 하나의 커넥션에서 ACK 없이 전송할 수 있는 요청수 (1보다 크게 설정하면 순서보장되지 않음)
+  - 하나의 커넥션에서 ACK 없이 전송할 수 있는 요청수 (기본값: 5)
 
 acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
 
