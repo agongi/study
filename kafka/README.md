@@ -5,6 +5,7 @@
 - https://kafka.apache.org/documentation
 - https://docs.confluent.io/kafka/introduction.html
 - https://www.conduktor.io/kafka/
+- https://velog.io/@hyun6ik/series/Apache-Kafka
 - https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
 - https://www.popit.kr/author/peter5236
 - https://bysssss.tistory.com/46
@@ -123,6 +124,8 @@ replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-syn
 [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 - 목적: (브로커) 장애시 해당 브로커에 속하던 `파티션 리더 선출`
+  - broker (node) 는 controller 와 session 을 유지해야 합니다
+  - follower 는 주기적으로 leader 의 데이터를 replicate 해야합니다 (not too far behind)
 - 플로우: ISR 에서 raft 를 통해 리더를 선출합니다
 
 ### Coordinator
@@ -163,10 +166,10 @@ replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-syn
   - exactly-once 를 위해 사용하는 옵션
 - max.in.flight.requests.per.connection
   - 하나의 커넥션에서 ACK 없이 전송할 수 있는 요청수 (기본값: 5)
-
-acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
-
-<img src='3-2.png' width='75%'>
+- max.block.ms
+  - producer#send 시 메시지를 저장하는 Buffer 할당까지 대기하는 시간
+- batch.size(64kb)/linger.ms(10ms)
+  - batch 에서 message 를 보내기까지의 size, timeout
 
 ### 전송방식
 
@@ -178,31 +181,47 @@ acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 
   - PID (producerID) & sequence 의 조합
   - `enable.idempotence=true`
 
+### Acks
+
+acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
+
+<img src='3-2.png' width='75%'>
+
+### Delivery timeout
+
+max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다 
+
+<img src='3-3.png' width='75%'>
+
+### 순서보장  
+
+`max.in.flight.requests.per.connection (default: 5)` 의 설정에 따라 batch 로 보내진 메세지중 1개가 실패한 경우 retry 하지만 그로인해 메세지의 순서가 변경 될 수 있습니다.
+
+`enable.idempotence=true` 로 설정한경우 batch 단위로 성공/실패 처리하므로 순서 보장이 가능합니다
+
 ## Consumer
 
-메세지를 소비하는 단위 입니다.
+메세지를 수신하는 단위 입니다.
 
-### fetch 흐름
+### 구성요소
 
-<img src='5.png' width='75%'>
+<img src='4.png' width='75%'>
 
-- fetcher
-- coordinator
-- assigner
+### 옵션
 
-// TODO - 각 kafka options 의미 설명
+- group.id
+  - consumer group 의 식별자 입니다. 동일 그룹내의 정보는 공유됩니다
+- enable.auto.commit
+  - 백그라운드로 오프셋을 커밋합니다 (periodically)
+- isolation.level
+  - read_uncommitted, read_committed
+  - read_committed 은 (producer 에서) 트랜잭션 commit 된 메세지만 가져갑니다
 
 ### Consumer Group
 
-consumer 는 특정 consumer-group 에 속하고, 그룹은 group-id 로 구분됩니다. 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer__offsets` 토픽으로 관리합니다.
-
-- consumer-group:partition:offsets 으로 관리
-
-### Rebalancing
-
-그룹안에서 Consumer 추가/삭제시 rebalancing 발생
-
-- 리밸런싱이 일어나는 동안은 STW
+- consumer 는 특정 consumer-group 에 속하고 그룹은 group-id 로 구분됩니다
+- 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer_offsets` 토픽으로 관리합니다.
+- 그룹에 consumer 추가/삭제시 리밸런싱이 발생하고 그 동안은 STW 입니다
 
 ## Advanced
 
