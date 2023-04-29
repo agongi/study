@@ -17,7 +17,6 @@
 - [Kafka Connect](kafka-connect)
 - [MirrorMaker 2.0](mm2)
 - [Schema Registry](schema-registry)
-- [KSQL](ksql)
 - [Transactions](transactions)
 
 ### Blog
