@@ -106,33 +106,48 @@ log.cleanup.policy=compact
 
 카프카는 파티션 리더가 모든 CRUD 를 담당하므로, 팔로어는 주기적으로 segment 을 fetch 해서 replication 을 수행합니다.
 
-```
-// TODO - 해당 과정에 대한 그림 필요
+<img src='2-1.png' width='75%'>
 
-우선 데이터 보내고 나중에 commit 유무 알려줌 (next fetch 에서)
-리더는 모든 ISR 이 복제를 완료한 데이터만 (즉 commit 된 데이터를 의미함) consumer 가 읽어가도록 보장한다
-```
+- producer#send 을 통해 leader partition 은 메세지를 저장합니다
+  - producer 는 replication 이 완료될때까지 대기합니다 (아직 성공으로 응답가지 않음)
+- follow partition (을 가지고 있는 broker) 은 메세지 fetch 후 저장
+- 그후 leader 는 commit 하고 producer 에 committed 로 성공 응답합니다
+  - 대기하던 producer 는 이제 다음 작업 진행
+- consumer 는 leader partition 을 통해 메세지를 가져가지만 uncommitted 인 메세지 (아직 replication 진행중) 는 가져가지 않도록 카프카가 보장합니다
 
-replication.factor 에 설정된 수치만큼 replication 이 되고, out-of-sync 가 아닌 팔로어를 ISR (InSyncReplica) 로 관리합니다.
+복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아닌 팔로어를 ISR` (In-sync-replicas) 로 관리합니다.
 
-- leader: 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외
-- follower: 주기적으로 Leader 의 data fetch
+- leader: 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외합니다
+- follower: `replica.lag.time.max.ms (10000ms)` 수치만큼 주기적으로 fetch 해야 합니다 (not too far behind)
 
 ### Controller
 
 [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
 
+<img src='2.png' width='75%'>
+
 - 목적: (브로커) 장애시 해당 브로커에 속하던 `파티션 리더 선출`
   - broker (node) 는 controller 와 session 을 유지해야 합니다
-  - follower 는 주기적으로 leader 의 데이터를 replicate 해야합니다 (not too far behind)
-- 플로우: ISR 에서 raft 를 통해 리더를 선출합니다
+  - follower 는 `replica.lag.time.max.ms (10000ms)` 수치만큼 주기적으로 fetch 해야 합니다 (not too far behind)
+- 플로우
+  - leader 는 follower 를 ISR 에서 제거후 zookeeper 에 상태를 업데이트 합니다
+  - zookeeper 는 controller 에 통보하고
+  - controller broker 는 나머지 broker 에 전파합니다 (각 broker 에서 local-cache 로 metadata 를 저장하고있음)
 
 ### Coordinator
 
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
-- 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `다른 consumer-group 선정`
-- 플로우: 기본적으로 heartbeat 로 체크하고 record polling, offset commit 이 오면 heartbeat 를 받았다고 판단합니다
+- 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `컨슈머 선정` -> 리밸런싱
+  - 기본적으로 heartbeat 로 체크하고 record polling, offset commit 이 오면 heartbeat 를 받았다고 판단합니다
+  - max.poll.interval.ms (default: 5min), heartbeat.interval.ms (default: 3sec)
+- [플로우](https://velog.io/@hyun6ik/Apache-Kafka-Consumer-Rebalance)
+  - coordinator broker 는 (컨슈머그룹 리밸런싱때) joinGroup 을 먼저한 consumer 를 group leader 로 선정합니다
+  - leader consumer 는 파티션 할당정보를 coordinator 에게 전달 (== `consumer 가 파티션 할당 주체`)
+  - coordinator 는 zookeeper 에 파티션 할당정보 저장후 group leader 에게 ack 합니다 (== confirmed)
+  - 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
+
+producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper 를 통해 파티션정보 metadata 를 받음) consumer 도 consumer-group 에서의 partition 할당은 consumer-leader 가 연산한후 통보 > ACKS 받습니다. (브로커 부담을 줄이기 위함)
 
 ## Producer
 
