@@ -115,10 +115,17 @@ log.cleanup.policy=compact
   - 대기하던 producer 는 이제 다음 작업 진행
 - consumer 는 leader partition 을 통해 메세지를 가져가지만 uncommitted 인 메세지 (아직 replication 진행중) 는 가져가지 않도록 카프카가 보장합니다
 
-복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아닌 팔로어를 ISR` (In-sync-replicas) 로 관리합니다.
+복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아니면 ISR` (In-sync-replicas) 로 관리합니다.
 
-- leader: 주기적으로 heartbeat 을 보내 응답하지 않는 follower 를 ISR 그룹에서 제외합니다
-- follower: `replica.lag.time.max.ms (10000ms)` 수치만큼 주기적으로 fetch 해야 합니다 (not too far behind)
+- follow failure
+  - (leader) heartbeat or fetch 요청이 오지 않는 follower 를 ISR 에서 제거후 zookeeper 에 metadata 업데이트 합니다
+  - zookeeper 는 metadata 갱신 후 controller 에 통보
+  - controller broker 는 전체 broker 에 변경내역 전파합니다
+- leader failure
+  - leader 의 장애는 zookeeper 가 감지합니다 (zookeeper 와 heartbeat 주기적으로 받고있음)
+  - zookeeper 는 metadata 갱신 후 controller 에 통보
+  - controller 는 리더 재선출후 zookeeper 에 metadata 갱신 & 전체 브로커에 전파합니다
+  - 전파된 정보는 producer/consumer 도 갱신받습니다
 
 ### Controller
 
