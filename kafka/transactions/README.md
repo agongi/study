@@ -10,21 +10,24 @@
 exactly-once 는 transaction 을 지원한다는 의미이고, Producer 에서의 처리는 같습니다:
 
 ```java
-KafkaProducer<String, String> producer=new KafkaProducer<>();
-public void send(){
-    producer.initTransactions();
-    producer.beginTransaction();
+public class Demo {
+    KafkaProducer<String, String> producer = new KafkaProducer<>();
 
-    try{
-    producer.send(record);
-    producer.flush();
-    producer.commitTransaction();
-    }catch(Exception e){
-    producer.abortTransaction();
-    }finally{
-    producer.close();
+    public void send() {
+        producer.initTransactions();
+        producer.beginTransaction();
+
+        try {
+            producer.send(record);
+            producer.flush();
+            producer.commitTransaction();
+        } catch (Exception e) {
+            producer.abortTransaction();
+        } finally {
+            producer.close();
+        }
     }
-    }
+}
 ```
 
 - producer
