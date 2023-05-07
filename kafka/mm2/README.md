@@ -46,7 +46,7 @@ offsets 정보는 `topic: offset-synch` 에 저장됩니다
 
 ### MM2 topology
 
-복제 단위단위 kafka-connect cluster 구성보다, 구성된 cluster 에서 connectors 를 추가하는 방식이 맞습니다 (운영 할 인프라의 범위를 줄이기 위함)
+복제 단위단위 마다 kafka-connect cluster 를 구성하기 보다 구성된 cluster 에 connectors 를 추가하는 방식이 추천됩니다 (운영 할 인프라의 범위를 줄이기 위함)
 
 <img src="3.png" width="75%">
 
