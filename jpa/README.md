@@ -1,4 +1,4 @@
-## JPA
+# JPA
 
 ```
 @author: suktae.choi
@@ -8,14 +8,14 @@
 - https://zhangyuhui.blog/2018/01/29/jpa-transaction-hibernate-session-jdbc-connection-and-db-transaction/
 ```
 
-#### Index
+### Index
 - [Object-Oriented Query Language](object-oriented-query-language)
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
 - [OSIV](osiv)
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 
-#### Blog
+### Blog
 - [JPA에서 대량의 데이터를 삭제할때 주의해야할 점](https://jojoldu.tistory.com/235)
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
@@ -23,9 +23,7 @@
 
 ***
 
-### Overview
-
-#### session-connection-transaction
+## session-connection-transaction
 
 - Open session (Hibernate)
 - Open physical connection (JDBC)
@@ -35,13 +33,13 @@
 - Close physical connection
 - Close session
 
-<img src="images/2.png" width="100%">
+<img src="2.png" width="100%">
 
 > Keep session connected until at end of view resolving is `OSIV` pattern
 
-#### Persistence context
+## Persistence context
 
-<img src="images/1.jpg" width="75%">
+<img src="1.jpg" width="75%">
 
 entityManager 에서 관리되는 객체를 의미한다.
 
@@ -61,13 +59,13 @@ User user = CRUDRepository.findOne(id);
 
 > 영속성은 tx 단위마다 생성 -> (좀더 정확히는 hibernate session 단위생성)
 
-#### OSIV
+## OSIV
 
 service 에서 tx 가 닫혔고 (detached 됨, lazy-loading 인 관계는 proxy 만 hold 하고 있는 상태)
 뷰 렌더딩 시점에 proxy 만 가지고있는 연관 entity 에 접근하면 에러발생 (프록시 초기화 (proxy-load) 는 persist 상태일때만 가능하다)
 : fetch-join 으로 모든 entity 를 load 한 후, tx 종료(세션닫힘, detached 로 됨. 하지만 이미 내용은 가지고있음)
 
-#### w/o transaction
+## w/o transaction
 
 - means
 
@@ -106,7 +104,7 @@ public void updateUser(Long id) {
 기존데이터
 ```
 
-#### Session context (== 정리필요)
+## Session context (== 정리필요)
 
 - entityManager 는 application-scope 으로 관리됨
 - session 은 hibernate 설정에 따르 context 결정
@@ -143,25 +141,25 @@ public User getUser(Long id) {
 sessionAlreadyClosedException
 ```
 
-#### EntityManager
+## EntityManager
 
 The EntityManager works with PersistenceContext and if it's not provided the EntityManager creates one.
 
 스프링에서는 @Bean 으로 관리하고, `@PersistenceContext` 로 주입받아 사용한다.
 
-#### TransactionManager
+## TransactionManager
 
 The TransactionManager is responsible for creating, commiting and ... tranactions based on annotations you provide
 
 ### JPA 기본개념
 
-#### 기본키 매핑
+### 기본키 매핑
 
 IDENTITY - auto increment 등 처럼 DB 에 위임
 SEQUENCE - 생성할 시퀀스를 지정 (generator)
 TABLE - 키 생성 전용 테이블이 있고, 그걸 지정
 
-#### 컬럼매핑
+### 컬럼매핑
 
 @Column
 @Temporal - date, time, datetime 지정 (기본값은 datetime 이 모두 표현되는 timestamp)
@@ -173,7 +171,7 @@ TABLE - 키 생성 전용 테이블이 있고, 그걸 지정
 - field 직접 접근, private 이라도 접근
 -  property getter/setter 통해서 접근
 
-#### 연관관계 매핑
+### 연관관계 매핑
 
 - OneToOne (무조건 1-1 로 존재해야함, 매핑이 optional 이면 1-1 이라고해도, oneToMany 로 매핑)
 - OneToMany(mappedBy=B)
@@ -195,7 +193,7 @@ private Set<Usery> Users = new LinkedHashSet<>();
 - 단방향: joinColumn (생략가능) 으로 key-만 지정 + 연관관계annotation 사용 (mappedBy 미사용)
 - 양방향: 연관관계 annotation 사용 (mappedBy 로 owner 지정해야함)
 
-#### 상속관계 매핑
+### 상속관계 매핑
 
 - @Inheritance
 
@@ -246,13 +244,13 @@ public class KrPersonInfo extends PersonInfo {
 
 - @MappedClass - 컬럼에 영향을 끼치지 않음 (단순 코드상 상속)
 
-#### 복합키 매핑
+### 복합키 매핑
 
 @IdClass
 
 @EmbeddedId - Embeddable
 
-#### 조인테이블 매핑
+### 조인테이블 매핑
 
 매핑테이블을 별도로 지정하는 방식이다
 
