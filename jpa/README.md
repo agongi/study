@@ -9,7 +9,6 @@
 ```
 
 ### Index
-- [Object-Oriented Query Language](object-oriented-query-language)
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
 - [OSIV](osiv)
@@ -59,17 +58,13 @@ User user = CRUDRepository.findOne(id);
 
 > 영속성은 tx 단위마다 생성 -> (좀더 정확히는 hibernate session 단위생성)
 
-## OSIV
-
-service 에서 tx 가 닫혔고 (detached 됨, lazy-loading 인 관계는 proxy 만 hold 하고 있는 상태)
-뷰 렌더딩 시점에 proxy 만 가지고있는 연관 entity 에 접근하면 에러발생 (프록시 초기화 (proxy-load) 는 persist 상태일때만 가능하다)
-: fetch-join 으로 모든 entity 를 load 한 후, tx 종료(세션닫힘, detached 로 됨. 하지만 이미 내용은 가지고있음)
-
 ## w/o transaction
 
 - means
 
-You do not have to create transaction to use JPA EntityManager and underlying Hibernate Session, if you just perform readonly Hibernate calls and **without lock** on entities, transaction is not necessary. However, most other write operation involved EntityManager calls ask for transaction to be provided, otherwise there will be some TransactionRequiredException thrown out.
+You do not have to create transaction to use JPA EntityManager and underlying Hibernate Session, if you just perform readonly Hibernate calls and **without lock** on entities, transaction is not necessary. 
+
+However, most other write operation involved EntityManager calls ask for transaction to be provided, otherwise there will be some TransactionRequiredException thrown out.
 
 - scope
 
