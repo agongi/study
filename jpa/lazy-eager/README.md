@@ -1,11 +1,11 @@
-## FetchType.Lazy vs Eager
+# FetchType.Lazy vs Eager
 
 ```
 @author: suktae.choi
 - https://doohwan-yoo.github.io/data-jpa-3/
 ```
 
-### FetchType.Lazy
+## FetchType.Lazy
 - **Join** to get whatever it is used
   - Cons: join is alway performed
 
@@ -24,7 +24,7 @@ where
   user0_.user_no=?
 ```
 
-### FetchType.Eager
+## FetchType.Eager
 - Query is executed more if used
   - Cons: **N + 1 query** performed
 

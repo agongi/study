@@ -12,6 +12,7 @@
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
 - [OSIV](osiv)
+- [Session](session)
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 
 ### Blog
@@ -22,159 +23,49 @@
 
 ***
 
-## session-connection-transaction
+## Persistence Context
 
-- Open session (Hibernate)
-- Open physical connection (JDBC)
-- tx begin;
-- ... CRUD
-- commit; or rollback;
-- Close physical connection
-- Close session
+entityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아래의 조건을 만족하면 됩니다:
 
-<img src="2.png" width="100%">
+- (신규) new Object(); 를 통해 생성된 자바 객체를 \#save
+- (조회) \#find 를 통해 조회한 entity
 
-> Keep session connected until at end of view resolving is `OSIV` pattern
+> 영속성은 tx 단위마다 생성됩니다 (정확히는 hibernate session 단위)
 
-## Persistence context
+EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @PersistenceContext 를 통해 주입해야 합니다
 
-<img src="1.jpg" width="75%">
+- 일반적인 bean 으로 주입하면 안됩니다
+  - thread 단위로 생성해야 하므로, singleton 이 기본인 bean 으로 사용 불가능
+- @PersistenceContext 를 통해 주입받으면
+  - EntityManagerFactory#createEntityManager 을 통해 생성하거나
+  - 진행중인 transaction 이 있다면 -> tx 에서 사용중인 em 획득
 
-entityManager 에서 관리되는 객체를 의미한다.
+## 기본키 매핑
 
-생성된 자바객체는 \#save 를 통해 영속성상태가 되거나, \#find 를 통해 DB 에서 조회된 entity 가 해당된다.
+- IDENTITY: auto increment 등 처럼 DB 에 위임
+- SEQUENCE: 생성할 시퀀스를 지정 (generator)
+- TABLE: 키 생성 전용 테이블 사용
+- AUTO: dialect 에 따라 hibernate 에서 3가지 방식중 선택
 
-```java
-// POJO is persisted
-User user = new User();
-entityManager.persist(user);
+## 컬럼 매핑
 
-// Selected POJO
-User user = CRUDRepository.findOne(id);
-```
+- @Column: 모든 컬럼에 정의 (생략시 묵시적으로 적용되지만, 명시하는게 나음)
+- @Enumerated: ENUM 지정
+- @Temporal: date, time, datetime 지정 (기본값은 datetime 이 모두 표현되는 timestamp)
+- @Lob: clob (longtext), blob (나머지)
+- @Transient: JPA 에서 관리하지 않을 field
+- @Access
+  - field 직접 접근 (private 이라도 접근)
+  - getter/setter 통한 접근
 
-- dirty-check: JPA 는 최초 영속성 상태가된 객체의 스냅샷을 관리하고, 최종 commit 시 변경이 있다면 update/delete query 를 발생한다.
-- proxy-init: lazy-load 로 프록시만 들고있는데, 실제 property 에 접근해서 객체를 가져오는것
+## 연관관계 매핑
 
-> 영속성은 tx 단위마다 생성 -> (좀더 정확히는 hibernate session 단위생성)
-
-## w/o transaction
-
-- means
-
-You do not have to create transaction to use JPA EntityManager and underlying Hibernate Session, if you just perform readonly Hibernate calls and **without lock** on entities, transaction is not necessary. 
-
-However, most other write operation involved EntityManager calls ask for transaction to be provided, otherwise there will be some TransactionRequiredException thrown out.
-
-- scope
-
-명시적 tx 선언유무에 따라, session 유지기간이 다르고 그에따라 아래와 같이 다른점이 생긴다:
-
-```java
-/**
- * session-per-request patterns
- */
-@Transactional	// session-connection-tx opened, AOP
-public void updateUser(Long id) {
-  User user = userRepository.findOne(id);
-  user.setName("changed");
-}	// session-connection closed, AOP
-
-// console 결과
-changed
-```
-
-```java
-/**
- * session-per-operation patterns (anti)
- */
-public void updateUser(Long id) {
-	// session-connection-tx is opened implicitly for select, and tear-down
-  User user = userRepository.findOne(id);
-  // user is no longer persist-managable
-  user.setName("changed");
-}
-
-// console 결과
-기존데이터
-```
-
-## Session context (== 정리필요)
-
-- entityManager 는 application-scope 으로 관리됨
-- session 은 hibernate 설정에 따르 context 결정
-  - thread 로 설정되어 있다면
-- implicit tx 가 시작된다면
-  - session opened
-  - JDBC opened
-  - tx begin; commit; or rollback;
-  - JDBC closed
-  - session closed
-- 그다음 implicit tx 시작시
-  - entityManager.getCurrentSession();
-  - session 이 threadLocal 단위로 관리되므로, mark as closed 
-  - exception throws
-
-```java
-// hibernate 설정
-props.put(org.hibernate.cfg.Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
-// SessionFactoryImpl - threadLocal 에 세션 저장
-else if ( "thread".equals( impl ) ) {
-  return new ThreadLocalSessionContext( this );
-}
-
-public User getUser(Long id) {
-  User user = new User(id);
-  user.setName(userService.getName(id));	// implicit session open and mark closed
-  user.setAddress(userService.getAddress(id));	// session fetches from threadLocal and fail
-
-  return user;
-}
-
-// console 결과
-sessionAlreadyClosedException
-```
-
-## EntityManager
-
-The EntityManager works with PersistenceContext and if it's not provided the EntityManager creates one.
-
-스프링에서는 @Bean 으로 관리하고, `@PersistenceContext` 로 주입받아 사용한다.
-
-## TransactionManager
-
-The TransactionManager is responsible for creating, commiting and ... tranactions based on annotations you provide
-
-### JPA 기본개념
-
-### 기본키 매핑
-
-IDENTITY - auto increment 등 처럼 DB 에 위임
-SEQUENCE - 생성할 시퀀스를 지정 (generator)
-TABLE - 키 생성 전용 테이블이 있고, 그걸 지정
-
-### 컬럼매핑
-
-@Column
-@Temporal - date, time, datetime 지정 (기본값은 datetime 이 모두 표현되는 timestamp)
-@Lob - clob (char[], string), blob (나머지)
-@Transient - ORM 에서 관리하지 않을 field
-
-@Access - 접근제어레벨
-
-- field 직접 접근, private 이라도 접근
--  property getter/setter 통해서 접근
-
-### 연관관계 매핑
-
-- OneToOne (무조건 1-1 로 존재해야함, 매핑이 optional 이면 1-1 이라고해도, oneToMany 로 매핑)
+### @OneToMany/@ManyToOne
 - OneToMany(mappedBy=B)
   - mappedBy 는 주인이 아닌곳에
 - ManyToOne
-- manytomany
 
-@JoinColumn - 연관관계테이블의 키매핑에 사용, 생략가능
+// TODO 단방향/양방향 매핑 정리
 
 ```java
 /**
@@ -188,7 +79,39 @@ private Set<Usery> Users = new LinkedHashSet<>();
 - 단방향: joinColumn (생략가능) 으로 key-만 지정 + 연관관계annotation 사용 (mappedBy 미사용)
 - 양방향: 연관관계 annotation 사용 (mappedBy 로 owner 지정해야함)
 
-### 상속관계 매핑
+### @OneToOne
+- 주 테이블에 F.K
+  - Proxy 를 통한 lazy-load 가능 (F.K is not null 이면 대상이 존재함이 보장되므로 Proxy 사용가능 즉 eager 불필요)
+  - proxy 가 아직 rowe 를 조회하진 않았지만 존재유무는 알아야 하므로 (proxy 와 null 은 다르다) 존재유무에 대한 보장이 필요함
+- 대상 테이블에 F.K
+  - eager-load 만 가능
+
+// TODO 단방향/양방향 매핑 정리
+
+### @ManyToMany
+
+- @JoinTable
+  - 연관관계 주인이 @JoinTable 을 명시합니다 (@JoinColumn 과 동일함)
+  - 연관관계 대상은 mappedBy 를 명시합니다
+
+```java
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(name = "TABLE_NAME", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+@Where(clause = "DEL_YN <> 1")   // 유효한 상품만 조회
+@Fetch(FetchMode.SUBSELECT)
+private Set<Order> orders = new LinkedHashSet<>();
+
+@ManyToMany(mappedBy = "orders")
+private Set<Person> persons = new LinkedHashSet<>();
+```
+
+JoinTable 방식은 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼만 사용가능하므로 테이블의 확장이 불가능합니다. 
+
+그래서 @ManyToMany with @JoinTable 보다 아래의 구조가 확장성이 있습니다:
+
+// 그림추가
+
+## 상속관계 매핑
 
 - @Inheritance
 
@@ -239,17 +162,20 @@ public class KrPersonInfo extends PersonInfo {
 
 - @MappedClass - 컬럼에 영향을 끼치지 않음 (단순 코드상 상속)
 
-### 복합키 매핑
+## 복합키 매핑
 
-@IdClass
+복합키를 P.K 로 사용하기보다, P.K 는 따로 사용하고 복합키로 정의 필요한 F.Ks 를 U.K 로 잡는게 사용성이 더 좋습니다
 
-@EmbeddedId - Embeddable
+> 조회할때 마다 복합키를 만들어야 하는 단점 상쇄
 
-### 조인테이블 매핑
+- @IdClass
+- @EmbeddedId - @Embeddable
+
+## 조인테이블 매핑
 
 매핑테이블을 별도로 지정하는 방식이다
 
-@JoinTables
+- @JoinTable
 
 
 
