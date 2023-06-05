@@ -9,6 +9,7 @@
 ```
 
 ### Index
+
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
 - [OSIV](osiv)
@@ -16,6 +17,7 @@
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 
 ### Blog
+
 - [JPA에서 대량의 데이터를 삭제할때 주의해야할 점](https://jojoldu.tistory.com/235)
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
@@ -61,32 +63,51 @@ EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @Persi
 ## 연관관계 매핑
 
 ### @OneToMany/@ManyToOne
-- OneToMany(mappedBy=B)
-  - mappedBy 는 주인이 아닌곳에
-- ManyToOne
 
-// TODO 단방향/양방향 매핑 정리
+- @OneToMany(mappedBy = B)
+  - 연관관계 대상
+  - mappedBy 으로 연관관계 주인 필드명 지정
+- @ManyToOne; @JoinColumn
+  - 연관관계 주인 (F.K 을 정의한 쪽이 주인 입니다)
+  - @JoinColumn 으로 F.K 지정
 
 ```java
 /**
- * 단방향 매핑
+ * User Entity
  */
-@OneToMany(fetch = FetchType.LAZY)
-@JoinColumn(name = "SEQ_ID", referencedColumnName = "USER_ID")
-private Set<Usery> Users = new LinkedHashSet<>();
+@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+private Set<Order> orders = new LinkedHashSet<>();
+
+/**
+ * Order Entity
+ */
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "USER_ID")
+private User user;
 ```
 
-- 단방향: joinColumn (생략가능) 으로 key-만 지정 + 연관관계annotation 사용 (mappedBy 미사용)
-- 양방향: 연관관계 annotation 사용 (mappedBy 로 owner 지정해야함)
-
 ### @OneToOne
-- 주 테이블에 F.K
-  - Proxy 를 통한 lazy-load 가능 (F.K is not null 이면 대상이 존재함이 보장되므로 Proxy 사용가능 즉 eager 불필요)
-  - proxy 가 아직 rowe 를 조회하진 않았지만 존재유무는 알아야 하므로 (proxy 와 null 은 다르다) 존재유무에 대한 보장이 필요함
-- 대상 테이블에 F.K
-  - eager-load 만 가능
 
-// TODO 단방향/양방향 매핑 정리
+- 주 테이블에 F.K 정의
+  - proxy 를 통한 lazy-load 가 가능합니다 (F.K is not null 이면 대상이 존재함이 보장되므로 proxy 사용가능 즉 eager 불필요)
+    - proxy 가 아직 row 를 조회하진 않았지만 존재유무는 알아야 하므로 (proxy 와 null 은 다르다) 존재유무에 대한 보장이 필요
+- 대상 테이블에 F.K 정의
+  - eager-load 만 가능합니다
+
+```java
+/**
+ * User Entity
+ */
+@OneToOne(mappedBy = "user")
+private Order order = new LinkedHashSet<>();
+
+/**
+ * Order Entity
+ */
+@OneToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "USER_ID")
+private User user;
+```
 
 ### @ManyToMany
 
@@ -102,14 +123,16 @@ private Set<Usery> Users = new LinkedHashSet<>();
 private Set<Order> orders = new LinkedHashSet<>();
 
 @ManyToMany(mappedBy = "orders")
-private Set<Person> persons = new LinkedHashSet<>();
+private Set<User> users = new LinkedHashSet<>();
 ```
 
-JoinTable 방식은 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼만 사용가능하므로 테이블의 확장이 불가능합니다. 
+@JoinTable 방식은 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼만 사용가능해서 테이블 확장이 불가능합니다.
 
-그래서 @ManyToMany with @JoinTable 보다 아래의 구조가 확장성이 있습니다:
+그래서 별도의 매핑테이블을 만들고 (대상1) OneToMany -- ManyToOne (매핑테이블) ManyToOne -- OneToMany (대상2) 로 연결하는게 확장성이 있습니다
 
-// 그림추가
+<img src="1.png" width="75%">
+
+// TODO 복합키 vs 기본키 + F.K
 
 ## 상속관계 매핑
 
@@ -118,17 +141,18 @@ JoinTable 방식은 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼�
 N 개의 타입으로 상속관계매핑이 필요한 경우
 
 ```java
+
 @Entity(name = "PersonInfo")
 @Table(name = "PERS_INFO")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorFormula("case when LOCT_TP in ('A','B) then 'KR' when LOCT_TP in ('C') then 'JP' else 'US' end")
 public abstract class PersonInfo {
     @Column("name)
-    private String name;
-    
-    @Column("LOCT_TP")
-    @DiscriminatorColumn("type")
-    private LocationType locationType;
+        private String name;
+
+        @Column("LOCT_TP")
+        @DiscriminatorColumn("type")
+        private LocationType locationType;
 }
 
 
@@ -137,6 +161,7 @@ public abstract class PersonInfo {
 컬럼당 1개의 상속관계가 정의된다면
 
 ```java
+
 @DiscriminatorValue("KR")
 public class KrPersonInfo extends PersonInfo {
     // ..
@@ -148,10 +173,10 @@ public class KrPersonInfo extends PersonInfo {
 @DiscriminatorColumn(name = "LOCT_TP")
 public abstract class PersonInfo {
     @Column("name)
-    private String name;
-    
-    @Column("LOCT_TP")
-    private LocationType locationType;
+        private String name;
+
+        @Column("LOCT_TP")
+        private LocationType locationType;
 }
 
 @DiscriminatorValue("KR")
