@@ -3,9 +3,8 @@
 ```
 @author: suktae.choi
 - http://arahansa.github.io/docs_spring/jpa.html
+- https://www.nowwatersblog.com/jpa/ch1
 - https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
-- https://docs.jboss.org/hibernate/orm/5.1/userguide/html_single/Hibernate_User_Guide.html
-- https://zhangyuhui.blog/2018/01/29/jpa-transaction-hibernate-session-jdbc-connection-and-db-transaction/
 ```
 
 ### Index
@@ -229,20 +228,74 @@ public class Person extends BaseEntity<String> {
 
 ## 복합키 매핑
 
-복합키를 P.K 로 사용하기보다, P.K 는 따로 사용하고 복합키로 정의 필요한 F.Ks 를 U.K 로 잡는게 사용성이 더 좋습니다
+테이블간의 결합을 막고, 부모 > 자식 > 손자로 이어지는 상속구조에서 식별관계는 P.K 가 길어지는 단점 있어서 `비식별관계`로 Entity 를 구성하는게 권장됩니다.
 
-> 조회할때 마다 복합키를 만들어야 하는 단점 상쇄
+그리고 복합키 사용시 조회할때 복합키 생성이 필요한 단점이 있어 F.K 는 그대로 유지하고, 별도의 P.K 를 선언해서 사용하는 방식이 좀 더 낫습니다.
 
-- @IdClass
-- @EmbeddedId - @Embeddable
+### 식별 vs 비식별 관계
+
+- 식별관계
+  - 부모테이블의 기본키를 자식테이블에서 기본키 + 외래키로 사용합니다
+- 비식별관계
+  - 부모테이블의 기본키를 자식테이블의 외래키로만 사용합니다
+
+### @IdClass vs @EmbeddedId/@Embeddable
+선언에 대한 문법적인 차이는 있지만, 복합키를 사용한다 의 관점은 동일합니다.
+
+대신 JPQL 로 보면 아래의 차이가 있습니다:
+
+```sql
+# @IdClass
+SELECT account.accountNumber FROM Account account;
+
+# @EmbeddedId (복합키로 인해 1-depth 추가)
+SELECT book.bookId.title FROM Book book;
+```
+
+### @OneToOne 식별관계
+@OneToOne 관계일때 같은키로 P.K 을 선언하는 것을 의미합니다.
+
+@MapsId 및 @JoinColumn 을 같이 선언해서 문법상 가능하지만 항상 N+1 이 발생합니다. 그래서 연관관계의 주인이 F.K 을 가지고 @JoinColumn 해서 lazy 하는 방식이 더 낫습니다
+
+### 기타사항 정리필요
+onetoone lazy 가 안되는 이유
+- proxy 는 null 을 wrapping 할 수 없음
+- 그래서 존재함이 보장되는 대상의 P.K 를 가지고 있어야함 (not null 이어야만 proxy 가능하므로)
+
+그럼 oneToMany 는 연관관계 주인이 아니라서 joinColumn 하지 않아 동일하게 대상 존재유무를 모르는데 lazy 가능한 이유는?
+- oneToMany 는 Collection 이고, collection 은 empty 표현가능
+- proxy 는 empty collection 을 wrapping 하면되므로, 식별자가 없어도 무방
+- onetoone 은 객체이므로, null or exist 라서 null 을 표현하지 못하는 proxy 의 한계가 있음
 
 ## 조인테이블 매핑
 
-매핑테이블을 별도로 지정하는 방식이다
+매핑테이블을 별도로 지정하는 방식입니다. 즉 연관관계를 맺으려면
 
-- @JoinTable
+- 테이블에 F.K 가 있다면 -> @JoinColumn
+- 매핑 테이블에 F.K 가 있다면 -> @JoinTable
 
+으로 사용하면됩니다.
 
+```java
+@ManyToOne
+@JoinTable(name = "PARENT_CHILD", // 매핑할 조인 테이블 이름
+  joinColumns = @JoinColumn(name = "CHILD_ID"), // 현재 엔티티를 참조하는 외래 키
+  inverseJoinColumns = @JoinColumn(name = "PARENT_ID") // 반대방향 엔티티를 참조하는 외래 키
+)
+private Parent parent;
+```
+
+## 여러 테이블 매핑
+
+1개의 Entity 가 여러개의 테이블을 매핑하는 것도 문법적으로 가능합니다. 가능은 하지만 테이블과 엔티티를 일대일로 정의하는게 맞습니다
+
+```java
+@Entity
+@Table(name="BOARD")
+@SecondaryTable(name="BOARD_DETAIL",
+    pkJoinColumns = @PrimaryKeyJoinColumn(name="BOARD_DETAIL_ID"))
+public class Board { ... }
+```
 
 
 
