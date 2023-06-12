@@ -22,6 +22,10 @@
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
 - [JPA 프로그래밍 정리](https://github.com/cheese10yun/TIL/blob/master/Spring/jpa/jpa.md)
 
+### Versions
+
+hibernate jpa 버전변경이력 정리
+
 ***
 
 ## Persistence Context
