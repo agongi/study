@@ -261,7 +261,7 @@ SELECT book.bookId.title FROM Book book;
 
 @MapsId 및 @JoinColumn 을 같이 선언해서 문법상 가능하지만 항상 N+1 이 발생합니다. 그래서 연관관계의 주인이 F.K 을 가지고 @JoinColumn 해서 lazy 하는 방식이 더 낫습니다
 
-### 기타사항 정리필요
+### 기타사항 // TODO - 정리필요
 onetoone lazy 가 안되는 이유
 - proxy 는 null 을 wrapping 할 수 없음
 - 그래서 존재함이 보장되는 대상의 P.K 를 가지고 있어야함 (not null 이어야만 proxy 가능하므로)
@@ -376,3 +376,78 @@ public class Parent {
 
 Aggregate Root 에서 연관관계를 관리할때 CASCARD, OrphanRemoval 을 모두 사용해서 관리할면 편리합니다
 
+## 데이터 타입
+
+### @Embedded/@Embeddable
+
+새로운 유형의 (값) 클래스를 직접 정의해서 사용 가능합니다:
+
+> 기존 @EmbeddedId/@Embeddable 와 동일한 사용성입니다. (대상 컬럼이 P.K 인지 단순 값인지의 차이만 존재) 
+
+```java
+@Entity
+public class Member {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+    @Embedded Address homeAddress; // 집 주소
+}
+
+@Embeddable
+public class Address {
+    @Column(name = "city") // 매핑할 컬럼 정의 가능
+    private String city;
+    private String street;
+    private String zipcode;
+    // ..
+}
+```
+
+### @ElementCollection/@CollectionTable
+
+<img src="7.png" width="75%">
+
+값 클래스를 Collection 으로 정의 가능합니다:
+
+```java
+@Entity
+public class Member {
+    @Id @GeneratedValue
+    private Lzong id;
+    @Embedded
+    private Adzdress homeAddress;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "FAVORITE_FOODS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private Set<String> favoriteFoods = new HashSet<String>();
+    
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "ADDRESS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private Set<Address> addressHistory = new ArrayList<Address>();
+}
+```
+```sql
+# @Embedded
+INSERT INTO MEMBER (ID, CITY, STREET, ZIPCODE) VALUES (1, '통영', '몽돌해수욕장 , 660-1231);
+
+# @ElementCollection 을 사용하는 string 타입
+INSERT INTO FAVORITE FOODS (MEMBER_ID, FOOD_NAME) VALUES (1, "짬뽕");
+INSERT INTO FAVORITE_FOODS (MEMBER_ID, FOOD_NAME) VALUES (1, "짜장");
+
+# @ElementCollection 을 사용하는 @Embedded 타입
+INSERT INTO ADDRESS (MEMBER_ID, CITY, STRBET, 2IPCODE) VALUES (1, '서울', '강남', '123-1231);
+INSERT INTO ADDRESS (MEMBER_ID, CITY, STREET, 2IPCODE) VALUES (1,  '서울', '강북 , 1000-0001);
+```
+
+@OneToMany 과 동일하게 데이터가 추가되지만 (@CollectionTable 으로 별도 테이블 사용) 차이점은 아래와 같습니다:
+
+- @OneToMany
+  - @Entity 와의 관계
+  - P.K 에 대한 제약이 없습니다
+  - @Id 식별자가 있습니다 
+- @ElementCollection
+  - @Embedded 와의 관계
+  - `대상 테이블의 모든 컬럼을 P.K 로 잡아야 합니다`
+  - @Id 식별자가 없습니다
+
+`@ElementCollection 으로 표현되는 관계는 모두 @OneToMany 로 표현 가능` 합니다. 제약이 없는 일대다 관계로 설정하는게 낫습니다 
