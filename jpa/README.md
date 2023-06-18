@@ -13,10 +13,12 @@
 - [EnumCodeConverter](enum-code-converter)
 - [OSIV](osiv)
 - [Session](session)
-- [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
+- [JPQL](jpql)
+- [Spring Data JPA](spring-data-jpa)
 
 ### Blog
 
+- [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 - [JPA에서 대량의 데이터를 삭제할때 주의해야할 점](https://jojoldu.tistory.com/235)
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
@@ -24,7 +26,7 @@
 
 ### Versions
 
-hibernate jpa 버전변경이력 정리
+- [Version history](https://en.wikipedia.org/wiki/Jakarta_Persistence)
 
 ***
 
@@ -450,4 +452,4 @@ INSERT INTO ADDRESS (MEMBER_ID, CITY, STREET, 2IPCODE) VALUES (1,  '서울', '�
   - `대상 테이블의 모든 컬럼을 P.K 로 잡아야 합니다`
   - @Id 식별자가 없습니다
 
-`@ElementCollection 으로 표현되는 관계는 모두 @OneToMany 로 표현 가능` 합니다. 제약이 없는 일대다 관계로 설정하는게 낫습니다 
+`@ElementCollection 으로 표현되는 관계는 모두 @OneToMany 로 표현 가능` 합니다. 제약이 없는 일대다 관계로 설정하는게 낫습니다
