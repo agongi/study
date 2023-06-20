@@ -11,10 +11,9 @@
 
 - [FetchType.LAZY vs EAGER](lazy-eager)
 - [EnumCodeConverter](enum-code-converter)
-- [OSIV](osiv)
-- [Session](session)
 - [JPQL](jpql)
 - [Spring Data JPA](spring-data-jpa)
+- [Persistence Context](persistence-context)
 
 ### Blog
 
