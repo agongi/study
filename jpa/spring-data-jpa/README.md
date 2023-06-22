@@ -1,4 +1,4 @@
-# JPQL
+# Spring Data JPA
 
 ```
 @author: suktae.choi
