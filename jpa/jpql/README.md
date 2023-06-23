@@ -79,3 +79,16 @@ left join (1-N 관계) 은 조회결과에 중복이 가능합니다. (driven-en
 - `애플리케이션에서 한번 더 중복 제거`
 
 ## SubQuery
+
+Hibernate 5.x 까지는 where 절 에서의 subquery 만 가능했지만, hibernate 6.1 부터 select, from 절 에서 subquery 가 지원됩니다
+
+## Case
+
+```jpql
+select
+    case when m.age <= 10 then '학생요금'
+         when m.age >= 60 then '경로요금'
+         else '일반 요금'
+    end
+from Member m
+```
