@@ -92,3 +92,18 @@ select
     end
 from Member m
 ```
+
+## Union
+
+Hibernate 6.x 부터 union 쿼리를 지원합니다
+
+```java
+List<String> topics = entityManager.createQuery("""
+    select c.name as name
+    from Category c
+    union all
+    select t.name as name
+    from Tag t
+    """, String.class)
+.getResultList();
+```
