@@ -31,9 +31,9 @@ List<Member> resultList = em.createNamedQuery("Member.findById", Member.class)
     .getSingleResult();
 ```
 
-SQL 을 직접 사용하더라도 em 을 사용하므로 영속성에서 관리됩니다. (projection 하지않고 Entity.class 를 직접 전달한 경우)
+`em.createNativeQuery` 과 `jdbcTemplate.queryForList` 모두 native-sql 으로 실행하는 것을 동일합니다. 대신 em 을 통해 실행하면 영속성에서 관리됩니다. (projection 하지않고 Entity.class 를 직접 전달한 경우)
 
-> JPQL 을 사용해도 결국엔 SQL 이 DB 에서 실행되므로 표현의 방식일 뿐입니다
+> JPQL 을 사용해도 결국엔 SQL 이 DB 에서 실행되므로 표현방식의 차이만 있음
 
 ## TypeQuery vs Query
 
