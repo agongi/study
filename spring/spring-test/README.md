@@ -1,39 +1,36 @@
-## Spring Test
+# Spring Test
 
 ```
 @author: suktae.choi
 ```
 
-#### Index
+### Index
 
 - [JUnit](junit)
 - [Mockito](mockito)
 - [Smoke test vs Sanity test](smoke-sanity)
 - [Set final field](set-final-field)
 
-#### Blog
+### Blog
 
 - [Why You Should Not Use InjectMocks](https://tedvinke.wordpress.com/2014/02/13/mockito-why-you-should-not-use-injectmocks-annotation-to-autowire-fields)
 - [Why injecting by constructor should be preferred](http://pillopl.github.io/constructor-injection/)
-- [AssertJ](https://www.baeldung.com/introduction-to-assertj)
 
 ***
 
-### Cores
-
-#### Transaction
+## Transaction
 
 기본적으로 TestContext 프레임워크는 각 테스트마다 트랜잭션을 만들고 롤백한다. 트랜잭션 지원이 테스트의 어플리케이션 컨텍스트에서 정의된 PlatformTransactionManager 빈으로 테스트 클래스에 제공된다.
 
 트랜잭션을 커밋하고 싶다면 @TransactionConfiguration와 @Rollback 어노테이션으로 트랜잭션을 롤백하는 대신에 커밋하도록 TestContext 프레임워크에 지시할 수 있다.
 
-#### Dependency
+## Dependency
 
 TestContext 프레임워크는 테스트 인스턴스를 인스턴스하는 방법으로 구성하지 않는다. 그러므로 생성자에 @Autowired나 @Inject를 사용해서 테스트 클래스에는 효과가 없다.
 
 > Field injection or setter is working
 
-#### Annotation
+## Annotation
 
 **@ContextConfiguration**
 
@@ -216,4 +213,3 @@ public void testProcessRepeatedly() {
   // 10 times executed
 }
 ```
-
