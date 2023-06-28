@@ -11,6 +11,11 @@
 @Query
 @Modifying
 
+modifying 에서 2가지 설정에 대한 의미 설명
+
+- flush before
+- clear after
+
 [@PersistenceContext 를 사용해야 하는 이유](https://batory.tistory.com/497)
 - proxy 를 가져온다
 - 실제로 사용이되는 시점에 thread 단위에서 가져오거나 생성된 em 으로 실행한다

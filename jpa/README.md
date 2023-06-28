@@ -262,7 +262,8 @@ SELECT book.bookId.title FROM Book book;
 
 @MapsId 및 @JoinColumn 을 같이 선언해서 문법상 가능하지만 항상 N+1 이 발생합니다. 그래서 연관관계의 주인이 F.K 을 가지고 @JoinColumn 해서 lazy 하는 방식이 더 낫습니다
 
-### 기타사항 // TODO - 정리필요
+// TODO - 정리필요
+```
 onetoone lazy 가 안되는 이유
 - proxy 는 null 을 wrapping 할 수 없음
 - 그래서 존재함이 보장되는 대상의 P.K 를 가지고 있어야함 (not null 이어야만 proxy 가능하므로)
@@ -271,6 +272,7 @@ onetoone lazy 가 안되는 이유
 - oneToMany 는 Collection 이고, collection 은 empty 표현가능
 - proxy 는 empty collection 을 wrapping 하면되므로, 식별자가 없어도 무방
 - onetoone 은 객체이므로, null or exist 라서 null 을 표현하지 못하는 proxy 의 한계가 있음
+```
 
 ## 조인테이블 매핑
 
