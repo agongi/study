@@ -10,6 +10,15 @@
 
 ***
 
+## @PersistenceContext
+
+entityManager 는 기본적으로 transaction-scope 로 동작합니다. 즉 현재 tx 를 실행하는 thread 단위에서만 영속성이 유효합니다 (persistence context 의 동시성 이슈)
+
+- https://batory.tistory.com/497)
+  - proxy 를 가져온다
+  - 실제로 사용이되는 시점에 thread 단위에서 가져오거나 생성된 em 으로 실행한다
+- https://colevelup.tistory.com/21
+
 ## Session (== Entity Manager)
 
 ### Lifecycle
