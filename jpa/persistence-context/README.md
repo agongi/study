@@ -10,44 +10,33 @@
 
 ***
 
-## @PersistenceContext
+| Hibernate       | JPA                 |
+|-----------------|---------------------|
+| Session         | Entity Manager      |
+| Session Context | Persistence Context |
 
-entityManager 는 기본적으로 transaction-scope 로 동작합니다. 즉 현재 tx 를 실행하는 thread 단위에서만 영속성이 유효합니다 (persistence context 의 동시성 이슈)
+## [Scope](https://colevelup.tistory.com/21)
 
-- https://batory.tistory.com/497)
-  - proxy 를 가져온다
-  - 실제로 사용이되는 시점에 thread 단위에서 가져오거나 생성된 em 으로 실행한다
-- https://colevelup.tistory.com/21
+entityManager 는 기본적으로 transaction-scope 로 동작합니다. 즉 현재 tx 를 실행하는 thread 단위에서만 영속성은 유효합니다
 
-## Session (== Entity Manager)
+> 영속성은 동시성 이슈가 있으므로 thread 단위로 유니크해야 합니다
 
-### Lifecycle
+영속성을 관리하는 em 은 아래의 방법으로 가져옵니다:
 
-- Open (hibernate) session (in terms of JPA, create EntityManager)
-- Open physical connection (JDBC)
-- tx begin;
-  - ... CRUD
-- commit; or rollback;
-- Close physical connection
-- Close session
+- @PersistenceContext EntityManager em;
+  - javax 에서 지원하는 방식입니다
+  - new or tx 에서 사용중인 em 을 리턴합니다
+- @Autowired EntityManager em;
+  - 스프링빈은 기본적으로 싱글톤 이기 때문에 동시성 이슈가 있지만 (영속성이 다같이 공유됨)
+  - proxy 가 반환되고 (runtime-weaving) 사용시점에 new or tx 에서 사용중인 em 으로 처리합니다
+- EntityManager em = emf.createEntityManager();
+  - 항상 instance 가 생성되지만 `다른 em 이라도 tx-scope 를 보고 같은 영속성 or 다른 영속성`을 바라볼지 결정되어 리턴됩니다
 
-<img src="2.png" width="75%">
+어노테이션을 주입 or 팩토리를 통한 생성 모두 `동일 트랜잭션 범위에서는` em instance 는 달라도 같은 영속성을 사용합니다.
 
-### Session Context
+<img src="3.png" width="75%">
 
-- entityManager 는 application-scope 으로 관리됨
-- session 은 hibernate 설정에 따르 context 결정
-  - thread 로 설정되어 있다면
-- implicit tx 가 시작된다면
-  - session opened
-  - JDBC opened
-  - tx begin; commit; or rollback;
-  - JDBC closed
-  - session closed
-- 그다음 implicit tx 시작시
-  - entityManager.getCurrentSession();
-  - session 이 threadLocal 단위로 관리되므로, mark as closed
-  - exception throws
+트랜잭션이 다르면 동일한 엔티티 매니저를 사용해도 다른 영속성 컨텍스트를 사용합니다
 
 ```java
 // hibernate 설정
@@ -57,20 +46,11 @@ props.put(org.hibernate.cfg.Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread")
 else if ( "thread".equals( impl ) ) {
   return new ThreadLocalSessionContext( this );
 }
-
-public User getUser(Long id) {
-  User user = new User(id);
-  user.setName(userService.getName(id));	// implicit session open and mark closed
-  user.setAddress(userService.getAddress(id));	// session fetches from threadLocal and fail
-
-  return user;
-}
-
-// console 결과
-sessionAlreadyClosedException
 ```
 
 ## OSIV
+
+<img src="2.png" width="75%">
 
 service 에서 tx 가 닫혔고 (detached 됨, lazy-loading 인 관계는 proxy 만 hold 하고 있는 상태)
 뷰 렌더딩 시점에 proxy 만 가지고있는 연관 entity 에 접근하면 에러발생 (프록시 초기화 (proxy-load) 는 persist 상태일때만 가능하다)
