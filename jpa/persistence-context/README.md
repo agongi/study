@@ -6,7 +6,7 @@
 
 ### Blog
 
-- [OSIV](http://pds19.egloos.com/pds/201106/28/18/Open_Session_In_View_Pattern.pdf)
+- [Open_Session_In_View_Pattern.pdf](http://pds19.egloos.com/pds/201106/28/18/Open_Session_In_View_Pattern.pdf)
 
 ***
 
