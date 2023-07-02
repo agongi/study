@@ -5,9 +5,7 @@
 - https://www.nowwatersblog.com/jpa/ch10
 ```
 
-## 영속성
-
-영속성의 변경감지를 통한 persist/merge/delete 이 아닌 `createQuery/createNativeQuery` 을 명시적으로 사용하는 것을 의미합니다.
+영속성의 변경감지를 통한 persist/merge/delete 가 아닌 `createQuery/createNativeQuery` 을 명시적으로 사용하는 것을 의미합니다.
 
 ### find vs JPQL
 
@@ -39,6 +37,11 @@ app <- JPQL (clear) <- DB
   - 이미 영속성에 존재하는 엔티티는 JPQL 의 조회결과로 대체되지 않기 때문입니다
 
 ## 조회
+
+```java
+// find - JPQL 이 아닌 em.find 사용
+em.find(Member.class, 234L);
+```
 
 ```java
 // ANSI SQL

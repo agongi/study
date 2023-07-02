@@ -50,50 +50,32 @@ else if ( "thread".equals( impl ) ) {
 
 ## OSIV
 
-<img src="2.png" width="75%">
+Session (== Entity Manager) 을 view 까지 확장해서 lazy-load (즉 N+1) 을 지원하는 개념입니다.
 
-service 에서 tx 가 닫혔고 (detached 됨, lazy-loading 인 관계는 proxy 만 hold 하고 있는 상태)
-뷰 렌더딩 시점에 proxy 만 가지고있는 연관 entity 에 접근하면 에러발생 (프록시 초기화 (proxy-load) 는 persist 상태일때만 가능하다)
-: fetch-join 으로 모든 entity 를 load 한 후, tx 종료(세션닫힘, detached 로 됨. 하지만 이미 내용은 가지고있음)
+### 과거 OSIV
+
+- 트랜잭션 범위
+  - [FROM] filter/interceptor [TO] view
+- 영속성 범위
+  - [FROM] filter/interceptor [TO] view
 
 <img src="1.png" width="75%">
 
-- OpenSessionInViewFilter (servlet-filter) 진입에서 hibernate#openSession
-  - dispatcher-servlet -- controller -- service -- repository 까지 수행
-  - controller 에서 return
-- OpenSessionInViewFilter (servlet-filter) 에서 hibernate#closeSession
+### 스프링 OSIV
 
-```java
-protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (TransactionSynchronizationManager.hasResource(sessionFactory)) {
-            participate = true;
-        } else {
-            boolean isFirstRequest = !isAsyncDispatch(request);
-            if (isFirstRequest || !applySessionBindingInterceptor(asyncManager, key)) {
-                // open session
-                logger.debug("Opening Hibernate Session in OpenSessionInViewFilter");
-                Session session = openSession(sessionFactory);
-                SessionHolder sessionHolder = new SessionHolder(session);
-                TransactionSynchronizationManager.bindResource(sessionFactory, sessionHolder);
+- 트랜잭션 범위
+  - [FROM/TO] @Transactional
+- 영속성 범위
+  - [FROM] filter/interceptor [TO] view
 
-                AsyncRequestInterceptor interceptor = new AsyncRequestInterceptor(sessionFactory, sessionHolder);
-                asyncManager.registerCallableInterceptor(key, interceptor);
-                asyncManager.registerDeferredResultInterceptor(key, interceptor);
-            }
-        }
+<img src="2.png" width="75%">
 
-        try {
-            filterChain.doFilter(request, response);
-        } finally {
-            if (!participate) {
-                // close session
-                SessionHolder sessionHolder =
-                    (SessionHolder)TransactionSynchronizationManager.unbindResource(sessionFactory);
-                if (!isAsyncStarted(request)) {
-                    logger.debug("Closing Hibernate Session in OpenSessionInViewFilter");
-                    SessionFactoryUtils.closeSession(sessionHolder.getSession());
-                }
-            }
-        }
-    }
-```
+트랜잭션은 종료되었지만 영속성만 존재할때 조회가 가능한 이유는 `tx 없는 select 가 가능하기 때문 (select for share 가 아닌 이상 모든 조회는 non-transactional read)` 입니다
+
+view 에서 영속성에 대한 변경이 있어도 아래의 조건에 의해 DB 에 반영되지 않습니다
+
+- 묵시적
+  - 스프링 OSIV filter/interceptor 는 요청이 끝나면 em.close() 로 종료하므로 반영되지 않습니다
+- 명시적
+  - em.flush 을 명시적으롷 호출해도 tx 가 이미 종료된 상태이므로 TransactionRequiredException 예외가 발생합니다
+
