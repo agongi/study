@@ -7,6 +7,7 @@
 ```
 
 ## NodePort
+
 <img src='1.png' width='50%'/>
 
 ```yaml
@@ -14,17 +15,18 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kubia-nodeport
-spec: 
+spec:
   type: NodePort
   ports:
-  - port: 80 # 서비스 클러스터 IP 포트
-    targetPort: 8080 # 서비스 대상 파드의 포트
-    nodePort: 30123 # 각 클러스터 노드의 포트 30123을 통해 서비스에 엑세스 할수 있음.
+    - port: 80 # 서비스 클러스터 IP 포트
+      targetPort: 8080 # 서비스 대상 파드의 포트
+      nodePort: 30123 # 각 클러스터 노드의 포트 30123을 통해 서비스에 엑세스 할수 있음.
   selector:
     app: kubia
 ```
 
 ## HostPort - Service 의 유형이 아님
+
 <img src='5.png' width='50%'/>
 
 ```yaml
@@ -35,16 +37,17 @@ metadata:
 spec:
   hostNetwork: true # 호스트 노드 네트워크 네임스페이스 사용
   containers:
-  - name: main
-    image: alpine
-    command: ["/bin/sleep", "999999"]
+    - name: main
+      image: alpine
+      command: [ "/bin/sleep", "999999" ]
 ```
 
 - spec.hostNetwork (== HostPort) 는 Kind: Service 이 아닌 Node 의 포드가 직접 1개의 Pod 으로 전달
-  - Node -- Pod 으로 포트가 1:1 로 바인딩 
+  - Node -- Pod 으로 포트가 1:1 로 바인딩
 - spec.type: NodePort 는 Kind: Service 를 통해 spec.matchLabel 이 동일한 임의의 Pod 으로 전달된다
 
 ## LoadBalancer
+
 L4 LB
 
 ```yaml
@@ -69,6 +72,7 @@ spec:
 ```
 
 ## Ingress
+
 L7 LB (Ingress Controller 가 필요함)
 
 - Ingress: 정책 resource
@@ -89,11 +93,11 @@ spec:
             servicePort: 80
     - host: bar.example.com
       http:
-          paths:
-            - path: /
-              backend: # bar.example.com -> bar-service
-              serviceName: bar
-              servicePort: 80
+        paths:
+          - path: /
+            backend: # bar.example.com -> bar-service
+            serviceName: bar
+            servicePort: 80
 ```
 
 - headless: service 의 단일 IP 를 노출하는게 아닌, 서비스에 연결된 (label-selector 통해) pod IP 를 직접 전달 (일반적인 A record DNS 처럼 동작)
@@ -110,13 +114,21 @@ metadata:
 spec:
   clusterIP: None # 헤드리스 서비스로 만드는 spec 옵션
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
   selector:
     app: kubia
 ```
 
+## Headless
+
+Headless Service는 클러스터 내부에서만 사용할 수 있는 서비스 유형입니다.
+
+- Headless Service 는 클러스터의 모든 Pod 의 DNS 레코드를 생성합니다. (클라이언트에게 단일 IP 주소를 제공하지 않음)
+- (내부) 클라이언트는 Pod 의 이름을 사용하여 Pod 에 직접 연결할 수 있습니다
+
 ## Istio
+
 L7 LB + 필요한 부가적인 resources 를 번들로 묶은 CR 로 통합 제공
 
 - istio <- ingress 대체 (ingress)
