@@ -187,12 +187,24 @@ public class KrPersonInfo extends PersonInfo {
 
 - InheritanceType.TABLE_PER_CLASS
   - 자식테이블 각각에 필요한 컬럼이 (부모에 선언한) 정의되는 형태입니다 
-  - 자식테이블을 함께 조회할때 UNION 을 사용해야하므로, 일반적으로 추천하지 않습니다
+  - 자식테이블을 함께 조회할때 UNION 을 사용해야하므로, `일반적으로 추천하지 않습니다`
 
 <img src="4.png" width="75%">
 
 ```java
-// ...
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) // 자식 테이블마다 테이블 생성
+public abstract class Item {
+    @Id @GeneratedValue
+    @Column(name = "ITEM_ID")
+    private Long id;
+    
+}
+@Entity
+@DiscriminatorValue("A")
+public class Album extends Item {
+    ...
+}
 ```
 
 ### @MappedSuperClass 를 상속하는 방법
@@ -261,18 +273,6 @@ SELECT book.bookId.title FROM Book book;
 
 @MapsId 및 @JoinColumn 을 같이 선언해서 문법상 가능하지만 항상 N+1 이 발생합니다. 그래서 연관관계의 주인이 F.K 을 가지고 @JoinColumn 해서 lazy 하는 방식이 더 낫습니다
 
-// TODO - 정리필요
-```
-onetoone lazy 가 안되는 이유
-- proxy 는 null 을 wrapping 할 수 없음
-- 그래서 존재함이 보장되는 대상의 P.K 를 가지고 있어야함 (not null 이어야만 proxy 가능하므로)
-
-그럼 oneToMany 는 연관관계 주인이 아니라서 joinColumn 하지 않아 동일하게 대상 존재유무를 모르는데 lazy 가능한 이유는?
-- oneToMany 는 Collection 이고, collection 은 empty 표현가능
-- proxy 는 empty collection 을 wrapping 하면되므로, 식별자가 없어도 무방
-- onetoone 은 객체이므로, null or exist 라서 null 을 표현하지 못하는 proxy 의 한계가 있음
-```
-
 ## 조인테이블 매핑
 
 매핑테이블을 별도로 지정하는 방식입니다. 즉 연관관계를 맺으려면
@@ -328,6 +328,27 @@ public final class Hibernate {
     }
 }
 ```
+
+### 프록시의 한계
+
+프록시는 null 값을 가질 수 없습니다. 그래서 연관관계 엔티티 (즉 instance) 를 가져올때 3가지 중 1개의 값을 리턴합니다:
+
+- (값이 없는 경우) null
+- (LAZY 의 경우) Proxy 로 감싼 instance
+- (EAGER 의 경우) 실제 instance
+
+연관관계 매핑에 따라 아래와 같이 동작합니다:
+
+- @OneToOne
+  - 프록시는 null 을 가질수 없으므로 OneToOne 연관관계 엔티티의 존재유무를 알아야 합니다
+  - 그래서 존재함을 확인하기 위해 N+1 쿼리가 발생합니다
+  - @JoinColumn 으로 대상의 기본키를 외래키로 가지고 있으면 존재유무를 알수 있으므로 Fetch.LAZY 가 가능합니다  
+- @ManyToOne
+  - 연관관계의 주인이고, @JoinColumn 을 통해 연관관계의 존재유무를 알수 있습니다
+- @OneToMany
+  - 연관관계의 주인이 아니라서 존재유무는 알수 없지만 Fetch.LAZY 가 가능합니다
+  - 이유는 Collection 은 null 대신 `empty 표현이 가능`하기 때문입니다
+    - 즉 실제 instance or proxy 로 감싼 empty.collection 으로 표현
 
 ### EAGER 
 
