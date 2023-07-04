@@ -40,12 +40,12 @@ entityManager 는 기본적으로 transaction-scope 로 동작합니다. 즉 현
 
 ```java
 // hibernate 설정
-props.put(org.hibernate.cfg.Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+props.put(org.hibernate.cfg.Environment.CURRENT_SESSION_CONTEXT_CLASS,"thread");
 
-// SessionFactoryImpl - threadLocal 에 세션 저장
-else if ( "thread".equals( impl ) ) {
-  return new ThreadLocalSessionContext( this );
-}
+    // SessionFactoryImpl - threadLocal 에 세션 저장
+    else if("thread".equals(impl)){
+    return new ThreadLocalSessionContext(this);
+    }
 ```
 
 ## OSIV
@@ -79,3 +79,19 @@ view 에서 영속성에 대한 변경이 있어도 아래의 조건에 의해 D
 - 명시적
   - em.flush 을 명시적으롷 호출해도 tx 가 이미 종료된 상태이므로 TransactionRequiredException 예외가 발생합니다
 
+## READONLY
+
+- 메모리 최적화 (스냅샷 미저장)
+  - 읽기 전용 쿼리 힌트
+  - 읽기 전용 엔티티 `@Immutable`
+- 속도 최적화 (스냅샷 미비교)
+  - 읽기 전용 트랜잭션
+
+```java
+@Transactional(readOnly = true) // 읽기 전용 트랜잭션
+public Collection<DataEntity> findAll() {
+    return em.createQuery("select d from DataEntity d", DataEntity.class)
+        .setHint("org.hibernate.readOnly",true) // 읽기 전용 쿼리 힌트
+        .getResultList();
+}
+```

@@ -9,7 +9,6 @@
 
 ### Index
 
-- [FetchType.LAZY vs EAGER](lazy-eager)
 - [JPQL](jpql)
 - [Spring Data JPA](spring-data-jpa)
 - [Persistence Context](persistence-context)
