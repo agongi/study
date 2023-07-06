@@ -56,3 +56,17 @@ public Long findById(Long id);
 
 - @QueryHint(name = "javax.persistence.lock.timeout", value = "5000")
 - em.setHint("javax.persistence.query.timeout", 5000)
+
+sql hint 는 JPA 는 지원하지 않아 hibernate 를 통해 설정해야 합니다
+```java
+Session session = em.unwrap(Session.class); // 하이버네이트 직접 사용
+List<Member> list = session.createQuery("select m from Member m")
+  .addQueryHint("FULL (MEMBER)") // SQL HINT 추가
+  .list();
+
+// 실행된 SQL
+select
+    /* + FULL(MEMBER) */ m.id, n.name
+from
+    Member m
+```

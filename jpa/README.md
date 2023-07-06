@@ -2,7 +2,7 @@
 
 ```
 @author: suktae.choi
-- http://arahansa.github.io/docs_spring/jpa.html
+- https://arahansa.github.io/docs_spring/jpa.html
 - https://www.nowwatersblog.com/jpa/ch1
 - https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 ```
