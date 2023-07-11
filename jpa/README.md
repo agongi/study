@@ -23,7 +23,24 @@
 
 ### Versions
 
-- [Version history](https://en.wikipedia.org/wiki/Jakarta_Persistence)
+- JPA https://jakarta.ee/specifications/persistence/
+  - JPA 2.0
+    - 대부분의 기능은 2.0 에 정의됨
+  - JPA 2.1
+    - converter
+    - stored procedure
+  - JPA 2.2
+    - streaming (cursor 지원)
+  - Jakarta Persistence 3.0
+    - package renamed javax -> jakarta
+  - Jakarta Persistence 3.1
+- Hibernate https://hibernate.org/orm/releases/
+  - 5.6
+    - javassist dropped (byte-buddy used)
+  - 6.1
+    - from subquery 지원
+  - 6.2
+    - ...
 
 ***
 
