@@ -42,15 +42,13 @@ RDB 으로 해당 시점까지의 스냅샷으로 복구후, 이후 데이터는
 
 ## [복제](https://redis.io/docs/reference/cluster-spec/#write-safety)
 
-https://buildatscale.tech/redis-replication/
-
 <img src='5.png' width="50%">
 
-- 비동기
-  - replicas 의 ack 를 기다리지 않고 client 에 성공응답 (async)
-  - WAIT 명령으로 replicas 의 응답을 기다릴수 있지만 ...
-- 1s 단위로 AOF 내용이 복제에 전달됨
-  - 전통적인 DB 의 쓰기지연과 같은 맥락으로 보면됨
+- (CUD 요청을 받았을때) replica 에 복제 ack 을 기다리지 않고 바로 성공처리 합니다
+  - 즉 `비동기 방식`입니다
+  - WAIT 명령으로 응답을 기다릴수 있지만 ...
+- master 는 1s 단위로 AOF 에 기록된 command 를 replica 에 전달합니다
+  - 일반적인 RDB 쓰기지연 (기본값: 1s) excuse 수치 입니다  
 
 ## [트랜잭션](https://redis.io/docs/interact/transactions/)
 
