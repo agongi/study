@@ -1,4 +1,4 @@
-## Docker
+# Docker
 
 ```
 @author: suktae.choi
@@ -7,7 +7,7 @@
 - https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose
 ```
 
-#### Index
+### Index
 
 - [ARG vs ENV](arg-env)
 - [ENTRYPOINT vs CMD](entrypoint-cmd)
