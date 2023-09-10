@@ -18,6 +18,16 @@
 
 N개의 워커로 동작하는 모드 입니다. 메타 정보를 kafka topic 에 저장합니다.
 
+kafka connect cluster 를 구성하므로 connector 를 CRUD 할수 있는 API 를 제공합니다
+
+### Dedicated
+
+N개의 워커로 동작하는 모드 입니다. 메타 정보를 kafka topic 에 저장합니다.
+
+kafka connect cluster 를 구성하지 않습니다.
+
+> `Kafka Connect Cluster` is a collection of Kafka Connect worker nodes that work together to execute connectors and manage data
+
 ## 구성요소
 
 ### Worker
