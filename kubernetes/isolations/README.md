@@ -34,7 +34,11 @@ $ unshare -m /bin/bash
 ### network namespace
 <img src="4.png" width="50%">
 
-### uts (unix time-sharing) namespace
+### IPC (inter process communication) namespace
+- semaphore
+- POSIX queue
+
+### UTS (unix time-sharing) namespace
 - hostname
 - domainname 
 
