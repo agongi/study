@@ -74,7 +74,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 
 ### GC 구조
 
-<img src="images/Screen%20Shot%202017-08-15%20at%2003.02.19.png" width="75%">
+<img src="5.png" width="75%">
 
 - Young
   - Eden, From (S0), To (S1) 영역으로 구성
@@ -105,15 +105,15 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 
 #### Serial GC
 
-<img src="images/1.png" width="75%">
+<img src="1.png" width="75%">
 
 #### Parallel/ParallelOld GC
 
-<img src="images/2.png" width="75%">
+<img src="2.png" width="75%">
 
 #### CMS GC
 
-<img src="images/3.png" width="75%">
+<img src="3.png" width="75%">
 
 - 장점
   - Major GC 수행시 `STW 가 짧게 2번` 발생한다.
@@ -128,7 +128,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 
 #### G1 GC
 
-<img src="images/4.png" width="75%">
+<img src="4.png" width="75%">
 
 모든 영역이 정해져 있지 않고, Region 이라는 작은 단위로 분리되어 있다.
 

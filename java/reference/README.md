@@ -10,7 +10,7 @@
 ### References
 Garbage Collector reclaims memory from objects which are eligible for garbage collection, but not many programmer knows that this eligibility is decided based upon **which kind of references are pointing to that object.**
 
-<img src="images/Screen%20Shot%202017-08-16%20at%2022.03.11.gif" width="75%">
+<img src="1.gif" width="75%">
 
 ### Reference Type
 

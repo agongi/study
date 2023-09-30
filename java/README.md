@@ -30,11 +30,15 @@
 - [Remote Debug](remote-debug)
 - [new T\[0\] vs new T\[size\]](0-size)
 - [Selector](selector)
+- [JIT](jit)
+- [Safe point](safe-point)
+- [Reference](reference)
 
 ### Series
 - [Collections](collections)
 - [NIO](nio)
 - [Generics](generics)
+- [Garbage Collection](garbage-collection)
 
 ### Design Patterns
 - [Factory Pattern](factory-pattern)
@@ -66,3 +70,5 @@
 - [Security Manager](https://docs.oracle.com/javase/tutorial/essential/environment/security.html)
 - [MDC Context 유지하기](https://blog.gangnamunni.com/post/mdc-context-task-decorator/)
 - [자바 JNI 개인정리](https://wiserloner.tistory.com/549?category=821930)
+- [Understanding JIT](https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler)
+- [JVM GC Basic](https://perfectacle.github.io/2019/05/07/jvm-gc-basic/)
