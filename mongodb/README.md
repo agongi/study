@@ -23,14 +23,14 @@
 - [Causal Consistency](causal-consistency)
 - [[19.12.03 ~ 12.05] 테크톡, 몽고DB](edu/20191203)
 
+### Blog
+- [Optimistic Locking](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template.optimistic-locking)
+
 ### Versions
 - MongoDB 4.2
 - MongoDB 4.4
 - MongoDB 5.0
 - MongoDB 6.0
-
-### Blog
-- [Optimistic Locking](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template.optimistic-locking)
 
 ***
 

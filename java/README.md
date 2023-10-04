@@ -34,29 +34,6 @@
 - [Safe point](safe-point)
 - [Reference](reference)
 
-### Series
-- [Collections](collections)
-- [NIO](nio)
-- [Generics](generics)
-- [Garbage Collection](garbage-collection)
-
-### Design Patterns
-- [Factory Pattern](factory-pattern)
-- [Singleton Pattern](singleton-pattern)
-- [Builder Pattern](builder-pattern)
-- [Observer Pattern](observer-pattern)
-- [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
-- [Double-Checked Locking](double-checked-locking)
-
-### Versions
-- [JDK 6](jdk-6)
-- [JDK 8](jdk-8)
-- [JDK 9](jdk-9)
-- [JDK 10](jdk-10)
-- [JDK 11](jdk-11)
-- [JDK 17](https://techblog.gccompany.co.kr/%EC%9A%B0%EB%A6%AC%ED%8C%80%EC%9D%B4-jdk-17%EC%9D%84-%EB%8F%84%EC%9E%85%ED%95%9C-%EC%9D%B4%EC%9C%A0-ced2b754cd7)
-- [JDK 21](https://howtodoinjava.com/java/java-21-new-features/)
-
 ### Blog
 - [Java Enum 활용기](http://woowabros.github.io/tools/2017/07/10/java-enum-uses.html)
 - [restTemplate memory leak 해결](http://woowabros.github.io/tools/2019/05/24/jvm_memory_leak.html)
@@ -72,3 +49,28 @@
 - [자바 JNI 개인정리](https://wiserloner.tistory.com/549?category=821930)
 - [Understanding JIT](https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler)
 - [JVM GC Basic](https://perfectacle.github.io/2019/05/07/jvm-gc-basic/)
+
+### Versions
+- [JDK 6](jdk-6)
+- [JDK 8](jdk-8)
+- [JDK 9](jdk-9)
+- [JDK 10](jdk-10)
+- [JDK 11](jdk-11)
+- [JDK 17](https://techblog.gccompany.co.kr/%EC%9A%B0%EB%A6%AC%ED%8C%80%EC%9D%B4-jdk-17%EC%9D%84-%EB%8F%84%EC%9E%85%ED%95%9C-%EC%9D%B4%EC%9C%A0-ced2b754cd7)
+- [JDK 21](https://howtodoinjava.com/java/java-21-new-features/)
+
+***
+
+### Series
+- [Collections](collections)
+- [NIO](nio)
+- [Generics](generics)
+- [Garbage Collection](garbage-collection)
+
+### Design Patterns
+- [Factory Pattern](factory-pattern)
+- [Singleton Pattern](singleton-pattern)
+- [Builder Pattern](builder-pattern)
+- [Observer Pattern](observer-pattern)
+- [Initialization-on-demand Holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
+- [Double-Checked Locking](double-checked-locking)
