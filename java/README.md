@@ -33,6 +33,7 @@
 - [JIT](jit)
 - [Safe point](safe-point)
 - [Reference](reference)
+- [Virtual Thread](virtual-thread)
 
 ### Blog
 - [Java Enum 활용기](http://woowabros.github.io/tools/2017/07/10/java-enum-uses.html)
@@ -49,6 +50,7 @@
 - [자바 JNI 개인정리](https://wiserloner.tistory.com/549?category=821930)
 - [Understanding JIT](https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler)
 - [JVM GC Basic](https://perfectacle.github.io/2019/05/07/jvm-gc-basic/)
+- [Why use a ReentrantLock if one can use synchronized(this)?](https://stackoverflow.com/questions/11821801/why-use-a-reentrantlock-if-one-can-use-synchronizedthis)
 
 ### Versions
 - [JDK 6](jdk-6)
