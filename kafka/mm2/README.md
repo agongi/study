@@ -2,66 +2,59 @@
 
 ```
 @author: suktae.choi
+- https://cwiki.apache.org/confluence/display/KAFKA/KIP-382%3A+MirrorMaker+2.0
 - https://devocean.sk.com/blog/techBoardDetail.do?ID=164371
 ```
 
-카프카 클러스터의 복제 (== DR 목적) 를 목적으로 사용합니다
+카프카 클러스터의 복제 (== DR 목적) 를 목적으로 사용합니다.
 
-kafka-connect 를 기반으로
-- kafka-connect cluster
-- source/sink connectors
-
-의 구성으로 동작합니다. 자세한 기본동작은 [링크](https://ibm-cloud-architecture.github.io/refarch-eda/technology/kafka-mirrormaker/)의 글로 대신합니다.
+> kafka-connect 를 기반으로 동작
 
 <img src="1.png" width="75%">
 
-## Consideration
-
-### Topic metadata replication
-
-Topic 및 ACL 의 전파를 위한
+## Topic metadata replication
+토픽설정 및 ACL 을 같이 복제하기위해
 
 - sync.topic.acl.enabled=true
 - sync.topic.configs.enabled=true
 
-는 권장됩니다
+설정이 권장됩니다.
 
-### Naming convention
-
+## Listen
 source/target cluster 의 토픽을 모두 소비하기위해 
 
-- @KafkaListener(id = "TEST-TOPIC", topicPattern = "^.*accounts")
+```java
+@KafkaListener(id = "testTopicListener", topicPattern = "^.*TEST-TOPIC")
+```
 
 topics 대신 topicPattern 으로 prefix regex 을 모두 포함해야 합니다
 
-> active-active 구성에서 circular 회피위해 topic prefix 추가됨
+> active-active 구성에서 circular 회피위해 topic prefix 추가됨 (ex. [source]TEST-TOPIC, [target]CR2.TEST-TOPIC)
 
-### Offset management
-
-source 와 target cluster 의 broker offset 은 다릅니다 (source-offset: 5 부터 MM2 시작되었다면 -> target-offset: 1 부터 시작)
+## Offset
+source 와 target cluster 의 `__consumer_offsets` 은 다릅니다. (source-offset: 5 부터 MM2 시작했으면 -> target-offset: 1 부터 시작)
 
 <img src="2.png" width="75%">
 
-offsets 정보는 `topic: offset-synch` 에 저장됩니다
+>`__consumer_offsets` 복제시 source, target 간의 변경된 offset 을 맞춰서 변경후 전달합니다. (즉 서로 다른 값을 가지고 있음)
 
-### MM2 topology
+## 동작모드
+- Active - Standby
+  - 이벤트 발행: source
+  - 1군데에만 신규 이벤트가 인입될때 사용합니다
+  - __consumer_offsets: 동일하게 복제합니다
+- Active - Active
+  - 이벤트 발행: source/target
+  - N군데에 신규 이벤트가 인입될때 사용합니다
+  - __consumer_offsets: delta 계산후 복제합니다
 
-복제 단위단위 마다 kafka-connect cluster 를 구성하기 보다 구성된 cluster 에 connectors 를 추가하는 방식이 추천됩니다 (운영 할 인프라의 범위를 줄이기 위함)
+## 방향성
+- 단방향
+  - Active - Standby 및 Active - Active (단반향) 모드
+  - 장애시 producer: 100% 실패
+  - 장애시 consumer: 50% 실패
+- 양방향
+  - Active - Active (양반향) 모드
+  - 장애시 producer: 50% 실패
+  - 장애시 consumer: 50% 실패
 
-<img src="3.png" width="75%">
-
-```yaml
-apiVersion: v1alpha1
-kind: KafkaMirrorMaker2
-...
-
- mirrors:
-  - sourceCluster: "event-streams-wdc"
-    targetCluster: "kafka-on-premise"
-    ...
-    topicsPattern: "accounts,orders"
-  - sourceCluster: "kafka-on-premise"
-    targetCluster: "event-streams-wdc"
-    ...
-    topicsPattern: "accounts,customers"
-```
