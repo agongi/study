@@ -6,8 +6,9 @@
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 ```
 
-## NodePort
+Service 는 Pod 으로 접근하는 정책을 정의하는 추상화 된 개념입니다. (ip:port 할당됨)
 
+## NodePort
 <img src='1.png' width='50%'/>
 
 ```yaml
@@ -26,7 +27,6 @@ spec:
 ```
 
 ## HostPort - Service 의 유형이 아님
-
 <img src='5.png' width='50%'/>
 
 ```yaml
@@ -47,8 +47,9 @@ spec:
 - spec.type: NodePort 는 Kind: Service 를 통해 spec.matchLabel 이 동일한 임의의 Pod 으로 전달된다
 
 ## LoadBalancer
-
 L4 LB
+
+- 외부에 endpoint 를 노출하는 역할만 수행
 
 ```yaml
 apiVersion: v1
@@ -72,11 +73,12 @@ spec:
 ```
 
 ## Ingress
+L7 LB (Ingress Controller 필요)
 
-L7 LB (Ingress Controller 가 필요함)
-
-- Ingress: 정책 resource
-- Ingress Controller: Ingress (정책) 을 참조하여 동작하는 구현체 (ex. ingress-nginx)
+- 외부에 endpoint 노출
+- L7 정책에 따라 기능제공
+  - Ingress: 정책 resource
+  - Ingress Controller: Ingress (정책) 을 참조하여 동작하는 구현체 (ex. ingress-nginx)
 
 <img src='3.png' width='50%'/>
 <img src='4.png' width='50%'/>
@@ -120,25 +122,23 @@ spec:
     app: kubia
 ```
 
+<img src='6.png' width='50%'/>
+
 ## Headless
-
 Headless Service는 클러스터 내부에서만 사용할 수 있는 서비스 유형입니다.
-
 - Headless Service 는 클러스터의 모든 Pod 의 DNS 레코드를 생성합니다. (클라이언트에게 단일 IP 주소를 제공하지 않음)
 - (내부) 클라이언트는 Pod 의 이름을 사용하여 Pod 에 직접 연결할 수 있습니다
+- statefulSet 은 headless service 를 통해 구성하는게 일반적 입니다. (특정 Pod 을 지정해서 외부에서 연결해야 하므로)
 
 ## Istio
-
-L7 LB + 필요한 부가적인 resources 를 번들로 묶은 CR 로 통합 제공
-
+Spring Cloud 에서 제공하는 discovery, config 등의 기능을 통합적으로 제공하는 service mesh 입니다.
 - istio <- ingress 대체 (ingress)
 - envoy <- nginx 대체 (ingress controller)
 - Virtual Service <- Service 대체 (endpoint)
 
 > envoy 에 대한 설정을 nginx.conf 와 달리, k8s resource.spec 으로 정의
 
-Istio 는 아래의 역할들을 처리할 수 있음
-
+Istio 는 아래의 역할들을 처리할 수 있습니다.
 - canary 배포 (A/B)
 - L7 기반 route (path, cookie)
 - discovery (weight)
