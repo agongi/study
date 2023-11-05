@@ -1,4 +1,4 @@
-## Garbage Collection
+# Garbage Collection
 
 ```
 @author: suktae.choi
@@ -6,12 +6,11 @@
 - https://perfectacle.github.io/2019/05/11/jvm-gc-advanced/
 - https://www.slideshare.net/aszegedi/everything-i-ever-learned-about-jvm-performance-tuning-twitter
 - https://docs.oracle.com/en/java/javase/11/gctuning/garbage-first-g1-garbage-collector1.html
+- https://catsbi.oopy.io/56acd9f4-4331-4887-8bc3-e3e50b2f3ea5
 ```
 
-### GC 유형
-
-#### Serial GC (-XX:+UseSerialGC)
-
+## GC 유형
+### Serial GC (-XX:+UseSerialGC)
 - 알고리즘
   - Mark-Sweep-Compact
 - GC Thread
@@ -19,8 +18,7 @@
   - major GC: 1개
 - `Compaction 수행`
 
-#### Parallel GC (-XX:+UseParallelGC)
-
+### Parallel GC (-XX:+UseParallelGC)
 - 알고리즘
   - Mark-Sweep-Compact
 - GC Thread
@@ -28,8 +26,7 @@
   - major GC: 1개
 - `Compaction 수행`
 
-#### Parallel Old GC (-XX:+UseParallelOldGC)
-
+### Parallel Old GC (-XX:+UseParallelOldGC)
 - 알고리즘
   - (Young) Mark-Sweep-Compact
   - (Old) Mark-Summary-Compact
@@ -38,15 +35,14 @@
   - `major GC: N개`
 - `Compaction 수행`
 
-#### CMS GC (-XX:+UseConcMarkSweepGC)
-
+### CMS GC (-XX:+UseConcMarkSweepGC)
 GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 파편화시 ParallelGC 로 compact 수행)
 
 - 알고리즘
-  - `Initial Mark (STW)`: GC Root가 참조하는 객체만 마킹
-  - `Concurrent Mark`: 참조하는 객체를 따라가며 지속적으로 마킹
-  - `Remark (STW)`: concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
-  - `Concurrent Sweep`: 접근할 수 없는 객체를 제거
+  - Initial Mark (STW): GC Root가 참조하는 객체만 마킹
+  - Concurrent Mark: 참조하는 객체를 따라가며 지속적으로 마킹
+  - Remark (STW): concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
+  - Concurrent Sweep: 접근할 수 없는 객체를 제거
 - GC Thread
   - `minor GC: N개`
   - `major GC: N개`
@@ -56,24 +52,37 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
   - (Compat 를 하지않고) STW 를 `짧게 2번 끊어서, 소요시간이 짧다`
   - (Compact 를 하지않아) STW 가 짧지만, `단편화 발생시 ParallelGC` 가 수행되고 이때는 STW 가 길다
 
-#### G1 GC (-XX:+UseG1GC)
-
+### G1 GC (-XX:+UseG1GC)
 - 알고리즘
-  - `Initial Mark`: GC Root가 참조하는 객체만 마킹
-  - `Remark (STW)`: concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
-  - `Cleanup (STW)`: empty region 제거
-  - `Compact`: 각 region 에 있는 객체를 적절히 재배치 후, empty region 제거
+  - Initial Mark: GC Root가 참조하는 객체만 마킹
+  - Remark (STW): concurrent mark 과정에서 변경된 사항이 없는지 다시 한번 마킹하며 확정
+  - Cleanup (STW): empty region 제거
+  - Compact: 각 region 에 있는 객체를 적절히 재배치 후, empty region 제거
 - GC Thread
-  - minor GC: N개
-  - major GC: N개
+  - `minor GC: N개`
+  - `major GC: N개`
 - `Compaction 수행`
 - 특징
-  - Young, Old 가 연속된 공간이 아닌 `개별 Region 이 필요에 따라` 유연하게 할당
-  - Young and/or Old 전체영역이 아닌 `garbage region 만 GC 수행`
-  - 주기적 and/or -XX:InitiatingHeapOccupancyPercent 수치도달시 Young,Old GC 가 같이 수행된다
+  - 연속된 영역이 아닌 `개별 Region` 이 필요에 따라 할당 (Region 이 eden/s0-1/old 로 사용됨)
+  - eden/s0-1/old 가 young -> old 로 프로모션시 실제 객체를 이동하지 않고, young region 을 old region 으로 사용합니다
+    - 그래서 객체의 이동이 발생하지 않는 만큼 빠릅니다 (에이징없이 s0 -> s1 -> old 로 한번에 프로모션)
+  - 전체 영역이 아닌 `garbage region 만 GC 수행` -> collect 되는 region 에 있는 살아있는 객체는 다른 region 으로 재할당 합니다 (== compact)
+    - 일반적으로 재할당될때의 STW 가 긴 시간입니다
+  - 주기적으로 OR -XX:InitiatingHeapOccupancyPercent 수치도달시 Young,Old GC 가 같이 수행됩니다
 
-### GC 구조
+### ZGC (-XX:+UseZGC)
+- 알고리즘
+  - Colored pointers (STW): Mark 단계
+  - Load barriers: ...
+- GC Thread
+  - `minor GC: N개`
+  - `major GC: N개`
+- `Compaction 수행`
+- 특징
+  - 연속된 영역이 아닌 `개별 ZPage` 가 필요에 따라 할당 (Region 과 다르게 small/medium/large 로 각각 사이즈가 다름)
+  - ... TBD
 
+## GC 구조
 <img src="5.png" width="75%">
 
 - Young
@@ -94,25 +103,20 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 - Threshold 이상의 Age 객체는 Old 영역으로 이동하게 된다 - `Promotion`
 
 > Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.
->
 > 객체의 크기가 Eden 보다 크면, 바로 Old 영역으로 할당된다.
 
 **Major GC**
 
 - Old 영역이 가득 차면 `Full GC` 발생 (==`STW (stop-the-world)` 발생)
 
-### GC 알고리즘
-
-#### Serial GC
-
+## GC 알고리즘
+### Serial GC
 <img src="1.png" width="75%">
 
-#### Parallel/ParallelOld GC
-
+### Parallel/ParallelOld GC
 <img src="2.png" width="75%">
 
-#### CMS GC
-
+### CMS GC
 <img src="3.png" width="75%">
 
 - 장점
@@ -123,11 +127,9 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
   - Mark-Sweep 알고리즘에 비해 하는 일도 많고 복잡해서 `메모리, CPU를 더 많이` 쓴다.
   - 메모리 Compaction을 수행하지 않으므로 `단편화`가 발생시, STW 가 길게 발생한다.
 
-> Old GC 수행도중 단편화로 인해 메모리가 충분히 확보되지 않으면 즉시 모든 작업을 멈추고, Compaction 을 위해 ParallelOldGC 을 처음부터 수행한다.
->
+> Old GC 수행도중 단편화로 인해 메모리가 충분히 확보되지 않으면 즉시 모든 작업을 멈추고, Compaction 을 위해 Parallel Old 를 처음부터 수행한다.
 
-#### G1 GC
-
+### G1 GC
 <img src="4.png" width="75%">
 
 모든 영역이 정해져 있지 않고, Region 이라는 작은 단위로 분리되어 있다.
@@ -154,20 +156,19 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
   - cleanup 에서 정리된 region 에 있던 object 를 별도의 region 으로 모으는 작업
 
 > Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조.
->
 
-### Changes in JDK 8
+### ZGC
+<img src="6.png" width="75%">
 
+## Changes in JDK 8
 - Perm 사라짐 (MetaSpace 영역으로 바뀜 - native memory)
   - PermGen 영역이 삭제되어 heap 영역에서 사용할 수 있는 메모리 증가
   - PermGen영역을 스캔 하기 위해 소모되었던 시간이 감소되어 GC 성능이 향상 되었다.
 
-#### Before JDK 8
-
+### Before JDK 8
 - `new / survive / old / perm / native`  
 
-#### After JDK 8
-
+### After JDK 8
 - `new / survive / old / metaSpace (native)`
 
->  기존 perm 에 저장되어 문제를 유발하던 static/string literal 은 heap 으로 옮겨져 GC 대상으로 됨 
+- 기존 perm 에 저장되어 문제를 유발하던 static/string literal 은 heap 으로 옮겨져 GC 대상으로 변경되었습니다 
