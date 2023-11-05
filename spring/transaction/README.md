@@ -1,98 +1,109 @@
-## Transaction
+# Transaction
 
 ```
 @author: suktae.choi
-- http://haviyj.tistory.com/33
-- https://blog.outsider.ne.kr/869
-- http://lng1982.tistory.com/128
 - http://javacan.tistory.com/entry/Handle-DomainEvent-with-Spring-ApplicationEventPublisher-EventListener-TransactionalEventListener
-- https://spring.io/blog/2015/02/11/better-application-events-in-spring-framework-4-2
-- http://springsource.tistory.com/136
+- https://www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth
 ```
 
-#### Index
+트랜잭션은 아래의 동작을 수행하는것이 기본 원리 입니다:
+```java
+import java.sql.Connection;
 
-- [TransactionSynchronizationManager](transaction-synchronization-manager)
+Connection connection = dataSource.getConnection();
+Savepoint savePoint = connection.setSavepoint();
 
-***
+try (connection) {
+    connection.setAutoCommit(false);
+    // ...
+    
+    connection.commit();
+} catch (SQLException e) {
+    connection.rollback(savePoint);
+}
+```
+
+- connection 획득
+- savepoint 등록
+- auto-commit:false 설정
+- commit / rollback 수행
+  - rollback 시 savepoint 로 이동
+
+아래에 설명되는 @Transactional 및 TransactionTemplate 은 해당 동작을 스프링에서 wrapping 해서 제공하는 방식입니다
 
 ## TransactionManager
-
-스프링의 트랜잭션 매니저는 모두 **PlatformTransactionManager** interface 를 구현한다.
-
-대표적인 구현체는 다음과 같다:
-
 ### DataSourceTransactionManager
-
-DataSource (JDBC) 에서 사용하는 매니저이다. 
+JDBC 에서 사용하는 매니저입니다.
 
 - MyBatis
 - JdbcTemplate
 
-만 사용할 경우 정의한다.
-
 ### JpaTransactionManager
-
-JPA 를 사용한다면, 해당 매니저를 써야한다.
-
-JPA + DataSource (JDBC) API 도 같이 사용가능하다. (더 상위의 개념이니..)
-
-### HibernateTransactionManager
-
-Hibernate specific TransactionManager.
+JPA 를 사용한다면 해당 매니저를 선언합니다.
 
 ### JtaTransactionManager
+N 개의 DataSource 를 이용해서 글로벌(외부시스템)/분산(다른DB) 트랜잭션을 관리하려면 사용합니다. (Composite 의 개념)
 
-N 개의 DataSource 를 이용해서 글로벌(외부시스템)/분산(다른DB) 트랜잭션을 관리하기 위해 사용한다. Composite 의 개념
+## Propagation
+- **REQUIRED**: join existing, create new if no
 
-## How to use
+<img src="2.png">
 
-### TransactionManager
+- **REQUIRES_NEW**: create new always, independent to existing
+  - Use physically different transactions. Once NEW has been started, EXIST transaction suspended and doesnt affected despite NEW fails.
+  - NEW fails does not affect EXIST transaction
+  - EXIST fails does not affect NEW transaction
 
-직접 관리하는 방식으로
+<img src="1.png">
 
-- \#getTransaction
-- \#commit
-- \#rollback
+- NESTED: join existing, dependent to existing
+  - Use single physical transaction with multiple `savepoints.` Outer keeps continue despite such inner transaction have been rolled back. This mechanism mapped onto JDBC savepoints, so will only work with DataSourceTransactionManager
+  - Nested fails does not affect outer transaction
+  - Outer fails does globally rollback even if nested succeed
+- SUPPORTS: join existing, no if no
+- MANDATORY: join existing, throw exception if no
+- NOT_SUPPORTED: ignore if exist
+- NEVER: throw exception if exist
 
-명시적으로 method 를 호출하며 low-level 에서 트랜잭션을 관리한다.
+## Isolation
+- **DEFAULT** - DB default
+- READ_UNCOMMITTED
+- READ_COMMITTED
+- REPEATABLE_READ
+- SERIALIZABLE
+
+## @TransactionalEventListener
+ApplicationContext will regist the beans that contains method annotated of `@TransactionEventListener` on bootstrap. The event sent by **ApplicationContext#publishEvent** (that inherits EventPublisher) is held and put backed `to the TransactionalEventListener annotated methods.`
+
+The examples:
 
 ```java
-@Bean
-public PlatformTransactionManager transactionManager() {
-  JpaTransactionManager transactionManager = new JpaTransactionManager();
-  transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-  return transactionManager;
+@Component
+public class Sender {
+  private final ApplicationContext context;
+  private final ApplicationEventPublisher publisher;
+  
+  public void sendByContext(Object msg) {
+		// applicationContext inherits eventPublisher
+    context.publishEvent(msg);
+  }
+  
+  public void sendByPublisher(Object msg) {
+    publisher.publishEvent(msg);
+  }
 }
 
-@Service
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-  private final PlatformTransactionManager transactionManager;
-
-  public Object updateUser(UserVO userVo) {
-    // non-transactional code here
-    
-    // -- END
-    TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-    try {
-      // CUD operations
-    } catch (Exception ex) {
-      transactionManager.rollback(status);
-    }
-    transactionManager.commit(status);
+@Component
+public class Receiver {
+  @TransactionalEventListener
+  public void sendAfterCommit(Event event) {
+		// do something
   }
 }
 ```
 
-> Whatever It is not marked rollback-only programmatically, runtimeException is always being rollback by design
-
-### TransactionTemplate
-
-스프링에서 제공하는 template 을 사용하는 방식이다.
-
-transactionManager 를 주입하고, #execute 을 호출해 TransactionCallback#doInTransaction 안에서 실행되는 코드는 동일한 transaction 안에서 수행된다.
+## TransactionTemplate
+@Transactional 어노테이션을 선언하거나 직접 transactionTemplate 을 사용 할 수 있습니다.
 
 ```java
 @Bean
@@ -102,7 +113,7 @@ public TransactionTemplate transactionTemplate() {
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserService {
   private final TransactionTemplate transactionTemplate;
 
   public Object updateUser(UserVO userVo) {
@@ -126,103 +137,10 @@ public class UserServiceImpl implements UserService {
 }
 ```
 
-## Features
-
-### Propagation
-
-- **REQUIRED** - join existing, create new if no
-
-<img src="images/x1134407086.gif.pagespeed.ic.NDodWWj_K8.png">
-
-- **REQUIRES_NEW** - create new always, independent to existing
-  - Use physically different transactions. Once NEW has been started, EXIST transaction suspended and doesnt affected despite NEW fails.
-  - NEW fails does not affect EXIST transaction
-  - EXIST fails does not affect NEW transaction
-
-<img src="images/x1025204939.gif.pagespeed.ic.qc3nIvzXgN.png">
-
-- NESTED - join existing, dependent to existing
-  - Use single physical transaction with multiple `savepoints.` Outer keeps continue despite such inner transaction have been rolled back. This mechanism mapped onto JDBC savepoints, so will only work with DataSourceTransactionManager
-  - Nested fails does not affect outer transaction
-  - Outer fails does globally rollback even if nested succeed
-- SUPPORTS - join existing, no if no
-- MANDATORY - join existing, throw exception if no
-- NOT_SUPPORTED - ignore if exist
-- NEVER - throw exception if exist
-
-### Isolation
-
-- **DEFAULT** - DB default
-- READ_UNCOMMITTED
-- READ_COMMITTED
-- REPEATABLE_READ
-- SERIALIZABLE
-
-### ReadOnly
-
-Tx is working on read-only mode. The committed changes will be ignored implicitly.
-
-```java
-@Transactional(readOnly = true)
-```
-
-### TimeOut
-
-### Rollback
-
-Specify exception for rollback conditionally
-
-- rollbackFor
-- rollbackForClassName
-- noRollbackFor
-- noRollbackForClassName
-
-```java
-@Transactional(rollbackFor = Exception.class)
-```
-
-> RuntimeException (unchecked) can be caught even in try-cache code-level but It is marked **rollback-only** so Tx naver be committed.
-
-### Extras
-
-#### @TransactionalEventListener
-
-ApplicationContext will regist the beans that contains method annotated of `@TransactionEventListener` on bootstrap. The event sent by **ApplicationContext#publishEvent** (that inherits EventPublisher) is held and put backed `to the TransactionalEventListener annotated methods.`
-
-The examples:
-
-```java
-@Component
-public class Sender {
-	private final ApplicationContext context;
-  private final ApplicationEventPublisher publisher;
-  
-  public void sendByContext(Object msg) {
-		// applicationContext inherits eventPublisher
-    context.publishEvent(msg);
-  }
-  
-  public void sendByPublisher(Object msg) {
-    publisher.publishEvent(msg);
-  }
-}
-
-@Component
-public class Receiver {
-  @TransactionalEventListener
-  public void sendAfterCommit(Event event) {
-		// do something
-  }
-}
-```
-
-### Tips
-
-#### Rollback specific commit while exception thrown
-
-- REQUIRES_NEW 로 설정해서, 다른 작업과 무관한 Transaction 으로 처리한다
-- NESTED 로 설정해서, Outer 에 영향을 끼치지 않는 트랜잭션으로 분리 (대신 Outer 은 Nested 에 영향을 끼침)
-- @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
-
-### 
-
+## TransactionSynchronizationManager
+|                 | isActualTransactionActive | isSynchronizationActive |
+| --------------- | ------------------------- | ----------------------- |
+| InitTransaction | true                      | true                    |
+| Pause           | **false**                 | true                    |
+| Resume          | true                      | true                    |
+| Finished        | false                     | false                   |
