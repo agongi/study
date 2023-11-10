@@ -8,7 +8,7 @@
 ```
 
 ### Index
-- [Networking](networking)
+- [Network](network)
 - [Namespace](namespace)
 - [Label & Annotation](label-annotation)
 - [Policies](policies)
