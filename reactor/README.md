@@ -1,4 +1,4 @@
-## Reactor
+# Reactor
 
 ```
 @author: suktae.choi
@@ -7,15 +7,19 @@
 - https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
 ```
 
-#### Index
+### Index
+- [operator](operator)
 
-- [reactor operator](reactor-operator)
+### Blog
+- [Blocking to Reactive](<http://wiki.sys4u.co.kr/pages/viewpage.action?pageId=7766994#id-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C%EB%A1%9C%EB%B0%B0%EC%9B%8C%EB%B3%B4%EB%8A%94Reactor-11.BlockingtoReactive>)
+- [Proxy server with WebFlux](https://translate.googleusercontent.com/translate_c?depth=1&hl=ko&rurl=translate.google.co.kr&sl=ja&sp=nmt4&tl=en&u=https://kazuhira-r.hatenablog.com/entry/20180408/1523190124&xid=17259,15700023,15700186,15700190,15700248,15700253&usg=ALkJrhgdKV2YylUpbK6DdnJCS77pUGhknA)
+- [Flux sequence](https://www.baeldung.com/flux-sequences-reactor)
+- [Spring 웹 애플리케이션에서 사용하지 않는 API를 찾아보자](http://woowabros.github.io/tools/2019/02/15/controller-log.html)
 
 ***
 
-### Core Features
-
-#### Publisher (== `Observable` in RxJava)
+## Core Features
+### Publisher (== `Observable` in RxJava)
 
 - Flux - 0...N 개의 데이터를 가짐
 
@@ -29,12 +33,12 @@
   @Nullable T data;
   ```
 
-#### Subscriber (== `Observer` in Rxjava)
+### Subscriber (== `Observer` in Rxjava)
 
 - 서비스로직 구현, 데이터를 소비
   - Consumer<? super T>  consumer
 
-#### Subscription
+### Subscription
 
 - executionContext 로 이해하면됨
   - Publisher 의 data 참조하고, Subscriber 가 누구인지 알고있음
@@ -68,9 +72,9 @@ public interface Subscription {
 }
 ```
 
-![Screen Shot 2019-02-08 at 02.00.45](images/Screen%20Shot%202019-02-08%20at%2002.00.45.png)
+![Screen Shot 2019-02-08 at 02.00.45](Screen%20Shot%202019-02-08%20at%2002.00.45.png)
 
-#### Request/Response
+### Request/Response
 
 - [req] subscription.request(N)
 - [res] for (i = offset; i < N; i++) { subscriber.onNext(datas[i]) }
@@ -96,7 +100,7 @@ public interface Subscription {
 >
 > 불필요한 round-trip 을 방지하기위해, 내부적으로 request(N) 후 buffer 에 저장해서 1개씩 응답하는 구현체도 있다.
 
-#### Push/Pull
+### Push/Pull
 
 - Pull
   - 구독 (subscribe) 은 완료된 상태
@@ -107,7 +111,7 @@ public interface Subscription {
   - ~~(subscriber -> publisher) #request~~
   - (subscriber <- publisher) #onNext 로 데이터를 받음
 
-#### Backpressure
+### Backpressure
 
 - [req] subscription.request(N) 에서 N 을 조절함
   - 여유가있으면 - N++
@@ -141,7 +145,7 @@ public interface Subscription {
 });
 ```
 
-#### Schedulers (== thread pool)
+### Schedulers (== thread pool)
 
 - Schedulers.immediate()
 
@@ -177,7 +181,7 @@ Reactor 에서 제공하는 blocking APIs (`block()`, `blockFirst()`, `blockLast
 
 newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 명시적으로 dispose() 를 호출해서 종료필요
 
-#### publishOn/subscribeOn
+### publishOn/subscribeOn
 
 - publishOn
   - 선언부분 아래부터 지정된 스케쥴러에서 async 로 수행 (== affected below)
@@ -224,11 +228,10 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 [PUB1] filter
 ```
 
-#### ![Screen Shot 2019-02-10 at 23.48.55](images/Screen%20Shot%202019-02-10%20at%2023.48.55.png)
+### ![Screen Shot 2019-02-10 at 23.48.55](Screen%20Shot%202019-02-10%20at%2023.48.55.png)
 
-### Sequence
-
-#### Emission
+## Sequence
+### Emission
 
 **정해진 source (ex. Collection) 에서 생성하는 방법**
 
@@ -407,7 +410,7 @@ BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
     - onNext, onComplete, onError 이벤트를 발행하는 thread 가 동일해야함
   - state - 없음
 
-### Handle
+## Handle
 
 - handle(BiConsumer<T, SynchronousSink>)
 
@@ -427,10 +430,8 @@ BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
   ```
 
 - filter and/or map
-  
-  - 
 
-### Exception
+## Exception
 
 ```java
 Flux.just(1, 2, 0)
@@ -441,7 +442,7 @@ Flux.just(1, 2, 0)
 );
 ```
 
-#### error
+### error
 
 - onErrorReturn(T value)
   - return given value
@@ -465,7 +466,7 @@ Flux.just(1, 2, 0, 3)
     .subscribe(o -> System.out.println(o));
 ```
 
-#### finally
+### finally
 
 - doFinally(Consumer\<SignalType\> onFinally)
   - finally
@@ -539,7 +540,7 @@ Flux.using(
     }).subscribe(System.out::println);
 ```
 
-#### retry
+### retry
 
 - retry(long try)
   - 무조건 재시도, 재시도 횟수 지정
@@ -600,7 +601,7 @@ onNext: 2
 onComplete
 ```
 
-#### re-throw
+### re-throw
 
 Sequence 이벤트 발생시, try~catch 에서 잡힌 Exception 은 re-throw 가 안된다. 
 
@@ -667,7 +668,7 @@ Flux.range(1, 10)
 onError: IOException
 ```
 
-### Processors
+## Processors
 
 Publisher and/or Subscriber 을 모두 만족하는 Bridge
 
@@ -677,7 +678,7 @@ public interface Processor<T, R> extends Subscriber<T>, Publisher<R> {
 }
 ```
 
-#### Direct
+### Direct
 
 broadcasting without circular-buffer
 
@@ -746,7 +747,7 @@ Caused by: java.lang.IllegalStateException: UnicastProcessor allows only a singl
 	at reactor.core.publisher.Flux.subscribeWith(Flux.java:7907)
 ```
 
-#### Synchronous
+### Synchronous
 
 looping internally (circular buffer), processing synchronously
 
@@ -799,8 +800,7 @@ public void emitterProcessorTest() {
 [2]=4
 ```
 
-#### Asynchronous
-
+### Asynchronous
 looping internally (circular buffer), processing asynchronously
 
 - TopicProcessor
@@ -879,9 +879,8 @@ public void topicProcessorAsyncTest() {
 [2]=4 -- one of subscriber
 ```
 
-### Test
-
-#### StepVerifier
+## Test
+### StepVerifier
 
 테스트할 대상인 Publisher 를 전달하고, onNext/onError/onComplete 가 발생시 예상되는 return 값을 검증하는 코드를 작성한다.
 
@@ -937,8 +936,7 @@ public void testAppendError() {
 }
 ```
 
-#### Manipulate Time
-
+### Manipulate Time
 StepVerifier can be used in time-based scenario.
 
 - StepVerifier.withVirtualTime(Supplier<? extends Publisher>)
@@ -974,8 +972,7 @@ StepVerifier.withVirtualTime(() -> Mono.delay(Duration.ofDays(1)))
 
 > `expectNoEvent` also considers the `subscription` as an event. If you use it as a first step, it usually fails because the subscription signal is detected. Use`expectSubscription().expectNoEvent(duration)` pattern instead.
 
-#### Context
-
+### Context
 Reactor 는 기본적으로 async + parallel (선택적) 이므로 ThreadLocal 로 임시데이터를 관리하기 어렵다.
 
 그리고 stream-scoped 의 변수를 저장하기에 적합하지 않으므로 (ThreadLocal 은 thread-scoped) Reactor 3.1 부터 Context 를 지원한다. 더 자세한 내용은 Advanced Features 에 정리하고, StepVerifier 로 Context 를 테스트하는 방법은 크게 2가지가 있다.
@@ -1001,8 +998,7 @@ StepVerifier.create(Mono.just(1))
   .verifyComplete();
 ```
 
-#### TestPublisher
-
+### TestPublisher
 실제 Publisher 를 사용하는게 어렵다면, TestPublisher 를 만들어서 이벤트 발행을 할수있다.
 
 - next(T)
@@ -1066,12 +1062,10 @@ public void testPublisher() {
 }
 ```
 
-#### PublisherProbe
-
+### PublisherProbe
 Before version 3.1, you would need to manually maintain one `AtomicBoolean` per state you wanted to assert and attach a corresponding `doOn*` callback to the publisher you wanted to evaluate. This could be a lot of boilerplate when having to apply this pattern regularly. Fortunately, since 3.1.0 there’s an alternative with `PublisherProbe`, as follows
 
-### Debugging
-
+## Debugging
 기본적으로 Reactive Stream 은 디버깅이 어렵습니다. 성공/실패시 바로 그 지점에서 Exception 이 떨어지지않고 해당 이벤트에 따른 처리가 Stream 으로 흘러가기 때문입니다. 그래서 별도의 breakpoint 를 잡으며 따라가지 않으면 쉽게 파악이 되지 않습니다.
 
 > 만약 스트림을 비동기로 처리했다면?! HER..
@@ -1158,9 +1152,8 @@ public void testLog() {
 }
 ```
 
-### Advanced Features
-
-#### How Do I Wrap a Synchronous, Blocking Call?
+## Advanced Features
+### How Do I Wrap a Synchronous, Blocking Call?
 
 fromRunnable or fromCallable 로 감싼다.
 
@@ -1177,7 +1170,7 @@ Boolean result = files.blockOptional().orElse(null);
 
 You should use `Schedulers.boundedElastic`, because it creates a dedicated thread to wait for the blocking resource without impacting other non-blocking processing, while also ensuring that there is a limit to the amount of threads that can be created, and blocking tasks that can be enqueued and deferred during a spike.
 
-#### Mutualizing Operator
+### Mutualizing Operator
 
 반복되는 연산을 function<T, V> 으로 묶어서 재사용 할수있으며, 아래의 예제는 동일한 결과가 나온다:
 
@@ -1265,7 +1258,7 @@ public void composeTest() {
 3
 ```
 
-#### Hot/Cold
+### Hot/Cold
 
 - Cold publisher
   - subscriber 가 #subscribe() 할때, 데이터 발행
@@ -1321,8 +1314,7 @@ public void hotPublisherTest() {
 [1]: 3
 ```
 
-#### ConnectableFlux
-
+### ConnectableFlux
 데이터 발행의 단순 lazy-evaluation (deferred) 이 아닌, 특정시점에 트리거 하도록 제어하는 Publisher
 
 >Not only **defer** some processing to the subscription time of one subscriber, but you might actually want for several of them to *rendezvous* and **then** trigger.
@@ -1443,8 +1435,7 @@ will now connect
 [2]: 3
 ```
 
-#### Batches
-
+### Batches
 Flux 에 element 가 많을때 (ex. batch 작업등) 작업을 쪼개서 수행할수 있도록 Partitioning 이 필요하다. Reactor 에서는 3가지 방법을 제공한다.
 
 **Flux<GroupedFlux\<T\>\>**
@@ -1544,8 +1535,7 @@ public void bufferTest() {
 }
 ```
 
-#### ParallelFlux
-
+### ParallelFlux
 Serial 하게 정의된 Publisher 를 parallel - runOn 패턴을 이용해서 병렬처리 할 수 있다. 
 
 - parallel(int)
@@ -1613,8 +1603,7 @@ public void parallelTest() {
 
 element 가 rails (== group) 에 속하면, 해당 군은 동일한 Thread 에서 수행됨이 [보장된다](https://javacan.tistory.com/entry/Reactor-Start-7-Parallel). 다른 rails 의 작업이 먼저 끝났더라도 workSteal 이 발생하지않고, 쓰레드가 할당안된 다른 rail 를 찾아서 처리되기 때문이다.
 
-#### Schedulers
-
+### Schedulers
 Reactor 에서 기본적으로 제공하는 Scheduler 를 customize 하는 방법을 소개한다.
 
 > 내부적으로 병렬처리 되는 operation 을 scheduler 지정없이 사용하면 parallel 스케쥴러로 동작한다.
@@ -1677,8 +1666,7 @@ public void addDecoratorTest() {
 }
 ```
 
-#### [Hooks](https://github.com/reactor/reactor-core/blob/master/reactor-core/src/test/java/reactor/core/publisher/HooksTest.java)
-
+### [Hooks](https://github.com/reactor/reactor-core/blob/master/reactor-core/src/test/java/reactor/core/publisher/HooksTest.java)
 **Dropping Hooks**
 
 onNext or onError 가 누락되었을때 기본동작은 `logLevel.debug` 출력이다.
@@ -1812,8 +1800,7 @@ class ApplicationReadyEventListener implements ApplicationListener<ApplicationRe
 }
 ```
 
-#### Context
-
+### Context
 Using Flux/Mono to handle stream operations, `ThreadLocal` based-data is no longer supported in non-blocking world.
 
 > The execution can also easily and often jump from one thread to another.
@@ -1928,8 +1915,7 @@ public void solvedOfContext() throws InterruptedException {
 }
 ```
 
-#### Clean-Up
-
+### Clean-Up
 **doOnDiscard**
 
 The elements what couldn't pass through next-chain after filter are catched in `doOnDiscard`.

@@ -1,4 +1,4 @@
-## Reactor Operator
+# Reactor Operator
 
 ```
 @author: suktae.choi
@@ -7,9 +7,10 @@
 ```
 
 ## doOn**
+주로 디버깅이나 hooks 이 필요할때 사용합니다
 
 - `doOnSubscribe` 메서드는 구독이 시작 될 트리거 된다. 위 메서드 중 가장 먼저 실행 된다. 파라미터로는 Subscription 가 넘어 온다.
-- doOnRequest` 메서드는 요청 받을 떄 트리거 된다. 기본적으로 파라미터는 Long의 Long.MAX_VALUE 값이 넘어온다.
+- `doOnRequest` 메서드는 요청 받을 떄 트리거 된다. 기본적으로 파라미터는 Long의 Long.MAX_VALUE 값이 넘어온다.
 - `doOnNext`는 성공적으로 데이터가 방출 될 때 트리거 된다. 파라미터로는 해당 T 타입이 넘어 온다.
 - `doOnCancel` 메서드는 구독이 취소 됐을 때 넘어오는 이벤트다 파라미터로는 아무것도 넘어오지 않는다.
 - `doOnTerminate` 메서드는 완료 혹은 에러가 났을 떄 트리거 된다. 이벤트시기는 완료, 에러 이벤트 전에 트리거 된다. 이 역시 파라미터로는 아무것도 넘어오지 않는다.
