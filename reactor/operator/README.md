@@ -2,8 +2,8 @@
 
 ```
 @author: suktae.choi
-- http://wonwoo.ml/index.php/post/2442
 - https://luvstudy.tistory.com/100
+- https://d2.naver.com/helloworld/2771091
 ```
 
 ## doOn**
@@ -20,5 +20,59 @@
 - `doFinally` 에러, 취소, 완료 될 때 트리거 된다. 모노가 종료되면 무슨 일이든 트리거 된다. 파라미터로는 SignalType이 넘어와 종료 이벤트 타입을 받을 수 있다. 자바의 try catch finally의 finally 과 동일한 느낌이다.
 - `doOnEach` 메서드는 데이터를 방출 할 때, 혹은 완료 에러가 발생했을 때의 고급 이벤트다. 파라미터로 Signal 이 넘어온다. 이 신호에는 context 도 포함되어 있다. 주로 모니터링으로 사용한다고 한다. 위의 코드에서는 doOnEach 가 두번 출력된다. 데이터를 방출 할때 한번, 완료 되었을 때 한번.
 
-## [Others](https://luvstudy.tistory.com/100)
+## Create
+- generate
+- create
+- sinks
 
+## Filter
+- filter
+
+```java
+.filter(a -> a % 2 == 0)
+```
+
+- filterWhen
+
+```java
+.filterWhen(a -> Mono.just(a < 10))
+```
+
+## Error
+
+- onErrorReturn
+- onErrorResume
+
+## Transform
+- map
+- flatmap
+
+flatten 의 차이점 존재
+sync/async 차이점 존재 (대신 Scheulder 선언필요)
+
+
+## Merge
+- merge
+  - 여러개의 publisher 의 element 를 emit 순서대로 병합
+
+![merge.png](merge.png)
+
+- concat
+  - 여러개의 publisher 를 병합
+
+![concat.png](concat.png)
+
+- zip
+  - Flux.zip(flux1, flux2)
+- zipWith
+  - flux1.zipWith(flux2) 
+
+> 각 publisher 의 element 가 pair 로 합쳐질때 까지 대기
+
+## Collect
+- collectList
+- collectMap
+
+> blocking operation
+
+## Reduce
