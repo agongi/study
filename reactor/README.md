@@ -73,7 +73,7 @@ public interface Subscription {
 }
 ```
 
-![Screen Shot 2019-02-08 at 02.00.45](Screen%20Shot%202019-02-08%20at%2002.00.45.png)
+![1](1.png)
 
 ### Request/Response
 
@@ -229,7 +229,7 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 [PUB1] filter
 ```
 
-### ![Screen Shot 2019-02-10 at 23.48.55](Screen%20Shot%202019-02-10%20at%2023.48.55.png)
+### ![2](2.png)
 
 ## Sequence
 ### Emission
