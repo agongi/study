@@ -7,7 +7,7 @@
 ```
 
 ### Phases of SQL Query execution
-<img src="images/wiRZS.png" width="100%">
+<img src="1.png" width="100%">
 
 - Compilation phase
   - parse & compile & optimize (execution plan) & cache
@@ -27,7 +27,7 @@
 - We can say that Query stored in cache is Pre-Compiled means already compiled and only placeholders need to be replaced with user data using setter.
 - Now at run-time when user data comes in, Pre-Compiled Query is picked up from Cache and placeholders are replaced with user data. It can **avoid** to calculate ``Compilation phase`` again.
 
-<img src="images/kWnd1.png" width="100%">
+<img src="2.png" width="100%">
 
 #### Additional: How to avoid SQL Injection?
 PreparedStatment is already compiled and stored in cache with unique execution plan. The placeholders are only replaced with input data.

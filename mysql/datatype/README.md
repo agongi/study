@@ -12,9 +12,7 @@ The most common used:
 - tinyint
 - int
 - bigint
-
 - datetime
-
 - varchar
 
 ## char vs varchar
