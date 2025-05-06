@@ -1,4 +1,4 @@
-## ON DUPLICATE KEY UPDATE
+# ON DUPLICATE KEY UPDATE
 
 ```
 @author: suktae.choi

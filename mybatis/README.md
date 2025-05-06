@@ -1,8 +1,8 @@
-## MyBatis
+# MyBatis
 
 ```
 @author: suktae.choi
-- http://www.mybatis.org/mybatis-3/getting-started.html
+- https://mybatis.org/mybatis-3/
 ```
 
 ### Index

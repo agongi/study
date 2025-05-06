@@ -1,11 +1,11 @@
-## Dynamic SQL
+# Dynamic SQL
 
 ```
 @author: suktae.choi
 - http://www.mybatis.org/mybatis-3/dynamic-sql.html
 ```
 
-### \<foreach\>
+## \<foreach\>
 Insert multiple values at once
 
 ```java
@@ -48,7 +48,7 @@ public void insert(List<Item> items) {
 
 > List type will be automatically assigned to map named **list**, Array is as **array**
 
-### \<if test\>
+## \<if test\>
 Use if statement in sql
 
 ```sql
@@ -63,7 +63,7 @@ Use if statement in sql
 </select>
 ```
 
-### \<sql\>
+## \<sql\>
 Refer to table columns
 
 ```sql

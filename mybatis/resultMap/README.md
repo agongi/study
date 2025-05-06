@@ -1,19 +1,15 @@
-## \<resultMap\>
+# \<resultMap\>
 
 ```
 @author: suktae.choi
 - http://www.mybatis.org/mybatis-3/sqlmap-xml.html#Result_Maps
 ```
 
-### Flat Model
+## Flat Model
 Query result binds to resultMap model
 
 ```java
-/**
- * @author suktae.choi
- */
 public class Box {
-
     private Long BoxId;
     private BoxGradeType boxGrade;
     private String name;
@@ -35,14 +31,11 @@ public class Box {
 </resultMap>
 ```
 
-### Subclass Model
+## Subclass Model
 Query result binds to resultMap model that has nested class
-```java
-/**
- * @author suktae.choi
- */
-public class Box {
 
+```java
+public class Box {
     private Long BoxId;
     private BoxGradeType boxGrade;
     private String boxName;
@@ -56,9 +49,11 @@ public class Card {
   private String cardName;
 }
 ```
+
 ```sql
 select box_id, box_grade, card_id, card_type, card_name from {TABLE}
 ```
+
 ```sql
 <resultMap id="BoxResultMap" type="com.model.Box" >
 	<id property="boxId" column="box_id" />

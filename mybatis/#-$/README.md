@@ -1,4 +1,4 @@
-## #{...} vs ${...}
+# #{...} vs ${...}
 
 ```
 @author: suktae.choi
@@ -6,7 +6,7 @@
 - https://github.com/mybatis/mybatis-3/wiki/FAQ#what-is-the-difference-between--and-
 ```
 
-### #{value}
+## #{value}
 ```sql
 SELECT *
 FROM USER
@@ -25,7 +25,7 @@ WHERE
   NAME = "james"
 ```
 
-### ${column}
+## ${column}
 ```sql
 SELECT *
 FROM ${table}
