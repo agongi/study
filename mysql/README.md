@@ -1,5 +1,4 @@
 # MySQL
-
 ```
 @author: suktae.choi
 - https://dev.mysql.com/doc/refman/8.0/en/
@@ -7,7 +6,6 @@
 ```
 
 ### Index
-- [Data Type](datatype)
 - [Optimizer](optimizer)
 - [Execution Plan](execution-plan)
 - [Isolation](isolation)
@@ -18,7 +16,7 @@
 - [Replication](replication)
 - [Prepared statement](prepared-statement)
 - [INSERT INTO SELECT](insert-into-select)
-- [Duplicate Primary Key](duplicate-primary-key)
+- [중복 레코드 관리](duplicated-record)
 
 ### Blog
 - [https://use-the-index-luke.com/sql/preface](https://use-the-index-luke.com/sql/preface)

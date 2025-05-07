@@ -1,5 +1,4 @@
 ## Prepared statement
-
 ```
 @author: suktae.choi
 - http://www.technowlogeek.com/programming/java/jdbc/the-jdbc-preparedstatement-object/

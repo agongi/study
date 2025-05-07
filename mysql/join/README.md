@@ -1,5 +1,4 @@
 # Join
-
 ```
 @author: suktae.choi
 - http://rapapa.net/?p=311
