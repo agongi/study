@@ -1,16 +1,11 @@
 # INSERT INTO SELECT
 ```
-@author: suktae.choi
-- https://www.w3schools.com/sql/sql_insert_into_select.asp
+https://dev.mysql.com/doc/refman/8.4/en/insert-select.html
+https://stackoverflow.com/questions/25969/insert-into-values-select-from
 ```
 
 ```sql
-INSERT INTO
-  table_a (column_a, column_b, column_c)
-SELECT
-  column_a, column_b, column_c
-FROM
-  table_b
-WHERE
-  id = #{id}
+INSERT INTO table1 (col1)
+    SELECT  col1
+    FROM    table2  
 ```

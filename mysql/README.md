@@ -15,7 +15,7 @@
 - [MMM](mmm)
 - [Replication](replication)
 - [Prepared statement](prepared-statement)
-- [INSERT INTO SELECT](insert-into-select)
+- [테이블 복제](insert-into-select)
 - [중복 레코드 관리](duplicated-record)
 
 ### Blog
