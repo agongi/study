@@ -20,7 +20,6 @@ https://12bme.tistory.com/73?category=682920
   - MySQL 서버의 가장 밑단에서 실행 엔진의 요청에 따라 데이터를 디스크로 저장하고 디스크로부터 읽어옵니다. 즉 `실질적인 IO 를 수행합니다.`
 
 ## 결과 분석
-
 각 칼럼의 의미는 [LINK](https://0soo.tistory.com/235) 로 대체합니다.
 
 <img src="2.png">

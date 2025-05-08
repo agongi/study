@@ -9,13 +9,12 @@ https://velog.io/@hyunrrr/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index-%EC%A0%95%EB%B3%B5%EA
 
 인덱스는 수정 (CUD) 성능은 희생하고, 조회 (R) 속도를 높이는 기능입니다.
 
-## 알고리즘
-### B+Tree
+## B+Tree
 B+Tree 는 불균형이 아니라면 대부분의 select 에 비슷한  응답 속도를 보장합니다.
 
 > 즉 Tree depth deeper means 조회속도가 느려짐을 의미합니다. (일반적으로 5-depth 미만 ) 
 
-#### 구조
+## 구조
 <img src="1.png" width="50%">
 
 - secondary index 의 leaf node 는 clustering index 을 가지고 있습니다.
@@ -25,7 +24,7 @@ B+Tree 는 불균형이 아니라면 대부분의 select 에 비슷한  응답 �
 
 - clustering index 의 leaf node 는 실제 row 가 정렬되어 있습니다 (조회시 버퍼를 통해 메모리에 올라감)
 
-#### DML
+## DML
 - 생성
   - leaf node 의 page 사이즈 (16KB) 를 초과하면, 페이지 분할이 발생하고 (상위) branch node 까지 리밸런싱이 발생합니다
   - change buffer 를 통해 지연처리 가능하지만, 중복체크가 필요한 (pk or unique index) 는 즉시 IO 발생합니다
@@ -35,7 +34,7 @@ B+Tree 는 불균형이 아니라면 대부분의 select 에 비슷한  응답 �
 
 <img src="3.png" width="50%">
 
-#### 스캔 방식
+## 스캔 방식
 - index range scan
   - ```sql SELECT * FROM employees WHERE first_name BETWEEN 'Ebbe' AND 'Gad';```
   - 인덱스의 시작 --- 종료까지 `특정 범위`를 traversal 하는 방식입니다
@@ -71,7 +70,7 @@ B+Tree 는 불균형이 아니라면 대부분의 select 에 비슷한  응답 �
 
 <img src="7.png" width="50%">
 
-#### 스캔 방향
+## 스캔 방향
 MySQL 8.x 부터 DESC 인덱스를 지원합니다. (인덱스 자체가 DESC 로 정렬되어 생성되는 방식을 의미)
 
 > 기존에도 DESC 는 문법적으로 허용지만 인덱스 자체는 ASC 로 정렬되고, 반대로 읽는 형식으로 처리했습니다
@@ -82,13 +81,13 @@ MySQL 8.x 부터 DESC 인덱스를 지원합니다. (인덱스 자체가 DESC �
 
 <img src="8.png" width="50%">
 
-#### 사용 방법
+## 사용 방법
 - like 'xyz%' 는 인덱스 사용 (xyz 까지 인덱스를 사용할 수 있음)
   - like '%xyz' 는 앞을 특정할 수 없으므로 불가
 - 다중키 인덱스는 컬럼이 순서대로 정렬되므로 모든 조건에 명시 필요
 - ...
 
-### Hash
+## Hash
 key 를 hashing 해서 그 결과값으로 인덱스를 구성합니다
 - pros
   - 트리의 탐색과정 없이 key -- hashing -- result 로 한번에 결과가 나오므로 단건 조회가 빠릅니다 (depth 가 깊어질 염려가 없음)

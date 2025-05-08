@@ -12,6 +12,7 @@ https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
 - [Locks](locks)
 - [Index](index)
 - [Join](join)
+- [Partitioning](partitioning)
 - [MMM](mmm)
 - [Replication](replication)
 - [Prepared statement](prepared-statement)
@@ -123,7 +124,7 @@ Buffer 를 이용한 조회는 아래의 흐름으로 처리됩니다
 
 - 버퍼검색
   - hash index 검색
-  - B-Tree index 검색
+  - B+Tree index 검색
   - 조회되었다면 MRU 방향으로 승급
 - 디스크 조회후 LRU 에 추가
   - bulk 조회의 경우 Buffer 에는 올라가지만, MRU 로 승격은 되지않음
@@ -149,12 +150,12 @@ Redo 는 주기적인 checkpoint 이벤트가 발행되면 최종적으로 disk 
 이런 상황에서 (undo 로그에서) A 가 보는 TxID 는 오래전 데이터 이므로, old undo 는 정리되지 않습니다.
 
 ## Hash index
-B-Tree 의 탐색 단점을 극복하기 위한 Hash-Table 인덱스 (자주 조회하는 page 의 키값으로 해시 인덱스 생성후 즉시 조회)
+B+Tree 의 탐색 단점을 극복하기 위한 Hash-Table 인덱스 (자주 조회하는 page 의 키값으로 해시 인덱스 생성후 즉시 조회)
 
 - pros
   - 단건 탐색에 특화
 - cons
-  - range scan 불가능 (B-Tree 는 leaf 에서 linked-list 로 스캔가능)
+  - range scan 불가능 (B+Tree 는 leaf 에서 linked-list 로 스캔가능)
   - like, join 에도 적용 어려움
 
 ## Change buffer
