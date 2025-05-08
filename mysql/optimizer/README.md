@@ -1,8 +1,4 @@
 # Optimizer
-```
-
-```
-
 ## [방식](/mysql/execution-plan)
 - rule-based
 - cost-based

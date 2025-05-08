@@ -1,11 +1,9 @@
-## Prepared statement
+# Prepared statement
+```
+https://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or-prevent-sql-injection
 ```
 
-http://www.technowlogeek.com/programming/java/jdbc/the-jdbc-preparedstatement-object/
-http://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or-prevent-sql-injection
-```
-
-### Phases of SQL Query execution
+## Phases of SQL Query execution
 <img src="1.png" width="100%">
 
 - Compilation phase
@@ -13,7 +11,7 @@ http://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or
 - Execution phase
   - execute stored execution plan
 
-#### Behavior of PreparedStatement
+## Behavior of PreparedStatement
 - PreparedStatement are not complete SQL query and contains placeholder, which at run time is replaced by actual user data.
 - Whenever any PreparedStatment containing placeholders is passed in to SQL Server engine, It passes through below phases
   - Parsing and Normalization Phase
@@ -28,12 +26,12 @@ http://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or
 
 <img src="2.png" width="100%">
 
-#### Additional: How to avoid SQL Injection?
+## Additional: How to avoid SQL Injection?
 PreparedStatment is already compiled and stored in cache with unique execution plan. The placeholders are only replaced with input data.
 
 Any input data can't affect SQL statement itself. It is only replaced as input in ``?``.
 
-#### Another solution to avoid SQL injection?
+## Another solution to avoid SQL injection?
 Convert special characters of input to prevent it from affecting SQL statement:
 - / -> %64%
 - & -> %76%

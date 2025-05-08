@@ -1,19 +1,12 @@
 # Join
 ```
-
-http://rapapa.net/?p=311
-http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
-http://www.jidum.com/jidums/view.do?jidumId=167
-http://wiki.gurubee.net/pages/viewpage.action?pageId=26744652
-http://wiki.gurubee.net/pages/viewpage.action?pageId=4948020
+https://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
 ```
 
 <img src="1.png" width="75%">
 
 ## Join Types
-
 ### `Inner Join` (== Join)
-
 **Intersection** of both tables
 
 ```sql
@@ -41,7 +34,6 @@ where demo_people.pid = demo_property.pid;
 ```
 
 ### Left Outer Join (== `Left Join`)
-
 All **left table's row must present** and fill-out with right table's column
 
 ```sql
@@ -62,7 +54,6 @@ from demo_people
 ```
 
 ### Right Outer Join (== `Right Join`)
-
 All **right table's row must present** and fill-out with left table's column
 
 ```sql
@@ -83,7 +74,6 @@ from demo_people
 ```
 
 ### Outer Join (== Left + Right join)
-
 **Combination** of both right and left join
 
 ```sql
@@ -105,7 +95,6 @@ on (demo_people.pid = demo_property.pid);
 ```
 
 ### Cross Join
-
 **Multiply** table A and B. The result set is N * M
 
 **Join key** clauses are **not specified** in cross join
@@ -145,7 +134,6 @@ from demo_people,
 ```
 
 ### Theta Join
-
 조인에 참여하는 두 릴레이션의 속성값을 비교하여 조건을 만족하는 투플만 반환
 
 - exists
@@ -174,7 +162,6 @@ ORDER BY p.id
 ```
 
 ### Semi Join
-
 조인시 두 릴레이션 중 한쪽 릴레이션의 결과만 반환하는 방식
 
 ```
@@ -185,9 +172,7 @@ SQL의 LEFT JOIN은 왼쪽 테이블의 모든 레코드와 오른쪽 테이블�
 ```
 
 ## [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
-
 ### Nested Loops
-
 <img src="3.png" width="75%">
 
 - 선행 테이블 기준으로, 후행 테이블을 랜덤 액세스 하며 조인
@@ -215,7 +200,6 @@ where a.loc = 'NEW YORK'
 ```
 
 ### Sort Merge
-
 <img src="4.png" width="75%">
 
 - 선/후행 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
@@ -242,7 +226,6 @@ where a.deptno = b.deptno
 ```
 
 ### Hash Join
-
 <img src="5.jpg" width="75%">
 
 - 작은 테이블 기준으로, 조인키의 hash bucket 생성
@@ -260,7 +243,6 @@ where a.deptno = b.deptno
 ```
 
 ### Union vs Join
-
 ```sql
 Table1
     (1, 2, 3, 4)
