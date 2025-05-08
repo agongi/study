@@ -1,8 +1,5 @@
-## Pattern/Matcher
+# Pattern/Matcher
 
-```
-@author: suktae.choi
-```
 
 ```java
 /**

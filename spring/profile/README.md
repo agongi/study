@@ -1,7 +1,7 @@
 ## Profile
 
 ```
-@author: suktae.choi                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 ```
 
 Configuration could be loaded in specific `active-profile` by programmatic:

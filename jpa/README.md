@@ -1,20 +1,17 @@
 # JPA
 
 ```
-@author: suktae.choi
-- https://arahansa.github.io/docs_spring/jpa.html
-- https://www.nowwatersblog.com/jpa/ch1
-- https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
+https://arahansa.github.io/docs_spring/jpa.html
+https://www.nowwatersblog.com/jpa/ch1
+https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 ```
 
 ### Index
-
 - [JPQL](jpql)
 - [Spring Data JPA](spring-data-jpa)
 - [Persistence Context](persistence-context)
 
 ### Blog
-
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 - [JPA에서 대량의 데이터를 삭제할때 주의해야할 점](https://jojoldu.tistory.com/235)
 - [JPA N+1 문제 및 해결방안](https://jojoldu.tistory.com/165)
@@ -22,7 +19,6 @@
 - [JPA 프로그래밍 정리](https://github.com/cheese10yun/TIL/blob/master/Spring/jpa/jpa.md)
 
 ### Versions
-
 - JPA https://jakarta.ee/specifications/persistence/
   - JPA 2.0
     - 대부분의 기능은 2.0 에 정의됨
@@ -45,7 +41,6 @@
 ***
 
 ## Persistence Context
-
 entityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아래의 조건을 만족하면 됩니다:
 
 - (신규) new Object(); 를 통해 생성된 자바 객체를 \#save
@@ -62,14 +57,12 @@ EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @Persi
   - 진행중인 transaction 이 있다면 -> tx 에서 사용중인 em 획득
 
 ## 기본키 매핑
-
 - IDENTITY: auto increment 등 처럼 DB 에 위임
 - SEQUENCE: 생성할 시퀀스를 지정 (generator)
 - TABLE: 키 생성 전용 테이블 사용
 - AUTO: dialect 에 따라 hibernate 에서 3가지 방식중 선택
 
 ## 컬럼 매핑
-
 - @Column: 모든 컬럼에 정의 (생략시 묵시적으로 적용되지만, 명시하는게 나음)
 - @Enumerated: ENUM 지정
 - @Temporal: date, time, datetime 지정 (기본값은 datetime 이 모두 표현되는 timestamp)
@@ -80,9 +73,7 @@ EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @Persi
   - getter/setter 통한 접근
 
 ## 연관관계 매핑
-
 ### @OneToMany/@ManyToOne
-
 - @OneToMany(mappedBy = B)
   - 연관관계 대상
   - mappedBy 으로 연관관계 주인 필드명 지정
@@ -106,7 +97,6 @@ private User user;
 ```
 
 ### @OneToOne
-
 - 주 테이블에 F.K 정의
   - proxy 를 통한 lazy-load 가 가능합니다 (F.K is not null 이면 대상이 존재함이 보장되므로 proxy 사용가능 즉 eager 불필요)
     - proxy 가 아직 row 를 조회하진 않았지만 존재유무는 알아야 하므로 (proxy 와 null 은 다르다) 존재유무에 대한 보장이 필요
@@ -129,7 +119,6 @@ private User user;
 ```
 
 ### @ManyToMany
-
 - @JoinTable
   - 연관관계 주인이 @JoinTable 을 명시합니다 (@JoinColumn 과 동일함)
   - 연관관계 대상은 mappedBy 를 명시합니다
@@ -152,9 +141,7 @@ private Set<User> users = new LinkedHashSet<>();
 <img src="1.png" width="75%">
 
 ## 상속관계 매핑
-
 ### @Entity 를 상속하는 방법
-
 - InheritanceType.JOINED
   - 부모테이블이 존재하고, 자식테이블은 JOIN 으로 상속관계를 구현합니다
   - 단순조회시 JOIN 이 발생하고, INSERT 시 2번씩 쿼리가 수행됩니다
@@ -224,7 +211,6 @@ public class Album extends Item {
 ```
 
 ### @MappedSuperClass 를 상속하는 방법
-
 - @MappedSuperClass
   - @AttributeOverride: 상속시 컬럼을 재정의 할때 사용
   - @AssociationOverride: 상속시 연관관계를 재정의 할때 사용
@@ -259,13 +245,11 @@ public class Person extends BaseEntity<String> {
 > @Entity 는 @Entity or @MappedSuperClass 가 선언된 클래스만 상속 할 수 있습니다
 
 ## 복합키 매핑
-
 테이블간의 결합을 막고, 부모 > 자식 > 손자로 이어지는 상속구조에서 식별관계는 P.K 가 길어지는 단점 있어서 `비식별관계`로 Entity 를 구성하는게 권장됩니다.
 
 그리고 복합키 사용시 조회할때 복합키 생성이 필요한 단점이 있어 F.K 는 그대로 유지하고, 별도의 P.K 를 선언해서 사용하는 방식이 좀 더 낫습니다.
 
 ### 식별 vs 비식별 관계
-
 - 식별관계
   - 부모테이블의 기본키를 자식테이블에서 기본키 + 외래키로 사용합니다
 - 비식별관계
@@ -290,7 +274,6 @@ SELECT book.bookId.title FROM Book book;
 @MapsId 및 @JoinColumn 을 같이 선언해서 문법상 가능하지만 항상 N+1 이 발생합니다. 그래서 연관관계의 주인이 F.K 을 가지고 @JoinColumn 해서 lazy 하는 방식이 더 낫습니다
 
 ## 조인테이블 매핑
-
 매핑테이블을 별도로 지정하는 방식입니다. 즉 연관관계를 맺으려면
 
 - 테이블에 F.K 가 있다면 -> @JoinColumn
@@ -308,7 +291,6 @@ private Parent parent;
 ```
 
 ## 여러 테이블 매핑
-
 1개의 Entity 가 여러개의 테이블을 매핑하는 것도 문법적으로 가능합니다. 가능은 하지만 테이블과 엔티티를 일대일로 정의하는게 맞습니다
 
 ```java
@@ -320,7 +302,6 @@ public class Board { ... }
 ```
 
 ## Proxy
-
 <img src="6.png" width="50%">
 
 LAZY 로 설정된 연관관계는 Proxy 를 만들고 실제 객체의 참조를 관리합니다. (즉 실제로 값을 사용하는 시점에 N+1 로 DB 조회)
@@ -346,7 +327,6 @@ public final class Hibernate {
 ```
 
 ### 프록시의 한계
-
 프록시는 null 값을 가질 수 없습니다. 그래서 연관관계 엔티티 (즉 instance) 를 가져올때 3가지 중 1개의 값을 리턴합니다:
 
 - (값이 없는 경우) null
@@ -367,7 +347,6 @@ public final class Hibernate {
     - 즉 실제 instance or proxy 로 감싼 empty.collection 으로 표현
 
 ### EAGER 
-
 엔티티 조회시 join 으로 연관관계를 같이 가져옵니다.
 
 이때 기본적으로 left join 이지만, not null 임을 알려준다면 inner-join 으로 쿼리가 실행됩니다:
@@ -377,19 +356,16 @@ public final class Hibernate {
   - 관계의 매핑이 not null 이다. 라고 표현하므로 좀더 객체지향적인 접근 (column not null 은 DB 적인 관점)
 
 ### LAZY
-
 엔티티 조회시 연관관계를 같이 가져오지 않고 Proxy 로 대체합니다. (그후 실제로 데이트를 사용하는 시점에 N+1 발생)
 
 기본적으로 모든 매핑은 LAZY 로 설정하고 필요시 JPQL (querydsl or jooq) 로 FetchJoin 하는 방식이 낫습니다
 
 ### CASCADE
-
 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속 상태로 만들수 있습니다.
 
 > 영속성 전이를 사용하면 부모 엔티티를 저장할 때 자식 엔티티도 함께 저장
 
 ### Orphan Removal
-
 부모에서 자식의 참조 제거시 자식 엔티티가 삭제되도록 설정 할 수 있습니다.
 
 ```java
@@ -412,11 +388,9 @@ public class Parent {
 ```
 
 ### DDD (CASCADE + Orphan Removal)
-
 Aggregate Root 에서 연관관계를 관리할때 CASCARD, OrphanRemoval 을 모두 사용해서 관리할면 편리합니다
 
 ## 데이터 타입
-
 ### @Embedded/@Embeddable
 
 새로운 유형의 (값) 클래스를 직접 정의해서 사용 가능합니다:
@@ -443,7 +417,6 @@ public class Address {
 ```
 
 ### @ElementCollection/@CollectionTable
-
 <img src="7.png" width="75%">
 
 값 클래스를 Collection 으로 정의 가능합니다:

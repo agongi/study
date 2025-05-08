@@ -8,11 +8,11 @@ TCP provides an effective abstraction of a reliable network running over an unre
 > TCP guarantee packet is transferred and arrive in the same order to the client with following technics.
 
 ```
-@author: suktae.choi
-- http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
-- https://en.wikipedia.org/wiki/Transmission_Control_Protocol
-- http://tech.kakao.com/2016/04/21/closewait-timewait/
-- http://d2.naver.com/helloworld/47667
+
+http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
+https://en.wikipedia.org/wiki/Transmission_Control_Protocol
+http://tech.kakao.com/2016/04/21/closewait-timewait/
+http://d2.naver.com/helloworld/47667
 ```
 
 #### Index

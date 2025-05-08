@@ -1,8 +1,8 @@
 # Transactions
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/core/write-operations-atomicity/
+
+https://docs.mongodb.com/manual/core/write-operations-atomicity/
 ```
 
 몽고의 기본적으로 `document 단위의 atomic` 을 보장한다.

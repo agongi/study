@@ -1,8 +1,8 @@
 ## Queue
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
+
+https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
 ```
 
 ### Queue Implementations

@@ -1,10 +1,10 @@
 ## AOP Proxy
 
 ```
-@author: suktae.choi
-- https://gmoon92.github.io/spring/aop/2019/04/20/jdk-dynamic-proxy-and-cglib.html
-- https://www.baeldung.com/cglib
-- https://www.baeldung.com/java-dynamic-proxies
+
+https://gmoon92.github.io/spring/aop/2019/04/20/jdk-dynamic-proxy-and-cglib.html
+https://www.baeldung.com/cglib
+https://www.baeldung.com/java-dynamic-proxies
 ```
 
 ### 구현체 종류
@@ -60,7 +60,7 @@ String res = proxy.sayHello("anyValue");
 assertEquals("foo, bar", res);
 ```
 
-> spring 4.0 부터 AOP 기본구현체가 JDK -> CGLib 로 변경됨 - https://github.com/spring-projects/spring-boot/issues/8434
+> spring 4.0 부터 AOP 기본구현체가 JDK -> CGLib 로 변경됨 https://github.com/spring-projects/spring-boot/issues/8434
 
 **AspectJ**
 

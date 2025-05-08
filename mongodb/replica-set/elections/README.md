@@ -1,8 +1,8 @@
 # Elections
 
 ```
-@author: suktae.choi
-- https://atharva-inamdar.medium.com/understanding-mongodb-oplog-249f3996f528
+
+https://atharva-inamdar.medium.com/understanding-mongodb-oplog-249f3996f528
 ```
 
 mongo 에서의 리더선출은 `raft protocol` 을 통해 수행합니다. 즉 기본적인 동작원리는 동일합니다.

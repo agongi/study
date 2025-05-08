@@ -1,8 +1,8 @@
 # CRUD
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/crud/
+
+https://docs.mongodb.com/manual/crud/
 ```
 
 ## Insert

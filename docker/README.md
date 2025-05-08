@@ -1,10 +1,10 @@
 # Docker
 
 ```
-@author: suktae.choi
-- https://docs.docker.com/reference/
-- https://www.pyrasis.com/archive.html
-- https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose
+
+https://docs.docker.com/reference/
+https://www.pyrasis.com/archive.html
+https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose
 ```
 
 ### Index
@@ -82,14 +82,14 @@ $ docker run -it --rm -d -p 80:80 -p 443:443 nginx:20200320_145400
 
 더 자세한 CLI 명령어 및 Dockerfile 작성 가이드는 아래 링크 참조
 
-- https://docs.docker.com/engine/reference/commandline/cli/
-- https://docs.docker.com/engine/reference/builder/
+https://docs.docker.com/engine/reference/commandline/cli/
+https://docs.docker.com/engine/reference/builder/
 
 ## Advanced
 
 레퍼런스에 있는 Best Practices 중에서 도움될만한 내용을 정리합니다.
 
-- https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
 ### Dockerfile vs docker-compose.yml
 

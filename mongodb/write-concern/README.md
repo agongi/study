@@ -1,9 +1,9 @@
 # Write Concern
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/reference/write-concern/
-- https://www.mongodb.com/docs/manual/core/journaling
+
+https://docs.mongodb.com/manual/reference/write-concern/
+https://www.mongodb.com/docs/manual/core/journaling
 ```
 
 <img src="1.png" width="50%">

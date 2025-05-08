@@ -1,9 +1,9 @@
 ## /* vs /
 
 ```
-@author: suktae.choi
-- http://lng1982.tistory.com/97
-- https://okky.kr/article/145481
+
+http://lng1982.tistory.com/97
+https://okky.kr/article/145481
 ```
 
 #### Spec

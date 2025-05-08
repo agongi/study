@@ -1,8 +1,8 @@
 ## Closure
 
 ```
-@author: suktae.choi
-- http://d2.naver.com/helloworld/4911107
+
+http://d2.naver.com/helloworld/4911107
 ```
 
 ### Terms

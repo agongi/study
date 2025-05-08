@@ -1,8 +1,8 @@
 # Locks
 ```
-@author: suktae.choi
-- https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html
-- https://suhwan.dev/2019/06/09/transaction-isolation-level-and-lock/
+
+https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html
+https://suhwan.dev/2019/06/09/transaction-isolation-level-and-lock/
 ```
 
 ### Blog

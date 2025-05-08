@@ -1,9 +1,9 @@
 # Reactor Operator
 
 ```
-@author: suktae.choi
-- https://luvstudy.tistory.com/100
-- https://d2.naver.com/helloworld/2771091
+
+https://luvstudy.tistory.com/100
+https://d2.naver.com/helloworld/2771091
 ```
 
 ## doOn**

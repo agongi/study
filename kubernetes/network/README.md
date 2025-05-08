@@ -1,8 +1,8 @@
 # Network
 
 ```
-@author: suktae.choi
-- https://yozm.wishket.com/magazine/detail/2251/
+
+https://yozm.wishket.com/magazine/detail/2251/
 ```
 
 ### Blog

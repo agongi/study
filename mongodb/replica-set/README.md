@@ -1,8 +1,8 @@
 # ReplicaSet
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/replication/
+
+https://docs.mongodb.com/manual/replication/
 ```
 
 ### Index

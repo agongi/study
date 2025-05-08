@@ -1,8 +1,8 @@
 ## @EventListener - ApplicationListener
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/spring-events
+
+https://www.baeldung.com/spring-events
 ```
 
 ## Event

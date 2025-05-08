@@ -1,16 +1,16 @@
 ## JDK 11
 
 ```
-@author: suktae.choi
-- https://futurecreator.github.io/2018/09/29/java-11-released/
-- https://meetup.toast.com/posts/171
-- https://mkyong.com/java/java-11-nest-based-access-control/
-- https://www.baeldung.com/java-nest-based-access-control
-- https://www.baeldung.com/java-reflection-change-annotation-params
-- https://www.baeldung.com/jvm-epsilon-gc-garbage-collector
+
+https://futurecreator.github.io/2018/09/29/java-11-released/
+https://meetup.toast.com/posts/171
+https://mkyong.com/java/java-11-nest-based-access-control/
+https://www.baeldung.com/java-nest-based-access-control
+https://www.baeldung.com/java-reflection-change-annotation-params
+https://www.baeldung.com/jvm-epsilon-gc-garbage-collector
 ```
 
-JDK 11 - http://openjdk.java.net/projects/jdk/11/
+JDK 11 http://openjdk.java.net/projects/jdk/11/
 
 ***
 
@@ -268,7 +268,7 @@ Garbage 를 수집하지않는 No-Op GC 를 사용가능
 
 Unicode API [10.0.0 스펙](http://www.unicode.org/standard/standard.html) 적용
 
-- http://unicode.org/versions/Unicode10.0.0/
+http://unicode.org/versions/Unicode10.0.0/
 
 ### [Flight Recorder](http://openjdk.java.net/jeps/328)
 

@@ -1,9 +1,8 @@
 # HPA (Horizontal Pod Autoscaler)
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale/
-- https://github.com/kubernetes-sigs/metrics-server
+https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale/
+https://github.com/kubernetes-sigs/metrics-server
 ```
 
 <img src="1.png" width="50%">

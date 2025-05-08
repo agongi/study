@@ -1,9 +1,9 @@
 ## BeanPostProcessor vs BeanFactoryPostProcessor
 
 ```
-@author: suktae.choi
-- https://www.mkyong.com/java/java-custom-annotations-example/
-- http://wonwoo.ml/index.php/post/899
+
+https://www.mkyong.com/java/java-custom-annotations-example/
+http://wonwoo.ml/index.php/post/899
 ```
 
 ## BeanPostProcessor

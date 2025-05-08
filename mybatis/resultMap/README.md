@@ -1,8 +1,8 @@
 # \<resultMap\>
 
 ```
-@author: suktae.choi
-- http://www.mybatis.org/mybatis-3/sqlmap-xml.html#Result_Maps
+
+http://www.mybatis.org/mybatis-3/sqlmap-xml.html#Result_Maps
 ```
 
 ## Flat Model

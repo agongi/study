@@ -1,8 +1,8 @@
 # Zone Sharding
 
 ```
-@author: suktae.choi
-- https://www.mongodb.com/docs/manual/core/zone-sharding/
+
+https://www.mongodb.com/docs/manual/core/zone-sharding/
 ```
 
 <img src="1.png" width="50%">

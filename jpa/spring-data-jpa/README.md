@@ -1,11 +1,10 @@
 # Spring Data JPA
 
 ```
-@author: suktae.choi
+https://docs.spring.io/spring-data/jpa/reference/index.html
 ```
 
 ## CUD
-
 ```java
 @Query("UPDATE ABC_MEMBER SET MBR_STAT_TP = 'USED' WHERE MBR_NO = :id", nativeQuery = true)
 @Modifying(clearAutomatically = true, flushAutomatically = true)
@@ -19,7 +18,6 @@ public Long update(Long id);
   - clearAutomatically: JPQL (or SQL) 실행후 영속성 clear 유무
 
 ## SELECT
-
 ```java
 @Lock(LockModeType.PESSIMISTIC_WRITE)
 @Query("SELECT m.id FROM Member m WHERE m.id = :id")
@@ -32,7 +30,6 @@ public Long findById(Long id);
 ```
 
 ### @Lock
-
 - (낙관적락) **NONE**
   - (@Version 사용시 기본적으로 적용되므로 명시하지 않아도 됨) 엔티티 수정시 버전을 체크합니다
   - (동작) 트랜잭션 커밋시 버전정보를 SELECT 해서 영속성의 버전과 일치함을 확인
@@ -51,7 +48,6 @@ public Long findById(Long id);
   - (동작) select .. for update + version++
 
 ### QueryHint
-
 @Lock 사용시 timeout 을 지정해야 합니다. (select .. for share/update `nowait` 처럼 nowait 쿼리가 아니므로 무한히 대기함)
 
 - @QueryHint(name = "javax.persistence.lock.timeout", value = "5000")

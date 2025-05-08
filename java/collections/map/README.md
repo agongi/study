@@ -1,12 +1,12 @@
 ## Map
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/tutorial/collections/implementations/map.html
-- http://stackoverflow.com/questions/40471/differences-between-hashmap-and-hashtable
-- http://javarevisited.blogspot.kr/2015/08/difference-between-HashMap-vs-TreeMap-vs-LinkedHashMap-Java.html
-- http://javarevisited.blogspot.kr/2013/01/difference-between-identityhashmap-and-hashmap-java.html
-- http://javarevisited.blogspot.kr/2016/08/how-to-iterate-through-ConcurrentHashMap-print-all-keys-values-java.html
+
+https://docs.oracle.com/javase/tutorial/collections/implementations/map.html
+http://stackoverflow.com/questions/40471/differences-between-hashmap-and-hashtable
+http://javarevisited.blogspot.kr/2015/08/difference-between-HashMap-vs-TreeMap-vs-LinkedHashMap-Java.html
+http://javarevisited.blogspot.kr/2013/01/difference-between-identityhashmap-and-hashmap-java.html
+http://javarevisited.blogspot.kr/2016/08/how-to-iterate-through-ConcurrentHashMap-print-all-keys-values-java.html
 ```
 
 ### Map Implementations

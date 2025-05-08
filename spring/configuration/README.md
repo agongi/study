@@ -1,8 +1,8 @@
 ## @Configuration
 
 ```
-@author: suktae.choi
-- http://haviyj.tistory.com/33
+
+http://haviyj.tistory.com/33
 ```
 
 #### Index

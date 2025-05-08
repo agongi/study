@@ -1,8 +1,7 @@
-## Closure
+# Closure
 
 ```
-@author: suktae.choi
-- https://medium.com/sjk5766/lexical-scope-closure-%EC%A0%95%EB%A6%AC-41f5d1c928e4
+https://medium.com/sjk5766/lexical-scope-closure-%EC%A0%95%EB%A6%AC-41f5d1c928e4
 ```
 
 ## Lexical scope

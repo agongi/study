@@ -1,7 +1,7 @@
 ## JUnit
 
 ```
-@author: suktae.choi
+
 ```
 
 ### Intro

@@ -1,8 +1,8 @@
 ## Prepared statement
 ```
-@author: suktae.choi
-- http://www.technowlogeek.com/programming/java/jdbc/the-jdbc-preparedstatement-object/
-- http://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or-prevent-sql-injection
+
+http://www.technowlogeek.com/programming/java/jdbc/the-jdbc-preparedstatement-object/
+http://stackoverflow.com/questions/1582161/how-does-a-preparedstatement-avoid-or-prevent-sql-injection
 ```
 
 ### Phases of SQL Query execution

@@ -1,6 +1,6 @@
 # Optimizer
 ```
-@author: suktae.choi
+
 ```
 
 ## [방식](/mysql/execution-plan)

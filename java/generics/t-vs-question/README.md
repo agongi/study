@@ -1,8 +1,8 @@
 ## \<T\> vs \<?\>
 
 ```
-@author: suktae.choi
-- https://itexpertsconsultant.wordpress.com/2016/04/24/difference-between-list-liste-listobject-and-list-in-java/
+
+https://itexpertsconsultant.wordpress.com/2016/04/24/difference-between-list-liste-listobject-and-list-in-java/
 ```
 
 ### [\<T> vs \<?>](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)

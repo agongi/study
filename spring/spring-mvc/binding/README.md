@@ -1,10 +1,10 @@
 ## Binding & Validation
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/spring-mvc-custom-property-editor
-- https://blog.outsider.ne.kr/825
-- https://engkimbs.tistory.com/738
+
+https://www.baeldung.com/spring-mvc-custom-property-editor
+https://blog.outsider.ne.kr/825
+https://engkimbs.tistory.com/738
 ```
 
 ### Cores

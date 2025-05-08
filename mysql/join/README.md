@@ -1,11 +1,11 @@
 # Join
 ```
-@author: suktae.choi
-- http://rapapa.net/?p=311
-- http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
-- http://www.jidum.com/jidums/view.do?jidumId=167
-- http://wiki.gurubee.net/pages/viewpage.action?pageId=26744652
-- http://wiki.gurubee.net/pages/viewpage.action?pageId=4948020
+
+http://rapapa.net/?p=311
+http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
+http://www.jidum.com/jidums/view.do?jidumId=167
+http://wiki.gurubee.net/pages/viewpage.action?pageId=26744652
+http://wiki.gurubee.net/pages/viewpage.action?pageId=4948020
 ```
 
 <img src="1.png" width="75%">

@@ -1,8 +1,8 @@
 ## TLS
 
 ```
-@author: suktae.choi
-- https://tools.ietf.org/html/draft-ietf-tls-tls13-28
+
+https://tools.ietf.org/html/draft-ietf-tls-tls13-28
 ```
 
 #### Index

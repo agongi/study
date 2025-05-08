@@ -4,10 +4,10 @@ TCP guarantees in-order delivery, retransmission, flow-control and congestion co
 > All subsequent packages are held in receiver's side until the lost package is retransmitted and arrives at the receiver.
 
 ```
-@author: suktae.choi
-- https://en.wikipedia.org/wiki/Head-of-line_blocking
-- http://www.netmanias.com/ko/post/qna/2607
-- https://hpbn.co/building-blocks-of-tcp/
+
+https://en.wikipedia.org/wiki/Head-of-line_blocking
+http://www.netmanias.com/ko/post/qna/2607
+https://hpbn.co/building-blocks-of-tcp/
 ```
 
 TCP provides the abstraction of a reliable network running over an unreliable channel, which includes basic packet **error checking and correction**, **in-order delivery**, **retransmission** of lost packets, as well as flow control, congestion control, and congestion avoidance designed to operate the network at the point of greatest efficiency. Combined, these features make TCP the preferred transport for most applications.

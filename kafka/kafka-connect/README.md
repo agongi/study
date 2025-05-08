@@ -1,9 +1,8 @@
 # Kafka Connect
 
 ```
-@author: suktae.choi
-- https://docs.confluent.io/current/connect/concepts.html
-- https://medium.com/clay-one/kafka-connect-cluster-an-introduction-26522e72a9af
+https://docs.confluent.io/current/connect/concepts.html
+https://medium.com/clay-one/kafka-connect-cluster-an-introduction-26522e72a9af
 ```
 
 <img src="1.png" width="75%">
@@ -62,7 +61,7 @@ source or sink 에 연결 및 작업을 정의합니다. mysql-source-connector,
   }
 }
 
-curl -XPOST -d @- http://localhost:8083/connectors --header "content-Type:application/json"
+curl -XPOST -d @http://localhost:8083/connectors --header "content-Type:application/json"
 ```
 
 ### Task

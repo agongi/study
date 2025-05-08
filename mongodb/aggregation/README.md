@@ -1,9 +1,9 @@
 # Aggregation
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/aggregation/
-- https://www.practical-mongodb-aggregations.com/guides/sharding.html
+
+https://docs.mongodb.com/manual/aggregation/
+https://www.practical-mongodb-aggregations.com/guides/sharding.html
 ```
 
 <img src="1.png" width="50%">

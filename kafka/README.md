@@ -1,18 +1,16 @@
 # Kafka
 
 ```
-@author: suktae.choi
-- https://kafka.apache.org/documentation
-- https://docs.confluent.io/kafka/introduction.html
-- https://www.conduktor.io/kafka/
-- https://velog.io/@hyun6ik/series/Apache-Kafka
-- https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
-- https://www.popit.kr/author/peter5236
-- https://bysssss.tistory.com/46
+https://kafka.apache.org/documentation
+https://docs.confluent.io/kafka/introduction.html
+https://www.conduktor.io/kafka/
+https://velog.io/@hyun6ik/series/Apache-Kafka
+https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
+https://www.popit.kr/author/peter5236
+https://bysssss.tistory.com/46
 ```
 
 ### Index
-
 - [Kafka Stream](kafka-stream)
 - [Kafka Connect](kafka-connect)
 - [MirrorMaker 2.0](mm2)
@@ -20,14 +18,12 @@
 - [Transactions](transactions)
 
 ### Blog
-
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
 - [Schema Registry](https://medium.com/@gaemi/kafka-%EC%99%80-confluent-schema-registry-%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%8A%A4%ED%82%A4%EB%A7%88-%EA%B4%80%EB%A6%AC-1-cdf8c99d2c5c)
 
 ***
 
 ## 기본 개념
-
 ### Topic/Partition
 
 1개의 토픽은 N 개의 파티션으로 분산되어 저장됩니다.
@@ -39,7 +35,6 @@
 <img src='1.png' width='75%'>
 
 ### Page cache
-
 카프카는 모든 IO 에 OS 레벨의 page cache 를 활용합니다. (별도로 카프카 내부에서의 캐싱 없음)
 
 <img src='1-1.png' width='75%'>
@@ -52,7 +47,6 @@ https://docs.confluent.io/platform/current/kafka/deployment.html#memory 의 가�
 해야합니다.
 
 ### Zero copy (== Direct memory or DMA)
-
 page cache 를 통해 memory 에 있는 record 는
 
 - producer -- broker
@@ -61,7 +55,6 @@ page cache 를 통해 memory 에 있는 record 는
 간의 통신에서 zero-copy 를 통해 수신/전송 됩니다. 이를 통해 JVM heap 의 사용률을 줄일 수 있고 불필요한 복사비용이 감소합니다.
 
 ### Segment (== file)
-
 브로커에 저장되는 레코드의 (물리적인) 로그파일 입니다.
 
 - 브로커는 파티션의 모든 세그먼트에 대해 각각 하나의 열린 파일 핸들러를 유지 합니다
@@ -78,7 +71,6 @@ $ sysctl -p
 ```
 
 ### Log Retention
-
 Record 를 저장하는 파일의 보관주기는 아래와 같습니다:
 
 - 시간: 특정시간이 지난 파일 삭제 (default. 7-days)
@@ -86,7 +78,6 @@ Record 를 저장하는 파일의 보관주기는 아래와 같습니다:
 - 주기: retention 체크 주기 (default. 5-mins)
 
 ### Log Compaction
-
 Log compaction ensures that Apache Kafka will always `retain at least the last known value` for `each message key` within the log of data for a `single topic partition`.
 
 <img src='1-1.png' width='75%'>
@@ -101,9 +92,7 @@ log.cleanup.policy=compact
 ```
 
 ## Broker
-
 ### [Replication](https://docs.confluent.io/kafka/design/replication.html)
-
 카프카는 파티션 리더가 모든 CRUD 를 담당하므로, 팔로어는 주기적으로 segment 을 fetch 해서 replication 을 수행합니다.
 
 <img src='2-1.png' width='75%'>
@@ -128,7 +117,6 @@ log.cleanup.policy=compact
   - 전파된 정보는 producer/consumer 도 갱신받습니다
 
 ### Controller
-
 [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 <img src='2.png' width='75%'>
@@ -142,7 +130,6 @@ log.cleanup.policy=compact
   - controller broker 는 나머지 broker 에 전파합니다 (각 broker 에서 local-cache 로 metadata 를 저장하고있음)
 
 ### Coordinator
-
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 - 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `컨슈머 선정` -> 리밸런싱
@@ -157,11 +144,9 @@ log.cleanup.policy=compact
 producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper 를 통해 파티션정보 metadata 를 받음) consumer 도 consumer-group 에서의 partition 할당은 consumer-leader 가 연산한후 통보 > ACKS 받습니다. (브로커 부담을 줄이기 위함)
 
 ## Producer
-
 메세지를 전송하는 단위 입니다.
 
 ### 구성요소
-
 <img src='3.png' width='75%'>
 
 - kafkaProducer
@@ -175,7 +160,6 @@ producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper
   - (비동기) Accumulator 에 저장된 record 를 broker 에 전송합니다
 
 ### 옵션
-
 <img src='3-1.png' width='75%'>
 
 - acks
@@ -193,7 +177,6 @@ producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper
   - batch 에서 message 를 보내기까지의 size, timeout
 
 ### 전송방식
-
 - at-least once
   - acks 를 기다리고 실패시 재전송
 - at-mose once
@@ -203,25 +186,21 @@ producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper
   - `enable.idempotence=true`
 
 ### Acks
-
 acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
 
 <img src='3-2.png' width='75%'>
 
 ### Delivery timeout
-
 max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다 
 
 <img src='3-3.png' width='75%'>
 
 ### 순서보장  
-
 `max.in.flight.requests.per.connection (default: 5)` 의 설정에 따라 batch 로 보내진 메세지중 1개가 실패한 경우 retry 하지만 그로인해 메세지의 순서가 변경 될 수 있습니다.
 
 `enable.idempotence=true` 로 설정한경우 batch 단위로 성공/실패 처리하므로 순서 보장이 가능합니다
 
 ## Consumer
-
 메세지를 수신하는 단위 입니다.
 
 ### 구성요소
@@ -229,7 +208,6 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 <img src='4.png' width='75%'>
 
 ### 옵션
-
 - group.id
   - consumer group 의 식별자 입니다. 동일 그룹내의 정보는 공유됩니다
 - enable.auto.commit
@@ -239,22 +217,18 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
   - read_committed 은 (producer 에서) 트랜잭션 commit 된 메세지만 가져갑니다
 
 ### Consumer Group
-
 - consumer 는 특정 consumer-group 에 속하고 그룹은 group-id 로 구분됩니다
 - 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer_offsets` 토픽으로 관리합니다.
 - 그룹에 consumer 추가/삭제시 리밸런싱이 발생하고 그 동안은 STW 입니다
 
 ## Advanced
-
 ### ACID
-
 - producer: replication.factor (즉 ISR) 을 만족하면 그것을 commit 으로 간주합니다
   - transaction 을 사용한다면 -> commit record 를 명시적으로 한번 더 보내는 과정이 추가
 - consumer: polling 시 커밋된 메세지만 가져옵니다 (== 모든 ISR 에 동기화된 record)
   - transaction 을 사용한다면 -> commit 마킹된 record 만 pull
 
 ## 가용성 vs 내구성
-
 `unclean.leader.election.enable` 옵션을 통해 결정됩니다.
 
 - false: ISR 에서만 leader 를 선출합니다

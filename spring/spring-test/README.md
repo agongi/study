@@ -1,7 +1,7 @@
 # Spring Test
 
 ```
-@author: suktae.choi
+
 ```
 
 ### Index

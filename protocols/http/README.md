@@ -1,16 +1,16 @@
 ## HTTP
 
 ```
-@author: suktae.choi
-- http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
-- http://stackoverflow.com/questions/246859/http-1-0-vs-1-1
-- https://libosong.appspot.com/spdy/index.html
-- https://http2.github.io/faq
-- https://en.wikipedia.org/wiki/Head-of-line_blocking
-- https://www.nginx.com/blog/http-keepalives-and-web-performance/
-- http://d2.naver.com/helloworld/140351
-- https://developers.google.com/web/fundamentals/performance/http2/#design_and_technical_goals
-- https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
+
+http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
+http://stackoverflow.com/questions/246859/http-1-0-vs-1-1
+https://libosong.appspot.com/spdy/index.html
+https://http2.github.io/faq
+https://en.wikipedia.org/wiki/Head-of-line_blocking
+https://www.nginx.com/blog/http-keepalives-and-web-performance/
+http://d2.naver.com/helloworld/140351
+https://developers.google.com/web/fundamentals/performance/http2/#design_and_technical_goals
+https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
 ```
 
 #### Index

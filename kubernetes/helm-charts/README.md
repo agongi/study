@@ -1,10 +1,9 @@
 # Helm Charts
 
 ```
-@author: suktae.choi
-- https://helm.sh/docs/intro/quickstart/
-- https://cloud.ibm.com/docs/containers?topic=containers-helm&locale=ko
-- https://www.slideshare.net/skanddh/kubernetes-helm
+https://helm.sh/docs/intro/quickstart/
+https://cloud.ibm.com/docs/containers?topic=containers-helm&locale=ko
+https://www.slideshare.net/skanddh/kubernetes-helm
 ```
 
 **The package manager for Kubernetes.**

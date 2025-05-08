@@ -1,8 +1,8 @@
 ## Invariant vs Covariant
 
 ```
-@author: suktae.choi
-- https://jackjeong.tistory.com/54?category=802500
+
+https://jackjeong.tistory.com/54?category=802500
 ```
 
 ### Covariant

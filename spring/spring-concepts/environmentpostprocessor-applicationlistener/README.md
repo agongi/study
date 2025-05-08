@@ -1,8 +1,8 @@
 ## EnvironmentPostProcessor vs ApplicationListener\<ApplicationEnvironmentPreparedEvents\>
 
 ```
-@author: suktae.choi
-- https://blog.kingbbode.com/39
+
+https://blog.kingbbode.com/39
 ```
 
 결론적으로 보면, 결정때 필요한 기준 중에서

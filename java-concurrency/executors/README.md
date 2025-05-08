@@ -1,17 +1,16 @@
-## Thread Pool
+# Thread Pool
 
 ```
-@author: suktae.choi
-- https://stackoverflow.com/questions/9276807/whats-the-advantage-of-a-java-5-threadpoolexecutor-over-a-java-7-forkjoinpool
+https://stackoverflow.com/questions/9276807/whats-the-advantage-of-a-java-5-threadpoolexecutor-over-a-java-7-forkjoinpool
 ```
 
-#### Index
-
+### Index
 - [ForkJoin vs Executor](forkjoin-executor)
 
-### ExecutorService
+***
 
-#### Executors.newFixedThreadPool()
+## ExecutorService
+### Executors.newFixedThreadPool()
 - Thread count - fixed
 - Thread lifetime - 0 (infinite)
 - Queue size - unlimited
@@ -24,7 +23,7 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
 }
 ```
 
-#### Executors.newSingleThreadPool()
+### Executors.newSingleThreadPool()
 - Thread count - 1
 - Thread lifetime - 0 (infinite)
 - Queue size - unlimited
@@ -37,7 +36,7 @@ public static ExecutorService newFixedThreadPool() {
 }
 ```
 
-#### Executors.newCachedThreadPool()
+### Executors.newCachedThreadPool()
 - Thread count - unlimited
 - Thread lifetime - 60s
 - Queue size - 0 (hand-off)
@@ -50,7 +49,7 @@ public static ExecutorService newCachedThreadPool() {
 }
 ```
 
-#### Executors.newWorkStealingPool()
+### Executors.newWorkStealingPool()
 - Thread count - upon processors count
 - Queue size -  64M (static final int MAXIMUM_QUEUE_CAPACITY = 1 << 26)
 
@@ -63,8 +62,7 @@ public static ExecutorService newWorkStealingPool() {
 }
 ```
 
-### ThreadPoolExecutor
-
+## ThreadPoolExecutor
 <img src="images/Screen Shot 2019-06-27 at 01.48.23.png" width=50%>
 
 제공되는 ExecutorService 를 상속하고, pool 생성시 customize 가능하다. 추가로 제공되는 기능도 있다:
@@ -86,8 +84,7 @@ public class PausableThreadPoolExecutor extends ThreadPoolExecutor {
 }
 ```
 
-### ScheduledThreadPoolExecutor
-
+## ScheduledThreadPoolExecutor
 ```java
 public class SchedulerConfiguration {
   // threadCount: 1

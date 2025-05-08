@@ -1,17 +1,17 @@
 ## Properties
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
-- https://www.mkyong.com/java/java-properties-file-examples/
-- https://blog.outsider.ne.kr/794
+
+https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+https://www.mkyong.com/java/java-properties-file-examples/
+https://blog.outsider.ne.kr/794
 ```
 
 ## Resource
 
 Resource is a physical file that stores key=pair values. Spring provides abstraction interface for better accessing as following:
 
-- UrlResource - http:
+- UrlResource http:
 - ClassPathResource - classpath:
 - FileSystemResource - file:
 - ServletContextResource

@@ -1,9 +1,9 @@
 # Service
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/concepts/services-networking/service/
-- https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+https://kubernetes.io/docs/concepts/services-networking/service/
+https://kubernetes.io/docs/concepts/services-networking/ingress/
 ```
 
 Service 는 Pod 으로 접근하는 정책을 정의하는 추상화 된 개념입니다. (ip:port 할당됨)

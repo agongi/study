@@ -1,7 +1,7 @@
 ## TypeScript
 
 ```
-@author: suktae.choi
+
 - (import, export) https://medium.com/@_diana_lee/default-export%EC%99%80-named-export-%EC%B0%A8%EC%9D%B4%EC%A0%90-38fa5d7f57d4
 ```
 

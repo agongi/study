@@ -1,9 +1,9 @@
 ## COPY VS ADD
 
 ```
-@author: suktae.choi
-- https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/10
-- https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/09
+
+https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/10
+https://pyrasis.com/jHLsAlwaysUpToDateDocker/Unit07/09
 ```
 
 ### COPY

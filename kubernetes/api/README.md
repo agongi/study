@@ -1,9 +1,8 @@
 # API
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/concepts/workloads/pods/downward-api
-- https://coffeewhale.com/apiserver
+https://kubernetes.io/docs/concepts/workloads/pods/downward-api
+https://coffeewhale.com/apiserver
 ```
 
 ## Downward API

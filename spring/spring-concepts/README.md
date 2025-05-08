@@ -1,7 +1,7 @@
 ## Spring Common
 
 ```
-@author: suktae.choi
+
 ```
 
 #### Index

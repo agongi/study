@@ -2,12 +2,12 @@
 It is a `{key - value}` data structure which insert and/or select values based on **hashCode of key**
 
 ```
-@author: suktae.choi
-- https://en.wikipedia.org/wiki/Hash_table
-- http://d2.naver.com/helloworld/831311
-- http://bcho.tistory.com/1072
-- http://starplatina.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%BB%AC%EB%A0%89%EC%85%98-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%9D%B8%ED%84%B0%EB%B7%B0-%EC%A7%88%EB%AC%B8-40%EA%B0%9C
-- http://egloos.zum.com/iilii/v/4457500
+
+https://en.wikipedia.org/wiki/Hash_table
+http://d2.naver.com/helloworld/831311
+http://bcho.tistory.com/1072
+http://starplatina.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%BB%AC%EB%A0%89%EC%85%98-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%9D%B8%ED%84%B0%EB%B7%B0-%EC%A7%88%EB%AC%B8-40%EA%B0%9C
+http://egloos.zum.com/iilii/v/4457500
 ```
 
 ### Principle

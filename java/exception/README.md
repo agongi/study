@@ -4,12 +4,12 @@ Java fundamental of Exception.
 > Simply describe how expensive throwing exception and best practice to handle exception in java.
 
 ```
-@author: suktae.choi
-- http://java-performance.info/throwing-an-exception-in-java-is-very-slow/
-- http://thswave.github.io/java/exception/2015/06/28/exceptions-are-bad.html
-- http://www.nextree.co.kr/p3239/
-- https://dzone.com/articles/java-top-5-exception-handling
-- http://stackoverflow.com/questions/143622/exception-thrown-inside-catch-block-will-it-be-caught-again
+
+http://java-performance.info/throwing-an-exception-in-java-is-very-slow/
+http://thswave.github.io/java/exception/2015/06/28/exceptions-are-bad.html
+http://www.nextree.co.kr/p3239/
+https://dzone.com/articles/java-top-5-exception-handling
+http://stackoverflow.com/questions/143622/exception-thrown-inside-catch-block-will-it-be-caught-again
 ```
 
 ### 1. What is Exception

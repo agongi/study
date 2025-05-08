@@ -1,8 +1,8 @@
 # MySQL
 ```
-@author: suktae.choi
-- https://dev.mysql.com/doc/refman/8.0/en/
-- https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
+
+https://dev.mysql.com/doc/refman/8.0/en/
+https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
 ```
 
 ### Index

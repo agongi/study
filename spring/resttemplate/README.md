@@ -1,9 +1,9 @@
 ## RestTemplate
 
 ```
-@author: suktae.choi
-- http://blog.saltfactory.net/using-resttemplate-in-spring
-- http://cakas.tistory.com/9
+
+http://blog.saltfactory.net/using-resttemplate-in-spring
+http://cakas.tistory.com/9
 ```
 
 ### Methods

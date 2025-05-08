@@ -1,20 +1,17 @@
-## Serializable
+# Serializable
 
 ```
-@author: suktae.choi
-- http://woowabros.github.io/experience/2017/10/17/java-serialize.html
-- http://javarevisited.blogspot.kr/2011/04/top-10-java-serialization-interview.html
-- http://blog.naver.com/PostView.nhn?blogId=kkson50&logNo=220564273220&categoryNo=0&parentCategoryNo=18&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView
+https://techblog.woowahan.com/2550/
+https://javarevisited.blogspot.kr/2011/04/top-10-java-serialization-interview.html
+https://blog.naver.com/kkson50/220564273220
 ```
 
 <img src="images/20151210_130446.png" width="75%">
 
-### Overview
-
+## Overview
 An object can be represented as a `sequence of bytes` that includes the object's data as well as `information about the object's type and the types of data stored` in the object to **transfer to other JVM or be stored as file**.
 
-#### Serialization
-
+### Serialization
 Object to array of bytes.
 
  - required: `implements java.io.Serializable`
@@ -36,8 +33,7 @@ private byte[] convertToBytes(Object object) throws IOException {
 }
 ```
 
-#### Deserialization
-
+### Deserialization
 Array of byte[] to object.
 
 - required: has the same `serialVersionUID`
@@ -58,43 +54,37 @@ private byte[] convertToBytes(byte[] bytes) throws IOException {
 }
 ```
 
-#### Other serial/deserialization
-
+### Other serial/deserialization
 - JSON
 - XML
 - CSV
 - ...
 
-#### When to use it
-
+### When to use it
 The system purely stored/transfer java serialized byte[] are:
 
 - cache
 - session
 - RMI (== RPC)
 
-### Concerns
-
-#### Add and/or Delete fields
+## Concerns
+### Add and/or Delete fields
 
 no problem
 
-### Modify field (type)
-
+## Modify field (type)
 will throw exception
 
 ```java
 java.lang.ClassCastException: cannot assign instance of java.lang.String to field ...
 ```
 
-#### Why declare serialVersionUDI explicitly
-
+### Why declare serialVersionUDI explicitly
 serialVersionUID is checked while deserialization in store in file system or transfer to network. JVM automatically generate UID value based on its algorithm and might be vary each JVM's version.
 
 It causes unexpected `InvalidClassException` once It tries to read stored data after upgrading JVM version or different client with its own JVM's.
 
-#### Size
-
+### Size
 Serialized values contains class meta (ex. size, field names), that means size of value is bigger than any other ways like JSON.
 
 ```java

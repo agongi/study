@@ -1,20 +1,25 @@
-## Lock
-
+# Lock
 ```
-@author: suktae.choi
-- http://happinessoncode.com/2017/10/04/java-intrinsic-lock/
+https://happinessoncode.com/2017/10/04/java-intrinsic-lock/
 ```
 
-#### Blog
-
+### Blog
 - [비관적 Lock, 낙관적 Lock 이해하기]([https://medium.com/@jinhanchoi1/%EB%B9%84%EA%B4%80%EC%A0%81-lock-%EB%82%99%EA%B4%80%EC%A0%81-lock-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-1986a399a54](https://medium.com/@jinhanchoi1/비관적-lock-낙관적-lock-이해하기-1986a399a54))
 
-### Overview
+***
 
-#### Mutex
 
-- ReentrantLock
+## Synchronized
+```java
+private static class Counter {
+    public synchronized void increment() {
+      // ... method body
+  }
+}
+```
 
+## Mutex
+### ReentrantLock
 명시적으로 lock 획득/해제 를 제어할 수 있다:
 
 ```java
@@ -62,8 +67,7 @@ private static class Counter {
 }
 ```
 
-- (재미로) 다시보는 double-check locking
-
+### double-check locking
 ```java
 /**
  * 싱글톤
@@ -83,8 +87,7 @@ public Object getInstance() {
 }
 ```
 
-#### Semaphore
-
+### Semaphore
 N 개의 Thread 가 read/write 접근가능
 
 ```java

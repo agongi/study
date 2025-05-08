@@ -1,10 +1,10 @@
 # QueryDSL
 
 ```
-@author: suktae.choi
-- http://www.querydsl.com/static/querydsl/4.0.1/reference/ko-KR/html_single
-- https://joont92.github.io/jpa/QueryDSL
-- https://www.baeldung.com/intro-to-querydsl
+
+http://www.querydsl.com/static/querydsl/4.0.1/reference/ko-KR/html_single
+https://joont92.github.io/jpa/QueryDSL
+https://www.baeldung.com/intro-to-querydsl
 ```
 
 ### Blog

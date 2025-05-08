@@ -1,26 +1,22 @@
-## `var` vs `let` vs `const`
+# `var` vs `let` vs `const`
 
 ```
-@author: suktae.choi
-- https://gist.github.com/LeoHeo/7c2a2a6dbcf80becaaa1e61e90091e5d
-- https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90
-- https://evan-moon.github.io/2019/06/18/javascript-let-const/
+https://gist.github.com/LeoHeo/7c2a2a6dbcf80becaaa1e61e90091e5d
+https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90
+https://evan-moon.github.io/2019/06/18/javascript-let-const/
 ```
 
 ## var
-
 - function scope
 - 중복선언 가능
 - 재할당 가능 (== mutable)
 
 ## let
-
 - block scope
 - 중복선언 불가능
 - 재할당 가능 (== mutable)
 
 ## const
-
 - block scope
 - 중복선언 불가능
 - 재할당 불가능 (== immutable)
@@ -28,11 +24,9 @@
 ***
 
 ## Hoisting
-
 모두 hoisting 대상이다. 다만 function, block scope 에 따른 동작 차이는 존재한다.
 
 ## TDZ (Temporal Dead Zone)
-
 let, const 모두 block-scope hoisting 이 발생하는데, 아래 코드는 compile-error 가 발생한다.
 
 ```javascript

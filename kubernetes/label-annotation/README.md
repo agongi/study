@@ -1,9 +1,9 @@
 # Label & Annotation
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-- https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+
+https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ```
 
 ## Label

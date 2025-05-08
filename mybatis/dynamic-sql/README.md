@@ -1,8 +1,8 @@
 # Dynamic SQL
 
 ```
-@author: suktae.choi
-- http://www.mybatis.org/mybatis-3/dynamic-sql.html
+
+http://www.mybatis.org/mybatis-3/dynamic-sql.html
 ```
 
 ## \<foreach\>

@@ -1,7 +1,7 @@
 # Duplicated record
 ```
-@author: suktae.choi
-- https://jason-heo.github.io/mysql/2014/03/05/manage-dup-key2.html
+
+https://jason-heo.github.io/mysql/2014/03/05/manage-dup-key2.html
 ```
 
 신규 레코드를 insert 할때 3가지 방식이 존재합니다:

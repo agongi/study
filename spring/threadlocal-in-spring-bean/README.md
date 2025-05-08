@@ -1,8 +1,8 @@
 ## ThreadLocal in Spring Bean
 
 ```
-@author: suktae.choi
-- https://stackoverflow.com/questions/37332219/questions-about-using-threadlocal-in-a-spring-singleton-scoped-service
+
+https://stackoverflow.com/questions/37332219/questions-about-using-threadlocal-in-a-spring-singleton-scoped-service
 ```
 
 Typically ThreadLocal is declared `private static final` as a class field for **Per-Thread not Per-Thread, Per-Instance**.

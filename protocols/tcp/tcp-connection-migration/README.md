@@ -2,11 +2,11 @@
 Equivalent to TCP connection repair or TCP session migration
 
 ```
-@author: suktae.choi
-- https://lwn.net/Articles/495304/
-- https://tools.ietf.org/html/draft-snoeren-tcp-migrate-00
-- http://blog.nattyhacker.com/2013/07/transferable-tcp-connection.html
-- http://nms.lcs.mit.edu/talks/e2e-migrate.pdf
+
+https://lwn.net/Articles/495304/
+https://tools.ietf.org/html/draft-snoeren-tcp-migrate-00
+http://blog.nattyhacker.com/2013/07/transferable-tcp-connection.html
+http://nms.lcs.mit.edu/talks/e2e-migrate.pdf
 ```
 
 client sends MIGRATION_SYN to server

@@ -1,11 +1,10 @@
-## Synchronized
+# Synchronized
 
 ```
-@author: suktae.choi
-- http://javarevisited.blogspot.kr/2011/04/synchronization-in-java-synchronized.html
+https://javarevisited.blogspot.kr/2011/04/synchronization-in-java-synchronized.html
 ```
 
-특정 코드수행부분에 lock 을 건다:
+특정 코드수행부분에 lock 을 잡습니다:
 
 ```java
 private static class Counter {

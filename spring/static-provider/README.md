@@ -1,8 +1,8 @@
 ## Static Provider
 
 ```
-@author: suktae.choi
-- https://stackoverflow.com/questions/21827548/spring-get-current-applicationcontext
+
+https://stackoverflow.com/questions/21827548/spring-get-current-applicationcontext
 ```
 
 ### Static Bean / Property Provider

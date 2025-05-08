@@ -1,7 +1,7 @@
 ## Protocols
 
 ```
-@author: suktae.choi
+
 ```
 
 #### Index

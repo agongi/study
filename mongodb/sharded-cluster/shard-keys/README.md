@@ -1,8 +1,8 @@
 # Shard Keys
 
 ```
-@author: suktae.choi
-- https://www.mongodb.com/docs/manual/core/sharding-shard-key/
+
+https://www.mongodb.com/docs/manual/core/sharding-shard-key/
 ```
 
 shard key 는 single or multiple field covered by compound index 로써 document 가 어느 shard 에 있는지 판단하는 식별자 이다

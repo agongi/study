@@ -1,8 +1,8 @@
 # StatefulSets
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+
+https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 ```
 
 StatefulSet is the workload API object used to manage stateful applications.

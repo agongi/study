@@ -1,7 +1,7 @@
-## Transpiler
+# Transpiler
 
 ```
-@author: suktae.choi
+https://ko.javascript.info/polyfills
 ```
 
 그냥 단순히 keyword 만 나열합니다.

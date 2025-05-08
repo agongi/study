@@ -1,11 +1,5 @@
-## CountDownLatch
-
-```
-@author: suktae.choi
-```
-
-### Overview
-
+# CountDownLatch
+## Overview
 Main Thread 가 sub-task 의 종료가 보장 된 후, 다음을 처리하는 방식.
 
 CountDown 이 0 이 되면, block 되었던 main thread 가 resume 되어 작업을 이어서 수행한다.

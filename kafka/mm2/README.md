@@ -1,9 +1,8 @@
 # MirrorMaker 2.0
 
 ```
-@author: suktae.choi
-- https://cwiki.apache.org/confluence/display/KAFKA/KIP-382%3A+MirrorMaker+2.0
-- https://devocean.sk.com/blog/techBoardDetail.do?ID=164371
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-382%3A+MirrorMaker+2.0
+https://devocean.sk.com/blog/techBoardDetail.do?ID=164371
 ```
 
 카프카 클러스터의 복제 (== DR 목적) 를 목적으로 사용합니다.

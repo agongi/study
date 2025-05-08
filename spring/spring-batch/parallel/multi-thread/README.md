@@ -1,8 +1,8 @@
 ## Multi-thread
 
 ```
-@author: suktae.choi
-- https://jojoldu.tistory.com/493
+
+https://jojoldu.tistory.com/493
 ```
 
 - 하나의 Step 에서 chunk 단위로 병렬수행

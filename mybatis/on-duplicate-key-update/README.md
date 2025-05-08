@@ -1,8 +1,8 @@
 # ON DUPLICATE KEY UPDATE
 
 ```
-@author: suktae.choi
-- https://okky.kr/article/318516
+
+https://okky.kr/article/318516
 ```
 
 - Values are about to be inserted but there is duplicate P.K in table

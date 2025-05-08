@@ -1,10 +1,10 @@
 # Index
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/indexes/
-- https://www.mongodb.com/docs/manual/core/index-creation/
-- https://medium.com/swlh/mongodb-indexes-deep-dive-understanding-indexes-9bcec6ed7aa6
+
+https://docs.mongodb.com/manual/indexes/
+https://www.mongodb.com/docs/manual/core/index-creation/
+https://medium.com/swlh/mongodb-indexes-deep-dive-understanding-indexes-9bcec6ed7aa6
 ```
 
 - `_id` 는 무조건 primary-index, 나머지는 secondary-index 

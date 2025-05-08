@@ -1,11 +1,11 @@
 ## Proxy Protocol
 
 ```
-@author: suktae.choi
-- http://www.haproxy.org/download/1.7/doc/proxy-protocol.txt
-- https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/
-- https://www.haproxy.com/blog/preserve-source-ip-address-despite-reverse-proxies/
-- https://stackoverflow.com/questions/48394661/sending-proxy-protocol-to-server-that-doesnt-support-proxy-protocol
+
+http://www.haproxy.org/download/1.7/doc/proxy-protocol.txt
+https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/
+https://www.haproxy.com/blog/preserve-source-ip-address-despite-reverse-proxies/
+https://stackoverflow.com/questions/48394661/sending-proxy-protocol-to-server-that-doesnt-support-proxy-protocol
 ```
 
 `Proxy Protocol` is used between proxies (hence its name) or between a proxy and a server which could understand it. <br>

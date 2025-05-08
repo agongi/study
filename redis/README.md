@@ -1,9 +1,9 @@
 # Redis
 
 ```
-@author: suktae.choi
-- https://github.com/redis-study/redis-summary
-- https://redis.io/docs/
+
+https://github.com/redis-study/redis-summary
+https://redis.io/docs/
 ```
 
 ### Index

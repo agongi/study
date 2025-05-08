@@ -1,8 +1,8 @@
 # Query Plans
 
 ```
-@author: suktae.choi
-- https://www.mongodb.com/docs/manual/core/query-plans/
+
+https://www.mongodb.com/docs/manual/core/query-plans/
 ```
 
 검색이 Index 를 타는지는 https://docs.mongodb.com/manual/reference/explain-results/을 확인한다.

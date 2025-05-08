@@ -1,7 +1,7 @@
 ## MVC
 
 ```
-@author: suktae.choi
+
 ```
 
 #### Index

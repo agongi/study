@@ -1,20 +1,16 @@
 # Selector
 
 ```
-@author: suktae.choi
-- https://engineering.linecorp.com/ko/blog/do-not-block-the-event-loop-part2
+https://engineering.linecorp.com/ko/blog/do-not-block-the-event-loop-part2
 ```
 
 ## Multi-processor
-
 fork 해서 processor 를 N 개로 처리
 
 ## Multi-thread
-
 threadpool 에서 처리하는 일반적인 방식
 
 ## Multiplexing
-
 멀티플렉싱 기반 하나의 스레드에서 다중 접속을 처리하는 방법
 
 - Selector
@@ -102,7 +98,6 @@ public class EchoServer {
 ```
 
 ## Reactor
-
 하나의 스레드에서 다중 접속을 처리하는 디자인 패턴
 
 - Reactor
@@ -226,7 +221,6 @@ public class EchoHandler implements Handler {
 ```
 
 ### Event loop
-
 - 이벤트가 발생하기를 대기
 - 이벤트가 발생하면 처리할 수 있는 핸들러에 이벤트를 디스패치 합니다
 - 핸들러에서 이벤트를 처리합니다
@@ -235,7 +229,6 @@ public class EchoHandler implements Handler {
 - 다시 1-3 단계를 반복 합니다
 
 ## 다른 구현체
-
 - Netty
 - Node.js
 - Redis

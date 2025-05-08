@@ -1,8 +1,8 @@
 ## Processor
 
 ```
-@author: suktae.choi
-- https://jojoldu.tistory.com/347?category=635883
+
+https://jojoldu.tistory.com/347?category=635883
 ```
 
 Processor is used to filter or map the given one-item from Reader.

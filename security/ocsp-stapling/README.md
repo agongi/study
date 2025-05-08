@@ -1,8 +1,8 @@
 ## OCSP Stapling
 
 ```
-@author: suktae.choi
-- https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
+
+https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 ```
 
 접속하려는 서버에서 전달한 Certificate 의 유효성을 확인하기 위해, root cert 로 query 하는 과정을 거쳐야한다.

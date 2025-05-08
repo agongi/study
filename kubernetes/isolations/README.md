@@ -1,8 +1,7 @@
 # Isolations
 
 ```
-@author: suktae.choi
-- https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d
+https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d
 ```
 
 container 는 격리된 환경에서 실행되는 `process` 이다

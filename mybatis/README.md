@@ -1,8 +1,8 @@
 # MyBatis
 
 ```
-@author: suktae.choi
-- https://mybatis.org/mybatis-3/
+
+https://mybatis.org/mybatis-3/
 ```
 
 ### Index

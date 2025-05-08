@@ -1,9 +1,9 @@
 # Orphan Documents
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/reference/read-concern/
-- https://www.mongodb.com/docs/v6.0/reference/glossary/#std-term-orphaned-document
+
+https://docs.mongodb.com/manual/reference/read-concern/
+https://www.mongodb.com/docs/v6.0/reference/glossary/#std-term-orphaned-document
 ```
 
 replicaSet 에서 primary 에서는 지워졌지만 `oplog 를 반영하는 secondary 에는 남아있는` document 를 orphan document 라고 합니다.

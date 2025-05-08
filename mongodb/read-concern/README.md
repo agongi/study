@@ -1,9 +1,9 @@
 # Read Concern
 
 ```
-@author: suktae.choi
-- https://docs.mongodb.com/manual/reference/read-concern/
-- https://www.youtube.com/watch?v=14BwYGaohhI
+
+https://docs.mongodb.com/manual/reference/read-concern/
+https://www.youtube.com/watch?v=14BwYGaohhI
 ```
 
 ## local

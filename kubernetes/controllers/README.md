@@ -1,8 +1,7 @@
 # Controllers
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/concepts/architecture/controller/
+https://kubernetes.io/docs/concepts/architecture/controller
 ```
 
 Controller 는 N 개의 Pod 을 생성/운영하는 단위이다. Pod 이나 Node 장애시 failover 처리등을 스케쥴링 한다.

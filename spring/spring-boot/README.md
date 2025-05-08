@@ -1,6 +1,6 @@
 ## Spring Boot
 ```
-@author: suktae.choi
+
 ```
 #### Index
 

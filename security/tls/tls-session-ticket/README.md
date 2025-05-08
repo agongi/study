@@ -4,11 +4,11 @@ TLS Session Ticket is an extension to speed up the opening of TLS handshake betw
 >###### client stored `Session Ticket` after initial connection and reuse it later along with sending "Client Hello" packet. If it is valid, the server may send the same session state and continue shorten TLS-handshake
 
 ```
-@author: suktae.choi
-- https://timtaubert.de/blog/2014/11/the-sad-state-of-server-side-tls-session-resumption-implementations/
-- https://www.ietf.org/rfc/rfc5077.txt
-- http://security.stackexchange.com/questions/73777/ssl-tls-session-resumption-with-session-tickets
-- http://stackoverflow.com/questions/19939247/ssl-session-tickets-vs-session-ids
+
+https://timtaubert.de/blog/2014/11/the-sad-state-of-server-side-tls-session-resumption-implementations/
+https://www.ietf.org/rfc/rfc5077.txt
+http://security.stackexchange.com/questions/73777/ssl-tls-session-resumption-with-session-tickets
+http://stackoverflow.com/questions/19939247/ssl-session-tickets-vs-session-ids
 ```
 
 1) First TLS-handshake request initiated sending "Client Hello" along with **empty Session Ticket**

@@ -1,8 +1,8 @@
 # Elasticsearch
 
 ```
-@author: suktae.choi
-- https://esbook.kimjmin.net/
+
+https://esbook.kimjmin.net/
 ```
 
 ### Index

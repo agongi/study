@@ -1,8 +1,8 @@
 ## Type erase
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/tutorial/java/generics/genTypes.html
+
+https://docs.oracle.com/javase/tutorial/java/generics/genTypes.html
 ```
 
 우선 아래의 문장을 보면:

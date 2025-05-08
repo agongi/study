@@ -1,14 +1,11 @@
-## Java Varargs
-Java fundamental of Varargs.
-
->###### Varargs is equal to Array internally based on JDK. Varargs causes create array instance in each invocation.
+# Java Varargs
+Varargs is equal to Array internally based on JDK. Varargs causes create array instance in each invocation.
 
 ```
-@author: suktae.choi
-- https://en.wikipedia.org/wiki/Hash_table
+https://en.wikipedia.org/wiki/Hash_table
 ```
 
-**When to use Varargs**
+## When to use Varargs
  - You don't know how many arguments you need to pass to a method?
  - You want to pass unlimited variables to a method?
 
@@ -24,7 +21,7 @@ public class Demo {
 }
 ```
 
-**How Varagrs works actually**
+## How Varagrs works actually
 
 Complier automatically handles Varagrs in following :
 

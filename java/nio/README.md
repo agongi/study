@@ -1,13 +1,13 @@
 ## NIO (New Input/Output)
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/tutorial/essential/io/file.html
-- https://mkyong.com/tutorials/java-io-tutorials/
-- https://dog-foot-story.tistory.com/45
-- http://palpit.tistory.com/640
-- https://javapapers.com/java/java-nio-file-read-write-with-channels/
-- http://eincs.com/2009/08/java-nio-bytebuffer-channel/
+
+https://docs.oracle.com/javase/tutorial/essential/io/file.html
+https://mkyong.com/tutorials/java-io-tutorials/
+https://dog-foot-story.tistory.com/45
+http://palpit.tistory.com/640
+https://javapapers.com/java/java-nio-file-read-write-with-channels/
+http://eincs.com/2009/08/java-nio-bytebuffer-channel/
 ```
 
 #### index

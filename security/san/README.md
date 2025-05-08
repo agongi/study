@@ -10,10 +10,10 @@ The Subject Alternative Name (SAN), also known as Unified Communications Certifi
 >###### Simply wildcard certificate is partial of SAN.
 
 ```
-@author: suktae.choi
-- https://www.digicert.com/subject-alternative-name.htm
-- http://stackoverflow.com/questions/21489525/is-a-wildcard-san-certificate-possible
-- https://opensrs.com/blog/2012/09/san-and-wildcard-certificates-whats-the-difference/
+
+https://www.digicert.com/subject-alternative-name.htm
+http://stackoverflow.com/questions/21489525/is-a-wildcard-san-certificate-possible
+https://opensrs.com/blog/2012/09/san-and-wildcard-certificates-whats-the-difference/
 ```
 
 #### 1. Wildcard certificate

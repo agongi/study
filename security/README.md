@@ -1,7 +1,7 @@
 ## Security
 
 ```
-@author: suktae.choi
+
 ```
 
 #### Index

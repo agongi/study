@@ -1,21 +1,14 @@
-## Singleton Pattern
-Java design pattern of Singleton.
-
-> The design pattern to generate `ONLY ONE` object.
+# Singleton Pattern
+The design pattern to generate `ONLY ONE` object.
 
 ```
-@author: suktae.choi
-- http://changsuk.me/?p=1433
-- http://blog.jdm.kr/10
-- http://seotory.tistory.com/25
-- http://stackoverflow.com/questions/24538509/does-the-java-classloader-load-inner-classes
-- http://javarevisited.blogspot.jp/2012/07/when-class-loading-initialization-java-example.html
-- http://javarevisited.blogspot.sg/2011/03/10-interview-questions-on-singleton.html
-- https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+https://stackoverflow.com/questions/24538509/does-the-java-classloader-load-inner-classes
+https://javarevisited.blogspot.jp/2012/07/when-class-loading-initialization-java-example.html
+https://javarevisited.blogspot.sg/2011/03/10-interview-questions-on-singleton.html
+https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
 ```
 
-### 1. Basic
-
+## 1. Basic
 ```java
 public class Demo {
   private static Demo instance = null;
@@ -31,8 +24,7 @@ public class Demo {
 ```
 > It is `NOT` thread-safe.
 
-### 2. Lazy initialization
-
+## 2. Lazy initialization
 ```java
 public class Demo {
   private static Demo instance = null;
@@ -49,8 +41,7 @@ public class Demo {
 
 > There is critical performance disadvantage using `synchronized`.
 
-### 3. Early initialization
-
+## 3. Early initialization
 ```java
 public class Demo {
   private static final Demo instance = new Demo();
@@ -64,8 +55,7 @@ public class Demo {
 
 > It is beyond the strategy of singleton, lazy-load, due to initializing instance in class initialized-life-cycle.
 
-### [4. Initialization-on-demand holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
-
+## [4. Initialization-on-demand holder](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom)
 ```java
 public class Demo {
   private Demo() {}
@@ -81,7 +71,6 @@ public class Demo {
 ```
 
 > It keeps lazy-load strategy and avoids using synchronized for performance with guaranteeing thread-safe.
-
 > Class initialization is always atomic(serializable) guaranteed by [JVM](http://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html). This pattern delegates singleton synchronization problem(thread-safe) to JVM.
 
 When class is loaded in java means that **finding binary representations (.class)** by ClassLoader.
@@ -93,7 +82,7 @@ When class is initialized in java means that **executing its static initializers
  - Static variable `B` is assigned value not constant of class `T`
  - Static variable `B` is referenced of class `T`
 
-**Demo.java**
+### Demo.java
 ```java
 package com.sec;
 
@@ -124,7 +113,7 @@ public class Demo {
 }
 ```
 
-**Main.java**
+### Main.java
 ```java
 package com.sec;
 
@@ -139,7 +128,7 @@ public class Main {
 }
 ```
 
-**Output**
+### Output
 ```
 Static block(Demo) called
 ---------------------------------------
@@ -149,7 +138,7 @@ Static block(DemoHolder) called
 Constructor(Demo) called
 ```
 
-**Explanation**
+### Explanation
 ```
 1) Static method is invoked of class Demo
  : Demo.getInstance();

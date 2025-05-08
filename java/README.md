@@ -1,9 +1,8 @@
 # JAVA
 
 ```
-@author: suktae.choi
-- http://javarevisited.blogspot.com
-- https://docs.oracle.com/javase/tutorial/index.html
+http://javarevisited.blogspot.com
+https://docs.oracle.com/javase/tutorial/index.html
 ```
 
 ### Index

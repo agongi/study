@@ -1,21 +1,17 @@
-## Reference
+# Reference
 
 ```
-@author: suktae.choi
-- https://d2.naver.com/helloworld/329631
-- http://darksilber.tistory.com/entry/Java-Reference-Object%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%ED%99%9C%EC%9A%A9strongweak-reference
-- http://javarevisited.blogspot.kr/2014/03/difference-between-weakreference-vs-softreference-phantom-strong-reference-java.html
+https://d2.naver.com/helloworld/329631
+https://darksilber.tistory.com/entry/Java-Reference-Object%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%ED%99%9C%EC%9A%A9strongweak-reference
+https://javarevisited.blogspot.kr/2014/03/difference-between-weakreference-vs-softreference-phantom-strong-reference-java.html
 ```
 
-### References
+## References
 Garbage Collector reclaims memory from objects which are eligible for garbage collection, but not many programmer knows that this eligibility is decided based upon **which kind of references are pointing to that object.**
 
 <img src="1.gif" width="75%">
 
-### Reference Type
-
-#### Strong Reference
-
+### Strong Reference
 Strong referenced object never be collected.
 
 ```java
@@ -23,8 +19,7 @@ Strong referenced object never be collected.
 Counter counter = new Counter();
 ```
 
-#### Soft Reference
-
+### Soft Reference
 - referent: It can be a candidate of GC If JVM absolutely needs memory
   - It means heap is running out, soft-reference object will be collected even if there are references
 - reference-queue: optional
@@ -48,8 +43,7 @@ new SoftReference() itself remains	// soft-reference itself
 
 > ttl == JVM-option (-XX:SoftRefLRUPolicyMSPerMB) * (remain-heap-size) after last GC.
 
-#### Weak Reference
-
+### Weak Reference
 - referent: It will be collected in next GC even if there are references
 - reference-queue: optional
   - 생성자를 통해 reference-queue 가 주입되었으면, enqueued
@@ -72,8 +66,7 @@ new SoftReference() itself remains	// weak-reference itself
 
 > It is useful for cache, that is to have reference but may be or not be null.
 
-#### Phantom Reference
-
+### Phantom Reference
 - referent: It will **not** be collected by GC but explicit Reference#clear is invoked
 - reference-queue: mandatory
 
@@ -92,8 +85,7 @@ new Counter() remains	// phantomly-referneced (will not be collected until #clea
 new PhantomReference() itself remains	// phantom-reference itself is in queue
 ```
 
-#### Reference Queue
-
+## Reference Queue
 SoftReference 객체나 WeakReference 객체가 참조하는 객체가 GC 대상이 되면 SoftReference 객체, WeakReference 객체 내의 참조는 null로 설정되고 SoftReference 객체, WeakReference 객체 자체는 ReferenceQueue에 enqueue된다. 
 
 SoftReference와 WeakReference는 ReferenceQueue를 사용할 수도 있고 사용하지 않을 수도 있다. 그러나 PhantomReference는 반드시 ReferenceQueue를 사용해야만 한다. PhantomReference의 생성자는 단 하나이며 항상 ReferenceQueue를 인자로 받는다.

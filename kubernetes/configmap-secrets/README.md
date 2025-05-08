@@ -1,9 +1,8 @@
 # ConfigMap & Secrets
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/concepts/configuration/configmap
-- https://kubernetes.io/docs/concepts/configuration/secret
+https://kubernetes.io/docs/concepts/configuration/configmap
+https://kubernetes.io/docs/concepts/configuration/secret
 ```
 
 ## ConfigMap

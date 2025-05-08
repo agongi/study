@@ -1,7 +1,7 @@
 ## CompletableFuture<T>
 
 ```
-@author: suktae.choi
+
 ```
 
 ### Nutshell

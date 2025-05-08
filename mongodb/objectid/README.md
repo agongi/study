@@ -1,9 +1,9 @@
 # ObjectId
 
 ```
-@author: suktae.choi
-- https://docs.spring.io/spring-data/mongodb/docs/current/reference/html
-- https://www.mongodb.com/docs/manual/reference/method/ObjectId/
+
+https://docs.spring.io/spring-data/mongodb/docs/current/reference/html
+https://www.mongodb.com/docs/manual/reference/method/ObjectId/
 ```
 
 ## _id

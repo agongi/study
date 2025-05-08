@@ -1,11 +1,11 @@
 ## @Pageable
 
 ```
-@author: suktae.choi
+
 ```
 
 **Request**
-- http://localhost/users?page=2&size=40
+http://localhost/users?page=2&size=40
 
 Configuration
 ```xml

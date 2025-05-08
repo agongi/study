@@ -1,12 +1,12 @@
 ## Bootstrap
 
 ```
-@author: suktae.choi
-- http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
-- http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
-- http://stackoverflow.com/questions/18578143/about-multiple-containers-in-spring-framework
-- https://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/
-- http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/SpringServletContainerInitializer.html
+
+http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
+http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
+http://stackoverflow.com/questions/18578143/about-multiple-containers-in-spring-framework
+https://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/
+http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/SpringServletContainerInitializer.html
 ```
 
 #### Index

@@ -1,8 +1,8 @@
 # \<selectKey\>
 
 ```
-@author: suktae.choi
-- http://www.mybatis.org/mybatis-3/sqlmap-xml.html#insert_update_and_delete
+
+http://www.mybatis.org/mybatis-3/sqlmap-xml.html#insert_update_and_delete
 ```
 
 You can modify row in DB and get the affected **ONLY ONE value** right before/after query execution as following:

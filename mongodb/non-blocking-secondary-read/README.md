@@ -1,9 +1,9 @@
 # Non-blocking Secondary Reads
 
 ```
-@author: suktae.choi
-- https://www.mongodb.com/blog/post/secondary-reads-mongodb-40
-- https://medium.com/geekculture/mongodb-read-from-secondary-to-boost-performance-dca938a680ac
+
+https://www.mongodb.com/blog/post/secondary-reads-mongodb-40
+https://medium.com/geekculture/mongodb-read-from-secondary-to-boost-performance-dca938a680ac
 ```
 
 mongo 4.x 부터 primary --(replication)-- secondary 동안 read 는 non-blocking 입니다. 

@@ -1,9 +1,9 @@
 # Transaction
 
 ```
-@author: suktae.choi
-- http://javacan.tistory.com/entry/Handle-DomainEvent-with-Spring-ApplicationEventPublisher-EventListener-TransactionalEventListener
-- https://www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth
+
+http://javacan.tistory.com/entry/Handle-DomainEvent-with-Spring-ApplicationEventPublisher-EventListener-TransactionalEventListener
+https://www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth
 ```
 
 트랜잭션은 아래의 동작을 수행하는것이 기본 원리 입니다:

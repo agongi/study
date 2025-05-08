@@ -1,10 +1,10 @@
 # Index
 
 ```
-@author: suktae.choi
-- https://12bme.tistory.com/138?category=682920
-- https://wslog.dev/mysql-index#4c8551fdf047448290cb393ad7cd51c6
-- https://velog.io/@hyunrrr/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index-%EC%A0%95%EB%B3%B5%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91
+
+https://12bme.tistory.com/138?category=682920
+https://wslog.dev/mysql-index#4c8551fdf047448290cb393ad7cd51c6
+https://velog.io/@hyunrrr/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index-%EC%A0%95%EB%B3%B5%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91
 ```
 
 인덱스는 수정 (CUD) 성능은 희생하고, 조회 (R) 속도를 높이는 기능입니다.

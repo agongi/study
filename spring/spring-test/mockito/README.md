@@ -1,11 +1,11 @@
 # Mockito
 
 ```
-@author: suktae.choi
-- https://jojoldu.tistory.com/226
-- https://www.baeldung.com/java-spring-mockito-mock-mockbean
-- https://cobbybb.tistory.com/16
-- https://juneyr.dev/2019-02-08/mockito-repo-save
+
+https://jojoldu.tistory.com/226
+https://www.baeldung.com/java-spring-mockito-mock-mockbean
+https://cobbybb.tistory.com/16
+https://juneyr.dev/2019-02-08/mockito-repo-save
 
 ```
 

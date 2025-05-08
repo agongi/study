@@ -1,18 +1,17 @@
-## ForkJoin vs Executor
+# ForkJoin vs Executor
 
 ```
-@author: suktae.choi
-- http://javarevisited.blogspot.kr/2016/12/difference-between-executor-framework-and-ForkJoinPool-in-Java.html
+https://javarevisited.blogspot.kr/2016/12/difference-between-executor-framework-and-ForkJoinPool-in-Java.html
 ```
 
-### ForkJoinPool vs Executor Framework
-#### ForkJoinPool (== JVM default since JDK.7, used in parallelStream())
+## ForkJoinPool vs Executor Framework
+### ForkJoinPool (== JVM default since JDK.7, used in parallelStream())
 - Worker - Runnable or Callable
 - Task - one per thread
 - Queue - One global queue for all shared tasks
   - It may cause performance **bottleneck once frequent enqueue/dequeue** occurs due to concurrent operation
 
-#### Executor Framework
+### Executor Framework
 - Worker - ForkJoinTask
   - It is **much smaller (lighter)** than callable or runnable
 - Task - Task **divides** separately and each **subtasks** are assigned to threads

@@ -4,8 +4,8 @@ Java fundamental of Cloneable.
 > Java Object has protected clone() method and it works fine once all member-fields are primitives. you need to explicitly define deep-copy mechanism if you need such as Collections or Class copy,.
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/7/docs/api/java/lang/Cloneable.html
+
+https://docs.oracle.com/javase/7/docs/api/java/lang/Cloneable.html
 ```
 
 #### Application.java

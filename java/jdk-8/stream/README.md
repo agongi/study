@@ -1,10 +1,10 @@
 ## Java 8 Stream
 
 ```
-@author: suktae.choi
-- http://d2.naver.com/helloworld/4911107
-- http://iloveulhj.github.io/posts/java/java-stream-api.html
-- https://www.mkyong.com/java8/java-8-flatmap-example/
+
+http://d2.naver.com/helloworld/4911107
+http://iloveulhj.github.io/posts/java/java-stream-api.html
+https://www.mkyong.com/java8/java-8-flatmap-example/
 ```
 
 <img src="images/figure2.jpg" width="75%">

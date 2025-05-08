@@ -1,8 +1,8 @@
 ## instanceof
 
 ```
-@author: suktae.choi
-- https://jistol.github.io/java/2017/08/22/different-instanceof-isassignablefrom/
+
+https://jistol.github.io/java/2017/08/22/different-instanceof-isassignablefrom/
 ```
 
 - instanceof

@@ -1,8 +1,8 @@
 ## Heap
 
 ```
-@author: suktae.choi
-- https://ratsgo.github.io/data%20structure&algorithm/2017/09/27/heapsort
+
+https://ratsgo.github.io/data%20structure&algorithm/2017/09/27/heapsort
 ```
 
 힙은 크거나, 작은 값을 찾기 위해 만든 이진 트리입니다.

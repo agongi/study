@@ -1,8 +1,8 @@
 ## @DependsOn - SmartLifeCycle
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/spring-depends-on
+
+https://www.baeldung.com/spring-depends-on
 ```
 
 We can choose either the **SmartLifeCycle** interface or the **@DependsOn** annotation for managing initialization order

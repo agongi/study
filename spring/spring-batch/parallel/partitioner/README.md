@@ -1,10 +1,10 @@
 ## Partitioner
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/spring-batch-partitioner
-- https://jojoldu.tistory.com/550?category=902551
-- https://jobjava00.github.io/language/java/framework/spring-batch/partitioner/
+
+https://www.baeldung.com/spring-batch-partitioner
+https://jojoldu.tistory.com/550?category=902551
+https://jobjava00.github.io/language/java/framework/spring-batch/partitioner/
 ```
 
 - 하나의 Step 을 gridSize 만큼 각각의 StepExecution 으로 나눠서 수행 (독립적)

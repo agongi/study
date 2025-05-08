@@ -1,11 +1,11 @@
 ## Executable Jar
 
 ```
-@author: suktae.choi
-- https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
-- https://java.ihoney.pe.kr/523
-- https://www.baeldung.com/gradle-fat-jar
-- https://meteorkor.tistory.com/90
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html
+https://java.ihoney.pe.kr/523
+https://www.baeldung.com/gradle-fat-jar
+https://meteorkor.tistory.com/90
 ```
 
 #### Blog

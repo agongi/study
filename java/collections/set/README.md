@@ -1,13 +1,13 @@
 ## Set
 
 ```
-@author: suktae.choi
-- https://docs.oracle.com/javase/tutorial/collections/implementations/set.html
-- http://tutorials.jenkov.com/java-collections/set.html
-- http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html
-- http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html
-- https://stackoverflow.com/questions/6720396/different-types-of-thread-safe-sets-in-java
-- http://minborgsjavapot.blogspot.kr/2014/12/java-8-implementing-concurrenthashset.html
+
+https://docs.oracle.com/javase/tutorial/collections/implementations/set.html
+http://tutorials.jenkov.com/java-collections/set.html
+http://javarevisited.blogspot.kr/2012/11/difference-between-treeset-hashset-vs-linkedhashset-java.html
+http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html
+https://stackoverflow.com/questions/6720396/different-types-of-thread-safe-sets-in-java
+http://minborgsjavapot.blogspot.kr/2014/12/java-8-implementing-concurrenthashset.html
 ```
 
 <img src="images/Screen%20Shot%202017-08-28%20at%2022.03.11.jpg" width="75%">

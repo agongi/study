@@ -1,7 +1,7 @@
 ## Servlet
 
 ```
-@author: suktae.choi
+
 ```
 
 #### Index

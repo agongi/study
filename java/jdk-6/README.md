@@ -1,9 +1,9 @@
 ## JDK 6
 
 ```
-@author: suktae.choi
-- http://javarevisited.blogspot.com
-- https://docs.oracle.com/javase/tutorial/index.html
+
+http://javarevisited.blogspot.com
+https://docs.oracle.com/javase/tutorial/index.html
 ```
 
 ## [Pluggable Annotation Processor](https://pluu.github.io/blog/android/2015/12/24/annotation-processing-api/)

@@ -1,8 +1,8 @@
 ## new T\[0\] vs new T\[size\]
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/java-collection-toarray-methods
+
+https://www.baeldung.com/java-collection-toarray-methods
 ```
 
 ## Zero Initializations

@@ -1,8 +1,7 @@
-## ABA Concurrency
+# ABA Concurrency
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/cs/aba-concurrency
+https://www.baeldung.com/cs/aba-concurrency
 ```
 
 ABA 는 동시성 상황에서

@@ -1,17 +1,17 @@
-## Java Concurrency
+# Java Concurrency
 
 ```
-@author: suktae.choi
-- http://javarevisited.blogspot.com
-- http://tutorials.jenkov.com/java-concurrency/index.html
-- http://www.javaworld.com/article/2078809/java-concurrency/java-concurrency-java-101-the-next-generation-java-concurrency-without-the-pain-part-1.html
-- https://www.mkyong.com/spring/spring-and-java-thread-example/
-- http://redutan.github.io/posts/
-- http://aroundck.tistory.com/search/%EB%B3%91%EB%A0%AC
-- http://tutorials.jenkov.com/java-concurrency/index.html
+
+http://javarevisited.blogspot.com
+http://tutorials.jenkov.com/java-concurrency/index.html
+http://www.javaworld.com/article/2078809/java-concurrency/java-concurrency-java-101-the-next-generation-java-concurrency-without-the-pain-part-1.html
+https://www.mkyong.com/spring/spring-and-java-thread-example/
+http://redutan.github.io/posts/
+http://aroundck.tistory.com/search/%EB%B3%91%EB%A0%AC
+http://tutorials.jenkov.com/java-concurrency/index.html
 ```
 
-#### Index
+### Index
 - [Volatile](volatile)
 - [Executors](executors)
 - [Synchronized](synchronized)
@@ -20,23 +20,21 @@
 - [CyclicBarrier](cyclic-barrier)
 - [ABA Concurrency](aba-concurrency)
 
-#### Blog
+### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)
 - [Difference between CompletableFuture, Future and RxJava's Observable](https://stackoverflow.com/questions/35329845/difference-between-completablefuture-future-and-rxjavas-observable)
 - [CountDownLatch vs CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html)
 
 ***
 
-### Cores
-
-#### Intrinsic
+## Cores
+### Intrinsic
 
 고유락 (a.k.a monitor) 라고 부른다. 
 
 > 모든 Object 는 고유락을 소유함
 
-#### Reentrancy
-
+### Reentrancy
 Thread 단위로 한번 획득한 고유락은 재진입이 가능해야한다.
 
 ```java
@@ -57,8 +55,7 @@ private static class Counter {
 }
 ```
 
-#### Structured
-
+### Structured
 락의 획득/해제는 구조적으로 발생한다. block 단위로 진입/해지는 lock 의 획득/해제를 의미한다.
 
 ```
@@ -68,8 +65,7 @@ A 획득 - B 획득 - B 해제 - A 해제
 
 이 구조를 따르지않고 programmatic 제어가 필요하면, 명시적으로 lock 을 사용해야한다.
 
-#### [JMM (Java Memory Model)](https://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf) 이해
-
+### [JMM (Java Memory Model)](https://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf) 이해
 강한 메모리 모델
 
 ㄴ 전체코어는 항상 같은 값을 바라본다

@@ -1,8 +1,8 @@
 ## Set final field
 
 ```
-@author: suktae.choi
-- https://stackoverflow.com/questions/51521837/spring-reflectiontestutils-does-not-set-static-final-field
+
+https://stackoverflow.com/questions/51521837/spring-reflectiontestutils-does-not-set-static-final-field
 ```
 
 ```java

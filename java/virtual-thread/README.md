@@ -1,9 +1,8 @@
 # Virtual Thread
 
 ```
-@author: suktae.choi
-- https://findstar.pe.kr/2023/04/17/java-virtual-threads-1/
-- https://www.azul.com/blog/jdk-21-delivers-virtual-threads-other-new-features-and-long-term-support/
+https://findstar.pe.kr/2023/04/17/java-virtual-threads-1/
+https://www.azul.com/blog/jdk-21-delivers-virtual-threads-other-new-features-and-long-term-support/
 ```
 
 1개의 thread 는 스택 및 메타정보 할당을 위해 2MB 정도의 메모리를 사용합니다
@@ -16,7 +15,6 @@ thread가 blocking 연산을 할 때 CPU 할당은 그대로 유지되지 않고
 - 효율적으로 관리되긴 하지만 context switch 에 따른 비용 발생
 
 ## OS thread
-
 기존 thread 는 OS thread 와 1-1로 매핑됩니다. (메모리 대략 2MB 정도 사용)
 
 <img src="1.png" width="75%">

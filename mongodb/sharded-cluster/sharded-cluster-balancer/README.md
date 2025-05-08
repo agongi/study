@@ -1,9 +1,9 @@
 # Sharded Cluster Balancer
 
 ```
-@author: suktae.choi
-- https://www.mongodb.com/docs/manual/core/sharding-balancer-administration/
-- https://hyunki1019.tistory.com/157
+
+https://www.mongodb.com/docs/manual/core/sharding-balancer-administration/
+https://hyunki1019.tistory.com/157
 ```
 
 샤드에 데이터 (== chunk) 가 threshold 이상으로 누적되면 balancer 는 chunk migration 을 시도합니다. (background 로 동작)

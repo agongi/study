@@ -1,12 +1,10 @@
-## Remote Debug
+# Remote Debug
 
 ```
-@author: suktae.choi
-- https://www.baeldung.com/spring-debugging
+https://www.baeldung.com/spring-debugging
 ```
 
 ## JAVA_OPS
-
 JVM 옵션으로 들어갈 수 있도록, -jar 보다 앞에 들어가야한다.
 
 > 2nd args 부터는 CLI params 으로 들어간다.
@@ -23,7 +21,6 @@ java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9999 -jar R
 - address: port 지정
 
 ## IDE 설정
-
 <img src='images/1.png'/>
 
 Run/Debug Configuration -> Remote 에서 아래와 같이 설정

@@ -1,8 +1,8 @@
 # Namespace
 
 ```
-@author: suktae.choi
-- https://kubernetes.io/docs/tasks/administer-cluster/namespaces
+
+https://kubernetes.io/docs/tasks/administer-cluster/namespaces
 ```
 
 네임스페이스가 필요한 경우는 아래와 같다:

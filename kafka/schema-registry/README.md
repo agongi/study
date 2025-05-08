@@ -1,9 +1,8 @@
 # Schema Registry
 
 ```
-@author: suktae.choi
-- https://velog.io/@fj2008/%EC%B9%B4%ED%94%84%EC%B9%B4-%EC%8A%A4%ED%82%A4%EB%A7%88-%EB%A0%88%EC%A7%80%EC%8A%A4%ED%8A%B8%EB%A6%AC
-- https://always-kimkim.tistory.com/entry/kafka101-schema-registry
+https://velog.io/@fj2008/%EC%B9%B4%ED%94%84%EC%B9%B4-%EC%8A%A4%ED%82%A4%EB%A7%88-%EB%A0%88%EC%A7%80%EC%8A%A4%ED%8A%B8%EB%A6%AC
+https://always-kimkim.tistory.com/entry/kafka101-schema-registry
 ```
 
 데이터의 발행/소비에서 consumer 는 producer 의 이벤트를 `일방적으로 신뢰` 할 수 밖에 없습니다.
@@ -15,7 +14,6 @@ schema registry 는 메세지의 스키마를 (등록) 관리하고 이를 통�
 <img src="2.png" width="75%">
 
 ## 흐름
-
 <img src="1.png" width="75%">
 
 - Producer 는 KafkaAvroSerializer 를 사용합니다
@@ -38,7 +36,6 @@ public void process(ConsumerRecord<String, Shipment> record) {
 ```
 
 ## 호환성
-
 ### FORWARD
 - 개념: 컨슈머는 1번 스키마로 메시지를 처리하지만 2번 스키마도 처리할 수 있습니다.
 - 허용: 기본값이 설정된 필드 삭제, 필드 추가

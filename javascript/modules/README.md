@@ -1,18 +1,16 @@
-## Modules
+# Modules
 
 ```
-@author: suktae.choi
-- https://d2.naver.com/helloworld/12864
+https://d2.naver.com/helloworld/12864
 ```
 
-#### Blog
+### Blog
 
 - [RequireJS](https://d2.naver.com/helloworld/591319)
 
 ***
 
 ## CommonJS
-
 JavaScript를 브라우저에서뿐만 아니라, 서버사이드 애플리케이션이나 데스크톱 애플리케이션에서도 사용하려고 조직한 자발적 워킹 그룹이다.
 
 ```javascript
@@ -38,7 +36,6 @@ require "/src/lib/..";
 > RequireJS is an implementation of AMD
 
 ## ESM (ES6 modules)
-
 ES6 에서 지원하는 native-javascript module 스펙이다.
 
 ```javascript
@@ -57,9 +54,6 @@ util.print("hello world!");
 ```
 
 ### Comparison
-
 신규로 진행한다면 ES6 명세를 따르는게 맞고, 그렇다면 native-supported 인 ESM 을 사용하자.
 
 그게 아니면 node.js 에서 이미 사용하는 CommonJS 스펙을 따르는게 맞다. ~~(AMD...)~~
-
-### 

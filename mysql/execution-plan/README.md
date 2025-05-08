@@ -1,8 +1,8 @@
 # Execution Plan
 
 ```
-@author: suktae.choi
-- https://12bme.tistory.com/73?category=682920
+
+https://12bme.tistory.com/73?category=682920
 ```
 
 ## 쿼리 실행

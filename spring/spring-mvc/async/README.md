@@ -1,7 +1,7 @@
 ## Async
 
 ```
-@author: suktae.choi
+
 ```
 
 ### Response

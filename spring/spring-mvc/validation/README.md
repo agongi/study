@@ -1,9 +1,9 @@
 ## Validation
 
 ```
-@author: suktae.choi
-- https://blog.outsider.ne.kr/825
-- https://engkimbs.tistory.com/738
+
+https://blog.outsider.ne.kr/825
+https://engkimbs.tistory.com/738
 ```
 
 You need `validator` to verify input model via (ex. requestBody or ModelAttribute) into Controller.

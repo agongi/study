@@ -1,16 +1,15 @@
 # Coroutine
 
 ```
-@author: suktae.choi
-- https://tech.devsisters.com/posts/crunchy-concurrency-kotlin/
-- https://velog.io/@haero_kim/Thread-vs-Coroutine-%EB%B9%84%EA%B5%90%ED%95%B4%EB%B3%B4%EA%B8%B0
+https://tech.devsisters.com/posts/crunchy-concurrency-kotlin/
+https://velog.io/@haero_kim/Thread-vs-Coroutine-%EB%B9%84%EA%B5%90%ED%95%B4%EB%B3%B4%EA%B8%B0
 ```
 
-- Thread
+## Thread
 
 <img src="1.png" width="75%">
 
-- Coroutine
+## Coroutine
 
 <img src="2.png" width="75%">
 

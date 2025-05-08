@@ -1,9 +1,9 @@
 # Raft Consensus Algorithm
 
 ```
-@author: suktae.choi
-- https://d2.naver.com/helloworld/5663184
-- https://yoongrammer.tistory.com/50
+
+https://d2.naver.com/helloworld/5663184
+https://yoongrammer.tistory.com/50
 ```
 
 ## 리더선출

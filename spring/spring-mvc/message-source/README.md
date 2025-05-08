@@ -1,8 +1,8 @@
 ## MessageSource
 
 ```
-@author: suktae.choi
-- http://devks.tistory.com/42
+
+http://devks.tistory.com/42
 ```
 
 Resource bundle could be translated into defined-locale. resource name should follow these rules:
