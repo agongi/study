@@ -1,6 +1,5 @@
 # Replication
 ```
-https://dev.mysql.com/doc/refman/8.0/en/replication-multi-source.html
 https://velog.io/@dangdang/MySQL-%EB%B3%B5%EC%A0%9C
 ```
 
@@ -48,3 +47,16 @@ GTID 활성화 전, binlog_format = ROW 추천
 ## MSR (Multi Source Replication)
 샤딩을 해서 source 가 여러개인 경우를 의미 (N개의 source -> 1개의 replica)
 그런데 각각의 샤딩 source 에 각 replication 이 존재하는게 낫지않나?
+
+## MMM (Mysql Multi-master replication Manager) & DNS
+- MMM Agent
+  - 각 DB 서버에서 MMM 모니터와 통신하여 서버 상태 정보를 전송하고, MMM 모니터의 지시에 따라 작업을 수행
+- MMM Monitor
+  - 각 서버의 상태를 모니터링하고, 장애 발생 시 자동 복구 프로세스를 실행
+- VIP (DNS)
+  - MMM Monitor 를 통해 복구 프로세스 실행되어 VIP 변경이 필요한 경우 DNS 를 갱신
+- 클라이언트
+  - DNS 를 통해 VIP 획득하여 DB 접속
+  - Java 의 경우 `networkaddress.cache.ttl=?` 옵션으로 JVM DNS 캐시시간 설정 (DNS 부하와 failover 시간을 고려하여 설정)
+
+<img src="5.png" width="75%">
