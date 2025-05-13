@@ -12,7 +12,6 @@ https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
 - [Locks](locks)
 - [Index](index)
 - [Join](join)
-- [Partitioning](partitioning)
 - [Replication](replication)
 - [Prepared statement](prepared-statement)
 - [테이블 복제](insert-into-select)

@@ -1,17 +1,14 @@
 # Redis
 
 ```
-
 https://github.com/redis-study/redis-summary
 https://redis.io/docs/
 ```
 
 ### Index
-
 - [Persistence](persistence)
 
 ### Blog
-
 - [레디스 클러스터 Mget 명령은 어떻게 동작하는가?](https://brunch.co.kr/@springboot/359)
 - [\[우아한테크세미나\] 191121 우아한레디스 by 강대명님](https://www.youtube.com/watch?v=mPB2CZiAkKM)
 
@@ -26,7 +23,6 @@ redis cluster 는 key 의 hash 값으로 `slots: 16384` 에 분리해서 저장�
 > 단순한 GET/SET 요청은 10만/s 정도를 처리할 수 있습니다
 
 ## 저장
-
 <img src='1.png' width="50%">
 
 - AOF
@@ -41,14 +37,12 @@ redis cluster 는 key 의 hash 값으로 `slots: 16384` 에 분리해서 저장�
 RDB 으로 해당 시점까지의 스냅샷으로 복구후, 이후 데이터는 AOF 를 사용하는 방식으로 응용 가능합니다
 
 ## [복제](https://redis.io/docs/reference/cluster-spec/#write-safety)
-
 <img src='5.png' width="50%">
   - WAIT 명령으로 응답을 기다릴수 있지만 ...
 - master 는 1s 단위로 AOF 에 기록된 command 를 replica 에 전달합니다
   - 일반적인 RDB 쓰기지연 (기본값: 1s) excuse 수치 입니다  
 
 ## [트랜잭션](https://redis.io/docs/interact/transactions/)
-
 ```
 > MULTI (== begin)
 OK
@@ -70,8 +64,7 @@ QUEUED
 - [클러스터 환경에서는 tx 를 지원하지 않습니다](https://sauravomar01.medium.com/transactions-in-redis-cluster-muti-nodes-721da4919f66#46e3)
   - 모든 node 를 global-lock 잡아야해서, 몽고DB 에서도 지양합니다
 
-### 레디스 클러스터
-
+## 클러스터
 https://backtony.github.io/redis/2021-09-03-redis-3/ 
 
 <img src='3.png' width="50%">
@@ -80,8 +73,11 @@ https://backtony.github.io/redis/2021-09-03-redis-3/
 
 3대의 Redis 서버가 구축되어 있는 환경에서 node1: 0 - 5460, node2: 5461 - 10922, nod3: 10923 - 16384 으로 분산되어 저장합니다
 
-### 레디스 센티널
-
+## 센티널
 https://backtony.github.io/redis/2021-09-02-redis-2/
 
 <img src='4.png' width="50%">
+
+## Stream (Pub/Sub)
+
+## Spin-Lock
