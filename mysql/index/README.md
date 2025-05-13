@@ -147,7 +147,7 @@ Clustered Indexes 가 아닌 다른 모든 인덱스는 모두 Secondary Indexes
   - cons
     - 첫번째 컬럼이 다양하다면 (cardinality 높음) 너무 많은 쿼리가 (내부저긍로) 수행되므로 비효율
 
-<img src="7.png" width="50%">
+<img src="../mvcc/1.png" width="50%">
 
 ## [스캔 방향](https://tech.kakao.com/posts/351)
 MySQL 8.x 부터 DESC 인덱스의 생성을 지원합니다. (기존에도 DESC 는 문법적으로 허용지만 인덱스는 ASC 로 생성되고, 조회시 반대로 읽어야 했음)
@@ -161,4 +161,4 @@ MySQL 8.x 부터 DESC 인덱스의 생성을 지원합니다. (기존에도 DESC
   
 그래서 인덱스 생성 자체를 역방향으로 하면 해당 단점을 해결할 수 있습니다
 
-<img src="8.png" width="50%">
+<img src="../mvcc/2.png" width="50%">
