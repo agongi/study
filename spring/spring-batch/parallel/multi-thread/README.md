@@ -1,7 +1,6 @@
 ## Multi-thread
 
 ```
-
 https://jojoldu.tistory.com/493
 ```
 

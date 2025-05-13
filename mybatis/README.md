@@ -1,7 +1,6 @@
 # MyBatis
 
 ```
-
 https://mybatis.org/mybatis-3/
 ```
 

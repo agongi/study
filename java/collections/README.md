@@ -1,7 +1,6 @@
 ## Java Collections
 
 ```
-
 https://en.wikipedia.org/wiki/Java_collections_framework
 http://tutorials.jenkov.com/java-collections/index.html
 ```

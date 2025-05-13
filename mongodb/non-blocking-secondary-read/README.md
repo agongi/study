@@ -1,7 +1,6 @@
 # Non-blocking Secondary Reads
 
 ```
-
 https://www.mongodb.com/blog/post/secondary-reads-mongodb-40
 https://medium.com/geekculture/mongodb-read-from-secondary-to-boost-performance-dca938a680ac
 ```

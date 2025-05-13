@@ -1,7 +1,6 @@
 ## \<T\> vs \<?\>
 
 ```
-
 https://itexpertsconsultant.wordpress.com/2016/04/24/difference-between-list-liste-listobject-and-list-in-java/
 ```
 

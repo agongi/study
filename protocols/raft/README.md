@@ -1,7 +1,6 @@
 # Raft Consensus Algorithm
 
 ```
-
 https://d2.naver.com/helloworld/5663184
 https://yoongrammer.tistory.com/50
 ```

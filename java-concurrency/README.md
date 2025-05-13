@@ -1,7 +1,6 @@
 # Java Concurrency
 
 ```
-
 http://javarevisited.blogspot.com
 http://tutorials.jenkov.com/java-concurrency/index.html
 http://www.javaworld.com/article/2078809/java-concurrency/java-concurrency-java-101-the-next-generation-java-concurrency-without-the-pain-part-1.html

@@ -1,7 +1,6 @@
 # Query Plans
 
 ```
-
 https://www.mongodb.com/docs/manual/core/query-plans/
 ```
 

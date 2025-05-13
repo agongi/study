@@ -1,7 +1,6 @@
 ## Closure
 
 ```
-
 http://d2.naver.com/helloworld/4911107
 ```
 

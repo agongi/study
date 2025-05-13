@@ -1,7 +1,6 @@
 ## OCSP Stapling
 
 ```
-
 https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 ```
 

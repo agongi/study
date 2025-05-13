@@ -1,7 +1,6 @@
 ## RestTemplate
 
 ```
-
 http://blog.saltfactory.net/using-resttemplate-in-spring
 http://cakas.tistory.com/9
 ```

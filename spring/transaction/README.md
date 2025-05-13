@@ -1,7 +1,6 @@
 # Transaction
 
 ```
-
 http://javacan.tistory.com/entry/Handle-DomainEvent-with-Spring-ApplicationEventPublisher-EventListener-TransactionalEventListener
 https://www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth
 ```

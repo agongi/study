@@ -2,7 +2,6 @@
 Equivalent to TCP connection repair or TCP session migration
 
 ```
-
 https://lwn.net/Articles/495304/
 https://tools.ietf.org/html/draft-snoeren-tcp-migrate-00
 http://blog.nattyhacker.com/2013/07/transferable-tcp-connection.html

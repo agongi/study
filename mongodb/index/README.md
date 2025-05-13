@@ -1,7 +1,6 @@
 # Index
 
 ```
-
 https://docs.mongodb.com/manual/indexes/
 https://www.mongodb.com/docs/manual/core/index-creation/
 https://medium.com/swlh/mongodb-indexes-deep-dive-understanding-indexes-9bcec6ed7aa6

@@ -1,7 +1,6 @@
 ## @DependsOn - SmartLifeCycle
 
 ```
-
 https://www.baeldung.com/spring-depends-on
 ```
 

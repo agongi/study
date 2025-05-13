@@ -1,7 +1,6 @@
 ## Properties
 
 ```
-
 https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
 https://www.mkyong.com/java/java-properties-file-examples/
 https://blog.outsider.ne.kr/794

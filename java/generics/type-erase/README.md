@@ -1,7 +1,6 @@
 ## Type erase
 
 ```
-
 https://docs.oracle.com/javase/tutorial/java/generics/genTypes.html
 ```
 

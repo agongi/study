@@ -1,7 +1,6 @@
 ## Boot Features Testing
 
 ```
-
 https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing
 ```
 

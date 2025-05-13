@@ -1,7 +1,6 @@
 ## HTTP Cache-Control
 
 ```
-
 http://cyberx.tistory.com/9
 https://www.netmanias.com/ko/post/blog/5654/cdn-http/http-cache-control-expiration-and-validation
 https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching

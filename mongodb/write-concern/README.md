@@ -1,7 +1,6 @@
 # Write Concern
 
 ```
-
 https://docs.mongodb.com/manual/reference/write-concern/
 https://www.mongodb.com/docs/manual/core/journaling
 ```

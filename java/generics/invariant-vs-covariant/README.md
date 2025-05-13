@@ -1,7 +1,6 @@
 ## Invariant vs Covariant
 
 ```
-
 https://jackjeong.tistory.com/54?category=802500
 ```
 

@@ -4,7 +4,6 @@ Java fundamental of try-with-resources.
 > The try-with-resources statement lets you free from closing instance resources explicitly by closing it automatically.
 
 ```
-
 https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
 http://d2.naver.com/helloworld/1219
 ```

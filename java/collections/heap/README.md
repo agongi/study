@@ -1,7 +1,6 @@
 ## Heap
 
 ```
-
 https://ratsgo.github.io/data%20structure&algorithm/2017/09/27/heapsort
 ```
 

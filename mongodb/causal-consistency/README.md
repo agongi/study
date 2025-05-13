@@ -1,7 +1,6 @@
 # Causal Consistency
 
 ```
-
 https://www.mongodb.com/docs/current/core/causal-consistency-read-write-concerns/
 https://hyunki1019.tistory.com/177
 ```

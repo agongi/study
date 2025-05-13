@@ -1,7 +1,6 @@
 # Execution Plan
 
 ```
-
 https://12bme.tistory.com/73?category=682920
 ```
 

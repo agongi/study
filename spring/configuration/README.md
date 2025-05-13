@@ -1,7 +1,6 @@
 ## @Configuration
 
 ```
-
 http://haviyj.tistory.com/33
 ```
 

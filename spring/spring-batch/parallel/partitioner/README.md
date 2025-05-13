@@ -1,7 +1,6 @@
 ## Partitioner
 
 ```
-
 https://www.baeldung.com/spring-batch-partitioner
 https://jojoldu.tistory.com/550?category=902551
 https://jobjava00.github.io/language/java/framework/spring-batch/partitioner/

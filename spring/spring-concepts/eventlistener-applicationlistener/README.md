@@ -1,7 +1,6 @@
 ## @EventListener - ApplicationListener
 
 ```
-
 https://www.baeldung.com/spring-events
 ```
 

@@ -4,7 +4,6 @@ It has no handshaking dialogues, and thus exposes the user's program to any unre
 >###### UDP uses a simple connectionless transmission model with a minimum of protocol mechanism
 
 ```
-
 http://chimera.labs.oreilly.com/books/1230000000545/ch03.html
 https://en.wikipedia.org/wiki/User_Datagram_Protocol
 ```

@@ -1,7 +1,6 @@
 # Orphan Documents
 
 ```
-
 https://docs.mongodb.com/manual/reference/read-concern/
 https://www.mongodb.com/docs/v6.0/reference/glossary/#std-term-orphaned-document
 ```

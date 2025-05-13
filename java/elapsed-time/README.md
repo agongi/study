@@ -1,7 +1,6 @@
 ## Elapsed Time
 
 ```
-
 https://www.baeldung.com/java-measure-elapsed-time
 - (why nanos preferred) https://namocom.tistory.com/649
 ```

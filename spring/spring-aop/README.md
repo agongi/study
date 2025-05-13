@@ -1,7 +1,6 @@
 ## Spring AOP
 
 ```
-
 https://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html
 https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
 https://www.mkyong.com/spring/spring-aop-examples-advice/

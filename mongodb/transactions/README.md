@@ -1,7 +1,6 @@
 # Transactions
 
 ```
-
 https://docs.mongodb.com/manual/core/write-operations-atomicity/
 ```
 

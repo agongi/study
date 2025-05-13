@@ -1,7 +1,6 @@
 # Sharded Cluster
 
 ```
-
 https://docs.mongodb.com/manual/sharding/
 https://docs.mongodb.com/manual/core/sharding-shard-key/
 https://docs.mongodb.com/manual/tutorial/migrate-chunks-in-sharded-cluster/

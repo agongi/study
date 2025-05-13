@@ -1,7 +1,6 @@
 # Namespace
 
 ```
-
 https://kubernetes.io/docs/tasks/administer-cluster/namespaces
 ```
 

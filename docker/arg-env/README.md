@@ -1,7 +1,6 @@
 ## ARG vs ENV
 
 ```
-
 https://stackoverflow.com/questions/40902445/using-variable-interpolation-in-string-in-docker
 ```
 

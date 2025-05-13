@@ -1,7 +1,6 @@
 ## instanceof
 
 ```
-
 https://jistol.github.io/java/2017/08/22/different-instanceof-isassignablefrom/
 ```
 

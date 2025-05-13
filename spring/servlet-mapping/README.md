@@ -1,7 +1,6 @@
 ## /* vs /
 
 ```
-
 http://lng1982.tistory.com/97
 https://okky.kr/article/145481
 ```

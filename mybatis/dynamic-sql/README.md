@@ -1,7 +1,6 @@
 # Dynamic SQL
 
 ```
-
 http://www.mybatis.org/mybatis-3/dynamic-sql.html
 ```
 

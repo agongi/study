@@ -4,7 +4,6 @@ Java design pattern of Factory.
 >###### This pattern `separate dependency` between provider and client class.<br> Once class A has been changed, but class B doesn't need to concern of it.<br> (Factory class has all dependencies inside)
 
 ```
-
 http://blog.jdm.kr/180
 ```
 

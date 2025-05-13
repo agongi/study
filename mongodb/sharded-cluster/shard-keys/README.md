@@ -1,7 +1,6 @@
 # Shard Keys
 
 ```
-
 https://www.mongodb.com/docs/manual/core/sharding-shard-key/
 ```
 

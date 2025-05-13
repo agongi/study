@@ -1,7 +1,6 @@
 ## Queue
 
 ```
-
 https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
 ```
 

@@ -1,7 +1,6 @@
 ## Smoke Test vs Sanity Test
 
 ```
-
 https://www.guru99.com/smoke-sanity-testing.html
 ```
 

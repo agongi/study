@@ -1,6 +1,5 @@
 # Duplicated record
 ```
-
 https://jason-heo.github.io/mysql/2014/03/05/manage-dup-key2.html
 ```
 
