@@ -1,10 +1,8 @@
 # Redis
-
 ```
 https://github.com/redis-study/redis-summary
 https://redis.io/docs/
 ```
-
 ### Index
 - [Persistence](persistence)
 
@@ -78,6 +76,18 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
 
 <img src='4.png' width="50%">
 
-## Stream (Pub/Sub)
+## 메세지
+### [Streams](https://docs.spring.io/spring-data/redis/reference/redis/redis-streams.html)
+- 영속성
+  - `영속적`으로 가지고 있음
+  - 그에 따라 offset 을 이용해서 특정 시점부터 읽을 수 있음
+- 전달 방식
+  - `Polling`
+
+### [Pub/Sub](https://docs.spring.io/spring-data/redis/reference/redis/pubsub.html)
+- 영속성
+  - Broadcasting 기반으로 동작하고 `유실`
+- 전달 방식
+  - (구독을 통한) `Push`
 
 ## Spin-Lock
