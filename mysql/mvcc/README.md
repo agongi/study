@@ -1,34 +1,36 @@
 # MVCC (Multi Version Concurrency Control)
 ```
 https://mangkyu.tistory.com/288
-https://dkswnkk.tistory.com/718
+https://amaran-th.github.io/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/[MySQL]%20%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%20%EA%B2%A9%EB%A6%AC%EC%88%98%EC%A4%80%EA%B3%BC%20MVCC/
 ```
 
-MVCC는 하나의 레코드에 대해 여러 버전을 유지함으로써, 트랜잭션 간 충돌 없이 읽기와 쓰기가 병행되도록 합니다.
+MVCC는 하나의 레코드의 여러 버전을 유지하여, `락 없이` 동시성을 높이는 방법입니다.
+
+- `변경전` 데이터: Undo Log 에 저장
+- `변경될` 데이터: Buffer Pool 에 저장
+
+## Undo Log (== 버전 관리)
+```sql
+UPDATE member SET area = "경기" WHERE member_id
+```
+
+해당 쿼리의 동작을 정리하면 아래와 같습니다:
+- 커밋 여부와 상관없이 버퍼풀 (메모리) 내용 변경
+  - Undo Log 에는 변경 전 값 저장
+- (다른 트랜잭션) SELECT 시 Undo Log 에 저장된 `N-개의 버전에서 자신의 TxID 보다 낮은` 데이터 조회
+  -  트랜잭션 ID는 순차적으로 증가하며, 나중에 시작된 트랜잭션은 더 큰 ID를 가집니다
+- 트랙잭션 종료
+  - Commit: 현재 상태 유지 (춧후 버퍼풀의 내용은 디스크에 저장)
+  - Rollback: Undo Log 에 저장된 값으로 복구
+
+> Undo 에 저장된 데이터는 필요로 하는 트랜잭션이 없을 때까지 유지후 삭제
 
 <img src="1.png" width="50%">
 
-- A: 진행중
-- B, C: commit 완료 및 undo 저장
-
-이런 상황에서 (undo 로그에서) A 가 보는 TxID 는 오래전 데이터 이므로, old undo 는 정리되지 않습니다.
-
-## Undo
-- Update/Delete 쿼리 수행시 시스템 장애를 대응하기 위해(시스템 복구를 위해) Redo 로그에 요청 내용 기록
-- 버퍼 풀에 요청에 대한 내용을 기록
-- 변경되기 전 데이터는 index와 함께 Undo 로그에 복사
-- 종료
-  - 트랜잭션 정상 종료 및 커밋 시 버퍼 풀에 있는 내용을 디스크에 저장
-  - 트랜잭션 롤백 시 Undo 로그에 기록된 내용을 다시 복원
-
-InnoDB는 이와 같이 버퍼 풀, Undo 로그를 통해서 MVCC를 지원한다.
-
-### Redo (복원)
-Redo 는 주기적인 checkpoint 이벤트가 발행되면 최종적으로 disk 에 저장됩니다.
-
-> 즉 복원이 가능한 데이터는 마지막 checkpoint 까지의 데이터 입니다
-> 
-### 잠금 없는 일관된 읽기 (Non-Locking Consistent Read)
-non-locking select (isolation: Serializable 이 아닌경우) 는 `현재 record lock 이 잡혀있더라도` UNDO 를 통해 `대기없이` select 를 수행할 수 있습니다
-
-<img src="2.png" width="50%">
+## Redo Log (== 복원)
+데이터 변경 내용을 Redo Log 에 기록해서, 비정상 종료시 데이터 복구에 사용 합니다.
+- Commit 후 디스크에 기록되지 않은 경우, Redo Log 를 통해 복구
+  - Redo Log 자체도 버퍼에 저장하고, I/O 를 줄이기 위해 주기적으로 디스크 동기화
+ 
+## 잠금 없는 일관된 읽기 (Non-Locking Consistent Read)
+`현재 record lock 이 잡혀있더라도` Undo 를 통해 `대기없이` select 를 수행할 수 있습니다. (Serializable 격리레벨이 아닌경우)
