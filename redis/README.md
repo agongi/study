@@ -90,4 +90,42 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
 - 전달 방식
   - (구독을 통한) `Push`
 
-## Spin-Lock
+## [Spin-Lock](https://hdbstn3055.tistory.com/271)
+SET command 를 통해 (timeout 설정하면서) 값을 세팅하고, 적절한 interval 로 체크하는 구현방식 입니다.
+
+```java
+// 사용방법
+public T submit(Callable<T> callable) {
+    if (tryLock()) {
+        try {
+            return callable.call();
+        } catch (Exception e) {
+            // logging
+            throw new Exception();
+        } finally {
+            unlock(cacheName, key);
+        }
+    }
+}
+
+// 간단한 구현체
+private boolean tryLock() {
+  try {
+    while (true) {
+      boolean acquired = redisTemplate.opsForValue().setIfAbsent("KEY", "VALUE", "TIMEOUT");
+      // acquired?
+      if (acquired) {
+        return true;
+      }
+      // timeout
+      if (isTimeout(startTime, acquireTimeoutInMillis)) {
+        return false;
+      }
+      // interval
+      TimeUnit.MILLISECONDS.sleep(DEFAULT_TIMEOUT_MILLIS);
+    }
+  } catch (Exception e) {
+    return false;
+  }
+}
+```
