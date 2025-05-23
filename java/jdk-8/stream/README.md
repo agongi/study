@@ -1,4 +1,4 @@
-## Java 8 Stream
+## Stream
 
 ```
 http://d2.naver.com/helloworld/4911107
@@ -24,7 +24,7 @@ public class StreamTest {
 
     @Getter
     @Setter
-    @AllArgsConstructor
+    @RequiredArgsConstructor
     @ToString
     private class Name {
         private int id;

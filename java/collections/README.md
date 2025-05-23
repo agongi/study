@@ -1,4 +1,4 @@
-## Java Collections
+## Collections
 
 ```
 https://en.wikipedia.org/wiki/Java_collections_framework

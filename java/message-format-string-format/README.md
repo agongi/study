@@ -1,10 +1,9 @@
-## MessageFormat.format() vs String.format()
-
+# MessageFormat.format() vs String.format()
 ```
 https://stackoverflow.com/questions/2809633/difference-between-messageformat-format-and-string-format-in-jdk1-5
 ```
 
-#### MessageFormat.format()
+## MessageFormat.format()
 ```java
 @Test
 public void messageFormatTest() {
@@ -17,7 +16,7 @@ public void messageFormatTest() {
 }
 ```
 
-#### String.format()
+## String.format()
 ```java
 @Test
 public void stringFormatTest() {

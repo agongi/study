@@ -1,10 +1,6 @@
 # Pattern/Matcher
 
-
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class PatternTest {
   private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9]+$");

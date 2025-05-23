@@ -1,5 +1,4 @@
-## NIO (New Input/Output)
-
+# NIO (New Input/Output)
 ```
 https://docs.oracle.com/javase/tutorial/essential/io/file.html
 https://mkyong.com/tutorials/java-io-tutorials/
@@ -8,16 +7,11 @@ http://palpit.tistory.com/640
 https://javapapers.com/java/java-nio-file-read-write-with-channels/
 http://eincs.com/2009/08/java-nio-bytebuffer-channel/
 ```
-
-#### index
-
+### index
 - [ByteBuffer](bytebuffer)
-
 ***
-
 ## Files
-
-<img src='images/1.png'/>
+<img src="1.png" width="50%"/>
 
 | Stream                                         | Channel           |
 | ---------------------------------------------- | ----------------- |
@@ -36,8 +30,7 @@ http://eincs.com/2009/08/java-nio-bytebuffer-channel/
   - Files.newBufferedReader
   - ~~(Channel 을 쓴다면) Files.newByteChannel#read~~
 
-### Resource - Files#lines
-
+## Resource - Files#lines
 Resource => String 을 통해 처리하는 방식이다.
 
 ```java
@@ -53,8 +46,7 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-### InputStream - Files#lines
-
+## InputStream - Files#lines
 InputStream => String 을 통해 처리하는 방식이다.
 
 ```java
@@ -76,8 +68,7 @@ public static void main(String[] args) throws IOException {
 | InputStreamReader | char (string 단건)           | #read   |
 | BufferedReader    | string (string \n 만큼 읽음) | \#lines |
 
-### File - Files#lines
-
+## File - Files#lines
 기존 패키지 호환을 위해 java.io.File 이 필요하면, 이렇게 처리하자.
 
 ```java
@@ -92,8 +83,7 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-### InputStream - OutputStream
-
+## InputStream - OutputStream
 Stream - Stream 으로 직접 이용할때는 아래로 일괄처리.
 
 ```java
@@ -126,7 +116,6 @@ public static void main(String[] args) throws IOException {
 ```
 
 ## ClassLoader
-
 Resource 를 읽을때 1) ClassPath 2) Class 에서 읽을때의 경로 지정이 다르다.
 
 ```java
@@ -144,12 +133,10 @@ public static void main(String[] args) throws IOException {
 - ClassLoader 를 이용해서 읽을때는, 이미 absolute path 이므로 `/` 없이 지정해야한다.
 - Class 로 부터 읽을때는, 클래스 기준에서의 relative path 이므로, `/` 지정이 필요하다.
 
-## Paths
-
+# Paths
 Path 는 기본적으로 `FileSystem 을 기준`으로 한다.
 
 - String
-
 ```java
 public static Path of(String first, String... more) {
   return FileSystems.getDefault().getPath(first, more);
@@ -159,7 +146,6 @@ public static Path of(String first, String... more) {
 그게 아니면 URI 을 통해서 가져온다. URI 는 Resource 에서 convert 가능하므로 대부분의 포맷에서 가능하다.
 
 - URI
-
 ```java
 public static Path of(URI uri) {
   String scheme =  uri.getScheme();
@@ -168,7 +154,6 @@ public static Path of(URI uri) {
 ```
 
 - File
-
 ```java
 public static void main(String[] args) throws IOException {
   File file = new File("some/path");
@@ -177,7 +162,6 @@ public static void main(String[] args) throws IOException {
 ```
 
 - Resource
-
 ```java
 public static void main(String[] args) throws IOException {
   Resource resource = new ClassPathResource("some/resource");

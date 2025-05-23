@@ -1,4 +1,4 @@
-# Java Concurrency
+# Concurrency
 
 ```
 http://javarevisited.blogspot.com

@@ -1,22 +1,22 @@
-## Nested Class
+# Nested Class
 
 ```
-http://javarevisited.blogspot.kr/2012/12/inner-class-and-nested-static-class-in-java-difference.html
-http://stackoverflow.com/questions/70324/java-inner-class-and-static-nested-class
-http://stackoverflow.com/questions/1353309/java-static-vs-non-static-inner-class
-http://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
-http://dicky-programmingjoy.blogspot.kr/2007/04/why-use-private-static-method.html
+https://javarevisited.blogspot.kr/2012/12/inner-class-and-nested-static-class-in-java-difference.html
+https://stackoverflow.com/questions/70324/java-inner-class-and-static-nested-class
+https://stackoverflow.com/questions/1353309/java-static-vs-non-static-inner-class
+https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
+https://dicky-programmingjoy.blogspot.kr/2007/04/why-use-private-static-method.html
 https://stackoverflow.com/questions/1953530/why-does-java-prohibit-static-fields-in-inner-classes
 ```
 
-<img src="https://github.com/agongi/study/blob/master/java/nested-class/images/Screen%20Shot%202017-06-09%20at%2001.22.27.png">
+<img src="1.png" width="50%">
 
-### Purpose
+## Purpose
 - The class that is only used in one place
 - Increased readable and maintenance
   - Nesting small class within top-level class can place code closer and precise
 
-### Static-Nested & Non-Static-Nested Class
+## Static-Nested & Non-Static-Nested Class
 - Access fields of enclosing class even private
   - static-nested: X
   - non-static-nested: O
@@ -41,7 +41,7 @@ https://stackoverflow.com/questions/1953530/why-does-java-prohibit-static-fields
   - static-nested: class-level
   - non-static-nested: class-level
 
-### Local & Anonymous Class
+## Local & Anonymous Class
 - Declared location
   - local & anonymous: in-a-block (typically method body)
 
@@ -64,17 +64,19 @@ https://stackoverflow.com/questions/1953530/why-does-java-prohibit-static-fields
 
 > Local class is subset of Inner class, It means that It can't define static field but constant variables. Because constant typically declared `static final` will be transformed to each code snippet in compile-time.
 
-### Instantiation
+## Instantiation
 ```java
 class A {
-    class B {}
-    static class C { static int x; }
+    class B {
+        // Constructor
+    }
+    static class C { 
+        static int x; 
+    }
 }
 
-class Test
-{
-    public static void main(String… str)
-    {
+class Test {
+    public static void main(String ...str) {
         A a = new A();
 
         // Non-Static nested (Inner) Class

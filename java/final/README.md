@@ -1,30 +1,18 @@
-## Java final
-Java fundamental of final keyword.
-
-> keyword final has miscellaneous meaning in each locations. e.g. primitive, object, class and method.
-
+# final
 ```
-http://stackoverflow.com/questions/4012167/java-final-modifier
-http://stackoverflow.com/questions/2435163/why-can-final-object-be-modified
-```
+https://stackoverflow.com/questions/4012167/java-final-modifier
+https://stackoverflow.com/questions/2435163/why-can-final-object-be-modified
+````
 
-#### Primitive
-```
-can be set only once. (memory and performance gain [immutable])
-```
+## Primitive
+재정의 불가 (immutable)
 
-#### Method
-```
-can't be @overriden
-```
+## Method
+재정의 불가 (@Override)
 
-#### Object
-```
-can be modified.
-object reference never be changed.
-
-<Example> - java
-
+## Object
+레퍼런스 변경 불가 (mutable)
+```java
 final Object obj = new Object();
 obj.setA("aa"); // okay
 
@@ -32,7 +20,5 @@ Object obj2 = new Object();
 obj = obj2; // fail
 ```
 
-#### Class
-```
-can't be extended
-```
+## Class
+상속 불가

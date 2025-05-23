@@ -1,27 +1,18 @@
-## equals() and/or hashcode()
-Java conceptual comparison between equals() and hashCode() method.
-
->###### Objects which are `.equals() == true` MUST have the same `.hashCode() == true`.
-
+# equals() and/or hashcode()
 ```
-http://stackoverflow.com/questions/17027777/relationship-between-hashcode-and-equals-method-in-java
+https://stackoverflow.com/questions/17027777/relationship-between-hashcode-and-equals-method-in-java
+https://vprog1215.tistory.com/204
 ```
 
-**Principle**
+## 특징
+- 두 객체의 hashCode() 결과가 동일해도, equals() 결과는 다를수 있다
+- 두 객체의 equals() 결과가 동일하면, hashCode() 값도 동일해야 한다
 
-If you have two objects which are `.equals() == true` but `.hashCode() == false`, that is wrong!
+## 필요한 경우
+HashMap (or HashSet) 은 `Object#hashcode / {bucket size}` 를 이용해서 Bucket 을 선택합니다.
+- hashCode(): int 이므로 결과가 빠름
 
-**When to @Override equals() and/or hashCode() method?**
+그후 동일 Bucket 에 저장된 (== Hash Collision) element 들은 `Object#equals` 의 결과를 이용해서 동등성 확인을 합니다
+- equals(): boolean 이므로 모든 필드에 대한 비교가 들어가서 느림
 
-@Override object.equals() method when you need to `check equality of custom object`.
-
-```java
-equality comparison code example
-```
-
-@Override object.hashCode() method when you need to `use custom object as a key in HashMap`.<br>
-HashMap saves and/or reference value based on hashCode of key.
-
-```java
-hashCode comparison code example
-```
+<img src="1.png" width="75%">

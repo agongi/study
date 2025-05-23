@@ -1,4 +1,4 @@
-# Java Varargs
+# Varargs
 Varargs is equal to Array internally based on JDK. Varargs causes create array instance in each invocation.
 
 ```

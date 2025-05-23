@@ -12,9 +12,6 @@ http://wonwoo.ml/index.php/post/899
 
 #### Hello (== Target Class)
 ```java
-/**
- * @author suktae.choi
- */
 @Apple("hello suktae")
 @Service
 public class Hello implements DisposableBean, InitializingBean {
@@ -26,9 +23,6 @@ public class Hello implements DisposableBean, InitializingBean {
 
 #### Apple (== @Interface)
 ```java
-/**
- * @author suktae.choi
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Apple {
@@ -38,9 +32,6 @@ public @interface Apple {
 
 #### AppleProcessor
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 @Component
 public class AppleProcessor implements BeanPostProcessor {
@@ -74,9 +65,6 @@ public class AppleProcessor implements BeanPostProcessor {
 
 #### Main
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class Application {
   public static void main(String args[]) {

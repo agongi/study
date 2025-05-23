@@ -1,14 +1,10 @@
-## Builder pattern
-Java design pattern of Builder.
-
->###### It is useful when a number of parameters of instance constructor is more than 3 or above.
-
+# Builder pattern
 ```
 http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
 http://cleancodes.tistory.com/m/post/15
 ```
 
-**Person.java**
+## Person.java
 ```java
 package com.sec.builder;
 
@@ -68,7 +64,7 @@ public class Person {
 }
 ```
 
-**Main.java**
+## Main.java
 ```java
 package com.sec;
 
@@ -91,7 +87,7 @@ public class Main {
 }
 ```
 
-**Output**
+## Output
 ```
 static initializer PersonBuilder
 static initializer Person
@@ -101,7 +97,7 @@ Person [name=suktae, age=30, addr=kr, zipCode=11111]
 Person [name=company, age=55, addr=null, zipCode=0]
 ```
 
-**Explanation**
+## Explanation
 ```
 1) Instance is created of class PersonBuilder with mandatory parameters
  : new Person.PersonBuilder("suktae", 30)
@@ -126,13 +122,11 @@ Person [name=company, age=55, addr=null, zipCode=0]
  private constructor is loaded with parameter of class PersonBuilder
  ```
 
-**Pros**
- - Especially useful that instance constructor parameters are more than 3 or above<br>
-  (`readability`, ignore-parameter ordering and `avoid human error`)
-
- - It could be `immutable` with final modifier in variables of upper class<br>
-  (private final String name)
-
-**Cons**
- - always need to create `instance of Builder` to make `instance of class`<br>
-  (instance creation cost is increased)
+- Pros
+  - Especially useful that instance constructor parameters are more than 3 or above<br>
+   (`readability`, ignore-parameter ordering and `avoid human error`)
+  - It could be `immutable` with final modifier in variables of upper class<br>
+   (private final String name)
+- Cons
+  - always need to create `instance of Builder` to make `instance of class`<br>
+   (instance creation cost is increased)

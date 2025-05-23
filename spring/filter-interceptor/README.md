@@ -30,9 +30,6 @@ Each filter methods are invoked in following conditions:
 - destroy(): destroy
 
 ```java
-/**
- * @author suktae.choi
- */
 public class SessionFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -74,9 +71,6 @@ public class SessionFilter implements Filter {
 ```
 
 ```java
-/**
- * @author suktae.choi
- */
 @Component("myfilter")
 public class SessionFilter implements Filter {
     @Autowired

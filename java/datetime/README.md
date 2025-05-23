@@ -1,4 +1,4 @@
-## Datetime
+# Datetime
 
 ```
 http://blog.eomdev.com/java/2016/04/01/%EC%9E%90%EB%B0%948%EC%9D%98-java.time-%ED%8C%A8%ED%82%A4%EC%A7%80.html
@@ -6,8 +6,7 @@ http://d2.naver.com/helloworld/645609
 ```
 
 ## LocalDate
-
-Instant 를 이용한 conversion 은 아래와 같습니다.
+Instant 를 이용한 conversion 은 아래와 같습니다:
 
 ```java
 // to
@@ -23,7 +22,6 @@ date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 ```
 
 ## LocalDateTime
-
 - now
 - from
   - parse
@@ -73,7 +71,6 @@ Date.from(localDateTime.toInstant(ZoneOffset.ofHours(9)));
 ```
 
 ## ZonedDateTime
-
 - now
 - from
   - parse
@@ -123,7 +120,6 @@ Date.from(zonedDateTime.toInstant());
 ```
 
 ## Instant
-
 ```java
 @Test
 public void instantTest() {
@@ -141,25 +137,19 @@ public void instantTest() {
 ```
 
 ## Utility
-
 ### Duration
-
 초/분/시 를 표현
-
 ```java
 Duration duration = Duration.between(LocalDateTime.now(), LocalDateTime.now().minusHours(1));
 ```
 
 ### Period
-
 일/월/년 을 표현
-
 ```java
 Period period = Period.between(LocalDate.now(), LocalDate.now().minusDays(1));
 ```
 
 ### ZoneRegion extends ZoneId
-
 Region 이나 UTC 기준으로 생성한다. public method 가 제공되지 않아 ZondId 를 통해 생성가능하다.
 
 ```java
@@ -168,22 +158,19 @@ ZoneId zoneIdUTC = ZoneId.of("UTC+09:00");
 ```
 
 ### ZoneOffset extends ZoneId
-
 offset 을 제공해서 생성한다.
 
 ```java
 ZoneId zoneOffset = ZoneOffset.of("+09:00");
 ```
 
-둘의 차이점은 ZoneRules 의 유무이다. 각 region 마다 summer-time 같은 rule 이 존재 할수있는데
+둘의 차이점은 ZoneRules 의 유무 입니다. 각 region 마다 summer-time 같은 rule 이 존재 할수있는데
 
 - ZoneOffset: Rule 미포함
 - ZoneResion: Rule 포함
 
 ## 차이점
-
 ### Instant vs Timestamp
-
 \#toString 시 zone 의 유무만 다르고 정확하게 동일한 시간대를 의미
 
 > 대신 timestamp 는 int 라서 2038 이후의 시간을 표현하지 못함. instant 는 long
@@ -211,7 +198,6 @@ timestamp=2020-03-15 22:16:37.688885
   - SystemDefaultZone 의 시간으로 표시 (한국에선 +09:00)
 
 ### java.sql.Date vs java.util.Date
-
 - java.util.Date
   - Represents Date + Time
   - **nanos truncated**
@@ -232,7 +218,6 @@ timestamp=2020-03-15 22:16:37.688885
 > Prior to JDK 8
 
 ## Convert
-
 ### Date - String
 ```java
 // date to string
@@ -247,7 +232,6 @@ Date date = DateUtils.parseDate(now, "yyyy-MM-dd");
 ```
 
 ### Binding
-
 ```java
 // DB to Entity
 @DateTimeFormat("yyyy-MM-dd")
@@ -258,7 +242,6 @@ private String dateString;
 private Date regDate;
 ```
 
-### Operation
 ### Modification
 ```java
 Date date = new Date();

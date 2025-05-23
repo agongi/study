@@ -13,9 +13,6 @@ https://stackoverflow.com/questions/21827548/spring-get-current-applicationconte
   - Get values programmatically
 
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 @Component
 public class RedisTypeProvider implements ApplicationContextAware, EmbeddedValueResolverAware {
@@ -59,9 +56,6 @@ public class RedisTypeProvider implements ApplicationContextAware, EmbeddedValue
 ```
 
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class ApplicationTest {
 

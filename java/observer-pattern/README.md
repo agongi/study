@@ -8,11 +8,8 @@ http://egloos.zum.com/iilii/v/3902774
 
 #### WatcherImpl.java
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class WatcherImpl implements Watcher {
   private ArrayList<Observer> observers = new ArrayList<>();
@@ -50,9 +47,6 @@ public class WatcherImpl implements Watcher {
 
 #### ObserverImpl.java
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class ObserverImpl1 implements Observer {
   @Override
@@ -64,9 +58,6 @@ public class ObserverImpl1 implements Observer {
 
 #### Application.java
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class Application {
   public static void main(String[] args) {

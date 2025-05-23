@@ -1,13 +1,10 @@
-## Factory Pattern
-Java design pattern of Factory.
-
->###### This pattern `separate dependency` between provider and client class.<br> Once class A has been changed, but class B doesn't need to concern of it.<br> (Factory class has all dependencies inside)
-
+# Factory Pattern
 ```
-http://blog.jdm.kr/180
+https://velog.io/@ellyheetov/Factory-Pattern
 ```
 
-`public static factory pattern` is especially useful when there is needs of making different instance with the same input parameters. Constructor never separate it but it is simple to make it different with factory pattern as following :
+객체는 속성은 변경이 빈번함에 따라 생성자도 같이 변경이 필요합니다.
+객체의 생성을 담당하는 클래스를 한 곳에서 관리하여 결합도를 줄이기 위하여 팩토리 패턴이 존재합니다.
 
 ```java
 public class Demo {
@@ -27,7 +24,6 @@ public class Demo {
     return new Demo(a+b, a-b);
   }
 }
-
 ```
 
 **Quick reference**
@@ -47,7 +43,7 @@ public class Demo {
                 └── Demo.java
 ```
 
-**Fruit.java**
+## Fruit.java
 ```java
 package com.sec.factory;
 
@@ -56,12 +52,11 @@ public interface Fruit {
 }
 ```
 
-**Apple.java**
+## Apple.java
 ```java
 package com.sec.factory;
 
 public class Apple implements Fruit {
-
 	@Override
 	public void print() {
 		System.out.println("Apple");		
@@ -69,12 +64,11 @@ public class Apple implements Fruit {
 }
 ```
 
-**Melon.java**
+## Melon.java
 ```java
 package com.sec.factory;
 
 public class Melon implements Fruit {
-
 	@Override
 	public void print() {
 		System.out.println("Melon");		
@@ -82,7 +76,7 @@ public class Melon implements Fruit {
 }
 ```
 
-**FruitFactory.java**
+## FruitFactory.java
 ```java
 package com.sec.factory;
 
@@ -105,10 +99,9 @@ public class FruitFactory {
 ```
 
 > It uses `public static method` to get instance in factory class. This way is also used in singleton pattern.
-
 > `Reflection` is used in Factory class for avoiding hell of if ~ else statement loop.
 
-**Main.java**
+## Main.java
 ```java
 package com.sec;
 
@@ -126,8 +119,6 @@ public class Main {
     }
 }
 ```
-
-**Output**
 ```
 Apple
 Melon

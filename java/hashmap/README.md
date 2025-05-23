@@ -1,4 +1,4 @@
-## HashMap
+# HashMap
 It is a `{key - value}` data structure which insert and/or select values based on **hashCode of key**
 
 ```
@@ -9,9 +9,8 @@ http://starplatina.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%BB%AC%EB%A0%89%EC%85
 http://egloos.zum.com/iilii/v/4457500
 ```
 
-### Principle
-#### get() and/or put() operation
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202017-03-25%20at%2000.44.56.png">
+## get() and/or put() operation
+<img src="1.png">
 
 - call map.get(key)
 - invoked key.hashCode()
@@ -23,7 +22,7 @@ http://egloos.zum.com/iilii/v/4457500
 
 > map.get(key) put(key) are **heavy** operation
 
-#### containsKey() vs get()
+## containsKey() vs get()
 ```java
 // anti-pattern
 if (map.containsKey(key)) {
@@ -39,7 +38,7 @@ if (value != null) {
 ```
 `.containsKey()` and `.get()` use **the same method** that looks up the whole buckets to find corresponding entry. Using .containsKey() before calling .get() is redundant.
 
-#### entrySet() vs keySet()
+## entrySet() vs keySet()
 Most common use of iteration of Map<> is to use entrySet(). It would cover all cases whether extract key or value. **map.get()** is a heavy-operation to look up all buckets to pick up specific value.
 
 ```java
@@ -72,8 +71,8 @@ for (Data value : map.values()) {
 }
 ```
 
-### Collision
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202016-02-26%20at%2022.07.22.png" width="50%">
+## Collision
+<img src="2.png" width="50%">
 
 HashCode collision could happen because a number of object can be defined is larger than 2^32 and the same hash can be generated in each different key.
 
@@ -88,12 +87,12 @@ If size is 10 and keys are 1 or 11 or 21, index (hash) is equal to 1.
 
 Here is the way how to avoid collision.
 
-#### 1. Separate chaining
+### 1. Separate chaining
 LinkedList<br>
 Additional heap is required in each insert<br>
 Dynamic array
 
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202016-02-26%20at%2022.07.30.png" width="50%">
+<img src="3.png" width="50%">
 
  - insert : index[x] is conflicted, easily add next node using LinkedList
  - select : get index from hash of key, directly access index[x] and linearly search list until key is equal to
@@ -101,8 +100,7 @@ Dynamic array
 
 > About JDK 1.8 uses LinkedList when the number of nodes is less than 8, otherwise Tree (red-black) for performance.
 
-#### 2. Open addressing
-#### 2.1. Linear probing
+### 2. Open addressing
 Use empty space<br>
 No more additional heap is required<br>
 Fixed array<br>
@@ -111,15 +109,15 @@ Resizing is required - to create new array when origin is about to be full
 
  - insert : 11을 키로 하는 데이타를 그림과 같이 넣으면 1이 키인 데이타와 충돌이 발생한다. (이미 index가 1인 버킷에는 데이타가 들어가 있다.) Linear Probing에서는 아래 그림과 같이 충돌이 발생한 index (1) 뒤의 버킷에 빈 버킷이 있는지를 검색한다. 2번 버킷은 이미 index가 2인 값이 들어가 있고, 3번 버킷이 비어있기 3번에 값을 넣으면 된다.
 
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202016-02-26%20at%2022.07.45.png" width="50%">
+<img src="4.png" width="50%">
 
  - select : key 11에 대해서 검색을 하면, index가 1이기 때문에, array[1]에서 검색을 하는데, key가 일치하지 않기 때문에 뒤의 index를 검색해서 같은 키가 나오거나 또는 Key가 없을때 까지 검색을 진행한다.
 
  - delete : 삭제를 했을 경우 충돌에 의해서 뒤로 저장된 데이타는 검색이 안될 수 있다. 아래에서 좌측 그림을 보자,  2번 index를 삭제했을때, key 11에 대해서 검색하면, index가 1이기 때문에 1부터 검색을 시작하지만 앞에서 2번 index가 삭제되었기 때문에, 2번 index까지만 검색이 진행되고 정작 데이타가 들어 있는 3번 index까지 검색이 진행되지 않는다.<br>
  그래서 이런 문제를 방지하기 위해서 우측과 같이 데이타를 삭제한 후에, Dummy node를 삽입한다. 이 Dummy node는 실제 값을 가지지 않지만, 검색할때 다음 Index까지 검색을 연결해주는 역할을 한다.
 
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen%20Shot%202016-02-26%20at%2023.41.26.png" width="50%">
+<img src="5.png" width="50%">
 
 **Performance**
 
-<img src="https://github.com/agongi/study/blob/master/java/how-hashmap-works/images/Screen.Shot.2016-02-26.at.22.08.56.png" width="50%">
+<img src="6.png" width="50%">

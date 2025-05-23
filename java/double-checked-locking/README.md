@@ -1,21 +1,23 @@
-## Double Checked Locking
-
+# Double-Checked Locking
 ```
 http://javarevisited.blogspot.kr/2014/05/double-checked-locking-on-singleton-in-java.html
 ```
 
+- Thread can **join synchronized block at the same time**
+- Check again in block to guarantee make it only once
+
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class DoubleCheckedTest {
     private static DoubleCheckedTest instance = null;
 
     public DoubleCheckedTest getInstance() {
-        if (instance == null) {     // check condition in concurrent
-            synchronized (DoubleCheckedTest.class) {    // enter synchronized block simultaneously
-                if (instance == null) {     // check condition again, and lock until one thread completed
+        // double-checked locking
+        if (instance == null) {
+            // enter synchronized block N-Threads at the same time
+            synchronized (DoubleCheckedTest.class) {
+                // double-checked locking
+                if (instance == null) {
                     instance = new DoubleCheckedTest();
                 }
             }
@@ -23,12 +25,5 @@ public class DoubleCheckedTest {
 
         return instance;
     }
-
-    public static void main(String[] args) {
-        // ...
-    }
 }
 ```
-
-- Thread can **join synchronized block simultaneously**
-- Check again in block to guarantee make it only once

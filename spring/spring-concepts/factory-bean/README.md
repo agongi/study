@@ -19,18 +19,12 @@ http://stackoverflow.com/questions/4970297/how-to-get-beans-created-by-factorybe
 ### Code
 #### JacksonBean
 ```java
-/**
- * @author suktae.choi
- */
 public class JacksonBean {
 }
 ```
 
 #### JacksonFactory
 ```java
-/**
- * @author suktae.choi
- */
 public class JacksonFactory {
     private static JacksonBean jacksonBean;
 
@@ -55,9 +49,6 @@ public class JacksonFactory {
 #### JacksonFactoryBean
 
 ```java
-/**
-  * @author suktae.choi
-  */
 public class JacksonFactoryBean implements FactoryBean<JacksonBean> {
   private ApplicationContext applicationContext;
   private JacksonBean jacksonBean;
@@ -89,9 +80,6 @@ public class JacksonFactoryBean implements FactoryBean<JacksonBean> {
 
 #### Main
 ```java
-/**
- * @author suktae.choi
- */
 @Slf4j
 public class ApplicationTest {
   public static void main(String args[]) {
