@@ -36,26 +36,23 @@ ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
 
 > ByteBuffer only can access kernel buffer
 
-<img src="2.png" width="75%">
-
-## Terms
-- mark - save point
-- position - current position
-- limit - logical endpoint
-- capacity - physical endpoint
+## Basic Operations
+### Terms
+- mark: save point
+- position: current position
+- limit: logical endpoint
+- capacity: physical endpoint
 
 ```
 0 <= mark <= position <= limit <= capacity
 ```
 
-## Basic Operations
 ### Position
-
 - \#flip: `limit` 을 `position` 위치로 세팅후, 처음으로 돌아감
   - limit = position
   - position = 0
 
->현재까지 읽은만큼 다시 읽을때
+> 현재까지 읽은만큼 다시 읽을때
 
 - \#rewind: 처음으로 돌아감
   - position = 0
@@ -74,7 +71,6 @@ ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
 > 잔여 (안읽은) data 는 buf 처음으로 복사하고, 나머지는 capacity 만큼 다시 채워서 처리할때
 
 ### CRUD
-
 - \#put(byte)
 - \#get
 
@@ -85,7 +81,7 @@ ByteBuffer directBuff = ByteBuffer.allocateDirect(10);
 ```java
 // String to byte[]
 byte[] bytes = "suktae".getBytes();
-log.debug(bytes.toString());
+System.out.println(Arrays.toString(bytes));
 
 // 2016-10-24 23:48:46 [main] [DEBUG] com.games.Application - [B@1c2c22f3]
 ```
@@ -94,7 +90,7 @@ log.debug(bytes.toString());
 ```java
 // byte[] to ByteBuffer
 ByteBuffer buf = ByteBuffer.wrap(bytes);
-log.debug(buf.toString());
+System.out.println(buf);
 
 // 2016-10-24 23:48:46 [main] [DEBUG] com.games.Application - java.nio.HeapByteBuffer[pos=0 lim=6 cap=6]
 ```
@@ -102,9 +98,10 @@ log.debug(buf.toString());
 ### ByeBuffer to byte[]
 ```java
 // ByteBuffer to byte[]
+ByteBuffer buf = ByteBuffer.wrap(new byte[0]);
 byte[] arr = new byte[buf.capacity()];
 buf.get(arr);
-log.debug(arr.toString());
+System.out.println(arr);
 
 // 2016-10-24 23:48:46 [main] [DEBUG] com.games.Application - [B@4c75cab9
 ```
@@ -112,8 +109,8 @@ log.debug(arr.toString());
 ### byte[] to String
 ```java
 // byte[] to String
-String result = new String(arr);
-log.debug(result);
+String result = new String(new byte[0]);
+System.out.println(result);
 
 // 2016-10-24 23:48:46 [main] [DEBUG] com.games.Application - suktae
 ```
