@@ -160,14 +160,19 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 <img src="6.png" width="75%">
 
 ## Changes in JDK 8
-- Perm 사라짐 (MetaSpace 영역으로 바뀜 - native memory)
+- Permanent 사라짐 (MetaSpace 영역 (native memory) 으로 바뀜)
   - PermGen 영역이 삭제되어 heap 영역에서 사용할 수 있는 메모리 증가
   - PermGen영역을 스캔 하기 위해 소모되었던 시간이 감소되어 GC 성능이 향상 되었다.
 
 ### Before JDK 8
-- `new / survive / old / perm / native`  
+`eden / survive0,1 / old / Permanent / native`
+
+<img src="7.png" width="75%">
 
 ### After JDK 8
-- `new / survive / old / metaSpace (native)`
+`eden / survive0,1 / old / Metaspace (native)`
 
-- 기존 perm 에 저장되어 문제를 유발하던 static/string literal 은 heap 으로 옮겨져 GC 대상으로 변경되었습니다 
+<img src="8.png" width="75%">
+
+기존 Permanent 에 저장되던 Static/String 변수/상수는 Heap 으로 옮겨져 GC 대상이 되었습니다.
+Platform Thread 가 생성되면 할당되는 1MB 정도의 Stack 영역은 Native Memory 영역에 할당됩니다 -> 이 제약을 극복하는 [Virtual Thread](../virtual-thread) 가 JDK 21 에서 추가되었습니다.

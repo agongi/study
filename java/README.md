@@ -1,5 +1,4 @@
 # JAVA
-
 ```
 http://javarevisited.blogspot.com
 https://docs.oracle.com/javase/tutorial/index.html
@@ -59,7 +58,6 @@ https://docs.oracle.com/javase/tutorial/index.html
 - [JDK 11](jdk-11)
 - [JDK 17](jdk-17)
 - [JDK 21](jdk-21)
-
 ***
 
 ### Series
