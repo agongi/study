@@ -1,5 +1,4 @@
 # Kubernetes
-
 ```
 https://kubernetes.io/ko/docs/concepts/
 https://github.com/grepsean/k8skr-study-architecture
@@ -32,7 +31,6 @@ https://github.com/sungsu9022/study-kubernetes-in-action/issues
 <img src='1.png' width="50%"/>
 
 ### Node
-
 컨테이너화된 어플리케이션을 실행하는 단위 (VM and/or PM).
 
 > 어플리케이션의 구성요소인 Pod 을 호스팅한다.
@@ -70,7 +68,6 @@ master-worker 의 단위가 아닌 cluster 구축시 필요한 요소들
   - cluster 내부에서의 DNS 서비스 (CoreDNS 가 현재는 kube-dns 를 대체)
 
 ## Objects
-
 영속성을 가지는 객체 (== Persistent Entity). 클러스터의 상태를 표현한다.
 
 즉 하나의 의미가 있는 단위이고 (== 의도), 클러스터는 오브젝트의 `현재 상태`를 체크하여 `최대한 의도한 상태`로 조율한다.
@@ -79,11 +76,9 @@ master-worker 의 단위가 아닌 cluster 구축시 필요한 요소들
 - status: 현재 상태
 
 ### Container
-
 docker image 로 동작하는 실행단위
 
 ### Pod
-
 kube 애플리케이션의 기본 실행 단위. `일반적 시스템에서 1대의 서버단위`로 보면된다.
 
 동일한 pod 내의 container 는 network/disk 을 공유한다.
