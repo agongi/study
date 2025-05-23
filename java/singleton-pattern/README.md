@@ -1,12 +1,12 @@
 # Singleton Pattern
-The design pattern to generate `ONLY ONE` object.
-
 ```
 https://stackoverflow.com/questions/24538509/does-the-java-classloader-load-inner-classes
 https://javarevisited.blogspot.jp/2012/07/when-class-loading-initialization-java-example.html
 https://javarevisited.blogspot.sg/2011/03/10-interview-questions-on-singleton.html
 https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
 ```
+
+The design pattern to generate `ONLY ONE` object.
 
 ## 1. Basic
 ```java
@@ -127,8 +127,6 @@ public class Main {
     }
 }
 ```
-
-### Output
 ```
 Static block(Demo) called
 ---------------------------------------

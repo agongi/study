@@ -1,5 +1,4 @@
 # Reference
-
 ```
 https://d2.naver.com/helloworld/329631
 https://darksilber.tistory.com/entry/Java-Reference-Object%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%ED%99%9C%EC%9A%A9strongweak-reference

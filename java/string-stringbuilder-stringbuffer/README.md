@@ -26,4 +26,4 @@ http://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder
 
 > If your string can change, and will be accessed from multiple threads, use a StringBuffer because StringBuffer is synchronous so you have thread-safety.
 
-![alt-string-stringbuilder-stringbuffer](https://github.com/agongi/study/blob/master/java/string-stringbuilder-stringbuffer/images/Screen%20Shot%202016-02-14%20at%2015.50.02.png)
+<img src="1.png" width="50%">

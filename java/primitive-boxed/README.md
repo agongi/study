@@ -1,8 +1,4 @@
 # Primitive type vs Boxed Primitives
-Java conceptual comparison between Primitive type and Boxed Primitives.
-
-> ###### Use primitive type unless boxed primitives is required in certain cases.
-
 ```
 https://msdn.microsoft.com/en-us/library/yz2be5wk.aspx
 https://truepia.tistory.com/185
@@ -34,7 +30,6 @@ Stored in heap as object.
 > Use boxed primitive only in certain cases.
 
 ## 3. Autoboxing vs Unboxing
-
 Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type. When the CLR boxes a value type, it wraps the value inside a System.Object and stores it on the managed heap. Unboxing extracts the value type from the object. Boxing is implicit; unboxing is explicit.
 
  - Boxing : Boxing is used to store value types in the garbage-collected heap. Boxing is an implicit conversion of a value type to the type object or to any interface type implemented by this value type. Boxing a value type allocates an object instance on the heap and copies the value into the new object.

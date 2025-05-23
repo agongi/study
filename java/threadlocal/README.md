@@ -1,5 +1,4 @@
 # ThreadLocal
-
 ```
 https://stackoverflow.com/questions/43851389/if-thread-local-map-contains-a-weak-reference-to-the-threadlocal-object-then-wh
 https://stackoverflow.com/questions/2784009/why-should-java-threadlocal-variables-be-static
@@ -24,7 +23,6 @@ public class SessionFilter extends OncePerRequestFilter {
   }
 }
 ```
-
 ```java
 public class SessionContextHolder {
   private static ThreadLocal<SoftReference<Session>> context = new ThreadLocal<>();
@@ -51,7 +49,7 @@ web request 가 왔을때 간단히 session value 를 저장하는 예제이다.
 
 그리고 필요가 없어진 context 는 memory-leak 방지를 위해 clear 를 명시적으로 해주어야 한다.
 
-### Why Static
+## Why Static
 Because if it were an instance level field, then it would actually be "Per Thread - Per Instance", not just a guaranteed "Per Thread." That isn't normally the semantic you're looking for.
 
 Usually it's holding something like objects that are scoped to a User Conversation, Web Request, etc. You don't want them also sub-scoped to the instance of the class.
@@ -62,7 +60,6 @@ Usually it's holding something like objects that are scoped to a User Conversati
 
 ## Details
 ### Store
-
 ThreadLocal 은 단순히 getter/setter 를 제공하는 wrapper 이다. 실제 data 는 Thread 에 저장된다.
 
 대신 Thread 에서는 Map<ThreadLocal, Object> 의 map 을 사용해서
@@ -90,7 +87,6 @@ static class ThreadLocalMap {
   }
 }
 ```
-
 ```java
 /**
  * ThreadLocal.java
@@ -107,7 +103,6 @@ public void set(T value) {
 
 ### GC
 우선 아래 케이스가 GC 대상인지 확인해보자:
-
 - Map.Entry<> 의 key = null;
 
 ```java
@@ -126,7 +121,6 @@ public static void main(String[] args) throws InterruptedException {
   assertTrue(!weakMap.containsKey(key));
 }
 ```
-
 ```
 Map 자체의 reference 가 있지만
  - Map<String, Object> weakMap = ...
@@ -232,7 +226,6 @@ private static final ThreadLocal<WeakReference<Object>> context = new ThreadLoca
 
 ## Patterns
 ### Collection
-
 Collection\<Reference\<Object\>\> 는 GC 발생시 어떻게 클리어되는지 알아보자
 
 ```java

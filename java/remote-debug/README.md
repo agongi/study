@@ -1,5 +1,4 @@
 # Remote Debug
-
 ```
 https://www.baeldung.com/spring-debugging
 ```
@@ -21,7 +20,7 @@ java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9999 -jar R
 - address: port 지정
 
 ## IDE 설정
-<img src='images/1.png'/>
+<img src="1.png" width="50%">
 
 Run/Debug Configuration -> Remote 에서 아래와 같이 설정
 

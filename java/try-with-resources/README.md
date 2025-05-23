@@ -1,12 +1,10 @@
 # try-with-resources
-Java fundamental of try-with-resources.
-
-> The try-with-resources statement lets you free from closing instance resources explicitly by closing it automatically.
-
 ```
 https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
 http://d2.naver.com/helloworld/1219
 ```
+
+Try-with-resources statement lets you free from closing instance resources explicitly by closing it automatically.
 
 ## 1. Concept
 A resource is an object that must be closed after the program is finished with it. The try-with-resources statement ensures that each resource is closed at the end of the statement.

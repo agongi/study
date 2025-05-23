@@ -1,12 +1,10 @@
-## Observer pattern
-Observer pattern is listening interesting changes from particular instance.
-
+# Observer pattern
 ```
 http://javarevisited.blogspot.com/2011/12/observer-design-pattern-java-example.html
 http://egloos.zum.com/iilii/v/3902774
 ```
 
-#### WatcherImpl.java
+## WatcherImpl.java
 ```java
 @Slf4j
 @RequiredArgsConstructor
@@ -45,7 +43,7 @@ public class WatcherImpl implements Watcher {
 }
 ```
 
-#### ObserverImpl.java
+## ObserverImpl.java
 ```java
 @Slf4j
 public class ObserverImpl1 implements Observer {
@@ -56,7 +54,7 @@ public class ObserverImpl1 implements Observer {
 }
 ```
 
-#### Application.java
+## Application.java
 ```java
 @Slf4j
 public class Application {
@@ -75,9 +73,7 @@ public class Application {
   }
 }
 ```
-
-#### Output
-```java
+```
 2016-08-28 22:02:42 [main] DEBUG c.l.l.model.watcher.impl.WatcherImpl - value:suktae -> [ObserverImpl1]
 2016-08-28 22:02:42 [main] DEBUG c.l.l.m.observer.impl.ObserverImpl1 - ObserverImpl1 notified: [suktae]
 2016-08-28 22:02:42 [main] DEBUG c.l.l.model.watcher.impl.WatcherImpl - value:suktae -> [ObserverImpl2]

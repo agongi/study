@@ -1,12 +1,12 @@
 # Serializable
-
 ```
 https://techblog.woowahan.com/2550/
+https://techblog.woowahan.com/2551/
 https://javarevisited.blogspot.kr/2011/04/top-10-java-serialization-interview.html
 https://blog.naver.com/kkson50/220564273220
 ```
 
-<img src="images/20151210_130446.png" width="75%">
+<img src="1.png" width="75%">
 
 ## Overview
 An object can be represented as a `sequence of bytes` that includes the object's data as well as `information about the object's type and the types of data stored` in the object to **transfer to other JVM or be stored as file**.
@@ -63,13 +63,12 @@ private byte[] convertToBytes(byte[] bytes) throws IOException {
 ### When to use it
 The system purely stored/transfer java serialized byte[] are:
 
-- cache
-- session
+- `Cache (Redis, Memcached)`
+- Cession
 - RMI (== RPC)
 
 ## Concerns
 ### Add and/or Delete fields
-
 no problem
 
 ## Modify field (type)

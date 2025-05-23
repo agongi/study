@@ -1,5 +1,4 @@
 # Selector
-
 ```
 https://engineering.linecorp.com/ko/blog/do-not-block-the-event-loop-part2
 ```
