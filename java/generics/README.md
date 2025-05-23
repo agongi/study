@@ -1,23 +1,34 @@
-## Generics
-
+# Generics
 ```
 https://docs.oracle.com/javase/tutorial/java/generics/index.html
 https://rangken.github.io/blog/2015/effective-java-4/
 ```
-
-#### Index
-
+### Index
 - [Super type token](https://www.baeldung.com/java-super-type-tokens)
-- [Type erase](type-erase)
-- [\<T\> vs \<?\>](t-vs-question)
-- [Invariant vs Covariant](invariant-vs-covariant)
-
+- [\<T\> vs \<?\>](t-question)
+- [Invariant vs Covariant](invariant-covariant)
 ***
 
-### Type parameter
+제네릭은 `컴파일 타임: 타입 체크 및 자동 캐스팅`을 제공하며, `런타임: 타입 정보가 제거`됩니다.
 
-- Upper Bounded
+```java
+List<String> list = new ArrayList<>();
+list.add("Hello");
 
+// 컴파일: 자동 캐스팅
+String s = list.get(0);
+=> String result = (String) list.get(0); // 자동 캐스팅
+
+// 런타임: 타입 정보 제거
+List<String> list = new ArrayList<>();
+=> List list = new ArrayList<>();
+```
+
+## Type parameter
+- read: `T`
+- write: `T`
+
+### Upper Bounded
 ```java
 public class Box<T> {
   public <E extends Number> void inspect(E e) {
@@ -31,23 +42,12 @@ public class Box<T> {
 }
 ```
 
-- Lower Bounded
-
-It doesn't supported
-
-- Multiple Bounds
-
+### Lower Bounded
 ```java
-Class A     { /* ... */ }
-interface B { /* ... */ }
-interface C { /* ... */ }
-
-<T extends A & B & C>  // ok, A is class
-<T extends B & A & C>  // fail, B is interface
+List<T super Custom>
 ```
 
-### Wildcards
-
+## Wildcards
 - read: `Object`
 - write: Not allowed except `null`
 
@@ -55,25 +55,22 @@ interface C { /* ... */ }
 
 ```java
 private void reverse(List<?> ids) {
-  reverseHelper(ids);
+  add(ids);
 }
 
-private void reverseHelper(/* capture<?> */ List<T> ids) {
+private void add(/* capture<?> */ List<T> ids) {
   for (...) {
     ids.add(i);	// List<?> is captured to List<T> and allowed to write
   }
 }
 ```
 
-#### Upper Bounded
+### Upper Bounded
 ```java
 List<? extends Custom>
 ```
 
-#### Lower Bounded
+### Lower Bounded
 ```java
 List<? super Custom>
 ```
-
-#### Multiple Bounds
-It doesn't supported

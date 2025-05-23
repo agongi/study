@@ -1,11 +1,9 @@
-## Invariant vs Covariant
-
+# Invariant vs Covariant
 ```
 https://jackjeong.tistory.com/54?category=802500
 ```
 
-### Covariant
-
+## Covariant
 Array 는 covariant (공변) 이다. 즉
 
 ```java
@@ -22,8 +20,7 @@ Object strings[] = new String[3];
 strings[0] = new Integer(0);	// ArrayStoreException
 ```
 
-### Invariant
-
+## Invariant
 Collection 은 invariant 하다. 즉 동일한 상속관계일때
 
 `List<Dog> 는 List<Animal>` 의 subtype 이 아니다.

@@ -1,11 +1,9 @@
-## \<T\> vs \<?\>
-
+# \<T\> vs \<?\>
 ```
 https://itexpertsconsultant.wordpress.com/2016/04/24/difference-between-list-liste-listobject-and-list-in-java/
 ```
 
-### [\<T> vs \<?>](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
-
+## [\<T> vs \<?>](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
 T 는 모두 동일하다가 보장되지만, ? 는 보장되지 않는다.
 
 ```java
@@ -28,23 +26,18 @@ public static boolean isEmpty(List<?> list) {
 }
 ```
 
-### Compared in Collection
-
-#### Collection
-
+## Compared in Collection
+### Collection
 Raw type 을 그대로 사용. compile 단계에서 type-check 가 전혀 되지 않으므로, runtime exception 발생
 
-#### Collection\<Object>
-
+### Collection\<Object>
 아래의 Collection\<T\> 와 큰 차이는 없다. (type erase 되면 Object 로 치환되므로)
 
-##### Collection\<T\>
-
+#### Collection\<T\>
 상동
 
 > During the type erasure process, the Java compiler erases all type parameters and replaces each with `its first bound` if the type parameter is bounded, or `Object` if the type parameter is unbounded.
 
-#### Collection\<?>
-
+### Collection\<?>
 wildcard 는 READONLY 로 취급된다. 즉 담겨진 타입의 get 은 가능하지만 set 은 불가능하다. (null 은 set 가능함)
 
