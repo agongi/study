@@ -3,29 +3,31 @@
 https://jackjeong.tistory.com/54?category=802500
 ```
 
-## Covariant
-Array 는 covariant (공변) 이다. 즉
+제네릭은 `불공변을 기본으로 타입 안정성을 보장`합니다.
+
+## Covariant (공변)
+Array 는 covariant (공변) 이다
 
 ```java
-public class Animal {...}
-public class Dog extends Animal {...}
+String[] strings = new String[] { "A", "B" };
+Object[] objects = strings; // 컴파일 가능 (공변)
+
+objects[0] = 100; // ❌ 런타임 오류 (공변 - ArrayStoreException)
 ```
 
-의 상속관계일때, `Dog[] 은 Animal[] 의 subtype` 이 성립한다.
+- 컴파일타임: 가능
+- 런타임
+  - 잘못된 타입의 CUD 발생시 ArrayStoreException 이 발생한다.
 
-또한 타입이 runtime 에 남아있어서, 잘못된 타입의 CUD 발생시 ArrayStoreException 이 발생한다.
+
+## Invariant (불공변)
+Collection 은 invariant (불공변) 이다
 
 ```java
-Object strings[] = new String[3];
-strings[0] = new Integer(0);	// ArrayStoreException
+List<String> strings = new ArrayList<>();
+List<Object> objects = strings; // ❌ 컴파일 오류 (불공변)
 ```
 
-## Invariant
-Collection 은 invariant 하다. 즉 동일한 상속관계일때
-
-`List<Dog> 는 List<Animal>` 의 subtype 이 아니다.
-
-또한 타입이 runtime 때 삭제되어 (type erase 를 통한 raw type 으로 남음. 호환성위함) runtime 에는 exception 미발생한다. 
-
-> 대신 compile-time 때 error 로 잡아야함
-
+- 컴파일타임: 불가능
+- 런타임
+  - 성립하지 않음
