@@ -1,16 +1,13 @@
-## Cyclic Barrier
-
+# Cyclic Barrier
 ```
-
+https://www.baeldung.com/java-cyclic-barrier
 ```
-
-### Overview
 
 지정한 threshold 에 도달할때까지 Thread 들은 await 하고, 도달하면 다음 로직을 같이 수행함.
 
->  재사용가능하므로 cyclic 이 prefix 로 정의됨
+> 재사용가능하므로 cyclic 이 prefix 로 정의됨
 
-<img src="images/cyclic-barrier.png">
+<img src="1.png">
 
 ```java
 public static void main(String[] args) throws InterruptedException, BrokenBarrierException {

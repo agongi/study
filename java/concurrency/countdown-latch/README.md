@@ -1,10 +1,12 @@
 # CountDownLatch
-## Overview
-Main Thread 가 sub-task 의 종료가 보장 된 후, 다음을 처리하는 방식.
+```
+https://www.baeldung.com/java-countdown-latch
+```
 
+Main Thread 가 sub-task 의 종료가 보장 된 후, 다음을 처리하는 방식.
 CountDown 이 0 이 되면, block 되었던 main thread 가 resume 되어 작업을 이어서 수행한다.
 
-<img src="images/Screen%20Shot%202019-11-09%20at%2001.20.06.png" width="50%">
+<img src="1.png" width="50%">
 
 ```java
 public static void main(String[] args) throws InterruptedException {

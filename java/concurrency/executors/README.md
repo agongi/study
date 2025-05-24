@@ -1,14 +1,10 @@
 # Thread Pool
-
 ```
 https://stackoverflow.com/questions/9276807/whats-the-advantage-of-a-java-5-threadpoolexecutor-over-a-java-7-forkjoinpool
+https://javarevisited.blogspot.kr/2016/12/difference-between-executor-framework-and-ForkJoinPool-in-Java.html
 ```
 
-### Index
-- [ForkJoin vs Executor](forkjoin-executor)
-
 ***
-
 ## ExecutorService
 ### Executors.newFixedThreadPool()
 - Thread count - fixed
@@ -63,7 +59,7 @@ public static ExecutorService newWorkStealingPool() {
 ```
 
 ## ThreadPoolExecutor
-<img src="images/Screen Shot 2019-06-27 at 01.48.23.png" width=50%>
+<img src="1.png" width=50%>
 
 제공되는 ExecutorService 를 상속하고, pool 생성시 customize 가능하다. 추가로 제공되는 기능도 있다:
 
@@ -98,4 +94,19 @@ public class SchedulerConfiguration {
   }
 }
 ```
+
+## ForkJoinPool vs Executor Framework
+### ForkJoinPool (== JVM default since JDK.7, used in parallelStream())
+- Worker - Runnable or Callable
+- Task - one per thread
+- Queue - One global queue for all shared tasks
+    - It may cause performance **bottleneck once frequent enqueue/dequeue** occurs due to concurrent operation
+
+### Executor Framework
+- Worker - ForkJoinTask
+    - It is **much smaller (lighter)** than callable or runnable
+- Task - Task **divides** separately and each **subtasks** are assigned to threads
+- Queue - One global queue for accepting submit, all thread **hold each queue** separately
+    - Task will be distributed to each threads and enqueue in thread queue
+    - If one is **free to steal**, It dequeues one from it
 

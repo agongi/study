@@ -1,34 +1,28 @@
 # Concurrency
-
 ```
-http://javarevisited.blogspot.com
-http://tutorials.jenkov.com/java-concurrency/index.html
-http://www.javaworld.com/article/2078809/java-concurrency/java-concurrency-java-101-the-next-generation-java-concurrency-without-the-pain-part-1.html
+https://javarevisited.blogspot.com/
+https://jenkov.com/tutorials/java-concurrency/index.html
 https://www.mkyong.com/spring/spring-and-java-thread-example/
-http://redutan.github.io/posts/
-http://aroundck.tistory.com/search/%EB%B3%91%EB%A0%AC
-http://tutorials.jenkov.com/java-concurrency/index.html
+https://redutan.github.io/posts/
+https://aroundck.tistory.com/search/%EB%B3%91%EB%A0%AC
 ```
-
 ### Index
-- [Volatile](volatile)
 - [Executors](executors)
-- [Synchronized](synchronized)
 - [Lock](lock)
 - [CountDownLatch](countdown-latch)
 - [CyclicBarrier](cyclic-barrier)
-- [ABA Concurrency](aba-concurrency)
+- [ABA Problem](aba-problem)
 
 ### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)
 - [Difference between CompletableFuture, Future and RxJava's Observable](https://stackoverflow.com/questions/35329845/difference-between-completablefuture-future-and-rxjavas-observable)
 - [CountDownLatch vs CyclicBarrier](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CountDownLatch.html)
+- [자바 volatile 키워드](https://parkcheolu.tistory.com/16)
+- [Java Volatile 의미](http://thswave.github.io/java/2015/03/08/java-volatile.html)
 
 ***
-
 ## Cores
 ### Intrinsic
-
 고유락 (a.k.a monitor) 라고 부른다. 
 
 > 모든 Object 는 고유락을 소유함
@@ -75,7 +69,7 @@ A 획득 - B 획득 - B 해제 - A 해제
 
 JVM 은 약한 메모리 모델을 선택했다.
 
-<img src="images/5.png" width="75%">
+<img src="1.png" width="75%">
 
 > 강한모델은 H/W 레벨에서 미지원시 sw 로 각 예외처리를 필요함
 >
