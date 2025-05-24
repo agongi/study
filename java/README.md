@@ -20,7 +20,6 @@ https://docs.oracle.com/javase/tutorial/index.html
 - [Final](final)
 - [Jackson](jackson)
 - [Datetime](datetime)
-- [Number](number)
 - [Pattern-Matcher](pattern-matcher)
 - [ElapsedTime](elapsed-time)
 - [ThreadLocal](threadlocal)

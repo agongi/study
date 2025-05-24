@@ -7,6 +7,7 @@ https://www.mkyong.com/java/java-convert-object-to-map-example/
 ### Blog
 - [Annotations](http://www.baeldung.com/jackson-annotations)
 - [MixIn](https://github.com/FasterXML/jackson-docs/wiki/JacksonMixInAnnotations): Entity 수정없이 선택적으로 필드 포함/제외
+
 ***
 ## Serialize
 ### to JSON
