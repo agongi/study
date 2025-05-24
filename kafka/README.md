@@ -90,18 +90,16 @@ Record 를 저장하는 파일의 보관주기는 아래와 같습니다:
 log.cleanup.policy=compact
 ```
 
-<img src='1-2.png' width='75%'>
+<img src='1-2.png' width='50%'>
 
 ## 토픽/파티션
-1개의 토픽은 N 개의 파티션으로 분산되어 저장됩니다.
+브로커는 1개의 토픽의 메세지를 N-개의 파티션으로 분산해서 Record 저장 합니다
+파티션은 로그파일로 (== sengment) 메세지를 저장하고, `파티션 리더를 통해서만 CRUD 가 발생`합니다. (즉 Producer, Consumer 는 파티션 리더와 통신)
 
-파티션은 Broker 에 로그파일 (==segment) 로 저장되며 파티션 리더만을 통해 CRUD 가 발생합니다. 즉 Producer, Consumer 는 파티션 리더와 통신합니다.
-
-> 파티션단위의 순서는 보장됨
+> 파티션 단위의 메세지 순서는 보장 됩니다
+> 파티션은 늘릴수 있지만, 줄일수 없습니다 (데이터 유실)
 
 <img src='1.png' width='75%'>
-
-파티션은 늘릴수만 있고, 줄일수는 없습니다 (데이터 유실)
 
 ## Broker
 ### [Replication](https://docs.confluent.io/kafka/design/replication.html)
@@ -154,6 +152,10 @@ log.cleanup.policy=compact
   - 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
 
 producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper 를 통해 파티션정보 metadata 를 받음) consumer 도 consumer-group 에서의 partition 할당은 consumer-leader 가 연산한후 통보 > ACKS 받습니다. (브로커 부담을 줄이기 위함)
+
+## Zookeeper
+리더선출을 위해 사용합니다 (기존에는 offset 을 기록했지만 __consumer_offsets 토픽 사용으로 대체)
+카프카 4.0 부터는 Zookeeper 없이도 동작할 수 있습니다 (KRaft 모드)
 
 ## Producer
 메세지를 전송하는 단위 입니다.
