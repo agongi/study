@@ -1,5 +1,4 @@
 # Kafka
-
 ```
 https://kafka.apache.org/documentation
 https://docs.confluent.io/kafka/introduction.html
@@ -19,46 +18,49 @@ https://bysssss.tistory.com/46
 
 ### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
-- [Schema Registry](https://medium.com/@gaemi/kafka-%EC%99%80-confluent-schema-registry-%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%8A%A4%ED%82%A4%EB%A7%88-%EA%B4%80%EB%A6%AC-1-cdf8c99d2c5c)
+
+### Versions
+- [Kafka 4.0](kafka-4.0)
 
 ***
-
 ## 기본 개념
-### Topic/Partition
-
-1개의 토픽은 N 개의 파티션으로 분산되어 저장됩니다.
-
-파티션은 Broker 에 로그파일 (==segment) 로 저장되며 파티션 리더만을 통해 CRUD 가 발생합니다. 즉 Producer, Consumer 는 파티션 리더와 통신합니다.
-
-> 파티션단위의 순서는 보장됨
-
-<img src='1.png' width='75%'>
+### Persistence
+- OS는 디스크 성능 개선 위해 `메모리를 적극 활용한 read-ahead와 write-behind 방식으로 페이지 캐시`를 적극적으로 활용 합니다
+- 페이지 캐시는 OS 가 관리하는 영역이므로 카프카가 재시작 되더라도 유지됩니다
+  - 물론 OS 가 재시작되면 페이지 캐시도 초기화 됩니다..
 
 ### Page cache
-카프카는 모든 IO 에 OS 레벨의 page cache 를 활용합니다. (별도로 카프카 내부에서의 캐싱 없음)
+카프카는 모든 I/O 에 OS 레벨의 page cache 를 활용합니다. (별도로 카프카 내부에서의 캐싱 없음)
 
 <img src='1-1.png' width='75%'>
 
 https://docs.confluent.io/platform/current/kafka/deployment.html#memory 의 가이드에 따르면
 
 - 카프카 자체에 대한 -Xmx -Xms 는 5G 정도면 충분
-- 나머지는 모두 OS 가 사용하도록 (page cache) 메모리는 충분히 여유있게 유지
+- 나머지는 모두 OS 가 사용하도록 (page cache) 충분히 여유있게 유지
 
 해야합니다.
 
 ### Zero copy (== Direct memory or DMA)
-page cache 를 통해 memory 에 있는 record 는
+`디스크 -> 커널 버퍼 -> NIC`로 바로 전달해서 네트워 구간을 최적화 합니다.
 
-- producer -- broker
-- broker -- consumer
+>### 기존 (Non-Zero Copy) 방식
+- 디스크에서 데이터를 커널 버퍼로 읽음
+- 커널 버퍼의 데이터를 사용자 공간(User Space) 버퍼로 복사
+- 사용자 공간 버퍼에서 다시 소켓 커널 버퍼로 복사
+- 소켓 버퍼에서 네트워크 카드로 전송
 
-간의 통신에서 zero-copy 를 통해 수신/전송 됩니다. 이를 통해 JVM heap 의 사용률을 줄일 수 있고 불필요한 복사비용이 감소합니다.
+>### Zero Copy (sendfile) 방식
+- 커널이 직접 디스크 파일을 소켓으로 전송 (sendfile() 호출).
+- 사용자 공간을 거치지 않고, 디스크 → 커널 버퍼 → 네트워크 카드로 바로 전달.
+
+<img src='1-3.png' width='75%'>
 
 ### Segment (== file)
-브로커에 저장되는 레코드의 (물리적인) 로그파일 입니다.
+브로커에 저장되는 레코드의 (물리적인) 로그파일 입니다
 
 - 브로커는 파티션의 모든 세그먼트에 대해 각각 하나의 열린 파일 핸들러를 유지 합니다
-- 따라서 OS File Descriptor 는 [충분한 숫자](https://docs.confluent.io/current/kafka/deployment.html#file-descriptors-and-mmap) 로 설정해야 합니다
+- 따라서 OS 의 File Descriptor 는 [충분한 숫자](https://docs.confluent.io/current/kafka/deployment.html#file-descriptors-and-mmap) 를 설정해야 합니다
 
 ```bash
 # current opened socket counts
@@ -72,24 +74,34 @@ $ sysctl -p
 
 ### Log Retention
 Record 를 저장하는 파일의 보관주기는 아래와 같습니다:
-
-- 시간: 특정시간이 지난 파일 삭제 (default. 7-days)
-- 사이즈: 특정사이즈가 오버되면 파일 삭제 (default. 1G)
-- 주기: retention 체크 주기 (default. 5-mins)
+- Time: 특정시간이 지난 파일 삭제 (기본값: `7-days`)
+- Size: 특정사이즈를 넘은 파일 삭제 (기본값: 1G)
+- 주기: retention 체크 주기 (기본값: 5-mins)
 
 ### Log Compaction
-Log compaction ensures that Apache Kafka will always `retain at least the last known value` for `each message key` within the log of data for a `single topic partition`.
+토픽 > 파티션에 저장되어 있는 Record 의 Kafka Key 를 기준으로 `최신 1개만 유지` 하는 기능 입니다.
 
-<img src='1-1.png' width='75%'>
-
-- kafka-key 를 기준으로 message compaction 을 진행하므로, compaction 사용시 key 는 필수값 입니다
-  - record 의 key 는 원래 비필수
-- 각 파티션에서의 unique 만 보장합니다 (global unique 하지 않음)
+- `카프카 키`를 기준으로 Compation 진행하므로 필수
+  - 원래 메세지의 Kafka-key 는 비필수
+- `각 파티션의 유니크만 보장`합니다 (global unique 하지 않음)
   - 그에 따라 파티션 rebalancing or 추가시 중복이 발생 할 수 있습니다
 
 ```json
 log.cleanup.policy=compact
 ```
+
+<img src='1-2.png' width='75%'>
+
+## 토픽/파티션
+1개의 토픽은 N 개의 파티션으로 분산되어 저장됩니다.
+
+파티션은 Broker 에 로그파일 (==segment) 로 저장되며 파티션 리더만을 통해 CRUD 가 발생합니다. 즉 Producer, Consumer 는 파티션 리더와 통신합니다.
+
+> 파티션단위의 순서는 보장됨
+
+<img src='1.png' width='75%'>
+
+파티션은 늘릴수만 있고, 줄일수는 없습니다 (데이터 유실)
 
 ## Broker
 ### [Replication](https://docs.confluent.io/kafka/design/replication.html)
@@ -146,7 +158,6 @@ producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper
 ## Producer
 메세지를 전송하는 단위 입니다.
 
-### 구성요소
 <img src='3.png' width='75%'>
 
 - kafkaProducer
@@ -202,8 +213,6 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 ## Consumer
 메세지를 수신하는 단위 입니다.
-
-### 구성요소
 
 <img src='4.png' width='75%'>
 
