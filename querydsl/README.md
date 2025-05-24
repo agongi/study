@@ -9,6 +9,7 @@ https://www.baeldung.com/intro-to-querydsl
 - [JPASubQuery vs JPAExpressions](https://jojoldu.tistory.com/379?category=637935)
 - [연관관계 없이 Join 조회하기](https://jojoldu.tistory.com/396)
 
+***
 <img src="1.png" width="75%">
 
 기본적으로 JPQL 을 정적 QClass 를 통해 작성한다. 라는 개념입니다.

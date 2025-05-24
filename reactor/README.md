@@ -1,5 +1,4 @@
 # Reactor
-
 ```
 https://projectreactor.io/docs/core/release/reference
 https://javacan.tistory.com/search/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%A6%AC%EC%95%A1%ED%84%B0%20%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0
@@ -17,10 +16,8 @@ https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
 - [Sinks](https://hanseom.tistory.com/365)
 
 ***
-
 ## Core Features
 ### Publisher (== `Observable` in RxJava)
-
 - Flux - 0...N 개의 데이터를 가짐
 
   ```java
@@ -34,12 +31,10 @@ https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
   ```
 
 ### Subscriber (== `Observer` in Rxjava)
-
 - 서비스로직 구현, 데이터를 소비
   - Consumer<? super T>  consumer
 
 ### Subscription
-
 - executionContext 로 이해하면됨
   - Publisher 의 data 참조하고, Subscriber 가 누구인지 알고있음
   - Subscriber 와 실질적으로 통신하며 데이터를 전달
@@ -75,7 +70,6 @@ public interface Subscription {
 ![1](1.png)
 
 ### Request/Response
-
 - [req] subscription.request(N)
 - [res] for (i = offset; i < N; i++) { subscriber.onNext(datas[i]) }
 
@@ -101,7 +95,6 @@ public interface Subscription {
 > 불필요한 round-trip 을 방지하기위해, 내부적으로 request(N) 후 buffer 에 저장해서 1개씩 응답하는 구현체도 있다.
 
 ### Push/Pull
-
 - Pull
   - 구독 (subscribe) 은 완료된 상태
   - (subscriber -> publisher) #request
@@ -112,7 +105,6 @@ public interface Subscription {
   - (subscriber <- publisher) #onNext 로 데이터를 받음
 
 ### Backpressure
-
 - [req] subscription.request(N) 에서 N 을 조절함
   - 여유가있으면 - N++
   - 여유가없으면 - N--
@@ -146,7 +138,6 @@ public interface Subscription {
 ```
 
 ### Schedulers (== thread pool)
-
 - Schedulers.immediate()
 
 > The current thread
@@ -182,7 +173,6 @@ Reactor 에서 제공하는 blocking APIs (`block()`, `blockFirst()`, `blockLast
 newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 명시적으로 dispose() 를 호출해서 종료필요
 
 ### publishOn/subscribeOn
-
 - publishOn
   - 선언부분 아래부터 지정된 스케쥴러에서 async 로 수행 (== affected below)
   - Typically used for ``fast publisher``, ``slow consumer(s)`` scenarios.
@@ -229,10 +219,8 @@ newXXX() 를 통해 직접 생성한 쓰레드풀은 application shutdown 시 �
 ```
 
 ### ![2](2.png)
-
 ## Sequence
 ### Emission
-
 **정해진 source (ex. Collection) 에서 생성하는 방법**
 
 - just()
@@ -411,7 +399,6 @@ BUFFER[default] - (publisher 의) unbounded-buffer 에 저장
   - state - 없음
 
 ## Handle
-
 - handle(BiConsumer<T, SynchronousSink>)
 
   - filter + map

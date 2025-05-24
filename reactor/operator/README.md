@@ -3,6 +3,7 @@
 ```
 https://luvstudy.tistory.com/100
 https://d2.naver.com/helloworld/2771091
+https://projectreactor.io/docs/core/release/reference/apdx-operatorChoice.html
 ```
 
 ## doOn**
@@ -38,8 +39,7 @@ https://d2.naver.com/helloworld/2771091
 ```
 
 ## Error
-
-- onErrorReturn
+  - onErrorReturn
 - onErrorResume
 
 ## Transform
