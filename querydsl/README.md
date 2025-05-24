@@ -1,7 +1,6 @@
 # QueryDSL
-
 ```
-http://www.querydsl.com/static/querydsl/4.0.1/reference/ko-KR/html_single
+http://querydsl.com/static/querydsl/5.0.0/reference/html_single/
 https://joont92.github.io/jpa/QueryDSL
 https://www.baeldung.com/intro-to-querydsl
 ```
@@ -9,8 +8,6 @@ https://www.baeldung.com/intro-to-querydsl
 ### Blog
 - [JPASubQuery vs JPAExpressions](https://jojoldu.tistory.com/379?category=637935)
 - [연관관계 없이 Join 조회하기](https://jojoldu.tistory.com/396)
-
-***
 
 <img src="1.png" width="75%">
 
@@ -27,7 +24,6 @@ https://www.baeldung.com/intro-to-querydsl
 
 ## Factory 를 사용한 방식
 ### R (Select)
-
 ```java
 JPAQueryFactory query = new JPAQueryFactory(em);
 QCustomer customer = QCustomer.customer;
@@ -38,7 +34,6 @@ Customer bob = query.from(customer)
 ```
 
 ### CUD
-
 ```java
 // update
 queryFactory.update(user)
@@ -57,7 +52,6 @@ queryFactory.delete(user)
 
 ## Factory 를 사용하지 않는 방식
 ### R (Select)
-
 ```java
 JPAQuery query = new JPAQuery(em);
 QCustomer customer = QCustomer.customer;
@@ -68,7 +62,6 @@ Customer bob = query.from(customer)
 ```
 
 ### CUD
-
 ```java
 // update
 new JPAUpdateClause(em, QMember.member)
@@ -129,7 +122,6 @@ List<Customer> dtos = query.select(QEmployee.create(employee.firstName, employee
 > 생성되는 create method 는 Projections.constructor 를 사용합니다. 즉 직접사용도 가능
 
 ### DTO binding
-
 - 생성자
 
 ```java
@@ -159,7 +151,6 @@ List<Customer> dtos = query.select(new QCustomerDTO(customer.id, customer.name))
 ```
 
 - Field
-
 Setter 를 통해 접근
 
 ```java
@@ -177,21 +168,17 @@ List<UserDTO> dtos = query.select(
 Expression\<?\>... 를 넘기는 방식이라 필드명 불일치/생성자 불일치 등의 에러는 Runtime 시점에만 확인 가능하다.
 
 ## 서브쿼리
-
 https://jojoldu.tistory.com/379
 
 JPASubQuery 대신 JPAExpressions
 
 ## Criteria 생성
-
 BooleanExpression 이용해서 Criteria -> toArray expressions 패턴
 
 ## Relation 없는 조인
-
 Hibernate 5.1 이상부터 가능
 
 ## CUD Bulk
-
 1. spring-data 를 사용할 것인가?
    1. @Modifying(clearAutomatically = true) @Query("update ... ") 
    2. 끝
@@ -208,13 +195,11 @@ Hibernate 5.1 이상부터 가능
 > 스냅샷 비교과정은 Objects#equals 로 비교하므로 무거운 작업이다.
 
 ### @DynamicUpdate
-
 전체필드를 update query 에 실어서 보냄. payload 가 크므로 부하가큼
 
 이런 경우변경 필드만 업데이트 되도록, 어노테이션을 타입에 선언하면됨
 
 ### @Transactional(ReadOnly)
-
 readOnly tx 로 마킹되었다면, em.flush 가 발생하지않음
 
 - em#flush 시 수행하는 dirty-check 생략
@@ -223,14 +208,12 @@ readOnly tx 로 마킹되었다면, em.flush 가 발생하지않음
 ## [동작원리 (영속성)](https://github.com/cheese10yun/blog-sample/blob/master/query-dsl/docs/jpa-persistence-context.md)
 
 ### EntityManager 직접사용 or Spring Data
-
 - 영속성 컨텍스트 조회
   - 없으면, DB 조회
   - 영속성 컨텍스트에 저장
 - 결과 리턴
 
 ### JPQL (즉 JQPL 을 생성하는 QueryDSL)
-
 - DB 조회
 - 영속성 컨텍스트에 저장
   - 이미 동일한 식별자 (@Id) 가 있다면 DB 조회 결과는 Discard
@@ -239,7 +222,6 @@ readOnly tx 로 마킹되었다면, em.flush 가 발생하지않음
 이런 의도치 않은 결과를 방지하기위해, #flush 자동호출 설정이 필요하다.
 
 ### Flush Mode
-
 1. 명시적으로 em.flush() 호출
 2. Transaction 종료시, flush() 자동호출
 3. JPQL 실행시점에, flush() 자동호출
@@ -248,13 +230,10 @@ readOnly tx 로 마킹되었다면, em.flush 가 발생하지않음
    3. 그후 DB 조회가 발생하면 원했던 결과가 나옴
 
 ## Appendix
-
 ### MySQL에선 Group by를 하면 정렬도 수행된다고? 
-
 https://jojoldu.tistory.com/477
 
 ### batch_size
-
 https://jojoldu.tistory.com/457
 
 
