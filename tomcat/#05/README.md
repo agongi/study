@@ -1,18 +1,13 @@
-## 톰캣 #05 Deploy
-#### Serial deploy
-
-
->###### 1. ~~By manager~~
-
+# 톰캣 #05 Deploy
+## Serial deploy
+### 1. ~~By manager~~
 tomcat 설치시, manager enable되어 있다면, 웹 UI를 통해 배포를 쉽게 할 수 있다.
 
-![img-manager](https://github.com/agongi/study/blob/master/tomcat/%2305/images/Screen%20Shot%202015-07-07%20at%201.03.59%20AM.png)
+<img src="1.png" width="50%">
 
 **보안상 취약하니, 사용하지 말자**
 
-
->###### 2. By webapps
-
+### 2. By webapps
 server.xml에 기본적으로 다음과 같이 설정되어 있다.
 ```xml
 <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
@@ -23,7 +18,7 @@ server.xml에 기본적으로 다음과 같이 설정되어 있다.
  - unpackWARs: war에 대한 압축해제 유무 설정
  - autoDeploy: tomcat에서 자동으로 war 변경시, deploy할지 설정
 
-![img-webapps](https://github.com/agongi/study/blob/master/tomcat/%2305/images/Screen%20Shot%202015-07-07%20at%2012.40.35%20AM.png)
+<img src="2.png" width="50%">
 
 **자동**: Context 설정이 필요하지 않다.
 
@@ -68,13 +63,11 @@ http://localhost:8080/sample
 기술적으로, war파일의 위치를 제외하고 나머지는 동일하다.
 
 
->###### 3. By context.xml
-
+### 3. By context.xml
 기존에는 server.xml에 Context를 설정했지만, context는 변경이 자주 발생하므로 톰캣 5.5 이상 버젼에서는 context.xml로 따로 사용하도록 권고된다.
 
 server.xml는 다음위치에 있는 \*.xml은 자동으로 loading한다.
-![img-context.xml](https://github.com/agongi/study/blob/master/tomcat/%2305/images/Screen%20Shot%202015-07-08%20at%203.01.06%20AM.png)
-
+<img src="3.png" width="50%">
 
 다음 예제를 살펴보자
 
@@ -92,18 +85,17 @@ or
 http://localhost:8080/hahaha
 ```
 
-
-#### Parallel deploy
+## Parallel deploy
 기존의 방식은 순간적이지만, war 배포 시 tomcat의 재시작이 진행되고 그 순간에는 서비스 장애가 발생한다. 이번에 공부할 parallel deploy에서는 서비스순단 없이 배포를 가능하게 한다.
 
 개략적인 개념은 다음과 같다.
 
-![img-version](https://github.com/agongi/study/blob/master/tomcat/%2305/images/Screen%20Shot%202015-07-08%20at%204.04.52%20AM.png)
+<img src="4.png" width="50%">
 
 기술적으로 구현방법에 대해 알아보자. context.xml파일에 다음과 같이 설정을 한다.
  - docBase: sample##01, sample##02, sample##03 의 형식으로 버전을 구분 ( **##{버전}** )
  - path: 동일
 
-![img-context.xml](https://github.com/agongi/study/blob/master/tomcat/%2305/images/Screen%20Shot%202015-07-08%20at%204.05.03%20AM.png)
+<img src="5.png" width="50%">
 
 다음과 같이 설정시, 동일 path로 2개의 서비스가 running될 수 있으며, 기존 세션은 ##01, 신규 세션은 ##02로 bind되어 배포시에도 기존 유저는 서비스 순단없이 이용이 가능하다.

@@ -1,10 +1,8 @@
-## 톰캣 #09-10 쓰레드 및 모니터링
-#### 쓰레드
-
-
+# 톰캣 #09-10 쓰레드 및 모니터링
+## 쓰레드
 what is thread? 에 대한 질문은 답할수 있으리라 믿는다. 혹시 process vs thread의 개념이 clear하지 않다면, 다음 링크를 참조하자
 
-[process-vs-thread](http://stackoverflow.com/questions/200469/what-is-the-difference-between-a-process-and-a-thread)
+<img src="1.png" width="50%">
 
 Tomcat에서는 CATALINA_HOME}/conf/server.xml의 connector 에서 Thread 관련 설정을 할 수 있다.
 
@@ -28,34 +26,32 @@ Default Max Thread Value = 200
 
 각각의 설정을 명시적으로 추가한다면, 다음과 같다.
 
-![img-thread-settings](https://github.com/agongi/study/blob/master/tomcat/%2309-10/images/Screen%20Shot%202015-07-22%20at%2012.42.06%20AM.png)
+<img src="2.png" width="50%">
 
 설정은 성공적으로 하였지만, 불필요하게 중복적용이 많은 듯 하다. 방법이 없을까? 물론 있다.
 
-![img-executor](https://github.com/agongi/study/blob/master/tomcat/%2309-10/images/Screen%20Shot%202015-07-22%20at%2012.42.15%20AM.png)
+<img src="3.png" width="50%">
 
-
-#### 모니터링
-
->###### jkstatus
+## 모니터링
+### jkstatus
 mod_jk를 통해 apache-tomcat을 연동하였다면, default설정으로 jkstatus가 binding 되어있다.
  - 설정: https://github.com/agongi/study/tree/master/tomcat/%2308
 
-![img-jkstatus](https://github.com/agongi/study/blob/master/tomcat/%2309-10/images/Screen%20Shot%202015-07-22%20at%2012.29.08%20AM.png)
+<img src="4.png" width="50%">
 
->###### visualVM
+>### visualVM
 가장 보편적으로 사용하는 모니터링 도구이다. Tomcat뿐만아니라, JavaVM을 사용하는 모든 Application에 대한 모니터링이 가능하다.
 
  - 설정: http://misoin.tistory.com/42
 
-![img-visualVM](https://github.com/agongi/study/blob/master/tomcat/%2309-10/images/Screen%20Shot%202015-07-22%20at%2012.30.18%20AM.png)
+<img src="5.png" width="50%">
 
->###### JMX
+>### JMX
 또다른 대안으로 JMX도 있다. 살펴보도록 하자
  - 설정: http://lesstif.com/pages/viewpage.action?pageId=20776824
 
-![img-visualVM](https://github.com/agongi/study/blob/master/tomcat/%2309-10/images/Screen%20Shot%202015-07-22%20at%2012.45.11%20AM.png)
+<img src="6.png" width="50%">
 
 여러가지 Monitoring Tool을 살펴보았다. 그렇다면 뭘 써야하지? 결론부터 말하자면, **visualVM** 을 써라.
 
-( JConsole uses only JMX, but VisualVM uses other monitoring technologies like Jvmstat, Attach API and SA in addition to JMX )
+(JConsole uses only JMX, but VisualVM uses other monitoring technologies like Jvmstat, Attach API and SA in addition to JMX)

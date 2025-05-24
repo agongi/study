@@ -1,8 +1,5 @@
-## 톰캣 #04 환경설정
-#### 환경설정
-
-
-###### JVM 설정
+# 톰캣 #04 환경설정
+## JVM 설정
 eclipse를 사용해봤다면, eclipse.ini파일에 다음과 같은 설정을 봤을것이다.
 ```sh
 -Xverify:none
@@ -23,8 +20,7 @@ tomcat과 eclipse는 JVM위에서 동작하는 application이므로 동일하게
 JAVA_OPTS="%JAVA_OPTS%" -Xms128m -Xmx1024m -XX:MaxPermSize=256m -server
 ```
 
-
-###### CLASSPATH 설정
+## CLASSPATH 설정
 classpath설정도 다른 JVM기반 앱과 다르지 않다. 다음 예제를 보자.
 ```sh
 CLASSPATH="$CLASSPATH":/home/hosting_users/siksco7724/www/WEB-INF/lib/mysql-connector-java-5.1.6-bin.jar:
@@ -41,8 +37,7 @@ CLASSPATH="$CLASSPATH":/home/hosting_users/siksco7724/www/WEB-INF/lib/mysql-conn
 touch {CATALINA_HOME}/bin/setenv.sh
 ```
 
-
-#### WAS설정
+## WAS설정
 tomcat이 start 후, servlet/jsp, encoding, session 등 WAS설정이 필요하다. 차례대로 알아보자
  - **{CATALINA_HOME}/conf/web.xml**: tomcat에서 구동되는 모든 web instance에 일괄적용
  - **WEB-INF/web.xml**: 각 service별 별도 설정 가능
@@ -50,15 +45,13 @@ tomcat이 start 후, servlet/jsp, encoding, session 등 WAS설정이 필요하�
 
 tomcat guide를 보면, 시스템별 default설정은 /conf/web.xml에 설정 후, 각 서비스별 설정을 WEB-INF/web.xml하도록 권장한다.
 ex.) tomcat listen port등의 전체설정은, {CATALINA_HOME}/conf/web.xml에 한다.
-![img-server.xml](https://github.com/agongi/study/blob/master/tomcat/%2304/images/Screen%20Shot%202015-07-06%20at%2012.06.21%20AM.png)
+<img src="1.png" width="50%">
 
-
-#### Log
+## Log
 tomcat구동시 /log에 기본적으로 다음의 로그가 생성된다.
-![img-log](https://github.com/agongi/study/blob/master/tomcat/%2304/images/Screen%20Shot%202015-07-05%20at%2011.50.51%20PM.png)
+<img src="2.png" width="50%">
 
 이중 개발자가 log4j or console log를 통해 출력되는 파일은, **catalina.out** 이다. 그리고 기본으로 dailyRolling이 설정되어 일별로 catalina.out파일을 따로 저장한다.
 
-
-#### Standard Directory Layout
-![img-log](https://github.com/agongi/study/blob/master/tomcat/%2304/images/Screen%20Shot%202015-08-19%20at%201.41.58%20AM.png)
+## Standard Directory Layout
+<img src="3.png" width="50%">
