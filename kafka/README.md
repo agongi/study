@@ -93,10 +93,12 @@ log.cleanup.policy=compact
 <img src='1-2.png' width='50%'>
 
 ## 토픽/파티션
-브로커는 1개의 토픽의 메세지를 N-개의 파티션으로 분산해서 Record 저장 합니다
+브로커는 1개의 토픽의 메세지를 N-개의 파티션으로 분산해서 Record 저장 합니다.
+
 파티션은 로그파일로 (== sengment) 메세지를 저장하고, `파티션 리더를 통해서만 CRUD 가 발생`합니다. (즉 Producer, Consumer 는 파티션 리더와 통신)
 
-> 파티션 단위의 메세지 순서는 보장 됩니다
+> 파티션 단위의 메세지 순서는 보장
+
 > 파티션은 늘릴수 있지만, 줄일수 없습니다 (데이터 유실)
 
 <img src='1.png' width='75%'>
@@ -112,7 +114,7 @@ log.cleanup.policy=compact
 - follow partition (을 가지고 있는 broker) 은 메세지 fetch 후 저장
 - 그후 leader 는 commit 하고 producer 에 committed 로 성공 응답합니다
   - 대기하던 producer 는 이제 다음 작업 진행
-- consumer 는 leader partition 을 통해 메세지를 가져가지만 uncommitted 인 메세지 (아직 replication 진행중) 는 가져가지 않도록 카프카가 보장합니다
+  - consumer 는 leader partition 을 통해 메세지를 가져가지만 uncommitted 인 메세지 (아직 replication 진행중) 는 가져가지 않도록 카프카가 보장합니다
 
 복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아니면 ISR` (In-sync-replicas) 로 관리합니다.
 
@@ -154,7 +156,7 @@ log.cleanup.policy=compact
 producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper 를 통해 파티션정보 metadata 를 받음) consumer 도 consumer-group 에서의 partition 할당은 consumer-leader 가 연산한후 통보 > ACKS 받습니다. (브로커 부담을 줄이기 위함)
 
 ## Zookeeper
-리더선출을 위해 사용합니다 (기존에는 offset 을 기록했지만 __consumer_offsets 토픽 사용으로 대체)
+리더선출을 위해 사용합니다 (기존에는 offset 을 기록했지만 `__consumer_offsets` 토픽 사용으로 대체)
 카프카 4.0 부터는 Zookeeper 없이도 동작할 수 있습니다 (KRaft 모드)
 
 ## Producer
@@ -164,10 +166,11 @@ producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper
 
 - kafkaProducer
   - serialization
-  - partitioning
+  - `partitioning`
+    - 파티션은 브로커가 지정 하는게 아니라, producer 가 직접 판단 합니다
   - compression
 - RecordAccumulator
-  - serdes -- partition -- compression 이 완료된 record 가 저장되는 버퍼 입니다
+  - 전송될 record 를 저장하는 버퍼 입니다
   - 주기적으로 Sender 가 fetch 합니다
 - Sender
   - (비동기) Accumulator 에 저장된 record 를 broker 에 전송합니다
@@ -178,25 +181,22 @@ producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper
 - acks
   - 0: no ack from leader (== async)
   - 1: ack from leader
-  - all: ack from all ISR members
+  - `all`: ack from leader & all ISR members (at least once)
 - compression.type
-- enable.idempotence/transaction.id
-  - exactly-once 를 위해 사용하는 옵션
+  - `LZ4 (중간정도의 압축률/성능)`, GZIP, Snappy, ZSTD
+- [enable.idempotence](https://learn.conduktor.io/kafka/idempotent-kafka-producer/)/transaction.id
+  - exactly once (== Transaction) 이 필요한 경우 모두 설정합니다
+  - 내부적으로 idempotent 를 통한 중복제거는 아래의 그림처럼 브로커에서 중복제거를 하는 기능 입니다: 
+
+<img src='3-4.png' width='75%'>
+
 - max.in.flight.requests.per.connection
   - 하나의 커넥션에서 ACK 없이 전송할 수 있는 요청수 (기본값: 5)
+  - `enable.idempotence=true` 로 설정시 배치단위로 성공/실패 처리되어 순서 보장
 - max.block.ms
   - producer#send 시 메시지를 저장하는 Buffer 할당까지 대기하는 시간
 - batch.size(64kb)/linger.ms(10ms)
   - batch 에서 message 를 보내기까지의 size, timeout
-
-### 전송방식
-- at-least once
-  - acks 를 기다리고 실패시 재전송
-- at-mose once
-  - acks 를 기다리지 않음
-- exactly once ([transaction](transactions) 과 연관있음)
-  - PID (producerID) & sequence 의 조합
-  - `enable.idempotence=true`
 
 ### Acks
 acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
@@ -208,7 +208,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 <img src='3-3.png' width='75%'>
 
-### 순서보장  
+### 순서 보장  
 `max.in.flight.requests.per.connection (default: 5)` 의 설정에 따라 batch 로 보내진 메세지중 1개가 실패한 경우 retry 하지만 그로인해 메세지의 순서가 변경 될 수 있습니다.
 
 `enable.idempotence=true` 로 설정한경우 batch 단위로 성공/실패 처리하므로 순서 보장이 가능합니다
@@ -230,16 +230,47 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 ### Consumer Group
 - consumer 는 특정 consumer-group 에 속하고 그룹은 group-id 로 구분됩니다
 - 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer_offsets` 토픽으로 관리합니다.
-- 그룹에 consumer 추가/삭제시 리밸런싱이 발생하고 그 동안은 STW 입니다
+- 컨슈머그룹에 속한 컨슈머의 추가/삭제시 리밸런싱이 발생하고 그 동안은 STW 입니다
+
+### [전송 방식](https://learn.conduktor.io/kafka/delivery-semantics-for-kafka-consumers/)
+- at most once
+  - 메세지를 가져온 시점에 __consumer_offsets 토픽에 커밋 합니다
+  - 그에 따라 메세지 유실이 가능 합니다 
+
+<img src='4-1.png' width='75%'>
+
+- `at least once`
+  - 메세지를 가져온 후 처리하고 __consumer_offsets 토픽에 커밋 합니다
+  - 그에 따라 처리 도중 예외가 발생하면 (아직 커밋 전이므로) 중복 처리가 발생 할 수 있습니다
+
+<img src='4-2.png' width='75%'>
+
+- exactly once ([transaction](transactions) 과 연관있음)
+  - `enable.idempotence=true`, `transaction.id={ANY_ID}`, `isolation.level=read_committed`
+  - Producer: beginTransaction() -> send() -> commitTransaction() 을 통해 트랜잭션을 사용 합니다
+  - Consumer: read_committed 로 커밋된 메세지만 가져옵니다
+  - Producer -- Consumer 에서 `메세지 발행 -- __consumer_offsets 토픽에 커밋` 의 전체 과정을 Atomic 하게 처리해서 트랜잭션 (exactly once) 을 보장합니다
+
+### Automatic Offset Committing
+enable.auto.commit=true
+auto.commit.interval.ms=5s
+
+기본적으로 poll() 호출시 커밋을 수행합니다.
+만약 next poll 이 늦어지면 (즉 처리시간 지연) interval 이 지나면서 커밋이 수행되므로, at least once 의 처리되지 않은 메세지가 발생 할 수 있습니다
+
+<img src='4-2.png' width='75%'>
 
 ## Advanced
-### ACID
-- producer: replication.factor (즉 ISR) 을 만족하면 그것을 commit 으로 간주합니다
-  - transaction 을 사용한다면 -> commit record 를 명시적으로 한번 더 보내는 과정이 추가
-- consumer: polling 시 커밋된 메세지만 가져옵니다 (== 모든 ISR 에 동기화된 record)
-  - transaction 을 사용한다면 -> commit 마킹된 record 만 pull
+### @Transactional
+- Producer
+  - @Transaction 미사용 -> ISR (== replication.factor) 을 만족하는 record 는 브로커에서 Committed 으로 마킹
+  - @Transaction 사용 -> Commit 명령을 수동으로 한번 더 호출하는 과정이 추가
+- Consumer
+  - read_committed: 커밋된 메세지만 가져옵니다
+  - read_uncommitted: 커밋되지 않은 메세지도 가져옵니다
+- Producer -- Consumer 에서 `메세지 발행 -- __consumer_offsets 토픽에 커밋` 의 전체 과정을 Atomic 하게 처리해서 트랜잭션 (exactly once) 을 보장
 
-## 가용성 vs 내구성
+### 가용성 vs 내구성
 `unclean.leader.election.enable` 옵션을 통해 결정됩니다.
 
 - false: ISR 에서만 leader 를 선출합니다
@@ -248,3 +279,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 - true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
   - 가용성 높음
   - 내구성 낮음
+
+### @TransactionalEventListener
+
+### Outbox Pattern

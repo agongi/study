@@ -1,5 +1,4 @@
 # Transactions
-
 ```
 https://www.confluent.io/blog/transactions-apache-kafka
 https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it
@@ -58,7 +57,6 @@ public class Demo {
 
 ## Guarantees
 ### At Most Once (보통 이걸쓰지, 그래서 멱등성 유지가 중요)
-
 Producer 가 보낸 메세지는 무조건 Broker 에서 유효한 메세지로 간주합니다.
 
 timeout 등으로 producer 가 ack 를 받지못하면, retry 하는데 해당 메세지까지도 broker 는 저장합니다.
