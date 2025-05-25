@@ -273,6 +273,35 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 > 아직 처리 되지 않은 메세지가 커밋되므로 at most once 를 지킬 수 없게 됩니다
 
+### 리밸런싱 (Incremental Rebalance)
+컨슈머 그룹 리밸런싱은 아래의 조건에서 발생합니다:
+- 컨슈머 추가/삭제
+- 토픽에 파티션 추가
+
+- 기존 리밸런싱 방식
+  - 모든 Consumer 의 파티션 할당 반환후 전체 재할당
+  - 다운타임 (== STW) 증가
+
+<img src='4-4.png' width='75%'>
+
+- 점진적 리밸런싱 (CooperativeStickyAssignor 등)
+  - `partition.assignment.strategy=CooperativeStickyAssignor`
+  - 기존 할당 유지, 필요한 파티션만 재조정
+  - 다운타임 (== STW) 감소
+
+<img src='4-5.png' width='75%'>
+
+### Static Group Membership
+- 컨슈머 join group 시 매번 새로운 `member.id` 생성
+- 컨슈머그룹은 새로운 멤버로 인지하고 리밸런싱 수행
+- 만약 짧은 시간내 join/leave 한다면 리밸런싱을 최소화 할 수 있습니다
+  - `group.instance.id={고정된 MEMBER_ID}`
+  - `session.timeout.ms=3000ms`
+  - 고정된 group.instance.id 를 통해 동일한 멤버로 인식 합니다 (즉 리밸런싱을 하지 않음)
+  - (fallback) `session.timeout.ms` 수치만큼 해당 id 가 join 하지 않으면 리밸런싱을 수행합니다
+
+<img src='4-6.png' width='75%'>
+
 ## Advanced
 ### @Transactional
 - Producer
