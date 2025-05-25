@@ -7,11 +7,9 @@ https://always-kimkim.tistory.com/entry/kafka101-schema-registry
 
 데이터의 발행/소비에서 consumer 는 producer 의 이벤트를 `일방적으로 신뢰` 할 수 밖에 없습니다.
 
-schema registry 는 메세지의 스키마를 (등록) 관리하고 이를 통해 컨슈머는 정의된 데이터만 받을 수 있습니다.
-
-> 즉 producer 가 현재 등록된 스키마에 호환되지 않는 메세지를 발행 할 경우 `발행 실패합니다`
-
-<img src="2.png" width="75%">
+Schema Registry 는 메세지의 스키마를 (등록) 관리하고
+- Producer 가 등록된 스키마와 호환되지 않는 메세지를 발행 할 경우 `발행 자체를 실패해서`
+- Consumer 는 `정의된 데이터만 받도록 보장` 합니다
 
 ## 흐름
 <img src="1.png" width="75%">
@@ -19,43 +17,62 @@ schema registry 는 메세지의 스키마를 (등록) 관리하고 이를 통�
 - Producer 는 KafkaAvroSerializer 를 사용합니다
 - KafkaAvroSerializer 는 SchemaRegistryClient 을 이용해 Schema Registry 에 정보를 등록합니다
 - Schema Registry 에 정상적으로 스키마가 등록되면 SchemaID 를 반환하게 됩니다.
-- KafkaAvroSerializer 는 SchemaID 와 메시지 본문을 포함한 데이터를 직렬화 합니다
-- KafkaAvroDeserializer 는 다른 SchemaID 의 메세지를 backward/forward 방향성으로 매핑 합니다
-
-```java
-public void send(Shipment shipment) {
-    kafkaTemplate.send("TOPIC-NAME", shipment);
-}
-```
-
-```java
-@KafkaListener(topics = "TOPIC-NAME")
-public void process(ConsumerRecord<String, Shipment> record) {
-    // do something
-}
-```
+- `KafkaAvroSerializer 는 SchemaID 와 메시지 본문을 포함한 데이터를 직렬화` 합니다
+- `KafkaAvroDeserializer 는 SchemaID 의 메세지를 backward/forward 방향성으로 매핑` 합니다
 
 ## 호환성
 ### FORWARD
-- 개념: 컨슈머는 1번 스키마로 메시지를 처리하지만 2번 스키마도 처리할 수 있습니다.
-- 허용: 기본값이 설정된 필드 삭제, 필드 추가
-- 순서: 프로듀서 -> 컨슈머
+- 개념: (컨슈머 입장에서) 1번 스키마로 처리하고 -> `1번으로 2번 스키마도` 처리할 수 있습니다.
+- 호환성: 필드 삭제 (기본값 설정 필요), 필드 추가
+- 배포 순서: 프로듀서 -> 컨슈머
 
 <img src="3.png" width="75%">
 
 - 컨슈머는 (배포전) 기존의 1번 스키마를 알고 있습니다
 - 프로듀서는 (배포중) 1,2번 스키마로 메세지가 발행됩니다
-- 컨슈머의 KafkaAvroDeserializer 는 1,2번 -> 1번으로 매핑합니다
+- 컨슈머의 KafkaAvroDeserializer 는 `1,2번 -> 1번으로 매핑`합니다
   - 2번 메세지가 1번으로 convert 되야하므로 2번 스키마 등록시 아래의 특징이 존재합니다
-    - 필드추가: 2번에 추가된 필드는 1번으로 convert 시 제거하면 되므로 필드추가는 자유롭습니다
-    - (기본값이 설정된) 필드제거: 2번에 제거된 필드는 1번으로 convert 시 추가해야 하므로 기본값이 필요합니다
+    - 필드추가: 2번에 추가된 필드는 1번으로 convert 시 제거되므로 필드추가는 자유롭습니다
+    - 필드제거: 2번에 제거된 필드는 1번으로 convert 시 추가해야 하므로 기본값이 필요합니다
 - 프로듀서의 배포가 완료되면 컨슈머의 배포도 가능합니다
 
 ### BACKWARD
-- 개념: 컨슈머는 2번 스키마로 메시지를 처리하지만 1번 스키마도 처리할 수 있습니다.
-- 허용: 기본값이 설정된 필드 추가, 필드 삭제
-- 순서: 컨슈머 -> 프로듀서
+- 개념: (컨슈머 입장에서) 2번 스키마로 처리하고 -> `2번으로 1번 스키마도` 처리할 수 있습니다.
+- 호환성: 필드 추가 (기본값 설정 필요), 필드 삭제
+- 배포 순서: 컨슈머 -> 프로듀서
+
+```json
+// SCHEMA1
+{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    { "name": "id", "type": "int" }
+  ]
+}
+
+// SCHEMA2
+{
+  "type": "record",
+  "name": "User",
+  "fields": [
+    { "name": "id", "type": "int" },
+    { "name": "name", "type": "string", "default": "" } ✅ default 필수
+  ]
+}
+```
 
 ### FULL
-- 허용: 기본값이 설정된 필드 추가/삭제
-- 순서: 상관없음
+- 호환성: 기본값이 설정된 필드 추가/삭제
+- 배포 순서: 상관없음
+
+## 필요한가
+- 별도 인프라를 운영 해야하고 (Avro)
+- 스키마 변경에도 제약이 생김 (간단한 필드추가에도 기본값을 넣어야 함)
+
+이런 단점이 있으므로 아래를 보장 할 수 있으면 Schema Registry 없이도 운영이 가능합니다:
+
+- (정기배포) 과정에서 Consumer 선배포를 보장 할 수 있고
+- 카프카 발행 and/or API 개발/배포시 기본적으로 호환이 유지 되도록 수정하므로 
+
+> 기본적으로 Backward 호환성을 유지하는 방향으로 프로세스 정리
