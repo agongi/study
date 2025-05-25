@@ -2,7 +2,7 @@
 ```
 https://kafka.apache.org/documentation
 https://docs.confluent.io/kafka/introduction.html
-https://www.conduktor.io/kafka/
+https://learn.conduktor.io/kafka/what-is-apache-kafka/
 https://velog.io/@hyun6ik/series/Apache-Kafka
 https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
 https://www.popit.kr/author/peter5236
@@ -18,6 +18,8 @@ https://bysssss.tistory.com/46
 
 ### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
+- [Kafka에서 파티션 증가 없이 동시 처리량을 늘리는 방법 - Parallel Consumer](https://d2.naver.com/helloworld/7181840)
+- [카프카 컨슈머에 동적 쓰로틀링 적용하기](https://techblog.woowahan.com/20156/)
 
 ### Versions
 - [Kafka 4.0](kafka-4.0)
@@ -107,16 +109,16 @@ log.cleanup.policy=compact
 ### [Replication](https://docs.confluent.io/kafka/design/replication.html)
 카프카는 파티션 리더가 모든 CRUD 를 담당하므로, 팔로어는 주기적으로 segment 을 fetch 해서 replication 을 수행합니다.
 
-<img src='2-1.png' width='75%'>
+<img src='3-2.png' width='75%'>
 
-- producer#send 을 통해 leader partition 은 메세지를 저장합니다
-  - producer 는 replication 이 완료될때까지 대기합니다 (아직 성공으로 응답가지 않음)
-- follow partition (을 가지고 있는 broker) 은 메세지 fetch 후 저장
-- 그후 leader 는 commit 하고 producer 에 committed 로 성공 응답합니다
+- Producer#send 을 통해 `파티션 리더`에 메세지를 저장합니다
+  - producer 는 replication 이 완료될때까지 대기
+- `팔로우 파티션` 은 메세지 fetch
+- ISR 수치만큼의 팔로우가 ACKS 를 리턴하면 > 파티션 리더는 메세지를 Commit > Producer 에 committed 로 성공 응답합니다
   - 대기하던 producer 는 이제 다음 작업 진행
-  - consumer 는 leader partition 을 통해 메세지를 가져가지만 uncommitted 인 메세지 (아직 replication 진행중) 는 가져가지 않도록 카프카가 보장합니다
+  - ISR 이 모두 복사된 메세지는 Committed 로 상태가 변경되고 (Tx 미사용시) > 아직 복사 진행중이라 Uncommitted 상태인 메세지는 consumer#poll 에서 제외됩니다 (브로커가 전달하지 않음)
 
-복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아니면 ISR` (In-sync-replicas) 로 관리합니다.
+복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아니면 ISR` (In-Sync-Replicas) 로 관리합니다.
 
 - follow failure
   - (leader) heartbeat or fetch 요청이 오지 않는 follower 를 ISR 에서 제거후 zookeeper 에 metadata 업데이트 합니다
@@ -145,7 +147,7 @@ log.cleanup.policy=compact
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 - 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `컨슈머 선정` -> 리밸런싱
-  - 기본적으로 heartbeat 로 체크하고 record polling, offset commit 이 오면 heartbeat 를 받았다고 판단합니다
+  - 기본적으로 heartbeat 로 체크하고 poll, offset commit 이 오면 heartbeat 를 받았다고 판단합니다
   - max.poll.interval.ms (default: 5min), heartbeat.interval.ms (default: 3sec)
 - [플로우](https://velog.io/@hyun6ik/Apache-Kafka-Consumer-Rebalance)
   - coordinator broker 는 (컨슈머그룹 리밸런싱때) joinGroup 을 먼저한 consumer 를 group leader 로 선정합니다
@@ -153,7 +155,15 @@ log.cleanup.policy=compact
   - coordinator 는 zookeeper 에 파티션 할당정보 저장후 group leader 에게 ack 합니다 (== confirmed)
   - 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
 
-producer 에서 record 의 파티션 할당을 직접 하는것처럼 (zookeeper 를 통해 파티션정보 metadata 를 받음) consumer 도 consumer-group 에서의 partition 할당은 consumer-leader 가 연산한후 통보 > ACKS 받습니다. (브로커 부담을 줄이기 위함)
+### 파티션 할당
+- Producer 의 Partition 할당
+  - 카프카 메타데이터를 브로커를 통해 조회 & 저장 (Zookeeper 에 저장)
+  - 레코드를 전송할 때 직접 지정하거나, 파티셔너를 통해 결정
+  - `이를 통해 브로커의 연산 부담을 줄임`
+- Consumer Group 의 Partition 할당
+  - Consumer Group 중 하나를 Coordinator 로 선정
+  - (리밸런싱 발생시) Coordinator 가 파티션 할당 & 통보후 Acks 받음
+  - `이를 통해 브로커의 연산 부담을 줄임`
 
 ## Zookeeper
 리더선출을 위해 사용합니다 (기존에는 offset 을 기록했지만 `__consumer_offsets` 토픽 사용으로 대체)
@@ -252,13 +262,16 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
   - Producer -- Consumer 에서 `메세지 발행 -- __consumer_offsets 토픽에 커밋` 의 전체 과정을 Atomic 하게 처리해서 트랜잭션 (exactly once) 을 보장합니다
 
 ### Automatic Offset Committing
-enable.auto.commit=true
-auto.commit.interval.ms=5s
+<img src='4-3.png' width='75%'>
 
-기본적으로 poll() 호출시 커밋을 수행합니다.
-만약 next poll 이 늦어지면 (즉 처리시간 지연) interval 이 지나면서 커밋이 수행되므로, at least once 의 처리되지 않은 메세지가 발생 할 수 있습니다
+- `enable.auto.commit=true`
+- `auto.commit.interval.ms=5s`
 
-<img src='4-2.png' width='75%'>
+기본적으로 `Consumer#poll 호출시 커밋도 수행`합니다.
+
+만약 가져온 메세지의 처리가 지연되어 poll 을 호출하지 않으면 > `auto.commit.interval.ms` 설정에 의해 비동기로 커밋이 호출됩니다.
+
+> 아직 처리 되지 않은 메세지가 커밋되므로 at most once 를 지킬 수 없게 됩니다
 
 ## Advanced
 ### @Transactional
@@ -280,6 +293,33 @@ auto.commit.interval.ms=5s
   - 가용성 높음
   - 내구성 낮음
 
-### @TransactionalEventListener
+### 발행 보장
+`@TransactionalEventListener` 을 이용해서 트랜잭션 커밋 후 ApplicationContext 에서 이벤트를 발행 할 수 있습니다:
+```java
+@RequiredArgsConstructor
+public class KafkaTransactionalEventListener {
+    private final KafkaTemplate<Long, Object> kafkaTemplate;
 
-### Outbox Pattern
+    /**
+     * 트랜잭션 COMMIT 이후에 호출
+     */
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    public <T> void doSendAfterCommit(Event<T> event) {
+        kafkaTemplate.send(event);
+    }
+}
+```
+
+대신 ApplicationContext 에 의존하는 방식이므로 스프링이 비정상적으로 종료된 경우 누락 될 수 있습니다.
+
+발행누락을 막기 위해 [Outbox Pattern](https://ridicorp.com/story/transactional-outbox-pattern-ridi/) 을 사용할 수 있습니다:
+
+<img src='5.png' width='75%'>
+
+- 원본테이블 & Outbox 테이블을 동일 Transaction 에서 처리
+  - 전파 필요한 메세지 유실 방지
+- Outbox 테이블에 저장된 메세지는 CDC (== Debezium. `Kafka source connect 기반`) 를 통해 변경 감지 되고
+  - Kafka Source Connector 는 카프카로 메세지 전송 `(connect-offsets 으로 offset 관리)`
+  - Kafka Sink Connectort 는 카프카를 통해 메세지 수신 `(__consumer_offsets 으로 offset 관리)`
+- 해당 토픽을 구독하는 컨슈머 (Application) 에서 메세지를 가져와서 이벤트를 발행해서 누락을 방지합니다
+  - at least once 정도로 운영하므로 중복이 발생 할 수 있습니다
