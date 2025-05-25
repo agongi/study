@@ -98,7 +98,7 @@ Dynamic array
  - select : get index from hash of key, directly access index[x] and linearly search list until key is equal to
  - delete : easily delete link of nodes
 
-> About JDK 1.8 uses LinkedList when the number of nodes is less than 8, otherwise Tree (red-black) for performance.
+> 동일한 Bucket (Hash Collision) 에 element 가 8개 이상 들어가면, LinkedList 대신 Red-Black Tree 를 사용 합니다
 
 ### 2. Open addressing
 Use empty space<br>
