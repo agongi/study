@@ -3,6 +3,7 @@
 https://kafka.apache.org/documentation
 https://docs.confluent.io/kafka/introduction.html
 https://learn.conduktor.io/kafka/what-is-apache-kafka/
+https://github.com/itmare/kafka/tree/master/lecture
 https://velog.io/@hyun6ik/series/Apache-Kafka
 https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
 https://www.popit.kr/author/peter5236
@@ -118,8 +119,7 @@ log.cleanup.policy=compact
   - 대기하던 producer 는 이제 다음 작업 진행
   - ISR 이 모두 복사된 메세지는 Committed 로 상태가 변경되고 (Tx 미사용시) > 아직 복사 진행중이라 Uncommitted 상태인 메세지는 consumer#poll 에서 제외됩니다 (브로커가 전달하지 않음)
 
-복제는 `replication.factor=? (기본값: 3)` 수치만큼 복제 되고, `min.insync.replicas=? (기본값: 1)` 수치만큼 의 팔로워가 ACK 를 보내야 합니다.
-
+> 주의사항
 ```
 안정적인 카프카 운영을 위해 min.insync.replicas 는 반드시 replication.factor 보다 작아야 합니다 
 min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
@@ -188,6 +188,7 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
   - serialization
   - `partitioning`
     - 파티션은 브로커가 지정 하는게 아니라, producer 가 직접 판단 합니다
+    - `(kafka key).hashCode() % 파티션 개수` 의 결과로 파티션을 결정합니다 (없으면 Round-Robin 으로 선택)
   - compression
 - RecordAccumulator
   - 전송될 record 를 저장하는 버퍼 입니다
@@ -251,6 +252,10 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 - consumer 는 특정 consumer-group 에 속하고 그룹은 group-id 로 구분됩니다
 - 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer_offsets` 토픽으로 관리합니다.
 - 컨슈머그룹에 속한 컨슈머의 추가/삭제시 리밸런싱이 발생하고 그 동안은 STW 입니다
+- 각각의 파티션은 1개의 컨슈머그룹 > 1개의 컨슈머 하고 1-1 로 매핑 됩니다
+  - 다른 컨슈머 그룹의 컨슈머와는 파티션을 공유 합니다
+
+<img src='4-7.png' width='75%'>
 
 ### [전송 방식](https://learn.conduktor.io/kafka/delivery-semantics-for-kafka-consumers/)
 - at most once
