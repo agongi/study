@@ -118,7 +118,17 @@ log.cleanup.policy=compact
   - 대기하던 producer 는 이제 다음 작업 진행
   - ISR 이 모두 복사된 메세지는 Committed 로 상태가 변경되고 (Tx 미사용시) > 아직 복사 진행중이라 Uncommitted 상태인 메세지는 consumer#poll 에서 제외됩니다 (브로커가 전달하지 않음)
 
-복제는 `replication.factor 에 설정된 수치만큼 replication` 이 되고, `out-of-sync 가 아니면 ISR` (In-Sync-Replicas) 로 관리합니다.
+복제는 `replication.factor=? (기본값: 3)` 수치만큼 복제 되고, `min.insync.replicas=? (기본값: 1)` 수치만큼 의 팔로워가 ACK 를 보내야 합니다.
+
+```
+안정적인 카프카 운영을 위해 min.insync.replicas 는 반드시 replication.factor 보다 작아야 합니다 
+min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
+
+만약 동일한 수치가 설정되어 있다면, 팔로워가 장애가 발생시 모든 메세지가 발행 실패됩니다.
+- 3개의 복제를 설정했지만
+- 1개의 물리적인 브로커 장애시 1개의 복제가 될 수 없는 상황 발생
+- 그때 min.insync.replicas == replication.factor 라면 -> ISR 를 만족 할 수 없으므로 모든 발행이 실패 (그리고 Producer 의 설정에 따라 무한 retries 가능) 
+```
 
 - follow failure
   - (leader) heartbeat or fetch 요청이 오지 않는 follower 를 ISR 에서 제거후 zookeeper 에 metadata 업데이트 합니다
