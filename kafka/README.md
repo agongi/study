@@ -15,7 +15,7 @@ https://bysssss.tistory.com/46
 - [Kafka Connect](kafka-connect)
 - [MirrorMaker 2.0](mm2)
 - [Schema Registry](schema-registry)
-- [Transactions](transactions)
+- [Debezium](debezium)
 
 ### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
@@ -270,7 +270,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 <img src='4-2.png' width='75%'>
 
-- exactly once ([transaction](transactions) 과 연관있음)
+- exactly once ([transaction](#transactional) 과 연관있음)
   - `enable.idempotence=true`, `transaction.id={ANY_ID}`, `isolation.level=read_committed`
   - Producer: beginTransaction() -> send() -> commitTransaction() 을 통해 트랜잭션을 사용 합니다
   - Consumer: read_committed 로 커밋된 메세지만 가져옵니다
