@@ -1,11 +1,10 @@
-## ENTRYPOINT vs CMD
-
+# ENTRYPOINT vs CMD
 ```
 https://stackoverflow.com/questions/40902445/using-variable-interpolation-in-string-in-docker
 ```
 
-- ENTRYPOINT 
-  - 컨테이너가 시작될때 호출될 명령어 정의
+## ENTRYPOINT 
+컨테이너가 시작될때 호출될 명령어 정의
 
 ```bash
 $ docker run --entrypoint="echo hello" app
@@ -23,8 +22,8 @@ spec:
       args: ["arg1", "arg2", "arg3"]
 ```
 
-- CMD
-  - ENTRYPOINT에 전달되는 인자를 정의
+## CMD
+ENTRYPOINT에 전달되는 인자를 정의
 
 ```bash
 # 각각 $1, $2 로 바인딩
@@ -43,15 +42,15 @@ spec:
       args: ["arg1", "arg2", "arg3"] # docker cmd 와 동일기능
 ```
 
-### EXEC VS SH
+## EXEC VS SH
 SH 을 통한 실행
 
 ```dockerfile
-# via shell
+# using shell
 ENTRYPOINT echo hello
 ```
 
-<img src="images/1.png" width="75%">
+<img src="1.png" width="75%">
 
 EXEC 을 통한 실행
 
@@ -60,7 +59,7 @@ EXEC 을 통한 실행
 ENTRYPOINT ["echo", "hello"]
 ```
 
-<img src="images/2.png" width="75%">
+<img src="2.png" width="75%">
 
 ### 사용
 ```dockerfile
