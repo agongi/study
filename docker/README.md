@@ -2,13 +2,14 @@
 ```
 https://docs.docker.com/reference/
 https://pyrasis.com/jHLsAlwaysUpToDateDocker
-https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose
+https://velog.io/@choidongkuen/%EC%84%9C%EB%B2%84-Docker-Network-%EC%97%90-%EB%8C%80%ED%95%B4
 ```
 
 ### Index
 - [ARG vs ENV](arg-env)
 - [ENTRYPOINT vs CMD](entrypoint-cmd)
 - [COPY vs ADD](copy-add)
+- [docker-compose](docker-compose)
 
 ***
 ## 개념
@@ -78,50 +79,116 @@ $ docker run -it --rm -d -p 80:80 -p 443:443 nginx:20200320_145400
 - -p {external}:{internal}
   - 포트포워딩. 기본적으로 container 는 외부와 통신이 불가능하고, 노출할 외부/내부 포트 지정필요
 
-## Advanced
-레퍼런스에 있는 Best Practices 중에서 도움될만한 내용을 정리합니다.
+## Volume
+Docker volume 은 `호스트 OS의 특정 경로에 저장`되고, 컨테이너는 이를 `마운트`해서 사용합니다.
 
-https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+> /var/lib/docker/volumes/xxx
 
-### Dockerfile vs docker-compose.yml
-- Dockerfile
-  - 1개의 이미지 생성 정의
-- docker-compose.yml
-  - N개의 이미지 생성 정의
-  - 컨테이너 간 실행순서나 의존성 관리가능
+<img src="2.png" width="50%">
 
-동일한 context 에서 여러개의 이미지를 만들때 docker-compose.yml 이 유용합니다. 
+cgroup 으로 사이즈를 제한할 수 있고, 호스트에 저장되므로 `컨테이너끼리 공유` 할 수 있습니다. 
+- --volumn {HOST_경로}:{컨테이너_경로}
 
-뒤에 설명할 pipeline 에서도 하나의 build-pipeline (동일한 context 가 유지되는) 에서 compose 의 형태로 container 를 생성합니다.
+<img src="2-1.png" width="50%">
+
+## Network
+Docker Network 는 `컨테이너 간 통신`과 `외부 네트워크 (Host 를 통해) 연결`을 제공합니다
+
+- Docker containers 는 아무런 설정을 하지 않으면 외부에서 접근할 수 없으며 호스트만 접근 가능합니다
+- 외부 통신을 위해서 (컨테이너)의 eth0 IP:PORT 를 (호스트)의 IP:PORT 에 바인딩 해야 합니다
+  - `호스트에 veth*` 이름의 가상 인터페이스 <--> `컨테이너의 eth0` 인터페이스
+- veth 와 eth0 는 `Docker network` 를 통해 연결 됩니다:
+  - `(기본값) bridge`
+    - Host#{PORT} 와 Container#{PORT} 바인딩
+    - 동일 호스트 내의 컨테이너끼리 통신 가능
+
+<img src="2-2.png" width="50%">
 
 ```yaml
-# docker-compose.yml
-version: "3"
-services:
-  spring-app: # container name
-    build:  # if images not exists
-      context: .
-      dockerfile: ./docker/Dockerfile
-  nginx:
-    image: nginx:20200320_145400  # if images exists
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:	# 필요시 fuse 가능
-      - /docker/nginx/conf:/usr/local/etc/nginx/conf
+      - 80:80 # host#port:container#port
+      - 443:443
 ```
 
-아래 명령어로 실행 합니다.
+  - host
+    - Host 의 Network 를 그대로 사용
+  - overlay
+    - 멀티 호스트간 통신
 
-```bash
-$ docker-compose up
+<img src="2-3.png" width="50%">
+
+  - none
+    - 외부 네트워크와 연결하지 않음
+
+## [Advanced](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+### [Multi-stage builds](https://docs.docker.com/build/building/multi-stage/)
+Multi-stage builds let you reduce the size of your final image, by creating a cleaner separation between the building of your image and the final output
+
+<img src="3.png" width="50%">
+
+### Pin base image versions
+FROM 구문에서 이미지 버전을 지정해서 항상 동일한 버전을 가져 올 수 있도록 합니다.
+
+```dockerfile
+FROM alpine:3.21
+
+## cache 가 있다면 동일한/다른 이미지가 사용 될 수 있음
+# FROM alpine:latest
 ```
 
-> 더 자세한 사용법은 https://docs.docker.com/compose/compose-file/ 참조
+만약 latest 를 사용한다면 digest 를 명시해서 같은 이미지를 지정 할 수 있습니다:
+```dockerfile
+FROM alpine:latest@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c
+```
 
-### BuildContext
-Dockerfile 빌드가 수행될때, build context 의 범위를 알고 있어야합니다.
+### RUN
+> Here documents
 
+&& 을 이용해서 체이닝 하는 부분을 here documents 로 작성할 수 있습니다.
+```dockerfile
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    package-bar \
+    package-baz \
+    package-foo
+```
+
+```dockerfile
+RUN <<EOF
+apt-get update
+apt-get install -y --no-install-recommends \
+    package-bar \
+    package-baz \
+    package-foo
+EOF
+```
+
+> yum update -y && yum install ....
+
+패키지 업데이트 구문과 설치 구문은 동일 라인에서 작성해야 합니다
+
+- 기존
+```dockerfile
+FROM rhel:8.10
+RUN yum update -y
+RUN yum install -y curl
+```
+
+- 추가
+```dockerfile
+FROM rhel:8.10
+RUN yum update -y
+RUN yum install -y curl htop # htop 추가
+```
+
+각각의 RUN 구문은 새로운 layer 를 생성/캐싱 하므로 htop 은 outdated 로 설치 될 수 있습니다.
+
+아래와 같이 하나의 RUN 구문으로 작성하면 변경 감지되어 캐싱값이 아니라 실제 실행된 결과를 사용합니다: 
+```dockerfile
+FROM rhel:8.10
+RUN yum update -y && RUN yum install -y curl htop
+```
+
+### Build Context
 ```bash
 /home/usr1/workspace $ ls -l
 total 8
@@ -129,14 +196,11 @@ total 8
 drwxr-xr-x  5 suktae  staff   160 Mar 17 13:22 scripts
 ```
 
-파일시스템 구조가 위의 모습으로 잡혀있으면, image 생성시 접근가능한 경로는 `Dockerfile 이 존재하는 하위 뿐` 입니다.
+Dockerfile 이 `/home/usr1/workspace` 경로에 위치하면, 빌드시점에 /home/usr1/workspace 가 build context 가 됩니다. (상위 경로 접근 불가능)
 
-> Dockerfile 내부에서의 / 는 파일시스템의 /home/usr1/workspace
-
-만약 접근불가능한 path 의 파일을 참조하고 싶으면 아래의 방법이 있습니다.
+만약 상위 Path 의 파일을 참조하고 싶으면 아래의 방법이 있습니다.
 
 - argument 로 직접 전달
-
 ```bash
 $ docker build --tag nginx:20200320 --build-arg ssl_perm=/{PATH}/ssl.pub
 
@@ -146,7 +210,6 @@ ADD $ssl_perm .
 ```
 
 - volume mount
-
 ```bash
 $ docker run --volume /{PATH}/ssl.pub:/container/some/where .
 

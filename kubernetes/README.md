@@ -1,6 +1,7 @@
 # Kubernetes
 ```
 https://kubernetes.io/ko/docs/concepts/
+https://pyrasis.com/jHLsAlwaysUpToDateKubernetes
 https://github.com/grepsean/k8skr-study-architecture
 https://github.com/sungsu9022/study-kubernetes-in-action/issues
 ```

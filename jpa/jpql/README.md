@@ -1,5 +1,4 @@
 # JPQL
-
 ```
 https://www.nowwatersblog.com/jpa/ch10
 ```

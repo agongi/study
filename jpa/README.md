@@ -1,5 +1,4 @@
 # JPA
-
 ```
 https://arahansa.github.io/docs_spring/jpa.html
 https://www.nowwatersblog.com/jpa/ch1
@@ -39,7 +38,6 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
     - ...
 
 ***
-
 ## Persistence Context
 entityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아래의 조건을 만족하면 됩니다:
 
