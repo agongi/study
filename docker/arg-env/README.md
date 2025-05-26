@@ -4,14 +4,10 @@ https://stackoverflow.com/questions/40902445/using-variable-interpolation-in-str
 ```
 
 ## ARG
-build args 이다. `빌드타임`에 사용 가능하다.
-
+`빌드타임`에 사용 가능하다
 ```bash
 $ docker build Dockerfile --build-arg APP_VERSION=1.0.1
 ```
-
-Dockerfile 에서는 아래와 같이 사용한다.
-
 ```dockerfile
 # --build-arg 로 전달되면 덮어쓰고, 기본값은: 1.0.0 으로 설정
 ARG APP_VERSION=1.0.0
@@ -21,24 +17,18 @@ ENV APP_VERSION $APP_VERSION
 RUN ${APP_VERSION}
 ```
 
-빌드시점에만 사용되므로 (즉 dockerfile 내부에서만) ENTRYPOINT, CMD 에서는 인식되지 않는다.
-
+빌드시점에만 사용되므로 (즉 Dockerfile 내부 에서만) ENTRYPOINT, CMD 에서는 인식되지 않는다:
 ```dockerfile
 ARG APP_VERSION=1.0.0
 ENTRYPOINT java -jar /workspace/app-${APP_VERSION}.jar
 ```
-
 > 결과: java -jar /workspace/app-.jar 
 
 ## ENV
-환경변수이다. `빌드 및 런타임`에 사용 가능하다.
-
+`빌드 및 런타임`에 사용 가능하다
 ```bash
 $ docker run -e APP_VERSION=1.0.1 app
 ```
-
-Dockerfile 에서는 아래와 같이 사용한다.
-
 ```dockerfile
 # -e 로 전달되면 덮어쓰고, 기본값은: 1.0.0 으로 설정
 ENV APP_VERSION 1.0.0
@@ -46,4 +36,4 @@ ENV APP_VERSION 1.0.0
 RUN ${APP_VERSION}
 ```
 
-빌드 & 런타임에 사용되므로, ENTRYPOINT/CMD 에서 사용가능하다.
+빌드 & 런타임에 사용되므로, ENTRYPOINT/CMD 에서 사용할 수 있습니다.
