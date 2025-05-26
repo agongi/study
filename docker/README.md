@@ -1,7 +1,7 @@
 # Docker
 ```
 https://docs.docker.com/reference/
-https://www.pyrasis.com/archive.html
+https://pyrasis.com/jHLsAlwaysUpToDateDocker
 https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose
 ```
 
@@ -11,12 +11,23 @@ https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker
 - [COPY vs ADD](copy-add)
 
 ***
-**`Dockerfile` (or docker-compose.yml) 에 기술한 내용으로 `image` 를 만들고,** 
-**해당 이미지로 `container` 실행합니다.**
+## 개념
+Docker 는 Host 와 동일한 커널영역을 사용하지만 
+- 격리: `cgroup, namespace` 등을 활용해 컨테이너 격리 (내부적으로 system_call 호출)
+- 공유: `Network, Storage` 등을 같이 같이 사용
 
-<img src='1.png'>
+격리된 환경 에서 호스트 자원을 공유하며 애플리케이션을 실행하는 경량 가상화 기술입니다.
 
-생성한 (push) or 가져온 (pull) 이미지는 `docker server` 에 저장되고, 그렇게 관리하는 이미지를 선택해서 `docker run` 수행시 container 가 생성되어 instance 가 동작하는 원리 입니다.
+<img src="1.png" width="50%">
+
+## 구성요소
+Docker 는 크게 3가지로 구성되어 있습니다.
+- **Server (== Engine)**
+  - Docker Daemon 이라고도 불리며, Host OS 의 커널을 공유하여 컨테이너를 실행합니다
+- **Client (== CLI)**
+  - Docker Daemon 과 API 통신하는 CLI
+- **Docker Compose**
+  - N개의 Dockerfile 을 동시에 실행해주는 도구 입니다
 
 ## Dockerfile
 이미지를 생성할 명세를 정의합니다.
@@ -40,14 +51,11 @@ CMD ["nginx", "-g", "daemon off;"]
 ```
 
 기술한 Dockerfile 을 아래 명령어로 image 로 만들 수 있습니다.
-
 ```bash
 $ docker build --tag nginx:20200320_145400 .
 ```
 
-### Image
-docker server 에서 관리하는 이미지를 확인 할 수 있습니다.
-
+빌드후 registry 에 push 한 이미지를 pull 하면 현재 engine 에 저장된 이미지 목록을 확인 할 수 있습니다 
 ```bash
 suktae@localHost /usr/local/etc/nginx $ docker images
 REPOSITORY                          TAG           IMAGE ID      CREATED        SIZE
@@ -55,8 +63,7 @@ base-nginx											   1.12.2       a8c3d87a58e7   2 days ago      831MB
 nginx											    20200320_145400   65d59f58cbsb   2 days ago      833MB
 ```
 
-### Container
-생성한 (or 가져온) 이미지를 run 을 통해 container 로 띄웁니다.
+Registry 로 부터 pull 한 이미지를 run 커맨드로 컨테이너를 실행 합니다
 
 ```bash
 $ docker run -it --rm -d -p 80:80 -p 443:443 nginx:20200320_145400
@@ -70,12 +77,6 @@ $ docker run -it --rm -d -p 80:80 -p 443:443 nginx:20200320_145400
   - daemon mode 로 실행. [옵션이 필요한 이유](https://roseline124.github.io/kuberdocker/2019/07/24/docker-study05.html)
 - -p {external}:{internal}
   - 포트포워딩. 기본적으로 container 는 외부와 통신이 불가능하고, 노출할 외부/내부 포트 지정필요
-
-### CLI
-더 자세한 CLI 명령어 및 Dockerfile 작성 가이드는 아래 링크 참조
-
-https://docs.docker.com/engine/reference/commandline/cli/
-https://docs.docker.com/engine/reference/builder/
 
 ## Advanced
 레퍼런스에 있는 Best Practices 중에서 도움될만한 내용을 정리합니다.
