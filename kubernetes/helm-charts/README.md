@@ -1,5 +1,4 @@
 # Helm Charts
-
 ```
 https://helm.sh/docs/intro/quickstart/
 https://cloud.ibm.com/docs/containers?topic=containers-helm&locale=ko
@@ -31,7 +30,6 @@ $ kubectl apply -f {resource}.yaml
 ```
 
 ## QuickStart
-
 Charts 의 디렉토리 구조는 아래와 같습니다.
 
 ```bash
@@ -122,11 +120,8 @@ Pod 은 N 개의 Container 로 구성됩니다. 여기서의 Pod 은 nginx & boo
 - ...
 
 ## Syntax
-
 ### Build-in Objects
-
 - Release
-
 ```yaml
 {{ .Release.Name }}
 
@@ -134,13 +129,11 @@ Pod 은 N 개의 Container 로 구성됩니다. 여기서의 Pod 은 nginx & boo
 ```
 
 - Values
-
 ```yaml
 {{ .Values.xxx }}
 ```
 
 - Chart
-
 ```yaml
 {{ .Chart.Name }}
 
@@ -148,7 +141,6 @@ Pod 은 N 개의 Container 로 구성됩니다. 여기서의 Pod 은 nginx & boo
 ```
 
 - Template
-
 ```yaml
 {{ .Template.Name }}
 
@@ -156,15 +148,12 @@ Pod 은 N 개의 Container 로 구성됩니다. 여기서의 Pod 은 nginx & boo
 ```
 
 ### Functions
-
 - Comments
-
 ```yaml
 {{ /* comments */ }}
 ```
 
 - Condition
-
 ```yaml
 {{ if statement }} T0 {{ else }} T1 {{ end }}
 
@@ -174,7 +163,6 @@ Pod 은 N 개의 Container 로 구성됩니다. 여기서의 Pod 은 nginx & boo
 ```
 
 - Iteration
-
 ```yaml
 # values.yaml
 pizzaToppings:
@@ -203,7 +191,6 @@ toppings:
 
 ### Scheme
 #### label & annotation
-
 쿠버네티스 오브젝트에서 사용할 metadata 를 지정하는 방법이다. 기본적으로 key-value 형식이다.
 
 - label - label 지정. 오브젝트를 선택 (특정조건 만족하는) 하는 단위로 사용

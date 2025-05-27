@@ -1,5 +1,4 @@
 # Namespace
-
 ```
 https://kubernetes.io/docs/tasks/administer-cluster/namespaces
 ```
@@ -13,7 +12,6 @@ https://kubernetes.io/docs/tasks/administer-cluster/namespaces
 동일한 Cluster 내에서 `접근제한/리소스제한` 등이 필요할때 namespace 로 구분하면된다.
 
 ## Usage
-
 List the current namespaces in a cluster using:
 
 ```shell

@@ -1,5 +1,4 @@
 # Isolations
-
 ```
 https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d
 ```

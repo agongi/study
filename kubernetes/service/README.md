@@ -1,5 +1,4 @@
 # Service
-
 ```
 https://kubernetes.io/docs/concepts/services-networking/service/
 https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -130,14 +129,7 @@ Headless Service는 클러스터 내부에서만 사용할 수 있는 서비스 
 - statefulSet 은 headless service 를 통해 구성하는게 일반적 입니다. (특정 Pod 을 지정해서 외부에서 연결해야 하므로)
 
 ## Istio
-Spring Cloud 에서 제공하는 discovery, config 등의 기능을 통합적으로 제공하는 service mesh 입니다.
-- istio <- ingress 대체 (ingress)
-- envoy <- nginx 대체 (ingress controller)
-- Virtual Service <- Service 대체 (endpoint)
-
-> envoy 에 대한 설정을 nginx.conf 와 달리, k8s resource.spec 으로 정의
-
-Istio 는 아래의 역할들을 처리할 수 있습니다.
-- canary 배포 (A/B)
-- L7 기반 route (path, cookie)
-- discovery (weight)
+k8s 환경에서 서비스 메쉬를 구현하는 플랫폼 입니다
+- Envoy Proxy: 모든 서비스에 붙는 사이드카 프록시, 트래픽 관찰/제어/보안 수행
+- Ingress: 외부 -> 내부로의 트래픽 제어
+- Egress: 내부 -> 외부로의 트래픽 제어

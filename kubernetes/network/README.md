@@ -1,5 +1,4 @@
 # Network
-
 ```
 https://yozm.wishket.com/magazine/detail/2251/
 ```
@@ -9,7 +8,6 @@ https://yozm.wishket.com/magazine/detail/2251/
 - [\[번역\]쿠버네티스 패킷의 삶](https://coffeewhale.com/packet-network1)
 
 ***
-
 ## kube-dns
 https://mrkaran.dev/posts/ndots-kubernetes/
 
