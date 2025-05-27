@@ -11,24 +11,23 @@ Kafka Connct는 반복적인 파이프라인 구축을 간편하게 하고, 직�
 <img src="1.png" width="75%">
 
 ## 동작 방식
-- Kafka Connect는 하나 이상의 Worker로 구성된 Connect Cluster로 실행됩니다
-- (Distributed 모드) Kafka Connect Cluster 는 **Task**가 분산 실행되며, `리더 Worker`가 존재합니다
-- 내부적으로 Consumer Group 처럼 동작하며, 다음을 수행합니다:
+### Standalone
+1개의 워커로 동작하고, 메타 정보를 local 에 저장 합니다.
+
+### Distributed
+- N개의 워커로 동작하고, 메타 정보를 토픽에 저장 합니다
+- (Distributed 모드) `Kafka Connect Cluster` 는 **Task**가 분산 실행되며, `리더 Worker`가 존재합니다
+- Kafka Connect Cluster 를 실행한다는 의미는
+  - 동일한 Kafka 설정/토픽을 사용하는 여러개의 Worker 프로세스를 하나의 클러스터로 묶는다는 의미입니다
+  - 즉 `서버를 구동한다와 동일 개념`입니다. (실제로 kafka connect cluster 를 별도의 pod 으로 구동)
+- 제공되는 REST API 를 통해 커넥터를 등록해야 실제 작업이 시작됩니다
+- 내부적으로 Consumer Group 처럼 동작하며, 아래의 특징이 존재 합니다 (동일 Consumer Group 으로 동작위해 같은 `group.id` 설정 필요)
   - 리더 선출: 가장 먼저 그룹에 조인한 워커가 자동으로 리더 역할을 수행
   - 리밸런싱: 워커가 추가되거나 종료되면 (STW) 재 분배 됩니다
   - 메타데이터 저장: 아래 Kafka 토픽 3개에 상태를 저장합니다:
     - `connect-configs`: 커넥터 설정 정보
     - `connect-offsets`: 오프셋 정보 (source connector에서 중요)
     - `connect-status`: 커넥터 상태 및 실행 결과
-
-### Standalone
-1개의 워커로 동작하고, 메타 정보를 local 에 저장 합니다.
-
-### Distributed
-N개의 워커로 동작하고, 메타 정보를 토픽에 저장 합니다.
-- 메타 정보를 CRUD 할 수 있는 REST API 제공
-- 저장된 메타 정보를 각 워커가 공유
-- 동일한 Consumer Group 처럼 동작하기 위해 `group.id` 를 동일하게 설정 해야 합니다
 
 ## 구성요소
 ### Worker

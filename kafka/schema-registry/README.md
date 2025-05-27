@@ -15,6 +15,7 @@ Schema Registry 는 메세지의 스키마를 (등록) 관리하고
 <img src="1.png" width="75%">
 
 - Producer 는 KafkaAvroSerializer 를 사용합니다
+  - Avro 는 필드의 값만 들어가는 형식이므로 사이즈가 절감됩니다 (스키마 정보는 registry 에 저장)
 - KafkaAvroSerializer 는 SchemaRegistryClient 을 이용해 Schema Registry 에 정보를 등록합니다
 - Schema Registry 에 정상적으로 스키마가 등록되면 SchemaID 를 반환하게 됩니다.
 - `KafkaAvroSerializer 는 SchemaID 와 메시지 본문을 포함한 데이터를 직렬화` 합니다

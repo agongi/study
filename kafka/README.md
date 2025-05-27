@@ -15,7 +15,6 @@ https://bysssss.tistory.com/46
 - [Kafka Connect](kafka-connect)
 - [MirrorMaker 2.0](mm2)
 - [Schema Registry](schema-registry)
-- [Debezium](debezium)
 
 ### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
