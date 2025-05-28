@@ -8,7 +8,6 @@ https://github.com/calofmijuck/kubernetes-in-action/tree/main
 
 ### Index
 - [Network](network)
-- [Namespace](namespace)
 - [Label & Annotation](label-annotation)
 - [Policies](policies)
 - [HPA](hpa)
@@ -87,12 +86,12 @@ replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다. (label
 ## Deployment
 ReplicaSet 을 포함하는 개념으로, Replication & Pod 업데이트 & 스케일링 & Canary 배포 등을 지원하는 그룹이다.
 
-> A group of pods with functionalities
+> A group of pods with functionalities  
 
-<img src='3.png' width='75%'/>
+<img src='3.png' width='50%'/>
 
 ## DaemonSet
-replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다. (ReplicaSet 과의 차이점: 클러스터 모든(또는 일부) 노드에 1개의 POD 생성 보장)
+replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다. (ReplicaSet 과의 차이점: 클러스터의 모든(또는 일부) 노드에 1개의 POD 생성 보장)
 
 ## StatefulSet
 Deployment 와 같지만, pod 의 배포/삭제 순서 보장 and/or 상태를 가지는 인프라의 성격이다.
@@ -101,9 +100,9 @@ Deployment 와 같지만, pod 의 배포/삭제 순서 보장 and/or 상태를 �
 - 삭제: 2 -> 1 -> 0
 - jenkins, elasticsearch, airflow 등
 
-<img src='3-1.png' width='75%'/>
-<img src='3-2.png' width='75%'/>
-<img src='3-3.png' width='75%'/>
+<img src='3-1.png' width='50%'/>
+<img src='3-2.png' width='50%'/>
+<img src='3-3.png' width='50%'/>
 
 ## Job/CronJob
 `crontab`과 유사하게 지정된 시간/일자에 실행되는 Job 을 생성한다.
