@@ -21,7 +21,6 @@ implementation 'io.micrometer:micrometer-registry-prometheus'
 ```
 
 그후 prometheus expose 설정
-
 ```yaml
 # spring-actuator
 management:
@@ -50,7 +49,6 @@ location /stub_status {
 ```
 
 nginx-prometheus-exporter 는 nginx 에서 공식적으로 제공합니다.
-
 ```yaml
 - name: nginx-prometheus-exporter
   image: xxx/nginx-prometheus-exporter:latest
