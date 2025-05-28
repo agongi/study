@@ -11,14 +11,13 @@ https://redis.io/docs/
 - [\[우아한테크세미나\] 191121 우아한레디스 by 강대명님](https://www.youtube.com/watch?v=mPB2CZiAkKM)
 
 ***
-
 <img src='2.png' width="50%">
 
-redis cluster 는 key 의 hash 값으로 `slots: 16384` 에 분리해서 저장합니다. (hashmap 의 구조로 보면됨) 
+레디스 클러스터는 `Hash(KEY) % 16384` 을 통해 어떤 노드에 할당 할지 판단해서 저장합니다
 
 물리장비 node 는 slot-range 를 담당하고 범위를 벗어나는 데이터의 요청 (CURD) 은 Move 라는 에러를 리턴합니다. (client 는 해당 에러를 받으면 다른 서버로 요청을 다시합니다)
 
-> 단순한 GET/SET 요청은 10만/s 정도를 처리할 수 있습니다
+> 단순한 GET/SET 요청은 100,000/s 정도를 처리할 수 있습니다
 
 ## 저장
 <img src='1.png' width="50%">
