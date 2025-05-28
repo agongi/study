@@ -75,38 +75,34 @@ Container 의 집합으로, Kubernetes 에서 관리하는 가장 작은 단위 
 | 재시작 여부       | 예                                           | 아니오                                         |
 
 ## ReplicaSet
-replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다. (label & label-selector 을 통해 pod 제어)
-- (RC) label-selector 에서 1개의 label 만 지정가능
-- (RS) N 개의 label 지정가능
-
-> A group of pods
-
-하지만 rs 를 직접 생성하진 않고, 상위개념인 `Deployment 을 통한 rs 생성`으로 사용한다.
+- 단순히 Pod 을 복제/유지하는 역할 수행
+- Deployment 를 통해 관리 됩니다
 
 ## Deployment
-ReplicaSet 을 포함하는 개념으로, Replication & Pod 업데이트 & 스케일링 & Canary 배포 등을 지원하는 그룹이다.
-
-> A group of pods with functionalities  
+- ReplicaSet 을 관리
+- 롤링 업데이트/롤백 기능을 제공 합니다
 
 <img src='3.png' width='50%'/>
 
 ## DaemonSet
-replicas 로 명시된 Pod 개수를 유지하는 역할을 담당한다. (ReplicaSet 과의 차이점: 클러스터의 모든(또는 일부) 노드에 1개의 POD 생성 보장)
+1개의 노드에 최소 1개의 Pod 을 실행하는 역할을 수행 합니다.
+
+> 서비스에선 사용하진 않음. 인프라를 제공하는 곳에서 사용 할듯
 
 ## StatefulSet
-Deployment 와 같지만, pod 의 배포/삭제 순서 보장 and/or 상태를 가지는 인프라의 성격이다.
-
-- 배포(생성): 0 -> 1 -> 2
-- 삭제: 2 -> 1 -> 0
-- jenkins, elasticsearch, airflow 등
+Deployment (and/or ReplicaSet) 과 유사하지만, `Pod 에 유니크한 식별자가 부여`되어 기존 `PV 를 재사용` 할 수 있어 상태를 유지합니다 
 
 <img src='3-1.png' width='50%'/>
 <img src='3-2.png' width='50%'/>
-<img src='3-3.png' width='50%'/>
+
+- Identity
+  - Deployment: 매번 새롭게 생성되는 식별자 (ex. as7flakjsdhf, 98h34rtsaduh)
+  - StatefulSet: 순차적으로 채번되는 유니크 식별자 (ex. web-0, web-1, web-2)
+- Storage
+  - Deployment: 식별자가 변경되므로 새로운 PV 생성
+  - StatefulSet: PersistentVolumeClaim 을 사용하여, 기존 사용했던 PV 재사용
 
 ## Job/CronJob
-`crontab`과 유사하게 지정된 시간/일자에 실행되는 Job 을 생성한다.
+Job 은 일회성 작업을 수행합니다. CronJob 은 주기적으로 Job 을 수행합니다.
 
-> 시간은 master:kube-controller-manager 의 시간대를 사용한다.
-
-Job 은 하나 이상의 Pod 을 생성하고, 명령을 수행한 후 종료된다. 배치작업이나 간단한 lambda 작업을 수행하는데 적합하다.
+> 현업에서 CronJob 은 사용하지 않고 (스케쥴러는 airflow 등 사용) airflow 에서 Job 을 실행하는 형태 적용
