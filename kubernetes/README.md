@@ -10,12 +10,11 @@ https://github.com/calofmijuck/kubernetes-in-action/tree/main
 - [Network](network)
 - [Label & Annotation](label-annotation)
 - [Policies](policies)
-- [HPA](hpa)
 - [Helm Charts](helm-charts)
-- [Service](service)
 - [ConfigMap & Secrets](configmap-secrets)
-- [API](api)
 - [Isolations](isolations)
+- [API](api)
+- [HPA](hpa)
 
 ### Blog
 - [Pod Lifecycle](https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/)
@@ -106,3 +105,89 @@ Deployment (and/or ReplicaSet) 과 유사하지만, `Pod 에 유니크한 식별
 Job 은 일회성 작업을 수행합니다. CronJob 은 주기적으로 Job 을 수행합니다.
 
 > 현업에서 CronJob 은 사용하지 않고 (스케쥴러는 airflow 등 사용) airflow 에서 Job 을 실행하는 형태 적용
+
+## Service
+주기적으로 배포/삭제 되는 Pod 은 IP 가 변경될 수 있습니다.
+
+서비스는 ELB 역할을 하며 (기본값: Round-Robin) `외부에 동일한 IP 를 제공하여 외부 접점을 담당`하는 리소스 입니다.
+
+<img src='4.png' width="50%"/>
+
+## Session affinity
+nginx 의 sticky session 과 유사한 기능을 제공하는 옵션입니다
+
+> TCP 레벨에서의 처리라서 (ClientIP 기반) HTTP 레벨의 쿠키 기반으로는 동작하지 않습니다
+
+### 외부 연결
+| 방식             | 외부 접속 | 포트 사용                        | 확장성       | 특징                                                           |
+|------------------|-----------|------------------------------|--------------|--------------------------------------------------------------|
+| **ClusterIP**     | ❌        | 클러스터 내부 IP                   | ✅           | 기본값. 클러스터 내부에서만 접근 가능                                        |
+| **NodePort**      | ✅        | 각 노드의 IP + 30000~32767 포트 사용 | ✅           | 고정 포트로 모든 노드에 노출. 외부 트래픽 수신 가능                               |
+| **HostPort**      | ✅        | 노드의 실제 OS 포트 사용              | ❌           | 직접 노드의 포트 점유 (포트 충돌 위험 있음)                                   |
+| **LoadBalancer**  | ✅        | 일반적인 80/443 (L4 라우팅)         | ✅           | 서비스에 IP 가 할당되어 외부노출 (L4)                                     |
+| **Ingress**       | ✅        | 일반적인 80/443 (L7 라우팅)         | ✅           | 서비스에 IP/도메인이 할당되어 외부노출 (L7) |
+| **Headless Service** | ❌    | ✅                            | ✅       | `clusterIP: None`. 각 Pod에 고유 DNS 부여. StatefulSet에서 자주 사용     |
+
+### Istio
+k8s 환경에서 서비스 메쉬를 구현하는 플랫폼 입니다
+- Envoy Proxy: 모든 서비스에 붙는 사이드카 프록시, 트래픽 관찰/제어/보안 수행
+- Ingress: 외부 -> 내부로의 트래픽 제어
+- Egress: 내부 -> 외부로의 트래픽 제어
+
+## Volume
+Pod 의 관점에서 PVC 을 생성하면, 쿠버네티스가 적당한 크기와 접근모드의 PV를 찾아서 PVC를 PV에 바인딩 시켜주어 실제 볼륨을 할당 합니다
+
+> 개발자는 물리적 저장소에 대한 정보를 몰라야 한다! 그것은 클러스터 관리자가 할 일이다
+
+### PVC (PersistentVolumeClaim)
+필요한 스토리지에 대한 사용 선언
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb 
+spec:
+  containers:
+  - image: mongo
+    name: mongodb
+    volumeMounts:
+    - name: mongodb-data
+      mountPath: /data/db
+    ports:
+    - containerPort: 27017
+      protocol: TCP
+  volumes:
+  - name: mongodb-data                # PVC 로 볼륨 참조
+    persistentVolumeClaim:
+      claimName: mongodb-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+spec:
+  resources:
+    requests:                         # 1GB 스토리지 정의
+      storage: 1Gi
+  accessModes:
+    - ReadWriteOnce                   # 단일 클라이언트를 지원하는 읽기/쓰기
+  storageClassName: "XYZ"
+```
+
+### PV (PersistentVolume)
+실제 정의된 스토리지 리소스
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-pv
+spec:
+  capacity: 
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce                                       # 단일 클라이언트의 읽기/쓰기용으로 마운트
+    - ReadOnlyMany                                        # 여러 클라이언트의 읽기 전용으로 마운트
+  persistentVolumeReclaimPolicy: Retain    # 클레임이 해제된 후 퍼시스턴트볼륨을 유지한다.
+  hostPath:                                                     # ohstPath 볼륨 (minikube)
+    path: /tmp/mongodb
+```
