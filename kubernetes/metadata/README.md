@@ -1,11 +1,13 @@
-# API
+# Metadata
 ```
 https://kubernetes.io/docs/concepts/workloads/pods/downward-api
 https://coffeewhale.com/apiserver
 ```
 
+K8S 메타데이터를 조회/수정하는 방법을 기술합니다:
+
 ## Downward API
-기본적인 k8s metadata 는 downwardAPI 로 제공되고 pod 은 `resourceFieldRef` 을 통해 가져올 수 있다
+기본적인 Metadata 는 Downward API 을 통해 제공하고 `resourceFieldRef` 을 통해 가져올 수 있습니다
 
 <img src="1.png" width="75%">
 
@@ -31,10 +33,10 @@ spec:
 ```
 
 ## Kubernetes API
-https://kubernetes.io/docs/concepts/overview/kubernetes-api/ 에 정의된 명세대로 kube-api 서버와 rest 통신
+https://kubernetes.io/docs/concepts/overview/kubernetes-api/ 에 정의된 명세대로 kube-api 의 API 를 호출해서 조회/수정도 가능합니다
 
 ## kubectl
-shell client
+CLI 를 통해서도 조회/수정이 가능합니다
 
 ## SDK
-programmatic client
+제공되는 SDK 를 통해서도 조회/수정이 가능합니다

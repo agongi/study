@@ -13,7 +13,7 @@ https://github.com/calofmijuck/kubernetes-in-action/tree/main
 - [Helm Charts](helm-charts)
 - [ConfigMap & Secrets](configmap-secrets)
 - [Isolations](isolations)
-- [API](api)
+- [Metadata](metadata)
 - [HPA](hpa)
 
 ### Blog
