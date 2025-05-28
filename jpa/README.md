@@ -136,7 +136,7 @@ private Set<User> users = new LinkedHashSet<>();
 
 그래서 별도의 매핑테이블을 만들고 (대상1) OneToMany -- ManyToOne (매핑테이블) ManyToOne -- OneToMany (대상2) 로 연결하는게 확장성이 있습니다
 
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ## 상속관계 매핑
 ### @Entity 를 상속하는 방법
@@ -144,7 +144,7 @@ private Set<User> users = new LinkedHashSet<>();
   - 부모테이블이 존재하고, 자식테이블은 JOIN 으로 상속관계를 구현합니다
   - 단순조회시 JOIN 이 발생하고, INSERT 시 2번씩 쿼리가 수행됩니다
 
-<img src="2.png" width="75%">
+<img src="2.png" width="50%">
   
 ```java
 @Entity(name = "PersonInfo")
@@ -165,7 +165,7 @@ public abstract class PersonInfo {
   - 1개의 테이블에 부모/자식의 모든 컬럼을 표현합니다
   - 모든 자식테이블의 컬럼을 nullable 로 정의해야하고, 테이블 사이즈가 커집니다
 
-<img src="3.png" width="75%">
+<img src="3.png" width="50%">
 
 ```java
 @Entity(name = "PersonInfo")
@@ -190,7 +190,7 @@ public class KrPersonInfo extends PersonInfo {
   - 자식테이블 각각에 필요한 컬럼이 (부모에 선언한) 정의되는 형태입니다 
   - 자식테이블을 함께 조회할때 UNION 을 사용해야하므로, `일반적으로 추천하지 않습니다`
 
-<img src="4.png" width="75%">
+<img src="4.png" width="50%">
 
 ```java
 @Entity
@@ -213,7 +213,7 @@ public class Album extends Item {
   - @AttributeOverride: 상속시 컬럼을 재정의 할때 사용
   - @AssociationOverride: 상속시 연관관계를 재정의 할때 사용
 
-<img src="5.png" width="75%">
+<img src="5.png" width="50%">
 
 ```java
 @Getter
@@ -415,7 +415,7 @@ public class Address {
 ```
 
 ### @ElementCollection/@CollectionTable
-<img src="7.png" width="75%">
+<img src="7.png" width="50%">
 
 값 클래스를 Collection 으로 정의 가능합니다:
 

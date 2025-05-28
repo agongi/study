@@ -9,7 +9,6 @@ https://github.com/calofmijuck/kubernetes-in-action/tree/main
 ### Index
 - [Network](network)
 - [Label & Annotation](label-annotation)
-- [Policies](policies)
 - [Helm Charts](helm-charts)
 - [ConfigMap & Secrets](configmap-secrets)
 - [Isolations](isolations)

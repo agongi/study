@@ -11,7 +11,7 @@ https://yozm.wishket.com/magazine/detail/2251/
 ## kube-dns
 https://mrkaran.dev/posts/ndots-kubernetes/
 
-DNS resolution is configured in Kubernetes cluster through CoreDNS. The kubelet configures each Pod's /etc/resolv.conf to use the coredns pod as the nameserver. You can see the contents of /etc/resolv.conf inside any pod, they'll look something like:
+DNS resolution is configured in Kubernetes cluster through CoreDNS. The kubelet configures each Pod's /etc/resolv.conf to use the coredns pod as the nameserver.  
 
 ```
 search hello.svc.cluster.local svc.cluster.local cluster.local
@@ -29,7 +29,7 @@ options ndots:5
   - 다만 FQDN 은 domain 이 . 으로 끝날경우 FQDN 으로 인지한다 (ex. **naver.com.** 은 ndots:1 이지만 . 으로 끝나므로 FQDN)
 
 ## Internal (== Pod) to Service
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ### kube-proxy
 kube-proxy 는 (노드의) service 와 pod 을 연결합니다. (POD 이 N 개인 경우 LB 의 역할도 수행)
@@ -52,4 +52,4 @@ kube-proxy 는 (노드의) service 와 pod 을 연결합니다. (POD 이 N 개�
 - kube-proxy 는 단순히 netfilter 규칙을 수정하는 역할만 수행
 
 ## External to Service
-[Service](../service)
+[Service](..)

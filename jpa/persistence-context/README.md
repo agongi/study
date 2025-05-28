@@ -31,7 +31,7 @@ entityManager 는 기본적으로 transaction-scope 로 동작합니다. 즉 현
 
 어노테이션을 주입 or 팩토리를 통한 생성 모두 `동일 트랜잭션 범위에서는` em instance 는 달라도 같은 영속성을 사용합니다.
 
-<img src="3.png" width="75%">
+<img src="3.png" width="50%">
 
 트랜잭션이 다르면 동일한 엔티티 매니저를 사용해도 다른 영속성 컨텍스트를 사용합니다
 
@@ -54,7 +54,7 @@ Session (== Entity Manager) 을 view 까지 확장해서 lazy-load (즉 N+1) 을
 - 영속성 범위
   - [FROM] filter/interceptor [TO] view
 
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ### 스프링 OSIV
 - 트랜잭션 범위
@@ -62,7 +62,7 @@ Session (== Entity Manager) 을 view 까지 확장해서 lazy-load (즉 N+1) 을
 - 영속성 범위
   - [FROM] filter/interceptor [TO] view
 
-<img src="2.png" width="75%">
+<img src="2.png" width="50%">
 
 트랜잭션은 종료되었지만 영속성만 존재할때 조회가 가능한 이유는 `tx 없는 select 가 가능하기 때문 (select for share 가 아닌 이상 모든 조회는 non-transactional read)` 입니다
 
