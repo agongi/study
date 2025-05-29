@@ -1,5 +1,4 @@
 # Modules
-
 ```
 https://d2.naver.com/helloworld/12864
 ```
@@ -9,7 +8,6 @@ https://d2.naver.com/helloworld/12864
 - [RequireJS](https://d2.naver.com/helloworld/591319)
 
 ***
-
 ## CommonJS
 JavaScript를 브라우저에서뿐만 아니라, 서버사이드 애플리케이션이나 데스크톱 애플리케이션에서도 사용하려고 조직한 자발적 워킹 그룹이다.
 
@@ -26,7 +24,6 @@ console.log(utils.PI); // 3
 > Node.JS accepts CommonJS
 
 ## ~~AMD (Asynchronous Module Definition)~~
-
 AMD에서는 비동기 모듈(필요한 모듈을 네트워크를 통해 내려받을 수 있도록 하는 것)에 대한 표준안을 다루고 있다. 물론 CommonJS도 비동기 상황을 고려한 모듈 전송 포맷을 제공하지만, 순수 AMD를 지지하는 사람들과 합의를 도출해 내지는 못했다.
 
 ```javascript

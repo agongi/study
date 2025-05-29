@@ -1,5 +1,4 @@
 # Closure
-
 ```
 https://medium.com/sjk5766/lexical-scope-closure-%EC%A0%95%EB%A6%AC-41f5d1c928e4
 ```
