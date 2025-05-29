@@ -13,7 +13,18 @@ https://redis.io/docs/
 ***
 <img src='2.png' width="50%">
 
-레디스 클러스터는 `Hash(KEY) % 16384` 을 통해 어떤 노드에 할당 할지 판단해서 저장합니다
+```
+[Client] ──(key)────→ [Redis Cluster]
+                          │
+                          └─[슬롯 계산: HASH(key) % 16384]
+                                   ↓
+                       [해당 슬롯을 담당하는 노드 선택]
+                                   ↓
+                   [선택된 노드의 해시 테이블에 저장]
+                            ├── key1 → value1, value1-1, value1-2 (LinkedList)
+                            ├── key2 → value2 (LinkedList)
+                            └── ...
+```
 
 물리장비 node 는 slot-range 를 담당하고 범위를 벗어나는 데이터의 요청 (CURD) 은 Move 라는 에러를 리턴합니다. (client 는 해당 에러를 받으면 다른 서버로 요청을 다시합니다)
 
