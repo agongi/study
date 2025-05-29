@@ -1,25 +1,21 @@
-## Domain-Driven Development
-
+# Domain-Driven Development
 ```
 https://www.slideshare.net/madvirus/ddd-final
 https://www.slideshare.net/SpringCentral/domaindriven-design-with-relational-databases-using-spring-data-jdbc
 https://www.popit.kr/%EC%97%90%EA%B7%B8%EB%A6%AC%EA%B2%8C%EC%9E%87-%ED%95%98%EB%82%98%EC%97%90-%EB%A6%AC%ED%8C%8C%EC%A7%80%ED%86%A0%EB%A6%AC-%ED%95%98%EB%82%98/
 ```
 
-#### Index
-
+### Index
 - [Aggregate 매핑](aggregate-mapping)
 - [Aggregate Repository](aggregate-repository)
 
-#### Blog
-
+### Blog
 - [Effective Aggregate: Part I](https://dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_1.pdf)
 - [Effective Aggregate: Part II](https://dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_2.pdf)
 - [Effective Aggregate: Part III](https://dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_3.pdf)
 - [@DomainEvents](https://www.baeldung.com/spring-data-ddd)
 
 ***
-
 ## 구성요소
 
 - Domain
@@ -40,9 +36,7 @@ https://www.popit.kr/%EC%97%90%EA%B7%B8%EB%A6%AC%EA%B2%8C%EC%9E%87-%ED%95%98%EB%
   - AggregateRoot 만 repository 를 갖고, 나머지는 CASCADE=ALL 을 통해 전파해서 반영
 
 ## Spring Data + DDD
-
 ### Relation (== Entity)
-
 ```java
 @Entity
 @Table
@@ -69,7 +63,6 @@ public class Order {
 ```
 
 ### Value (== Embeddable)
-
 ```java
 @Entity
 @Table

@@ -1,16 +1,14 @@
-## Encrypted SNI
-
+# Encrypted SNI
 ```
 https://blog.mozilla.org/security/2018/10/18/encrypted-sni-comes-to-firefox-nightly/
 https://tools.ietf.org/html/draft-ietf-tls-esni-01
 https://blog.cloudflare.com/encrypted-sni/
 ```
 
-### Overview
-
+## Overview
 Before TLS 1.3, TLS handshake are working as below:
 
-![Screen Shot 2019-11-03 at 20.18.53](images/Screen%20Shot%202019-11-03%20at%2020.18.53.png)
+<img src="1.png" width="50%">
 
 - Client Hello
   - Desired serverName (SNI) is included to derive proper server's certificate
@@ -23,9 +21,8 @@ The problem is `SNI` is communicating in plain/text so packet is pointing out `I
 
 Now Let us go How Encrypted SNI works:
 
-### ESNI
-
-![Screen Shot 2019-11-03 at 20.18.57](images/Screen%20Shot%202019-11-03%20at%2020.18.57.png)
+## ESNI
+<img src="2.png" width="50%">
 
 - DNS lookup
   - DNS Record already has `Public Key`
@@ -51,15 +48,12 @@ Now Let us go How Encrypted SNI works:
 > Then SNI flow is re-negotiated `from the beginning` which cause performance effects.
 
 ### Concerns
-
 - Both supports TLS 1.3 or above
 - DNS should support public key sharing
 
 #### Pros
-
 - MITM is not working
 
 #### Cons
-
 - Something going bad, all flows are tear-down and SNI are ongoing from the beginning
 

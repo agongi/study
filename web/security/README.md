@@ -1,10 +1,5 @@
-## Security
-
-```
-
-```
-
-#### Index
+# Security
+### Index
 - [TLS (Transport Layer Security)](tls)
 - [SAN (Subject Alternative Name)](san)
 - [Diffie–Hellman key Exchange](diffie–hellman)

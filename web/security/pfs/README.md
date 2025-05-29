@@ -1,15 +1,13 @@
-## Perfect Forward Secrecy
-forward secrecy (FS; also known as perfect forward secrecy[1]) is a property of secure communication protocols.
-
->###### Compromise of long-term keys does not compromise past session keys in cryptography.
-
+# Perfect Forward Secrecy
 ```
 https://en.wikipedia.org/wiki/Forward_secrecy
 http://blogs.technet.com/b/erezs_iis_blog/archive/2013/08/22/perfect-secrecy-in-an-imperfect-world.aspx
 https://www.bpak.org/blog/2014/10/%EA%B7%B8%EA%B2%83%EC%9D%B4-%EC%95%8C%EA%B3%A0%EC%8B%B6%EB%8B%A4-e2e-pfs/
 ```
 
-<img src="images/kakao_4.png">
+forward secrecy (FS; also known as perfect forward secrecy[1]) is a property of secure communication protocols.
+
+> Compromise of long-term keys does not compromise past session keys in cryptography.
 
 현재 RSA를 사용하여 AES 키를 공유하는 상황이다.
 
@@ -18,3 +16,6 @@ https://www.bpak.org/blog/2014/10/%EA%B7%B8%EA%B2%83%EC%9D%B4-%EC%95%8C%EA%B3%A0
 여기서 심각한 점은, 앞으로의 메세지들 뿐만이 아니라 이전에 저장해둔 (암호화 되어있던) 메세지들도 풀 수 있다는 점이다. 서버에 저장되있는 메세지는 물론이고, 서버에서 삭제되었다고 해도 이전에 이미 암호화된 통신 내용을 저장해놓았다면 다시 돌아가서 복호화해볼 수 있게 된 셈이다.
 
 Forward Secrecy는 ‘long-term key’ (e.g. RSA pub/priv key)를 통해 만들어지거나 보호된 ‘session key’ (e.g. AES key)들이 long-term key가 유출된 이후에도 복호화되는 위협을 받지 않는다는 암호학적 성질을 나타낸다.
+
+<img src="1.png" width="50%">
+<img src="2.png" width="50%">

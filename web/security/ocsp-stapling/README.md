@@ -1,5 +1,4 @@
-## OCSP Stapling
-
+# OCSP Stapling
 ```
 https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 ```
@@ -8,8 +7,7 @@ https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 
 아래의 방법들은 인증서의 Root Cert 유효성을 확인하기 위한 방법들이다:
 
-### CRL (Certificate Revocation List)
-
+## CRL (Certificate Revocation List)
 - TLS handshake
 - Certificate hands-over
 - Look up root certificate
@@ -20,8 +18,7 @@ https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 
 > Slow in retriving all blacklist per TLS handshaking
 
-### OCSP (Online Certificate Status Protocol)
-
+## OCSP (Online Certificate Status Protocol)
 - ... same with above
 - Look for OCSP url described in certificate
 - Request to OCSP url to verify it is valid or not
@@ -30,8 +27,7 @@ https://www.maxcdn.com/one/visual-glossary/ocsp-stapling/
 
 > Slow in ask is valid or not per TLS handshaking
 
-### OCSP Stapling
-
+## OCSP Stapling
 - Target webserver caches periodically the response from OCSP vendor
   - Response valid through marked timestamp
   - Response is digital-signed prevent from modifying
