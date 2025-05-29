@@ -1,5 +1,4 @@
-## HTTP
-
+# HTTP
 ```
 http://www.slideshare.net/Jxck/spdy-http2-quic-bpstudy-20130828
 http://stackoverflow.com/questions/246859/http-1-0-vs-1-1
@@ -16,33 +15,34 @@ https://community.akamai.com/community/web-performance/blog/2016/06/22/understan
 - [HTTP Cache-Control](http/http-cache-control)
 - [HTTP Session](https://soon-devblog.tistory.com/2)
 
-### HTTP/1.1
-#### Keep-alive
+***
+## HTTP/1.1
+### Keep-alive
 HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default:
 - max: maximum request amount of keep connection
 - timeout: maximum sec of keep connection
 
 > It can reduce renegotiates flow of TCP connection known as 3-way handshaking.
 
-#### N-TCP-Connection
+### N-TCP-Connection
 Client is able to create 2-TCP-Connections per domain to get over performance limitation. The total number is vary.
 
-<img src="images/Screen%20Shot%202017-04-11%20at%2001.39.28.png" width="75%">
+<img src="1.png" width="50%">
 
 > Trick: Negotiate max-connection to each sub-domain e.g. 2-Connections per image.google.com, 2-Connections per video.google.com
 
-#### Pipelining in connection
+### Pipelining in connection
 Pipelining enables client to send all request in parallel before receives response. Server responses packet `in the same order` that the requests were received.
 
-<img src="images/Zp2lf.png" width="75%">
+<img src="2.png" width="50%">
 
 > It causes [Head-of-line blocking](https://en.wikipedia.org/wiki/Head-of-line_blocking) problem. (Output is occupied by first packet in line.)
 
-### HTTP/2
+## HTTP/2
 SPDY is invented by Google to improve HTTP/1.1 flaws. The core developers of SPDY have been involved in the development of HTTP/2, including both Mike Belshe and Roberto Peon. As of February 2015, Google has announced that following the recent final ratification of the HTTP/2 standard, support for `SPDY would be deprecated`, and that support for SPDY would be withdrawn completely in 2016.
 
-#### Binary framing layer
-<img src="images/Screen%20Shot%202017-04-11%20at%2001.44.59.png" width="75%">
+### Binary framing layer
+<img src="3.png" width="50%">
 
 The `layer` refers to a design choice to introduce a new optimized encoding mechanism between the socket interface and the higher HTTP API exposed to our applications: the HTTP semantics, such as verbs, methods, and headers, are unaffected, but the way they are encoded while in transit is different. Unlike the **newline delimited plaintext** HTTP/1.x protocol, all HTTP/2 communication is split into smaller **messages** and **frames**, each of which is encoded in binary format.
 
@@ -52,7 +52,7 @@ As a result, both client and server must use the new binary encoding mechanism t
 - Message: A complete sequence of frames that map to a logical request or response message.
 - Frame: The smallest unit of communication in HTTP/2, each containing a frame header, which at a minimum identifies the stream to which the frame belongs.
 
-<img src="images/Screen%20Shot%202017-04-11%20at%2001.37.17.png" width="75%">
+<img src="4.png" width="50%">
 
 The relation of these terms can be summarized as follows:
 
@@ -61,16 +61,15 @@ The relation of these terms can be summarized as follows:
 - Each message is a logical HTTP message, such as a request, or response, which consists of one or more frames.
 - The frame is the smallest unit of communication that carries a specific type of data—e.g., HTTP headers, message payload, and so on. Frames from different streams may be interleaved and then reassembled via the embedded stream identifier in the header of each frame.
 
-
-#### One-TCP-Connection
+### One-TCP-Connection
 With HTTP/1.x, browsers open between 4 and 8 connections per origin. This may improve performance in parallel situation but each of connections need to be negotiated called `3-way-handshake` that cause `RTT (Round-Trip-Time)` and reduce performance.
 
 One TCP Connection means that client need to negotiate 3-way-handshake once and use it multiply.
 
-#### Multiplexing
+### Multiplexing
 The new binary framing layer in HTTP/2 resolves the head-of-line blocking problem found in HTTP/1.x and eliminates the need for multiple connections to enable parallel processing and delivery of requests and responses.
 
-<img src="images/Screen%20Shot%202017-04-11%20at%2001.37.08.png" width="75%">
+<img src="5.png" width="50%">
 
 The snapshot captures multiple streams in flight within the same connection. The client is transmitting a DATA frame (stream 5) to the server, while the server is transmitting an interleaved sequence of frames to the client for streams 1 and 3. As a result, there are three parallel streams in flight.
 
@@ -82,15 +81,15 @@ The ability to break down an HTTP message into independent frames, interleave th
 
 > Multiplexing enables client to send all request in parallel before receives response. Server responses packet `out-of-order` that the requests were received.
 
-#### Header Compression
+### Header Compression
 HTTP header is compressed using `HPACK`. It significantly reduces HTTP response size by compression and improves performance almost 30%.
 
-#### Server Push
+### Server Push
 Server can push static resources e.g. css and/or javascript **BEFORE** respond HTML request.
 
 Pushed resources are cached in browser and `cache-hit (HTTP 304 Not Modified)`.
 
-<img src="images/Screen%20Shot%202016-02-02%20at%2000.34.17.png" width="75%">
+<img src="6.png" width="50%">
 
-#### Priority
+### Priority
 Client could `set priority` in request so when server receives it, It can set up priority in processing and response it rather than others.
