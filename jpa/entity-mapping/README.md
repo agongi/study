@@ -28,6 +28,8 @@ IDENTITY/SEQUENCE/TABLE 전략은 DB에서 PK를 생성하므로 persist() 시�
 ## 컬럼 매핑
 - @Column
   - 모든 컬럼에 정의
+- @JoinColumn
+  - 연관관계 매핑시 사용할 `상대방의 F.K`
 - @Enumerated
   - ENUM 저장 방식 (STRING/ORDINAL)
 
@@ -93,26 +95,24 @@ public void setModDate(Instant date) {
 
 ## 연관관계
 ### @OneToMany/@ManyToOne
-- @OneToMany(mappedBy = B)
+- `@OneToMany(mappedBy = "user")`
   - 연관관계 대상
   - mappedBy 으로 연관관계 주인 필드명 지정
-- @ManyToOne; @JoinColumn
-  - 연관관계 주인 (F.K 을 정의한 쪽이 주인 입니다)
+- `@ManyToOne; @JoinColumn(name = "USER_ID")`
+  - 연관관계 주인 (`F.K 을 정의한 테이블이 주인`)
   - @JoinColumn 으로 F.K 지정
 
 ```java
-/**
- * User Entity
- */
-@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-private Set<Order> orders = new LinkedHashSet<>();
+public class User {
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  private Set<Order> orders = new LinkedHashSet<>();    
+}
 
-/**
- * Order Entity
- */
-@ManyToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "USER_ID")
-private User user;
+public class Order {
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "USER_ID") // F.K
+  private User user;    
+}
 ```
 
 ### @OneToOne
