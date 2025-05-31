@@ -1,7 +1,7 @@
 # JPA
 ```
 https://arahansa.github.io/docs_spring/jpa.html
-https://www.nowwatersblog.com/jpa/ch1
+https://github.com/SoonMyeong/jpa-study/tree/master
 https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 ```
 
@@ -19,26 +19,16 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 
 ### Versions
 - JPA https://jakarta.ee/specifications/persistence/
-  - JPA 2.0
-    - 대부분의 기능은 2.0 에 정의됨
-  - JPA 2.1
-    - converter
-    - stored procedure
-  - JPA 2.2
+  - 2.2
     - streaming (cursor 지원)
-  - Jakarta Persistence 3.0
+  - 3.0
     - package renamed javax -> jakarta
-  - Jakarta Persistence 3.1
-- Hibernate https://hibernate.org/orm/releases/
-  - 5.6
-    - javassist dropped (byte-buddy used)
-  - 6.1
-    - from subquery 지원
-  - 6.2
-    - ...
+  - 3.1
+  - 3.2
+  - 4.0
 
 ***
-## Persistence Context
+## 영속성 (== Persistence Context)
 entityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아래의 조건을 만족하면 됩니다:
 
 - (신규) new Object(); 를 통해 생성된 자바 객체를 \#save
@@ -70,7 +60,7 @@ EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @Persi
   - field 직접 접근 (private 이라도 접근)
   - getter/setter 통한 접근
 
-## 연관관계 매핑
+## 연관관계
 ### @OneToMany/@ManyToOne
 - @OneToMany(mappedBy = B)
   - 연관관계 대상
@@ -138,7 +128,7 @@ private Set<User> users = new LinkedHashSet<>();
 
 <img src="1.png" width="50%">
 
-## 상속관계 매핑
+## 상속
 ### @Entity 를 상속하는 방법
 - InheritanceType.JOINED
   - 부모테이블이 존재하고, 자식테이블은 JOIN 으로 상속관계를 구현합니다
@@ -204,14 +194,13 @@ public abstract class Item {
 @Entity
 @DiscriminatorValue("A")
 public class Album extends Item {
-    ...
+    // ...
 }
 ```
 
-### @MappedSuperClass 를 상속하는 방법
-- @MappedSuperClass
-  - @AttributeOverride: 상속시 컬럼을 재정의 할때 사용
-  - @AssociationOverride: 상속시 연관관계를 재정의 할때 사용
+### @MappedSuperClass
+- @AttributeOverride: 상속시 컬럼을 재정의 할때 사용
+- @AssociationOverride: 상속시 연관관계를 재정의 할때 사용
 
 <img src="5.png" width="50%">
 
@@ -242,7 +231,12 @@ public class Person extends BaseEntity<String> {
 
 > @Entity 는 @Entity or @MappedSuperClass 가 선언된 클래스만 상속 할 수 있습니다
 
-## 복합키 매핑
+## 객체 그래프 탐색
+Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQL 에서 선언 시점에 결정` 이 아닌 지연로딩 방식의 Proxy 를 통해 `사용 시점에 결정` 할 수 있게 합니다.
+
+> 물론 Lazy loading 을 사용한다면 N+1 이 발생하므로 fetchJoin 을 통해 미리 로딩하는게 나음
+
+## 복합키
 테이블간의 결합을 막고, 부모 > 자식 > 손자로 이어지는 상속구조에서 식별관계는 P.K 가 길어지는 단점 있어서 `비식별관계`로 Entity 를 구성하는게 권장됩니다.
 
 그리고 복합키 사용시 조회할때 복합키 생성이 필요한 단점이 있어 F.K 는 그대로 유지하고, 별도의 P.K 를 선언해서 사용하는 방식이 좀 더 낫습니다.
@@ -266,12 +260,12 @@ SELECT account.accountNumber FROM Account account;
 SELECT book.bookId.title FROM Book book;
 ```
 
-### @OneToOne 식별관계
+### @OneToOne
 @OneToOne 관계일때 같은키로 P.K 을 선언하는 것을 의미합니다.
 
 @MapsId 및 @JoinColumn 을 같이 선언해서 문법상 가능하지만 항상 N+1 이 발생합니다. 그래서 연관관계의 주인이 F.K 을 가지고 @JoinColumn 해서 lazy 하는 방식이 더 낫습니다
 
-## 조인테이블 매핑
+## 조인테이블
 매핑테이블을 별도로 지정하는 방식입니다. 즉 연관관계를 맺으려면
 
 - 테이블에 F.K 가 있다면 -> @JoinColumn
@@ -288,7 +282,7 @@ SELECT book.bookId.title FROM Book book;
 private Parent parent;
 ```
 
-## 여러 테이블 매핑
+## 여러 테이블
 1개의 Entity 가 여러개의 테이블을 매핑하는 것도 문법적으로 가능합니다. 가능은 하지만 테이블과 엔티티를 일대일로 정의하는게 맞습니다
 
 ```java
@@ -390,7 +384,6 @@ Aggregate Root 에서 연관관계를 관리할때 CASCARD, OrphanRemoval 을 �
 
 ## 데이터 타입
 ### @Embedded/@Embeddable
-
 새로운 유형의 (값) 클래스를 직접 정의해서 사용 가능합니다:
 
 > 기존 @EmbeddedId/@Embeddable 와 동일한 사용성입니다. (대상 컬럼이 P.K 인지 단순 값인지의 차이만 존재) 
