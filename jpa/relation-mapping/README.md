@@ -1,4 +1,4 @@
-# 엔티티 매핑
+# 연관관계 매핑
 ```
 https://www.nowwatersblog.com/jpa/ch10
 ```

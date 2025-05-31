@@ -9,8 +9,8 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 - [JPQL](jpql)
 - [Spring Data JPA](spring-data-jpa)
 - [Persistence Context](persistence-context)
-- [엔티티 매핑](entity-mapping)
-- [상속 매핑](inheritance-mapping)
+- [연관관계 매핑](relation-mapping)
+- [상속관계 매핑](inheritance-mapping)
 
 ### Blog
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)

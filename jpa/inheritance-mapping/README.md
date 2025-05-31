@@ -1,4 +1,4 @@
-# 상속 매핑
+# 상속관계 매핑
 ```
 https://www.baeldung.com/hibernate-inheritance
 ```
