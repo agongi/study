@@ -4,45 +4,61 @@ https://www.baeldung.com/jpa-hibernate-persistence-context
 ```
 
 ### Blog
-- [Open_Session_In_View_Pattern.pdf](http://pds19.egloos.com/pds/201106/28/18/Open_Session_In_View_Pattern.pdf)
-
+- [Open_Session_In_View_Pattern.pdf](Open_Session_In_View_Pattern.pdf)
 ***
-
 | Hibernate       | JPA                 |
 |-----------------|---------------------|
 | Session         | Entity Manager      |
 | Session Context | Persistence Context |
 
-## [Scope](https://colevelup.tistory.com/21)
-entityManager 는 기본적으로 transaction-scope 로 동작합니다. 즉 현재 tx 를 실행하는 thread 단위에서만 영속성은 유효합니다
+## 특징
+- DB 와 애플리케이션 사이의 1차 캐시 역할을 수행합니다
+  - repeatable read 수준의 격리 보장 (1차캐시를 통해 조회하므로 기존 값이 조회됨)
+- 영속성에 저장되는 Entity 는 @Id (동등성 식별위한) 가 필수
 
-> 영속성은 동시성 이슈가 있으므로 thread 단위로 유니크해야 합니다
+### 변경감지
+JPA는 엔티티를 영속성 컨텍스트에 보관할 때, 최초 상태 `스냅샷` 을 저장하고 플러시 시점에 스냅샷과 비교해서 변경된 엔티티를 감지 합니다:
+- 현재 엔티티와 스냅샷을 비교해서 변경된 엔티티를 찾은후
+- Dirty Check 된 엔티티의 Update SQL 를 생성합니다
+  - 기본적으로 Update SQL 은 모든 필드를 업데이트 하는 동일 SQL 을 사용합니다 (쿼리 재사용하여 DB 성능 향상)
+  - 변경된 필드만 포함하는 SQL 을 동적으로 생성하려면 `@DynamicUpdate/@DynamicInsert` 을 Entity 에 선언
+- Flush (DB 에 SQL 전달해서 반영) & Commit
 
-영속성을 관리하는 em 은 아래의 방법으로 가져옵니다:
+### Flush
+- em#flush 직접 호출
+- 트랜잭션 커밋 시 자동 호출
+- `JPQL 쿼리 실행 시` 자동 호출
+  - JPQL 쿼리를 생성하는 `QueryDSL 사용`해도 자동 호출 됩니다
+  - JPQL 은 DB 를 직접 조회하므로 현재 영속성의 값과 다른 데이터를 조회 할 수 있습니다 (영속성의 1차캐시로 인한 쓰기지연)
+  - 그래서 `현재까지의 영속성 내용이 JPQL DB 직접 조회에 반영 하기 위해` 쿼리 수행전 flush 를 수행합니다 (flushAutomatically=true)
+  - 만약 JPQL 로 DB 를 직접 수정하는 내용이 있다면 -> 영속성에는 해당 내용이 반영 전 입니다. 그래서 clearAutomatically=true 를 설정해서 이후 영속성에 재조회해서 반영 되도록 선언 합니다
+  
+```java
+@Modifying(clearAutomatically = true, flushAutomatically = true)
+public void updateUser(String id);
+```
 
-- @PersistenceContext EntityManager em;
-  - javax 에서 지원하는 방식입니다
-  - new or tx 에서 사용중인 em 을 리턴합니다
-- @Autowired EntityManager em;
-  - 스프링빈은 기본적으로 싱글톤 이기 때문에 동시성 이슈가 있지만 (영속성이 다같이 공유됨)
-  - proxy 가 반환되고 (runtime-weaving) 사용시점에 new or tx 에서 사용중인 em 으로 처리합니다
-- EntityManager em = emf.createEntityManager();
-  - 항상 instance 가 생성되지만 `다른 em 이라도 tx-scope 를 보고 같은 영속성 or 다른 영속성`을 바라볼지 결정되어 리턴됩니다
+### [Scope](https://colevelup.tistory.com/21)
+EntityManager 는 현재의 DB 커넥션에 유효합니다. 즉 현재 실행되고 있는 Transaction 단위에서 영속성은 유지 됩니다
 
-어노테이션을 주입 or 팩토리를 통한 생성 모두 `동일 트랜잭션 범위에서는` em instance 는 달라도 같은 영속성을 사용합니다.
+> 동시성 이슈가 있으므로 Thread 간에 공유하거나 재사용 하면 안됨
 
 <img src="3.png" width="50%">
 
-트랜잭션이 다르면 동일한 엔티티 매니저를 사용해도 다른 영속성 컨텍스트를 사용합니다
+- EntityManagerFactory 는 hibernate 설정을 읽어서 EntityManager 를 제공하는 역할
+- emf.createEntityManager 를 통해 생성된 객체는 아직 커넥션 사용전
+  - Transaction 이 시작되는 시점까지 (지연로딩) 커넥션 사용은 지연됩니다
+  - ConnectionPool 애플리케이션이 설정 시점에 제공 합니다 (ex. hikari)
+- 한번 생성된 EntityManager 는 절대 다른 스레드에 공유 하면 안됩니다
 
 ```java
 // hibernate 설정
 props.put(org.hibernate.cfg.Environment.CURRENT_SESSION_CONTEXT_CLASS,"thread");
 
-    // SessionFactoryImpl - threadLocal 에 세션 저장
-    else if("thread".equals(impl)){
-    return new ThreadLocalSessionContext(this);
-    }
+// SessionFactoryImpl - threadLocal 에 세션 저장
+else if("thread".equals(impl)){
+  return new ThreadLocalSessionContext(this);
+}
 ```
 
 ## OSIV
@@ -71,7 +87,7 @@ view 에서 영속성에 대한 변경이 있어도 아래의 조건에 의해 D
 - 묵시적
   - 스프링 OSIV filter/interceptor 는 요청이 끝나면 em.close() 로 종료하므로 반영되지 않습니다
 - 명시적
-  - em.flush 을 명시적으롷 호출해도 tx 가 이미 종료된 상태이므로 TransactionRequiredException 예외가 발생합니다
+  - em.flush 을 호출해도 tx 가 이미 종료된 상태이므로 TransactionRequiredException 예외가 발생합니다
 
 ## READONLY
 - 메모리 최적화 (스냅샷 미저장)
