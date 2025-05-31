@@ -64,13 +64,7 @@ else if("thread".equals(impl)){
 ## OSIV
 Session (== Entity Manager) 을 view 까지 확장해서 lazy-load (즉 N+1) 을 지원하는 개념입니다.
 
-### 과거 OSIV
-- 트랜잭션 범위
-  - [FROM] filter/interceptor [TO] view
-- 영속성 범위
-  - [FROM] filter/interceptor [TO] view
-
-<img src="1.png" width="50%">
+> 트랜잭션 종료시 커넥션 (DBCP) 을 반납하지 않고, view (최종 응답) 까지 유지 
 
 ### 스프링 OSIV
 - 트랜잭션 범위
@@ -90,10 +84,10 @@ view 에서 영속성에 대한 변경이 있어도 아래의 조건에 의해 D
   - em.flush 을 호출해도 tx 가 이미 종료된 상태이므로 TransactionRequiredException 예외가 발생합니다
 
 ## READONLY
-- 메모리 최적화 (스냅샷 미저장)
+- 메모리 최적화 `(스냅샷 미저장)`
   - 읽기 전용 쿼리 힌트
   - 읽기 전용 엔티티 `@Immutable`
-- 속도 최적화 (스냅샷 미비교)
+- 속도 최적화 `(스냅샷 미비교)`
   - 읽기 전용 트랜잭션
 
 ```java
