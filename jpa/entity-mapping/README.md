@@ -94,57 +94,107 @@ public void setModDate(Instant date) {
 ```
 
 ## 연관관계
-### @OneToMany/@ManyToOne
-- `@OneToMany(mappedBy = "user")`
-  - 연관관계 대상
-  - mappedBy 으로 연관관계 주인 필드명 지정
-- `@ManyToOne; @JoinColumn(name = "USER_ID")`
-  - 연관관계 주인 (`F.K 을 정의한 테이블이 주인`)
-  - @JoinColumn 으로 F.K 지정
-
 ```java
 public class User {
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-  private Set<Order> orders = new LinkedHashSet<>();    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Order> orders = new LinkedHashSet<>();    
 }
 
 public class Order {
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "USER_ID") // F.K
-  private User user;    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID") // F.K
+    private User user;    
+}
+```
+
+### @OneToMany
+- `@OneToMany(mappedBy = "user")`
+  - 연관관계 대상
+  - mappedBy 으로 연관관계 주인의 필드명 지정
+- 단방향 @OneToMany 사용
+  - `mappedBy = ?` 으로 지정할 대상이 없으므로 (양방향 이므로) 저장시 INSERT 가 아닌 `INSERT-UPDATE 쿼리가 발생` 합니다
+  - 따라서 단방향 @OneToMany 은 권장되지 않습니다 (양방향 권장)
+
+```java
+@Entity
+public class Team {
+    @OneToMany
+    private List<Member> members;
+}
+```
+```sql
+-- Member insert (team_id = null)
+INSERT INTO member (name, team_id) VALUES (?, null);
+
+-- Member update (team_id = 1)
+UPDATE member SET team_id = 1 WHERE id = ?;
+
+-- INSERT → UPDATE 두 번 쿼리가 나감 (N개면 2N번!)
+```
+
+### @ManyToOne
+- `@ManyToOne; @JoinColumn(name = "USER_ID")`
+  - 연관관계 주인
+  - `스스로 연관관계를 결정 할수 있는 F.K 를 저장`하고 있어서 주인이라는 개념을 사용합니다 (@JoinColumn 으로 F.K 지정)
+- 양방향 @ManyToOne 사용
+  - JPA 는 연관관계의 주인이 F.K 를 관리하므로 한쪽에만 저장해도 문제 없습니다
+  - 하지만 POJO 의 관점으로 보면 양쪽 모두에 적용되야 올바르게 동작 합니다
+
+```java
+// https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Object_corruption,_one_side_of_the_relationship_is_not_updated_after_updating_the_other_side
+public class Member {
+    private Team team;
+    
+    public void changeTeam(Team team) {
+        this.team = team; // 연관관계 주인에 설정 (데이터 관점에서 해당 작업만 해도 문제없음)
+        team.getMembers().add(this); // 양방향 갱신을 하지 않으면 team 에는 member 가 없음 (명시적으로 재조회 하기 전까지)
+    }
 }
 ```
 
 ### @OneToOne
-- 주 테이블에 F.K 정의
-  - proxy 를 통한 lazy-load 가 가능합니다 (F.K is not null 이면 대상이 존재함이 보장되므로 proxy 사용가능 즉 eager 불필요)
-    - proxy 가 아직 row 를 조회하진 않았지만 존재유무는 알아야 하므로 (proxy 와 null 은 다르다) 존재유무에 대한 보장이 필요
-- 대상 테이블에 F.K 정의
-  - eager-load 만 가능합니다
+- Proxy 객체는 `존재함이 보장되는 객체를` 아직 로딩하지 않은 가짜 객체 입니다
+  - Proxy 객체가 있다면 null 이 아님을 보장한다는 의미입니다. (JPA 는 null or proxy 로 객체를 표현)
+  - 따라서 Proxy 아니면 null 을 세팅하기 위해 존재함을 확인해야 하는 N+1 문제가 발생 할 수 있습니다 
+- 양방향 @OneToOne 사용
 
 ```java
-/**
- * User Entity
- */
-@OneToOne(mappedBy = "user")
-private Order order = new LinkedHashSet<>();
+public class User {
+    // eager 로딩만 가능합니다 (실제로 존재함을 SQL 을 실행해야만 알 수 있음)
+    @OneToOne(mappedBy = "user")
+    private Order order = new LinkedHashSet<>();
+}
 
-/**
- * Order Entity
- */
-@OneToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "USER_ID")
-private User user;
+public class Order {
+    // lazy 로딩이 가능합니다 (연관관계의 주인이므로 F.K 가 존재한다면 실제로 Entity 가 존재함을 알 수 있음)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+}
+```
+
+- 단방향 @OneToOne 사용
+
+```java
+public class Order {
+    // lazy 로딩이 가능합니다 (연관관계의 주인이므로 F.K 가 존재한다면 실제로 Entity 가 존재함을 알 수 있음)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User user;
+}
 ```
 
 ### @ManyToMany
-- @JoinTable
-  - 연관관계 주인이 @JoinTable 을 명시합니다 (@JoinColumn 과 동일함)
-  - 연관관계 대상은 mappedBy 를 명시합니다
+- @JoinTable (매핑 테이블) 을 이용해서 연관관계를 매핑 합니다
+  - 대신 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼만 사용하므로 확장이 불가능합니다
+  - 그럴 경우 별도로 테이블을 만들고 `(대상1) OneToMany -- ManyToOne (매핑테이블) ManyToOne -- OneToMany (대상2)` 으로 정의하면 확장이 가능합니다
 
 ```java
 @ManyToMany(fetch = FetchType.EAGER)
-@JoinTable(name = "TABLE_NAME", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+@JoinTable(
+    name = "TABLE_NAME",
+    joinColumns = @JoinColumn(name = "PERSON_ID"),
+    inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
 @Where(clause = "DEL_YN <> 1")   // 유효한 상품만 조회
 @Fetch(FetchMode.SUBSELECT)
 private Set<Order> orders = new LinkedHashSet<>();
@@ -152,9 +202,5 @@ private Set<Order> orders = new LinkedHashSet<>();
 @ManyToMany(mappedBy = "orders")
 private Set<User> users = new LinkedHashSet<>();
 ```
-
-@JoinTable 방식은 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼만 사용가능해서 테이블 확장이 불가능합니다.
-
-그래서 별도의 매핑테이블을 만들고 (대상1) OneToMany -- ManyToOne (매핑테이블) ManyToOne -- OneToMany (대상2) 로 연결하는게 확장성이 있습니다
 
 <img src="1.png" width="50%">
