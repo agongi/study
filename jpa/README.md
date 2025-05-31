@@ -9,6 +9,7 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 - [JPQL](jpql)
 - [Spring Data JPA](spring-data-jpa)
 - [Persistence Context](persistence-context)
+- [엔티티 매핑](entity-mapping)
 
 ### Blog
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
@@ -17,117 +18,16 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 - [순환참조를 해결하는 방법](http://binarycube.tistory.com/1)
 - [JPA 프로그래밍 정리](https://github.com/cheese10yun/TIL/blob/master/Spring/jpa/jpa.md)
 
-### Versions
-- JPA https://jakarta.ee/specifications/persistence/
-  - 2.2
-    - streaming (cursor 지원)
-  - 3.0
-    - package renamed javax -> jakarta
-  - 3.1
-  - 3.2
-  - 4.0
+### [Versions](https://jakarta.ee/specifications/persistence/)
+- JPA 2.2 
+  - streaming (cursor 지원)
+- JPA 3.0
+  - package renamed javax -> jakarta
+- JPA 3.1
+- JPA 3.2
+- JPA 4.0
 
 ***
-## 영속성 (== Persistence Context)
-entityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아래의 조건을 만족하면 됩니다:
-
-- (신규) new Object(); 를 통해 생성된 자바 객체를 \#save
-- (조회) \#find 를 통해 조회한 entity
-
-> 영속성은 tx 단위마다 생성됩니다 (정확히는 hibernate session 단위)
-
-EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @PersistenceContext 를 통해 주입해야 합니다
-
-- 일반적인 bean 으로 주입하면 안됩니다
-  - thread 단위로 생성해야 하므로, singleton 이 기본인 bean 으로 사용 불가능
-- @PersistenceContext 를 통해 주입받으면
-  - EntityManagerFactory#createEntityManager 을 통해 생성하거나
-  - 진행중인 transaction 이 있다면 -> tx 에서 사용중인 em 획득
-
-## 기본키 매핑
-- IDENTITY: auto increment 등 처럼 DB 에 위임
-- SEQUENCE: 생성할 시퀀스를 지정 (generator)
-- TABLE: 키 생성 전용 테이블 사용
-- AUTO: dialect 에 따라 hibernate 에서 3가지 방식중 선택
-
-## 컬럼 매핑
-- @Column: 모든 컬럼에 정의 (생략시 묵시적으로 적용되지만, 명시하는게 나음)
-- @Enumerated: ENUM 지정
-- @Temporal: date, time, datetime 지정 (기본값은 datetime 이 모두 표현되는 timestamp)
-- @Lob: clob (longtext), blob (나머지)
-- @Transient: JPA 에서 관리하지 않을 field
-- @Access
-  - field 직접 접근 (private 이라도 접근)
-  - getter/setter 통한 접근
-
-## 연관관계
-### @OneToMany/@ManyToOne
-- @OneToMany(mappedBy = B)
-  - 연관관계 대상
-  - mappedBy 으로 연관관계 주인 필드명 지정
-- @ManyToOne; @JoinColumn
-  - 연관관계 주인 (F.K 을 정의한 쪽이 주인 입니다)
-  - @JoinColumn 으로 F.K 지정
-
-```java
-/**
- * User Entity
- */
-@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-private Set<Order> orders = new LinkedHashSet<>();
-
-/**
- * Order Entity
- */
-@ManyToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "USER_ID")
-private User user;
-```
-
-### @OneToOne
-- 주 테이블에 F.K 정의
-  - proxy 를 통한 lazy-load 가 가능합니다 (F.K is not null 이면 대상이 존재함이 보장되므로 proxy 사용가능 즉 eager 불필요)
-    - proxy 가 아직 row 를 조회하진 않았지만 존재유무는 알아야 하므로 (proxy 와 null 은 다르다) 존재유무에 대한 보장이 필요
-- 대상 테이블에 F.K 정의
-  - eager-load 만 가능합니다
-
-```java
-/**
- * User Entity
- */
-@OneToOne(mappedBy = "user")
-private Order order = new LinkedHashSet<>();
-
-/**
- * Order Entity
- */
-@OneToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "USER_ID")
-private User user;
-```
-
-### @ManyToMany
-- @JoinTable
-  - 연관관계 주인이 @JoinTable 을 명시합니다 (@JoinColumn 과 동일함)
-  - 연관관계 대상은 mappedBy 를 명시합니다
-
-```java
-@ManyToMany(fetch = FetchType.EAGER)
-@JoinTable(name = "TABLE_NAME", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
-@Where(clause = "DEL_YN <> 1")   // 유효한 상품만 조회
-@Fetch(FetchMode.SUBSELECT)
-private Set<Order> orders = new LinkedHashSet<>();
-
-@ManyToMany(mappedBy = "orders")
-private Set<User> users = new LinkedHashSet<>();
-```
-
-@JoinTable 방식은 `joinColumns/inverseJoinColumns` 을 통해 2개의 컬럼만 사용가능해서 테이블 확장이 불가능합니다.
-
-그래서 별도의 매핑테이블을 만들고 (대상1) OneToMany -- ManyToOne (매핑테이블) ManyToOne -- OneToMany (대상2) 로 연결하는게 확장성이 있습니다
-
-<img src="1.png" width="50%">
-
 ## 상속
 ### @Entity 를 상속하는 방법
 - InheritanceType.JOINED

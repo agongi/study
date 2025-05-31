@@ -11,6 +11,14 @@ https://www.baeldung.com/jpa-hibernate-persistence-context
 | Session         | Entity Manager      |
 | Session Context | Persistence Context |
 
+EntityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아래의 조건을 만족하면 됩니다:
+- (신규) new Object(); 를 통해 생성된 자바 객체를 \#save
+- (조회) \#find 를 통해 조회한 entity
+
+> 영속성은 tx 단위마다 생성됩니다 (정확히는 hibernate session 단위)
+
+EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @PersistenceContext 를 통해 주입해야 합니다
+
 ## 특징
 - DB 와 애플리케이션 사이의 1차 캐시 역할을 수행합니다
   - repeatable read 수준의 격리 보장 (1차캐시를 통해 조회하므로 기존 값이 조회됨)
