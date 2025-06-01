@@ -37,25 +37,27 @@ Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQ
 ## 복합키
 테이블간의 결합을 막고, 부모 > 자식 > 손자로 이어지는 상속구조에서 식별관계는 P.K 가 길어지는 단점 있어서 `비식별관계`로 Entity 를 구성하는게 권장됩니다.
 
-그리고 복합키 사용시 조회할때 복합키 생성이 필요한 단점이 있어 F.K 는 그대로 유지하고, 별도의 P.K 를 선언해서 사용하는 방식이 좀 더 낫습니다.
-
-### 식별 vs 비식별 관계
+`복합키는 조회시 복합키 생성이 필요한 단점`이 있어 F.K 는 그대로 유지하고, 별도의 P.K 를 선언해서 사용하는 방식이 좀 더 낫습니다. (비식별 관계)
 - 식별관계
-  - 부모테이블의 기본키를 자식테이블에서 기본키 + 외래키로 사용합니다
+  - 부모테이블의 기본키를 `자식테이블의 기본키 + 외래키`로 사용합니다
+
+<img src="1.png" width="50%">
+
 - 비식별관계
-  - 부모테이블의 기본키를 자식테이블의 외래키로만 사용합니다
+  - 부모테이블의 기본키를 `자식테이블의 외래키`로만 사용합니다
+
+<img src="2.png" width="50%">
 
 ### @IdClass vs @EmbeddedId/@Embeddable
-선언에 대한 문법적인 차이는 있지만, 복합키를 사용한다 의 관점은 동일합니다.
-
+문법적인 차이는 있지만 기능을 동일 합니다 (OOP 관점으로 보면 @EmbeddedId 가 좀더 나음)
 대신 JPQL 로 보면 아래의 차이가 있습니다:
+```java
+//@EmbeddedId
+em.createQuery("select p.id.id1, p.id.id2 from Parent p"); 
 
-```sql
-# @IdClass
-SELECT account.accountNumber FROM Account account;
+//@IdClass
+em.createQuery("select p.idl, P.id2 from Parent p");
 
-# @EmbeddedId (복합키로 인해 1-depth 추가)
-SELECT book.bookId.title FROM Book book;
 ```
 
 ### @OneToOne
