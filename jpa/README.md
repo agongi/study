@@ -127,3 +127,42 @@ INSERT INTO ADDRESS (MEMBER_ID, CITY, STREET, 2IPCODE) VALUES (1,  '서울', '�
   - @Id 식별자가 없습니다
 
 `@ElementCollection 으로 표현되는 관계는 모두 @OneToMany 로 표현 가능` 합니다. 제약이 없는 일대다 관계로 설정하는게 낫습니다
+
+## 부가 기능
+### @Converter
+```java
+@Convert(converter = BooleanToYNConverter.class) // 개별 필드에 컨버터 지정
+private boolean vip;
+
+@Convert(autoApply = true) // 모든 Boolean 에 적용하려면 autoApply = true 사용
+public class BooleanToYNConverter implements AttributeConverter<Boolean, string> {
+  @Override
+  public String convertToDatabaseColumn (Boolean attribute) {
+    return  BooleanUtils.isTrue(dbData) ? "Y" : "N";
+  }
+  
+  @Override
+  public Boolean convertToEntityattribute (String dbData) {
+    return BooleanUtils.isTrue(dbData);
+  }
+}
+```
+
+### @Listener
+변경 감지후 전/후처리 처리 위한 리스너 등록
+```java
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class AuditEntity<ID extends Serializable> {
+    @CreatedDate
+    @Column(name = "REG")
+    private Instant regDate;
+
+    @CreatedBy
+    @Column(name = "REG_INFO")
+    private AuditInfo regAuditInfo;
+}
+```
+
+### 엔티티 그래프
+.. 복잡해서 안써봄
