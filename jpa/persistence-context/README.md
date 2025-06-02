@@ -17,7 +17,11 @@ EntityManager 에서 관리되는 객체를 의미합니다. 영속상태는 아
 
 > 영속성은 tx 단위마다 생성됩니다 (정확히는 hibernate session 단위)
 
-EntityManager 는 thread-safe 하지 않으므로, 공유하면 안되고 @PersistenceContext 를 통해 주입해야 합니다
+EntityManager 는 현재의 DB 커넥션에 유효합니다. 즉 현재 실행되고 있는 Transaction 단위에서 영속성은 유지 됩니다
+
+> 동시성 이슈가 있으므로 Thread 간에 공유하거나 재사용 하면 안됨
+
+<img src="1.png" width="50%">
 
 ## 특징
 - DB 와 애플리케이션 사이의 1차 캐시 역할을 수행합니다
@@ -46,52 +50,39 @@ JPA는 엔티티를 영속성 컨텍스트에 보관할 때, 최초 상태 `스�
 public void updateUser(String id);
 ```
 
-### [Scope](https://colevelup.tistory.com/21)
-EntityManager 는 현재의 DB 커넥션에 유효합니다. 즉 현재 실행되고 있는 Transaction 단위에서 영속성은 유지 됩니다
-
-> 동시성 이슈가 있으므로 Thread 간에 공유하거나 재사용 하면 안됨
+### [트랜잭션의 범위와 영속성](https://colevelup.tistory.com/21)
+트랜잭션이 같으면 같은 영속성 컨텍스트를 사용합니다
 
 <img src="3.png" width="50%">
 
-- EntityManagerFactory 는 hibernate 설정을 읽어서 EntityManager 를 제공하는 역할
-- emf.createEntityManager 를 통해 생성된 객체는 아직 커넥션 사용전
-  - Transaction 이 시작되는 시점까지 (지연로딩) 커넥션 사용은 지연됩니다
-  - ConnectionPool 애플리케이션이 설정 시점에 제공 합니다 (ex. hikari)
-- 한번 생성된 EntityManager 는 절대 다른 스레드에 공유 하면 안됩니다
+트랜잭션이 다르면 다른 영속성 컨텍스트를 사용합니다
 
-```java
-// hibernate 설정
-props.put(org.hibernate.cfg.Environment.CURRENT_SESSION_CONTEXT_CLASS,"thread");
-
-// SessionFactoryImpl - threadLocal 에 세션 저장
-else if("thread".equals(impl)){
-  return new ThreadLocalSessionContext(this);
-}
-```
+<img src="4.png" width="50%">
 
 ## OSIV
-Session (== Entity Manager) 을 view 까지 확장해서 lazy-load (즉 N+1) 을 지원하는 개념입니다.
+Transaction 의 범위가 아닌 Controller (== View) 에서 준영속 상태의 객체 그래프 탐색시 `org.hibernate.LazyInitializationException` 이 발생합니다.
 
-> 트랜잭션 종료시 커넥션 (DBCP) 을 반납하지 않고, view (최종 응답) 까지 유지 
+OSIV 는 Session (== Entity Manager) 의 범위를 View 까지 확대하여 지연로딩 (== N+1 방식으로) 을 지원합니다.
 
 ### 스프링 OSIV
 - 트랜잭션 범위
   - [FROM/TO] @Transactional
+  - DBCP 커넥션을 획득/반환은 트랜잭션 시작/종료 시점 입니다
 - 영속성 범위
-  - [FROM] filter/interceptor [TO] view
+  - [FROM] @Transactional [TO] Filter/Interceptor
+    - `트래픽 진입 -> Filter/Interceptor` 시점부터 
+    - `Filter/Interceptor -> 트래픽 아웃` 시점까지 영속성 존재
+    - 영속성이 유지되면서 Controller 에서 객체 그래프 탐색시 > 지연로딩을 통한 조회가 가능해 집니다 (nontransactional read 사용)
 
 <img src="2.png" width="50%">
 
-트랜잭션은 종료되었지만 영속성만 존재할때 조회가 가능한 이유는 `tx 없는 select 가 가능하기 때문 (select for share 가 아닌 이상 모든 조회는 non-transactional read)` 입니다
-
-view 에서 영속성에 대한 변경이 있어도 아래의 조건에 의해 DB 에 반영되지 않습니다
-
+OSIV 사용중 단순 조회가 아닌 엔티티의 수정이 발생해도 2가지 조건에 의해 반영되지 않습니다:
 - 묵시적
-  - 스프링 OSIV filter/interceptor 는 요청이 끝나면 em.close() 로 종료하므로 반영되지 않습니다
+  - 스프링 OSIV filter/interceptor 는 최종적으로 em.close() 로 종료하므로 반영되지 않습니다 (#flush 하지 않음)
 - 명시적
   - em.flush 을 호출해도 tx 가 이미 종료된 상태이므로 TransactionRequiredException 예외가 발생합니다
 
-## READONLY
+## Read-Only Transactional
 - 메모리 최적화 `(스냅샷 미저장)`
   - 읽기 전용 쿼리 힌트
   - 읽기 전용 엔티티 `@Immutable`
