@@ -166,3 +166,37 @@ public abstract class AuditEntity<ID extends Serializable> {
 
 ### 엔티티 그래프
 .. 복잡해서 안써봄
+
+## 성능 최적화
+### N+1
+지연로딩 + (필요한 경우에만) 페치조인으로
+
+### Read-Only Transactional
+- 메모리 최적화 `(스냅샷 미저장)`
+  - 읽기 전용 쿼리 힌트
+  - 읽기 전용 엔티티 `@Immutable`
+- 속도 최적화 `(스냅샷 미비교)`
+  - 읽기 전용 트랜잭션
+
+```java
+@Transactional(readOnly = true) // 읽기 전용 트랜잭션
+public Collection<DataEntity> findAll() {
+    return em.createQuery("select d from DataEntity d", DataEntity.class)
+        .setHint("org.hibernate.readOnly",true) // 읽기 전용 쿼리 힌트
+        .getResultList();
+}
+```
+
+### batchSize/fetchSize
+- batchSize
+  - INSERT/UPDATE 시 모아서 보낼 SQL 의 개수
+- fetchSize
+  - SELECT 시 조회할 데이터의 개수
+
+### 대량 삭제
+단순한 DELETE 를 실행해도, 영속성에 조회/삭제 하므로 불필요한 SELECT 가 발생합니다
+(JPA 는 영속성에 존재하는 데이터를 수정/삭제 하는 개념이므로)
+
+그러므로 즉시 삭제를 원할경우 JPQL 를 직접 사용합니다
+
+### Lock
