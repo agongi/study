@@ -30,11 +30,6 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 - JPA 4.0
 
 ***
-## 객체 그래프 탐색
-Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQL 에서 선언 시점에 결정` 이 아닌 지연로딩 방식의 Proxy 를 통해 `사용 시점에 결정` 할 수 있게 합니다.
-
-> 물론 Lazy loading 을 사용한다면 N+1 이 발생하므로 fetchJoin 을 통해 미리 로딩하는게 나음
-
 ## 복합키
 테이블간의 결합을 막고, 부모 > 자식 > 손자로 이어지는 상속구조에서 식별관계는 P.K 가 길어지는 단점 있어서 `비식별관계`로 Entity 를 구성하는게 권장됩니다.
 

@@ -1,15 +1,14 @@
 # 프록시
-```
-https://www.nowwatersblog.com/jpa/ch10
-```
+### Blog
+- [How to Convert a Hibernate Proxy to a Real Entity Object](https://www.baeldung.com/hibernate-proxy-to-real-entity-object)
 
+***
 <img src="1.png" width="50%">
 
-LAZY 로 설정된 연관관계는 Proxy 를 만들고 실제 객체의 참조를 관리합니다. (즉 실제로 값을 사용하는 시점에 N+1 로 DB 조회)
-
-Proxy 는 원본 엔티티를 상속받은 객체이므로 타입 체크시 주의해야 합니다.
-
-> 아래와 같이 `HibernateProxy or PersistentCollection` 타입이고 concrete type 은 initialize 후 비교가능
+지연 로딩 기능을 사용하려면 실제 엔티티 객체 대신에 데이터베이스 `조회를 지연할 수 있는 가짜 객체`가 필요한데 이것을 프록시 객체 입니다.
+- fetchType.LAZY 로 설정된 연관관계는 Proxy 를 리턴합니다 (실제 값을 `사용시점에 N+1` 로 DB 조회)
+- Proxy 는 원본 엔티티를 상속받은 객체이므로 타입 체크시 주의해야 합니다
+  - 아래와 같이 `HibernateProxy or PersistentCollection` 타입이고 실제 타입은 initialize 후 확인 가능
 
 ```java
 public final class Hibernate {
@@ -27,12 +26,12 @@ public final class Hibernate {
 }
 ```
 
-### 프록시의 한계
-프록시는 null 값을 가질 수 없습니다. 그래서 연관관계 엔티티 (즉 instance) 를 가져올때 3가지 중 1개의 값을 리턴합니다:
+## 특징
+`프록시는 null 값을 가질 수 없습니다`. 그래서 연관관계 엔티티 (즉 instance) 를 가져올때 3가지 중 1개의 값을 리턴합니다:
 
 - (값이 없는 경우) null
-- (LAZY 의 경우) Proxy 로 감싼 instance
-- (EAGER 의 경우) 실제 instance
+- (LAZY 의 경우) Proxy 객체
+- (EAGER 의 경우) 실제 객체
 
 연관관계 매핑에 따라 아래와 같이 동작합니다:
 
@@ -42,10 +41,15 @@ public final class Hibernate {
   - @JoinColumn 으로 대상의 기본키를 외래키로 가지고 있으면 존재유무를 알수 있으므로 Fetch.LAZY 가 가능합니다
 - @ManyToOne
   - 연관관계의 주인이고, @JoinColumn 을 통해 연관관계의 존재유무를 알수 있습니다
+  - 그러므로 FetchType.LAZY 가 가능합니다
 - @OneToMany
   - 연관관계의 주인이 아니라서 존재유무는 알수 없지만 Fetch.LAZY 가 가능합니다
-  - 이유는 Collection 은 null 대신 `empty 표현이 가능`하기 때문입니다
-    - 즉 실제 instance or proxy 로 감싼 empty.collection 으로 표현
+  - `Collection 은 null 대신 empty 가 가능`하기 때문입니다
+
+### 객체 그래프
+Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQL 에서 선언 시점에 결정` 이 아닌 지연로딩 방식의 Proxy 를 통해 `사용 시점에 결정` 한다는 의미 입니다
+
+> 물론 Lazy loading 을 사용한다면 N+1 이 발생하므로 fetchJoin 을 통해 미리 로딩하는게 나음
 
 ### EAGER
 엔티티 조회시 join 으로 연관관계를 같이 가져옵니다.
