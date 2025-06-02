@@ -200,3 +200,22 @@ public Collection<DataEntity> findAll() {
 그러므로 즉시 삭제를 원할경우 JPQL 를 직접 사용합니다
 
 ### Lock
+- 낙관적
+  - 화면을 오래 열어둔 상태에서 (2개의 화면) 같은 데이터를 수정하면 나중에 들어온 데이터로 덮어지면서 처음 커밋이 유실됩니다
+  - 그런 케이스는 버저닝을 통한 낙관적락이 효율적 입니다. (최초값만 인정)
+  - `@Version` 은 오름차순으로 증가하는 숫자이고 버전이 다르면 에러처리
+
+```sql
+UPDATE BOARD
+SET
+    TITIE=?,
+    VERSION=?+1 (버전 + 1 증가)
+WHERE
+    ID=?
+    AND VERSION=? (버전 비교)
+```
+
+- 비관적
+  - @Lock 을 통해 read/write lock 을 잡아서 동시성 문제를 해결합니다
+  - readLock: 조회`가능`/수정불가 > 보통 readLock 을 사용 (조회는 되야하니)
+  - writeLock: 조회`불가`/수정불가
