@@ -1,11 +1,11 @@
 # JPQL
 ```
-https://www.nowwatersblog.com/jpa/ch10
+https://sungunjo.github.io/jpa-study/2022/03/01/ch.10-object-oriented-query-language.html
 ```
 
 영속성의 변경감지를 통한 persist/merge/delete 가 아닌 `createQuery/createNativeQuery` 을 명시적으로 사용하는 것을 의미합니다.
 
-## find vs JPQL
+## `find vs JPQL`
 - find
   - 영속성을 먼저 검색합니다
   - (미발견시) 쿼리를 실행합니다
@@ -32,6 +32,11 @@ app <- JPQL (clear) <- DB
 - CLEAR
   - 쿼리 실행후 영속성을 clear 해야 합니다
   - 이미 영속성에 존재하는 엔티티는 JPQL 의 조회결과로 대체되지 않기 때문입니다
+
+```java
+@Modifying(clearAutomatically = true, flushAutomatically = true)
+public void modifyUser();
+```
 
 ## 조회
 ```java
