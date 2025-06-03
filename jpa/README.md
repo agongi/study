@@ -9,6 +9,7 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 - [JPQL](jpql)
 - [Proxy](proxy)
 - [Spring Data JPA](spring-data-jpa)
+- [QueryDSL](querydsl)
 - [Persistence Context](persistence-context)
 - [연관관계 매핑](relation-mapping)
 - [상속관계 매핑](inheritance-mapping)
