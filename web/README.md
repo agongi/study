@@ -52,7 +52,7 @@ CORS 를 위해서 전체적인 동작을 설명하면:
 - (이후) Access-Control-Max-Age 에 설정된 시간만큼 예비호출 스킵
   - 서버에서 Max-Age 를 설정하지 않았다면 매 호출마다 preflight 수행
 
-<img src="1.png" width="50%">
+<img src="2.png" width="50%">
 
 해당 동작을 처리하는 nginx 의 설정은 아래와 같습니다:
 ```
