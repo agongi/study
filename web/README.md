@@ -34,7 +34,7 @@ HTTP Method 에 대한 멱등성은 동일한 요청을 여러번 보내도 서�
 Same Origin 은 `프로토로://도메인:포트` 가 동일함을 의미합니다. (동일하지 않다면 Cross Origin)
 
 `브라우져는 기본적으로 Same Origin 에 대한 리소스 호출만을 허용`합니다.
-- img, script, css 는 Cross Origin 을 허용하고 (ex. CDN 도메인)
+- img, css 는 Cross Origin 을 허용하고 (ex. CDN 도메인)
 - script (ex. Fetch/XMLHttpRequest 등 js 에서 API 호출) 는 Same Origin 만 허용합니다
 
 해당 제약을 허용할 방식이 CORS 이고 아래와 같이 동작합니다:
@@ -84,7 +84,29 @@ nginx 에서 vhost, location path 기반 으로 연동
 
 ## XSS
 
-## CSRF
+## [CSRF (Cross Site Request Forgery)](https://dev-ino.tistory.com/35)
+외부 페이지에서 의도하지 않은 요청을 실행하는 취약점 입니다
+- Cross Site 를 만들고 해당 페이지로 유도
+- 유저는 현재 로그인된 자신의 쿠키를 가지고 있다면
+
+```html
+<!-- GET 요청이 즉시 실행되도록 img,css 를 이용해서 진입시점에 API 호출 -->
+<img src="도메인/v2/delete-user">
+
+<!-- FORM 을 만들어서 버튼 클릭시 변경 요청이 실행 -->
+<form action="https://vulnerable-website.com/password/change" method="POST">
+            <input type="hidden" name="password" value="mypassword">
+     </form>
+<script>
+  document.forms[0].submit();
+</script>
+```
+
+의 `가상 페이지에서 의도되지 않은 요청`을 하게 됩니다. 아래의 조치로 어느정도 방어 할 수 있습니다: 
+- `Referrer 체크`
+  - 최소한의 안전장치
+- SameSite 쿠키 사용
+  - Site 가 다른경우 쿠키가 전달됨을 막아서 에러처리 하는 방안
 
 ## HTTP/2.0
 
@@ -97,3 +119,4 @@ nginx 에서 vhost, location path 기반 으로 연동
   -  window.location.host 가 cookie:domain 과 일치해야함 
 - session
   - 세션 쿠키는 브라우저가 닫히거나 세션이 종료될 때까지 유효합니다.
+- SameSite
