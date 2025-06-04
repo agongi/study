@@ -82,7 +82,28 @@ add_header Access-Control-Allow-Origin '*' always;
 ## Iframe
 nginx 에서 vhost, location path 기반 으로 연동
 
-## XSS
+## [XSS](https://dj-min43.medium.com/xss-%EA%B3%B5%EA%B2%A9%EC%9D%84-%EC%A7%81%EC%A0%91-%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-c2c1d9baf7ec)
+공격자가 화면에 실행할 수 있는 \<script> 를 삽입/실행할 수 있는 취약점 입니다.
+- form
+- input
+
+<img src="3.png" width="50%">
+
+```html
+<div>
+<span>검색값: c/span>
+    <span id="search-input-result">
+    <script>alert("script 공격");</script>
+</span>
+</div>
+```
+
+아래의 조치로 방어가 필요합니다:
+- 입력값의 Escape
+  - \<script> -> &lt;script&gt;
+- 리액트는 JSX 를 렌더링 할때 escape 처리 합니다
+
+<img src="4.png" width="50%">
 
 ## [CSRF (Cross Site Request Forgery)](https://dev-ino.tistory.com/35)
 외부 페이지에서 의도하지 않은 요청을 실행하는 취약점 입니다
@@ -107,8 +128,6 @@ nginx 에서 vhost, location path 기반 으로 연동
   - 최소한의 안전장치
 - SameSite 쿠키 사용
   - Site 가 다른경우 쿠키가 전달됨을 막아서 에러처리 하는 방안
-
-## HTTP/2.0
 
 ## Cookies
 - secure
