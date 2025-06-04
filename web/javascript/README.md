@@ -22,7 +22,4 @@ https://ko.javascript.info/
 - [Promise](promise)
 
 ### Blog
-- [jQuery - Ajax - crossdomain 이슈](http://igna.tistory.com/19)
 - [JavaScript closure inside loops](https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example)
-- [CORS (Cross-Origin Resource Sharing)](https://evan-moon.github.io/2020/05/21/about-cors/)
-
