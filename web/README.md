@@ -79,10 +79,7 @@ add_header Access-Control-Allow-Origin '*' always;
 
 ## [Post Message](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
 
-## Iframe
-nginx 에서 vhost, location path 기반 으로 연동
-
-## [XSS](https://dj-min43.medium.com/xss-%EA%B3%B5%EA%B2%A9%EC%9D%84-%EC%A7%81%EC%A0%91-%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-c2c1d9baf7ec)
+## [XSS (Cross-Site Scripting)](https://dj-min43.medium.com/xss-%EA%B3%B5%EA%B2%A9%EC%9D%84-%EC%A7%81%EC%A0%91-%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-c2c1d9baf7ec)
 공격자가 화면에 실행할 수 있는 \<script> 를 삽입/실행할 수 있는 취약점 입니다.
 - form
 - input
@@ -105,8 +102,23 @@ nginx 에서 vhost, location path 기반 으로 연동
 
 <img src="4.png" width="50%">
 
+## [CSP (Content-Security-Policy)](https://brunch.co.kr/@sangjinkang/43)
+스크립트를 실행할 수 있는 Cross Origin 을 지정하는 방식으로, 위에 XSS 방식보다 좀 더 강력한 접근 방식입니다
+- XSS 는 실행은 되지만 escape 처리
+- CSP 는 실행 자체를 막는 방법
+
+```html
+<!-- 서버의 응답헤더 -->
+Content-Security-Policy: frame-ancestors 'none';
+Content-Security-Policy: default-src 'self' *.naver.com
+
+<!-- 브라우저는 응답헤더에 있는 Origin 을 보고 일치유무 확인 -->
+```
+
+Cross Origin 에서 \<iframe> 을 사용시 (ex. \<iframe src="https://youtube.com"/> CSP 헤더를 통해 방지할 수 있습니다
+
 ## [CSRF (Cross Site Request Forgery)](https://dev-ino.tistory.com/35)
-외부 페이지에서 의도하지 않은 요청을 실행하는 취약점 입니다
+Cross Origin 에서 의도하지 않은 요청을 실행하는 취약점 입니다
 - Cross Site 를 만들고 해당 페이지로 유도
 - 유저는 현재 로그인된 자신의 쿠키를 가지고 있다면
 
