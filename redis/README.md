@@ -12,6 +12,7 @@ https://redis.io/docs/
 
 ***
 <img src='2.png' width="50%">
+
 ```
 [Client] ──(key)───────────────────[Redis Cluster]
               │                                           ↑   └── [선택된 노드의 해시 테이블에 조회/저장]
