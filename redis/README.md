@@ -14,13 +14,22 @@ https://redis.io/docs/
 <img src='2.png' width="50%">
 
 ```
-[Client] ──(key)───────────────────[Redis Cluster]
-              │                                           ↑   └── [선택된 노드의 해시 테이블에 조회/저장]
-              └─[슬롯 계산: HASH(key) % 16384]           │          ├── key1 → value1, value1-1, value1-2 (LinkedList)
-                                ↓                         │          ├── key2 → value2 (LinkedList)
-                  [해당 슬롯을 저장하는 노드 계산]         │          └── ...
-                                │                         │                       
-                                └─────────────
+[Client]
+   │
+   │ (key)
+   ▼
+[슬롯 계산: HASH(key) % 16384]
+   │
+   ▼
+[슬롯 → 담당 노드 확인]
+   │
+   ▼
+[선택된 Redis 노드]
+   │
+   └─> 해당 노드의 해시 테이블에 접근
+         ├── key1 → value1, value1-1, value1-2  (LinkedList)
+         ├── key2 → value2                     (LinkedList)
+         └── ...
 ```
 클라이언트에서 KEY 를 기반으로 SLOT > NODE 를 계산해서 해당 노드에 명령을 전달합니다.
 
