@@ -77,8 +77,6 @@ if ($request_method = 'OPTIONS') {
 add_header Access-Control-Allow-Origin '*' always;
 ```
 
-## [Post Message](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
-
 ## [XSS (Cross-Site Scripting)](https://dj-min43.medium.com/xss-%EA%B3%B5%EA%B2%A9%EC%9D%84-%EC%A7%81%EC%A0%91-%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-c2c1d9baf7ec)
 공격자가 화면에 실행할 수 있는 \<script> 를 삽입/실행할 수 있는 취약점 입니다.
 - form
@@ -116,6 +114,33 @@ Content-Security-Policy: default-src 'self' *.naver.com
 ```
 
 Cross Origin 에서 \<iframe> 을 사용시 (ex. \<iframe src="https://youtube.com"/> CSP 헤더를 통해 방지할 수 있습니다
+
+## [PostMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
+Cross-Origin 페이지 끼리 메세지를 주고 받는 방법 입니다.
+- 팝업
+- iframe
+
+### Sender
+메세지와 `targetOrigin` 을 같이 보냅니다. (Same-Origin 으로 열려있는 페이지에만 메세지 전달)
+```tsx
+function sendPostMessage(message: string, targetOrigin: string) {
+  window.parent.postMessage(message, targetOrigin)
+}
+```
+
+* 으로 지정할 수 있지만 `CSRF 취약점`이 발생합니다.
+
+### Receiver
+수신에서도 다시한번 targetOrigin 을 검증합니다
+```tsx
+window.addEventListener("message", (event) => {
+  if (event.origin !== "https://trusted.com") {
+      return
+  }
+  
+  console.log("안전한 메시지 수신:", event.data)
+})
+```
 
 ## [CSRF (Cross Site Request Forgery)](https://dev-ino.tistory.com/35)
 Cross Origin 에서 의도하지 않은 요청을 실행하는 취약점 입니다
