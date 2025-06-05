@@ -39,6 +39,7 @@ https://redis.io/docs/
 
 ## 영속화
 IN-MEMORY DB 이지만 주기적으로 영속화 합니다:
+
 <img src='1.png' width="50%">
 
 - AOF
