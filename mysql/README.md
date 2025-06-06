@@ -24,8 +24,7 @@ https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
 - [late row lookups](https://explainextended.com/2009/10/23/mysql-order-by-limit-performance-late-row-lookups/)
 
 ***
-
-<img src='1.png' width="75%">
+<img src='1.png' width="50%">
 
 - MySQL
   - 커넥션 관리 (foreground thread)
@@ -35,7 +34,7 @@ https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
 
 ## MySQL 엔진
 ### Thread 구조
-<img src='2.png' width="75%">
+<img src='2.png' width="50%">
 
 - foreground
   - 실제 client 요청을 받는 thread
@@ -44,7 +43,7 @@ https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
   - log, buffer to disk(write), disk to buffer(read) ...
 
 ## InnoDB 스토리지 엔진
-<img src='5.png' width="75%">
+<img src='5.png' width="50%">
 
 record 기반 잠금을 제공합니다
 
