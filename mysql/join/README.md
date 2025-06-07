@@ -3,7 +3,7 @@
 https://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354
 ```
 
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ## Join Types
 ### `Inner Join` (== Join)
@@ -99,7 +99,7 @@ on (demo_people.pid = demo_property.pid);
 
 **Join key** clauses are **not specified** in cross join
 
-<img src="2.png" width="75%">
+<img src="2.png" width="50%">
 
 ```sql
 -- Explicit Cross Join
@@ -173,60 +173,56 @@ SQL의 LEFT JOIN은 왼쪽 테이블의 모든 레코드와 오른쪽 테이블�
 
 ## [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
 ### Nested Loops
-<img src="3.png" width="75%">
+<img src="3.png" width="50%">
 
-- 선행 테이블 기준으로, 후행 테이블을 랜덤 액세스 하며 조인
+- 선행 테이블 `먼저 조회`후, 후행 테이블을 `랜덤 액세스` 하며 조인
   - 선행 (Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
   - 후행 (Driven) 테이블 `랜덤 액세스`
 - OLTP 에서 적합한 방식의 조인 (서비스는 일부의 조인결과를 사용하므로)
 
-> Driven 을 index search 하며 1개씩 가져옴 (조인키는 인덱스여야함)
+> 조회된 Driving 을 기준으로 B+Tree 탐색을 통해 건별로 가져옴 (조인키로 인덱스 탐색하므로 인덱스가 잡혀있어야함)
 
 ```java
-// equivalent in code
-for(i=0;i<100;i++){--driving
-    for(j=0;j<100;j++){--driven
-    // ...
-    }
-    }
+// 드라이빙 테이블
+for (var index : indexes) {
+    // 드리븐 테이블
+    var result = index.get(index);
+}
 ```
-
 ```sql
-select /*+ use_nl(b,a) */ a.dname, b.ename, b.sal
-from emp b,
-     dept a
-where a.loc = 'NEW YORK'
-  and b.deptno = a.deptno
+SELECT /*+ USE_NL(b a) */ a.*
+FROM dept a
+LEFT JOIN emp b ON b.deptno = a.deptno
+WHERE a.loc = 'NEW YORK';
 ```
 
 ### Sort Merge
-<img src="4.png" width="75%">
+<img src="4.png" width="50%">
 
 - 선/후행 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
-  - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (완료시까지 기다려야함)
-    - 조인 연결고리의 `비교 연산자` 일 경우 유리
-  - 선/수행 테이블 순차 검색
+- 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (skew 발생)
+- NL 은 driven 을 랜덤조회 해야 하는데, 그 대상이 많은 경우 (범위 탐색 같은) sort-merge 가 나을수 있다
 
 ```java
 List<String> a=new ArrayList<>();
-    List<String> b=new ArrayList<>();
+List<String> b=new ArrayList<>();
 
-    a.sort();
-    b.sort();
+a.sort(joinKey);
+b.sort(joinKey);
 
-// ...
+for (var element : a) {
+    var result = b.getby(element.joinKey);
+}
 ```
-
 ```sql
-select /*+ use_merge(a b) */ a.dname, b.empno, b.ename
-from dept a,
-     emp b
-where a.deptno = b.deptno
-  and b.sal > 1000;
+SELECT /*+ USE_MERGE(a b) */ a.*
+FROM dept a
+       LEFT JOIN emp b ON b.deptno = a.deptno
+WHERE b.sal > 1000;
 ```
 
 ### Hash Join
-<img src="5.jpg" width="75%">
+<img src="5.jpg" width="50%">
 
 - 작은 테이블 기준으로, 조인키의 hash bucket 생성
   - 큰 테이블은 조인키의 hash 값으로 검색
@@ -235,7 +231,7 @@ where a.deptno = b.deptno
 - 조인키가 index 가 아닐 경우 적합 (NL 을 쓰면 안됨)
 
 ```sql
-select /*+ use_hash(a b) */ a.dname, b.empno, b.ename
+select /*+ USE_HASH(a b) */ a.dname, b.empno, b.ename
 from dept a,
      emp b
 where a.deptno = b.deptno
