@@ -8,16 +8,19 @@ https://willseungh0.tistory.com/161
 - rule-based
 - cost-based
 
-기본적으로 cost-based (통계정보) 로 옵티마이저가 실행계획을 선택 합니다
+기본적으로 `cost-based (통계정보)` 로 옵티마이저가 실행계획을 선택 합니다
 
 ## 풀 스캔
 - table full scan
   - 테이블을 처음부터 끝까지 읽는 방식입니다
   - 연속된 데이터 페이지가 조회되면 -> 포그라운드 스레드는 백그라운드 스레드에 의해 조회된 버퍼를 읽으므로 처리가 빨라집니다
     - `Read Ahead`: 백그라운드 스레드가 N-개의 페이지 단위로 미리 조회후 버퍼에 올려두는 작업
+  - 보통 `전체데이터의 25% 이상 조회할 경우` table full scan 이 유리합니다
+    - 불필요한 B+Tree 검색에 따른 단건 조회가 더 느림
 - index full scan
   - 인덱스를 처음부터 끝까지 읽는 방식입니다
-  - SELECT COUNT(*) FROM person; 처럼 인덱스 전체 조회로 결과가 가능 한 경우 사용 합니다 
+  - SELECT COUNT(*) FROM person; 처럼 인덱스 전체 조회로 결과가 가능 한 경우 사용 합니다
+  - 인덱스만으로 SQL 을 처리할 수 경우를 > `covering index` 라고 합니다
 
 ## 병렬처리
 아무런 WHERE 조건 없이 테이블 전체 건수를 가져오는 쿼리만 병렬로 처리 할 수 있습니다
