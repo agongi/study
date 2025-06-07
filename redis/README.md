@@ -3,8 +3,6 @@
 https://github.com/redis-study/redis-summary
 https://redis.io/docs/
 ```
-### Index
-- [Persistence](persistence)
 
 ### Blog
 - [레디스 클러스터 Mget 명령은 어떻게 동작하는가?](https://brunch.co.kr/@springboot/359)

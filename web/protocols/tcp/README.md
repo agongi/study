@@ -1,12 +1,4 @@
-## TCP (Transmission Control Protocol)
-TCP provides an effective abstraction of a reliable network running over an unreliable channel, hiding most of the complexity of network communication from our applications:
- - Retransmission of lost data
- - In-order delivery
- - Congestion control and avoidance
- - Data integrity
-
-> TCP guarantee packet is transferred and arrive in the same order to the client with following technics.
-
+# TCP (Transmission Control Protocol)
 ```
 http://chimera.labs.oreilly.com/books/1230000000545/ch02.html
 https://en.wikipedia.org/wiki/Transmission_Control_Protocol
@@ -14,11 +6,13 @@ http://tech.kakao.com/2016/04/21/closewait-timewait/
 http://d2.naver.com/helloworld/47667
 ```
 
-#### Index
-- [TCP Fast Open](https://github.com/agongi/study/tree/master/tcp/tcp-fast-open/)
-- [TCP Connection Migration](https://github.com/agongi/study/tree/master/tcp/tcp-connection-migration/)
-- [TCP Forward Error Correction](https://github.com/agongi/study/tree/master/tcp/tcp-forward-error-correction/)
-- [TCP Head-Of-Line](https://github.com/agongi/study/tree/master/tcp/tcp-head-of-line/)
+TCP provides an effective abstraction of a reliable network running over an unreliable channel, hiding most of the complexity of network communication from our applications:
+ - Retransmission of lost data
+ - In-order delivery
+ - Congestion control and avoidance
+ - Data integrity
+
+> TCP guarantee packet is transferred and arrive in the same order to the client with following technics.
 
 ### 3-way-handshake
 Origin 3-way-handshaking in TCP connection.

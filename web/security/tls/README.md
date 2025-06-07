@@ -17,11 +17,6 @@ The Transport Layer Security (TLS) Handshake Protocol is responsible for the aut
 
 > Simply SSL is the out-dated name of TLS.
 
-### Index
-- [TLS Session Tickets](tls-session-ticket)
-- [TLS ALPN (Application-Layer Protocol Negotiation)](https://github.com/agongi/study/tree/master/tls/tls-alpn/)
-
-***
 ## TLS Handshaking
 2 entirely round-trip is done in new connection establishment. But 1 round-trip is required using existing connection.
 

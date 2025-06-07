@@ -6,12 +6,6 @@ https://www.mkyong.com/spring/spring-and-java-thread-example/
 https://redutan.github.io/posts/
 https://aroundck.tistory.com/search/%EB%B3%91%EB%A0%AC
 ```
-### Index
-- [Executors](executors)
-- [Lock](lock)
-- [CountDownLatch](countdown-latch)
-- [CyclicBarrier](cyclic-barrier)
-- [ABA Problem](aba-problem)
 
 ### Blog
 - [쓰레드풀 과 ForkJoinPool](http://hamait.tistory.com/612)

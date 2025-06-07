@@ -1,20 +1,12 @@
-## TLS
-
+# TLS
 ```
 https://tools.ietf.org/html/draft-ietf-tls-tls13-28
 ```
 
-#### Index
-
-- [ESNI](esni)
-
-
-
-### Concept
-
 TLS handshaking
 
-### TLS 1.2
+## TLS 1.2
+TBD
 
-### TLS 1.3
-
+## TLS 1.3
+TBD

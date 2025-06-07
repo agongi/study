@@ -5,9 +5,6 @@ https://javacan.tistory.com/search/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%A6%AC%EC%95
 https://kazuhira-r.hatenablog.com/entry/20160827/1472291329
 ```
 
-### Index
-- [operator](operator)
-
 ### Blog
 - [Blocking to Reactive](<http://wiki.sys4u.co.kr/pages/viewpage.action?pageId=7766994#id-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C%EB%A1%9C%EB%B0%B0%EC%9B%8C%EB%B3%B4%EB%8A%94Reactor-11.BlockingtoReactive>)
 - [Proxy server with WebFlux](https://translate.googleusercontent.com/translate_c?depth=1&hl=ko&rurl=translate.google.co.kr&sl=ja&sp=nmt4&tl=en&u=https://kazuhira-r.hatenablog.com/entry/20180408/1523190124&xid=17259,15700023,15700186,15700190,15700248,15700253&usg=ALkJrhgdKV2YylUpbK6DdnJCS77pUGhknA)

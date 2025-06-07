@@ -1,5 +1,4 @@
 ## Bootstrap
-
 ```
 http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
 http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
@@ -7,10 +6,6 @@ http://stackoverflow.com/questions/18578143/about-multiple-containers-in-spring-
 https://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/
 http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/SpringServletContainerInitializer.html
 ```
-
-#### Index
-
-- [Life Cycle](life-cycle)
 
 ### By-ServletContainer
 **ServletContainerInitializer** class will be loaded, instantiated and have its onStartup() method invoked `by any Servlet 3.0+ container` in bootstrap.

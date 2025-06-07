@@ -1,20 +1,10 @@
-## MVC
-
+# MVC
+```
+https://docs.spring.io/spring-framework/reference/web/webmvc.html
 ```
 
-```
-
-#### Index
-
-- [Binding](binding)
-- [Validation](validation)
-- [MessageSource](message-source)
-- [Async](async)
-
-### Cores
-
-#### Interceptor
-
+## Cores
+### Interceptor
 ```java
 public class AuthCheckInterceptor implements HandlerInterceptor {
   @Override
@@ -58,8 +48,7 @@ public class BaseConfiguration implements WebMvcConfigurer {
 }
 ```
 
-#### ViewResolver
-
+### ViewResolver
 ```java
 @Bean
 public InternalResourceViewResolver internalResourceViewResolver() {
@@ -71,8 +60,7 @@ public InternalResourceViewResolver internalResourceViewResolver() {
 }
 ```
 
-#### Locale
-
+### Locale
 - AcceptHeaderLocaleResolver: configure locale based on accept-language
 - SessionLocaleResolver
 - CookieLocaleResolver
@@ -91,8 +79,7 @@ public LocalResolver localeResolver() {
 }
 ```
 
-#### ContentNegotiate
-
+### ContentNegotiate
 Defines supported mediaTypes to response
 
 ```java
@@ -116,8 +103,7 @@ public class BaseConfiguration extends WebMvcConfigurerAdapter {
 - URL 에 extension 이 없는 경우 (ex. GET /user)
   - `Accept` 헤더값으로 추론
 
-#### MessageConverters
-
+### MessageConverters
 Configure unmarshal response types
 
 ```java
@@ -132,8 +118,7 @@ public class BaseConfiguration extends WebMvcConfigurerAdapter {
 }
 ```
 
-#### PropertySourcesPlaceholder
-
+### PropertySourcesPlaceholder
 ```java
 @Bean
 public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -146,8 +131,7 @@ public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderCon
 }
 ```
 
-#### MultipartResolver
-
+### MultipartResolver
 File uploading
 
 ```java
@@ -159,8 +143,7 @@ public MultipartResolver multipartResolver() {
 }
 ```
 
-#### MethodArgumentResolver
-
+### MethodArgumentResolver
 Allows argument injected into controller from web requests.
 
 ```java
@@ -176,8 +159,7 @@ public class BaseConfiguration extends WebMvcConfigurerAdapter {
 }
 ```
 
-#### MethodReturnValueHandler
-
+### MethodReturnValueHandler
 Return value hooks like `@After` in AspectJ.
 
 ```java
@@ -187,8 +169,7 @@ public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnV
 }
 ```
 
-#### ExceptionResolver
-
+### ExceptionResolver
 Configurable exceptionHandler
 
 ```java
@@ -233,8 +214,7 @@ public class ExceptionHandlerAdvice {
 }
 ```
 
-#### Excel/PDF
-
+### Excel/PDF
 Excel is generated once contentNegotiation is supported in given web requests with header `Accept=application/vnd.ms-excel`.
 
 ```properties

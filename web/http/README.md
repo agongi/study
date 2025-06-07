@@ -11,11 +11,6 @@ https://developers.google.com/web/fundamentals/performance/http2/#design_and_tec
 https://community.akamai.com/community/web-performance/blog/2016/06/22/understanding-how-the-http2-protocol-is-negotiated
 ```
 
-#### Index
-- [HTTP Cache-Control](http/http-cache-control)
-- [HTTP Session](https://soon-devblog.tistory.com/2)
-
-***
 ## HTTP/1.1
 ### Keep-alive
 HTTP/1.1 supports `Keep-alive` to re-use the TCP session by default:

@@ -3,11 +3,6 @@
 https://docs.oracle.com/javase/tutorial/java/generics/index.html
 https://rangken.github.io/blog/2015/effective-java-4/
 ```
-### Index
-- [Super type token](https://www.baeldung.com/java-super-type-tokens)
-- [\<T\> vs \<?\>](t-question)
-- [Invariant vs Covariant](invariant-covariant)
-***
 
 제네릭은 `컴파일 타임: 타입 체크 및 자동 캐스팅`을 제공하며, `런타임: 타입 정보가 제거`됩니다.
 

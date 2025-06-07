@@ -1,5 +1,4 @@
 ## Binding & Validation
-
 ```
 https://www.baeldung.com/spring-mvc-custom-property-editor
 https://blog.outsider.ne.kr/825
@@ -7,9 +6,7 @@ https://engkimbs.tistory.com/738
 ```
 
 ### Cores
-
 #### Comparison
-
 - PropertyEditor
   - scope: Controller
   - stateful
@@ -24,8 +21,6 @@ https://engkimbs.tistory.com/738
   - two-way binding
     - Only works in String - Object bind
 
-#### Index
-
 `AnnotationMethodHandlerAdapter` 는 매칭된 URL 을 정의한 @Controller 를 호출하는 역할을 담당한다.
 
 호출시 @RequestParam 이나 @ModelAttribute, @PathVariable 등 처럼 HTTP 요청을 파라미터 변수에 바인딩해주는 작업이 필요한 애노테이션을 만나면 WebDataBinder 에서 String (http req) -> Custom.class 로의 rule 이 정의된 `PropertyEditor` 를 검색후 바인딩을 한다.
@@ -38,7 +33,6 @@ https://engkimbs.tistory.com/738
 하는 과정이 필요하다.
 
 ### Controller-scoped
-
 #### @InitBinder
 
 Method level `@InitBinder` is used to register property editor that will hook request string to Object.
@@ -107,7 +101,6 @@ Object -> String 의 converting 시
 \#setValue 를 하는시점에 stateful 하므로, 동시성 문제가 발생한다.
 
 ### Application-scoped
-
 #### WebBindingInitializer
 
 모든 Controller 에 공통으로 정의할 PropertyEditor 를 등록하려면, WebBindingInitializer 를 사용한다.
@@ -142,7 +135,6 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
 ```
 
 #### Converter
-
 ```java
 public class BaseWebConfig extends WebMvcConfigurerAdapter {
   @Override
@@ -172,7 +164,6 @@ public class UserConverter {
 ```
 
 #### Formatter
-
 Converter + locale
 
 ```java

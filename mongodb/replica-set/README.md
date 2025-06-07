@@ -1,14 +1,7 @@
 # ReplicaSet
-
 ```
 https://docs.mongodb.com/manual/replication/
 ```
-
-### Index
-- [Elections](elections)
-- [Oplog](oplog)
-
-***
 
 <img src="1.png" width="50%"/>
 

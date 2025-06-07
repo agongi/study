@@ -5,13 +5,6 @@ https://pyrasis.com/jHLsAlwaysUpToDateDocker
 https://velog.io/@choidongkuen/%EC%84%9C%EB%B2%84-Docker-Network-%EC%97%90-%EB%8C%80%ED%95%B4
 ```
 
-### Index
-- [ARG vs ENV](arg-env)
-- [ENTRYPOINT vs CMD](entrypoint-cmd)
-- [COPY vs ADD](copy-add)
-- [docker-compose](docker-compose)
-
-***
 ## 개념
 Docker 는 Host 와 동일한 커널영역을 사용하지만 
 - 격리: `cgroup, namespace` 등을 활용해 컨테이너 격리 (내부적으로 system_call 호출)

@@ -5,15 +5,6 @@ https://github.com/SoonMyeong/jpa-study/tree/master
 https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 ```
 
-### Index
-- [JPQL](jpql)
-- [Proxy](proxy)
-- [Spring Data JPA](spring-data-jpa)
-- [QueryDSL](querydsl)
-- [Persistence Context](persistence-context)
-- [연관관계 매핑](relation-mapping)
-- [상속관계 매핑](inheritance-mapping)
-
 ### Blog
 - [JPA Best Practices](https://github.com/cheese10yun/spring-jpa-best-practices)
 - [JPA에서 대량의 데이터를 삭제할때 주의해야할 점](https://jojoldu.tistory.com/235)

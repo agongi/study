@@ -4,14 +4,6 @@ https://developer.mozilla.org
 https://ko.javascript.info/
 ```
 
-### Index
-- [javascript](javascript)
-- [protocols](protocols)
-- [security](security)
-- [http](http)
-- [Tomcat](tomcat)
-
-***
 ## RESTful API
 URL에 자원(Resource)을 명시하고, HTTP Method에 행위(Action)를 명시하는 API
 

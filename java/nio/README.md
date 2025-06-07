@@ -7,9 +7,7 @@ http://palpit.tistory.com/640
 https://javapapers.com/java/java-nio-file-read-write-with-channels/
 http://eincs.com/2009/08/java-nio-bytebuffer-channel/
 ```
-### index
-- [ByteBuffer](bytebuffer)
-***
+
 ## Files
 <img src="1.png" width="50%"/>
 

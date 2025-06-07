@@ -6,15 +6,6 @@ https://github.com/sungsu9022/study-kubernetes-in-action/issues
 https://github.com/calofmijuck/kubernetes-in-action/tree/main
 ```
 
-### Index
-- [Network](network)
-- [Label & Annotation](label-annotation)
-- [Helm Charts](helm-charts)
-- [ConfigMap & Secrets](configmap-secrets)
-- [Isolations](isolations)
-- [Metadata](metadata)
-- [HPA](hpa)
-
 ### Blog
 - [Pod Lifecycle](https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/)
 

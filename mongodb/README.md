@@ -1,26 +1,8 @@
 # MongoDB
-
 ```
 https://docs.spring.io/spring-data/mongodb/docs/current/reference/html
 https://docs.mongodb.com/manual
 ```
-
-### Index
-- [ObjectId](objectid)
-- [Sharded Cluster](sharded-cluster)
-- [ReplicaSet](replica-set)
-- [CRUD](crud)
-- [WriteConcern](write-concern)
-- [ReadConcern](read-concern)
-- [Transactions](transactions)
-- [Index](index)
-- [Query Plans](query-plans)
-- [Aggregation](aggregation)
-- [Orphan Documents](orphan-documents)
-- [Change Streams](change-streams)
-- [Non-blocking secondary read](non-blocking-secondary-read)
-- [Causal Consistency](causal-consistency)
-- [[19.12.03 ~ 12.05] 테크톡, 몽고DB](edu/20191203)
 
 ### Blog
 - [Optimistic Locking](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template.optimistic-locking)
@@ -32,7 +14,6 @@ https://docs.mongodb.com/manual
 - MongoDB 6.0
 
 ***
-
 | RDBMS       | Mongo                                                   |
 | ----------- |---------------------------------------------------------|
 | Database    | Database                                                |

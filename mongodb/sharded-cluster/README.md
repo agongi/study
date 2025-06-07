@@ -1,18 +1,10 @@
 # Sharded Cluster
-
 ```
 https://docs.mongodb.com/manual/sharding/
 https://docs.mongodb.com/manual/core/sharding-shard-key/
 https://docs.mongodb.com/manual/tutorial/migrate-chunks-in-sharded-cluster/
 https://docs.mongodb.com/manual/core/sharding-data-partitioning/
 ```
-
-### Index
-- [Sharded Cluster Balancer](sharded-cluster-balancer)
-- [Shard Keys](shard-keys)
-- [Zone Sharding](zone-sharding)
-
-***
 
 <img src="1.png" width="50%">
 

@@ -9,20 +9,10 @@ https://github.com/kafkakru/meetup/tree/master/conference/1st-conference
 https://www.popit.kr/author/peter5236
 https://bysssss.tistory.com/46
 ```
-
-### Index
-- [Kafka Stream](kafka-stream)
-- [Kafka Connect](kafka-connect)
-- [MirrorMaker 2.0](mm2)
-- [Schema Registry](schema-registry)
-
 ### Blog
 - [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
 - [Kafka에서 파티션 증가 없이 동시 처리량을 늘리는 방법 - Parallel Consumer](https://d2.naver.com/helloworld/7181840)
 - [카프카 컨슈머에 동적 쓰로틀링 적용하기](https://techblog.woowahan.com/20156/)
-
-### Versions
-- [Kafka 4.0](kafka-4.0)
 
 ***
 ## 기본 개념
