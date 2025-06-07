@@ -2,7 +2,8 @@
 ```
 https://12bme.tistory.com/138?category=682920
 https://wslog.dev/mysql-index#4c8551fdf047448290cb393ad7cd51c6
-https://velog.io/@hyunrrr/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index-%EC%A0%95%EB%B3%B5%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91
+https://rebro.kr/167
+https://rebro.kr/169
 ```
 
 ## 개요
@@ -26,9 +27,9 @@ https://velog.io/@hyunrrr/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index-%EC%A0%95%EB%B3%B5%EA
 
 ## 방식
 ### B-Tree vs B+Tree vs Hash
-B-Tree/B+Tree 인덱스는 트리형태로 정렬해서 인덱스를 구성합니다.
+B-Tree/B+Tree (Balanced Binary-Search Tree) 형태로 정렬해서 인덱스를 구성합니다.
 
-본질적으로 Balaned-Tree 이므로 불균형은 발생하지 않습니다:
+본질적으로 [Balanced-Tree](https://rebro.kr/169) 이므로 불균형은 발생하지 않습니다:
 
 > 삽입/삭제 시 항상 균형(balance) 을 유지하도록 노드 split/merge 수행
 
@@ -40,7 +41,7 @@ B-Tree/B+Tree 인덱스는 트리형태로 정렬해서 인덱스를 구성합�
 [1,5,10] <-> [20,25,30]   ← 리프 노드 (양방향으로 연결됨. 데이터를 저장함)
 ```
 
-| 항목    | B-Tree      | B+Tree                                 |
+| 항목    | B-Tree      | `B+Tree`                                 |
 |-------|-------------|----------------------------------------|
 | 저장 위치 | 중간/리프       | 리프                                     |
 | 노드 연결 | X           | O (리프 노드 연결되어 있음. index range scan 가능) |
@@ -51,7 +52,7 @@ Hash 인덱스는 Key 의 해싱값으로 인덱스를 구성합니다.
 
 본질적으로 Hash 이므로 범위조회/정렬을 지원하지 않습니다: (단건 조회에 특화)
 
-> InnoDB는 해시 인덱스를 직접 지원하지 않지만 내부적으로 adaptive hash index 를 유지해, 자주 접근되는 B+Tree 경로를 해시로 캐싱
+> InnoDB는 내부적으로 adaptive hash index 를 유지해, 자주 접근되는 B+Tree 경로를 해시로 캐싱
 
 ```
 해시 함수
@@ -78,30 +79,45 @@ Mysql 은 데이터를 `페이지단위 (기본: 16KB)` 로 관리하고, RID (=
 ### Clustered Indexes
 기본적으로 P.K 가 clustered index 입니다. P.K 가 없는 경우 unique-index -> (없으면) 묵시적으로 생성하는 키의 순서대로 지정됩니다.
 
-실제 데이터는 `Clustered index 로 지정한 컬럼에 맞춰서 정렬되어 저장`됩니다:
+실제 데이터는 `Clustered index 기준으로 논리적인 페이지를 정렬해서 저장`됩니다:
 
-- 테이블에 CUD 발생 (업데이트는 클러스터링 인덱스가 변경되었다고 가정하면)
-- (물리적인) `데이터 재정렬 발생`
-- (재정렬로 인해) `페이지 분할` 발생시, 각 데이터의 RID 변경
-  - `a(rowid:1)-b(2)-x(3)-y(4)-z(5)` 로 정렬된 상태에서 c 가 들어오면 -> `a(rowid:1)-b(2)-c-(3)-x(4)-y(5)-z(6)`
-- 그에 따라 RID 도 전체 갱신
-  - `인덱스 갱신 발생`
+> 물리적인 실제 데이터는 디스크에 정렬되지 않음
 
-<img src="9.png" width="50%">
-<img src="2.png" width="50%">
+- 인덱스 변경이 발생한 경우
+- 클러스터링 인덱스는 논리적으로 디스크 페이지가 정렬되어 있으므로 재정렬 필요
+  - 각 리프노드는 정렬된 페이지로 정렬되어야 함 (범위 탐색의 성능목적)
+- 그만큼의 성능상 악영향 발생 
+
+```
+[Clustered Index (논리 트리)]
+       (Root)
+         ↓
+      ┌─────────────┐
+      │  ...        │
+      └─────────────┘
+         ↓
+[Leaf Node (정렬됨)]
+     ┌────┐ → ┌────┐ → ┌────┐
+     │ 10 │   │ 20 │   │ 30 │   (PK 순)
+     └────┘   └────┘   └────┘
+       ↓        ↓        ↓
+     PID=2    PID=5   PID=11
+
+[디스크 페이지 매핑] => 정렬되어 있음
+  PID=2  → 블록 #8   ← PK=30
+  PID=5  → 블록 #21  ← PK=10
+  PID=11 → 블록 #77  ← PK=20
+```
 
 ### Secondary Indexes
-Clustered Indexes 가 아닌 다른 모든 인덱스는 모두 Secondary Indexes 입니다
-
-데이터의 변경이 발생해도, Clustered Indexes 를 값으로 가지므로 성능에 영향이 없습니다
-
-- 테이블에 CUD 발생
-- 리프노드는 clustered index 를 참조 하므로 영향 없음
+Clustered Index 가 아닌 다른 모든 인덱스는 모두 Secondary Index 입니다
+- 인덱스 변경이 발생한 경우
+- 세컨더리 인덱스는 디스크 페이지가 아닌 clustered index 를 참조 하므로 재정렬 불필요
   - 장점: CUD 시 영향을 받지 않습니다
   - 단점: 모든 조회는 secondary -> clustered 의 순서대로 2번 조회합니다
 - 단점이 존재하지만 데이터 변경시 모든 인덱스를 갱신하는 비용이 크므로 해당 구조로 구성 
 
-> Unique indexes 도 Secondary Indexes 의 일부 지만 인덱스 갱신시 change buffer (쓰기지연) 를 사용하지 않음
+> Unique index 도 Secondary Index 이지만 인덱스 갱신시 change buffer (쓰기지연) 를 사용하지 않음 (중복 없음을 보장하기 위함)
 
 ### DML 발생시
 - 생성
@@ -136,18 +152,17 @@ Clustered Indexes 가 아닌 다른 모든 인덱스는 모두 Secondary Indexes
 <img src="6.png" width="50%">
 
 ### index skip scan
-- compound-index 가 있을경우 조건은 순서대로 명시되야 합니다. (2번째 컬럼은 1번째 컬럼에 의존해서 정렬되어 있으므로 -> 첫번째 컬럼이 반드시 존재해야함)
-- ```sql SELECT gender, birth_day FROM employee WHERE birth_day >= '1990-01-01'; # 인덱스는 [gender, birth_day] 의 복합키```
-- 해당 쿼리일때 복합키 인덱스를 사용하기 위해 옵타마이저는 아래의 최적화를 수행합니다
-- ```sql SELECT gender, birth_day FROM employee WHERE gender = 'M' and birth_day >= '1990-01-01'; SELECT gender, birth_day FROM employee WHERE gender = 'F' and birth_day >= '1990-01-01';```
+- 복합키 인덱스를 사용하려면 정의된 순서대로 조건을 넣어야 합니다. (2번째 컬럼은 1번째 컬럼에 의존해서 정렬되어 있으므로 -> 첫번째 컬럼이 반드시 존재해야함)
+- ```sql SELECT gender, birth_day FROM employee WHERE birth_day >= '1990-01-01'; ```
+  - 인덱스는 [gender, birth_day] 복합키
+- 옵타마이저는 아래의 최적화를 수행합니다:
   - 첫번째 인덱스를 묵시적으로 넣어줘서 복합키 인덱스를 사용할수 있도록 처리
-- 장/단점이 존재합니다
-  - pros
-    - 개별 인덱스를 만들지 않아도됨
-  - cons
-    - 첫번째 컬럼이 다양하다면 (cardinality 높음) 너무 많은 쿼리가 (내부저긍로) 수행되므로 비효율
-
-<img src="../mvcc/1.png" width="50%">
+  - ```sql SELECT gender, birth_day FROM employee WHERE gender = 'M' and birth_day >= '1990-01-01';```
+  - ```sql SELECT gender, birth_day FROM employee WHERE gender = 'F' and birth_day >= '1990-01-01';```
+- 장점
+  - 개별 인덱스를 만들지 않아도됨
+- 단점
+  - 첫번째 컬럼에 중복이 많다면 (cardinality 낮음) 불필요한 드라이빙 데이터 조회가 발생하므로 비효율
 
 ## [스캔 방향](https://tech.kakao.com/posts/351)
 MySQL 8.x 부터 DESC 인덱스의 생성을 지원합니다. (기존에도 DESC 는 문법적으로 허용지만 인덱스는 ASC 로 생성되고, 조회시 반대로 읽어야 했음)
@@ -161,4 +176,4 @@ MySQL 8.x 부터 DESC 인덱스의 생성을 지원합니다. (기존에도 DESC
   
 그래서 인덱스 생성 자체를 역방향으로 하면 해당 단점을 해결할 수 있습니다
 
-<img src="../mvcc/2.png" width="50%">
+<img src="7.png" width="75%">
