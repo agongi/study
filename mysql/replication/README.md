@@ -2,20 +2,15 @@
 ```
 https://velog.io/@dangdang/MySQL-%EB%B3%B5%EC%A0%9C
 ```
-
-source server: 생성된 binary log 를 replica server 로 전달
-replica server: 저장 (로컬 디스크에 저장) - source server 의 id/pw 등의 정보를 가지고 있음
-replica server: 동기화 (리포지토리에 반영)
-
 - 바이너리 로그(Binary Log): MySQL 서버에서 발생하는 모든 변경 사항이 기록되는 곳
 - 릴레이 로그(Relay Log): 레플리카 서버에서 소스 서버의 바이너리 로그를 읽어 들여 로컬 디스크에 저장해둔 파일
 
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ## 식별자 타입
 즉 어디까지 수행했어? 를 tid 기반으로 구분 필요한데 식별자로 어떤 값을 사용할지에 대한 고민
 
-<img src="2.png" width="75%">
+<img src="2.png" width="50%">
 
 ### Binlog:offset
 ROW 기반 바이너리 로그 포맷을 사요한다면 데이터 자체가 복제되므로 해당 방식도 이슈없지만 아래의 단점이 존재합니다:
@@ -27,29 +22,20 @@ GTID 활성화 전, binlog_format = ROW 추천
 
 ## 바이너리 로그 포맷
 ### Statement 기반
-구문이 replication 으로 들어가면 다른 결과가 나올 수 있음. (ex. P.K 가 다르게 생성되거나 NOW() 의 결과 등이 다름)
-즉 값 그 자체를 복사해야 불일치 미발생 / 대신 복제 사이즈가 작음
+실행된 SQL 이 Binlog 에 저장되어 복제됩니다. 대신 복제DB 와 값이 불일치 할수 있습니다 (ex. P.K 가 다르게 생성되거나 NOW() 의 결과 등이 다름)
 
 ### Row 기반
-복제 사이즈가 큼 (그만큼의 복제지연 가능). 대신 불일치 가능성 없음
-압축도 고려가능
-
-```
-binlog 형식은 2가지 방식이 있습니다.
-- ROW 포맷
-- STATEMENT 포맷
-
-MySQL 8.x 부터 binlog 의 포맷이 ROW 가 기본값이 되었고 이해한 내용을 정리하면
+데이터 자체가 복제되어 불일치가 발새하지 않습니다.
+MySQL 8.x 부터 binlog 의 포맷은 ROW 가 기본값 입니다:
 - insert into select ... 처럼 동적인 결과로 insert 쿼리가 발생하면 (그리고 NOW() 문구도 포함해서)
-- master/replicas 의 결과가 100% 동일하다고 보장할 수 없습니다 
-```
+- master/replicas 의 결과가 100% 동일하다고 보장할 수 없으므로
 
 ## 동기화 방식
 ### Asynchronous
-<img src="3.png" width="75%">
+<img src="3.png" width="50%">
 
 ### Semi-Synchronous
-<img src="4.png" width="75%">
+<img src="4.png" width="50%">
 
 ### Synchronous
 실제 relay 받고 replica 에서 commit 완료 까지 대기
@@ -69,4 +55,4 @@ MySQL 8.x 부터 binlog 의 포맷이 ROW 가 기본값이 되었고 이해한 �
   - DNS 를 통해 VIP 획득하여 DB 접속
   - Java 의 경우 `networkaddress.cache.ttl=?` 옵션으로 JVM DNS 캐시시간 설정 (DNS 부하와 failover 시간을 고려하여 설정)
 
-<img src="5.png" width="75%">
+<img src="5.png" width="50%">
