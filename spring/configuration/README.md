@@ -1,6 +1,6 @@
 # @Configuration
 ```
-http://haviyj.tistory.com/33
+https://haviyj.tistory.com/33
 ```
 
 ## @Configuration
@@ -10,17 +10,17 @@ It defines properties line XML-based settings
 If the same bean of type exists, @Primary one is used
 > It will throw duplicate bean candidates blabla unless @Primary is annotated
 
-### @Lazy
+## @Lazy
 Bean is created once getBean() is invoked
 
-### @DependsOn
+## @DependsOn
 bean initialization must run after that bean
 
-### @Import
+## @Import
 add more @configuration
 
-### @ContextConfiguration
+## @ContextConfiguration
 test packages. declare @configuration or any context
 
-### @Propertysources
+## @PropertySources
 with PropertySourcePlaceHolderConfigurer

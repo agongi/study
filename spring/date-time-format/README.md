@@ -1,15 +1,12 @@
-## @DateTimeFormat
-
+# @DateTimeFormat
 ```
 https://stackoverflow.com/questions/15164864/how-to-accept-date-params-in-a-get-request-to-spring-mvc-controller
 https://stackoverflow.com/questions/37871033/spring-datetimeformat-configuration-for-java-time
 https://jojoldu.tistory.com/361?category=635883
 ```
 
-### Request
-
-#### JsonFormat
-
+## Request
+### JsonFormat
 @RequestBody
 
 ```java
@@ -35,8 +32,7 @@ public class RequestVO {
 }
 ```
 
-#### DateTimeFormat
-
+### DateTimeFormat
 @ModelAttribute
 
 ```java
@@ -72,10 +68,8 @@ public void getById(
 }
 ```
 
-### Response
-
-#### JsonFormat
-
+## Response
+### JsonFormat
 @ResponseBody
 
 ```java
@@ -94,8 +88,7 @@ public class ResponseVO {
 }
 ```
 
-#### DateTimeFormat
-
+### DateTimeFormat
 Not working!
 
 > Jackson only cares POJO from/to json

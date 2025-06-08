@@ -1,5 +1,4 @@
-## @DependsOn - SmartLifeCycle
-
+# @DependsOn - SmartLifeCycle
 ```
 https://www.baeldung.com/spring-depends-on
 ```
@@ -7,7 +6,6 @@ https://www.baeldung.com/spring-depends-on
 We can choose either the **SmartLifeCycle** interface or the **@DependsOn** annotation for managing initialization order
 
 ## @DependsOn
-
 ```java
 @Configuration
 public class DemoConfig {
@@ -25,7 +23,6 @@ public class DemoConfig {
 ```
 
 ## SmartLifeCycle
-
 ```java
 @Component
 public class DemoCycleConfigurer implements SmartLifecycle {

@@ -1,5 +1,4 @@
-## Life Cycle
-
+# Life Cycle
 ```
 http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
 https://blog.outsider.ne.kr/902
@@ -7,7 +6,7 @@ http://devbox.tistory.com/entry/Spring-webxml-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0
 http://www.javajigi.net/display/JAVA/Servlet+Life+Cycle
 ```
 
-<img src="images/Screen%20Shot%202017-06-17%20at%2017.19.48.png">
+<img src="1.png">
 
 ### Cores
 #### Servlet

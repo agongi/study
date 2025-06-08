@@ -1,4 +1,4 @@
-## Filter vs Interceptor
+# Filter vs Interceptor
 Filter is invoked **before dispatcherServlet** but interceptor handles **after it.**
 
 ```
@@ -7,9 +7,9 @@ http://dev-eido.tistory.com/entry/Interceptor-filter-AOP%EC%9D%98-%EC%B0%A8%EC%9
 http://javacan.tistory.com/entry/58
 ```
 
-<img src="https://github.com/agongi/study/blob/master/spring-common/filter-interceptor/images/89101625_26c5be9fd9.jpg" width="75%">
+<img src="1.jpg" width="75%">
 
-### Filter
+## Filter
 It is invoked in servlet container(web.xml) managed by WAS regardless spring container `before dispatcher servlet`.
 
 ```xml
@@ -52,7 +52,7 @@ public class SessionFilter implements Filter {
 }
 ```
 
-#### Use spring bean in filter
+### Use spring bean in filter
 - Define <filter-class> **org.springframework.web.filter.DelegatingFilterProxy** </filter-class>
 - Use the same name defined in <filter-name>
 - Use @Autowired as normal spring bean
@@ -97,7 +97,7 @@ public class SessionFilter implements Filter {
 }
 ```
 
-### Interceptor
+## Interceptor
 It is invoked `after dispatcher servlet` in defined order. (e.g. A > B > C)
 
 ```xml

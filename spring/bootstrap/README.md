@@ -1,4 +1,4 @@
-## Bootstrap
+# Bootstrap
 ```
 http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
 http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
@@ -7,7 +7,7 @@ https://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/
 http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/SpringServletContainerInitializer.html
 ```
 
-### By-ServletContainer
+## By-ServletContainer
 **ServletContainerInitializer** class will be loaded, instantiated and have its onStartup() method invoked `by any Servlet 3.0+ container` in bootstrap.
 
 ```java
@@ -48,8 +48,7 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 
 Now Servlet 3.0+ containers will automatically scan the classpath for implementations of Spring's `WebApplicationInitializer` interface.
 
-#### Servlet
-
+### Servlet
 ```xml
 <listener>
      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -92,8 +91,7 @@ public class BaseInitializer implements WebApplicationInitializer {
 }
 ```
 
-#### Spring-Framework
-
+### Spring-Framework
 ```java
 public class BaseInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
   @Override
@@ -113,8 +111,7 @@ public class BaseInitializer extends AbstractAnnotationConfigDispatcherServletIn
 }
 ```
 
-#### Spring-Boot
-
+### Spring-Boot
 WebApplicationInitializer is raw-level interface to bootstrap, and It is not enough to initialize spring-boot features. Now boot supports its wrapper class to enable all spring-boot functions also.
 
 ```java
@@ -131,10 +128,8 @@ public class BaseInitializer extends SpringBootServletInitializer {
 }
 ```
 
-### By-CLI
-
-#### Spring-Framework
-
+## By-CLI
+### Spring-Framework
 ```java
 public class Application {
   public static void main(String args[]) {
@@ -145,8 +140,7 @@ public class Application {
   }
 ```
 
-#### **Spring-Boot**
-
+### Spring-Boot
 ```java
 @Import(ToyConfig.class)
 @SpringBootApplication

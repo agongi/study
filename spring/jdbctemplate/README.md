@@ -28,12 +28,13 @@ NamedParameterJdbcOperations jdbc = new NamedParameterJdbcTemplate(dataSource);
 jdbc.execute("sql", params);
 ```
 
-## SqlParameterSource
+## ParameterSource
+조회 파라미터 매핑
 
+### SqlParameterSource
 Query parameter 매핑
 
 ### BeanPropertySqlParameterSource
-
 Object to params
 
 ```java
@@ -70,7 +71,6 @@ static class CustomSqlParameterSource extends BeanPropertySqlParameterSource {
 ```
 
 ### MapSqlParameterSource
-
 Map to params
 
 ```java
@@ -86,11 +86,9 @@ jdbcTemplate.queryForObject(
 ```
 
 ## RowMapper
-
-Query 결과 매핑
+결과값 매핑
 
 ### BeanPropertyRowMapper
-
 Result to object.
 
 > snake_case -> camelCase. 필드명이 상이하면 `as` 를 통해 rename 이 필요하다.
@@ -136,7 +134,6 @@ public static void main(String[] args) {
 ```
 
 ### ColumnMapRowMapper
-
 Result to Map
 
 ```java
@@ -154,7 +151,6 @@ Map<String, Object> userMap = jdbcTemplate.queryForObject(
 ```
 
 ### Custom
-
 마땅한게 없으면 직접 interface 를 구현해서 사용합니다. @FunctionalInterface 이므로 lambda 로 처리 가능합니다.
 
 ```java
@@ -168,7 +164,6 @@ RowMapper<User> userMapper = (rs, rowNum) -> {
 ```
 
 ## Auto Increment (or Sequence)
-
 jdbcTemplate#update 를 사용하고 keyHolder 를 전달하면, 응답값으로 id 를 가져올수 있다. 하지만 복잡하므로
 
 SimpleJdbcInsert 를 사용하는 방법을 알아보자:
@@ -189,7 +184,6 @@ Number id = insertion.executeAndReturnKey(params);
 ```
 
 ## Batch
-
 spring-batch commit-interval 와 동일한 개념으로, N 개의 항목을 한번에 처리한다.
 
 ```java
@@ -213,21 +207,16 @@ public void update(List<? extends User> items) {
 ```
 
 ## Advanced
-
 ### [Lazy-Loading](https://github.com/benelog/spring-jdbc-tips/blob/master/lazy-loading.md)
-
 ORM 에서는 fetch = FetchType.LAZY 으로 간단하게 설정가능하지만, jdbc 에서는 트리키하게 해결이 필요함
 
 ### Caching
-
 이것까지 쓰진 않음
 
 ### [OneToMany](https://github.com/benelog/spring-jdbc-tips/blob/master/spring-jdbc-extensions.md)
-
 ... 이런거 들어가면 마땅히 좋은 방법이 없음. ORM 으로 하자
 
 ### Stored Procedure
-
 ```java
 jdbcTemplate.execute("{CALL USER_STORED_PROCEDURE()}", o -> o.execute());
 ```

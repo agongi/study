@@ -1,11 +1,9 @@
-## Import
-
+# Import
 ```
 https://jaehun2841.github.io/2019/12/22/2019-12-22-spring-import/#%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-4-importselector%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%84%A0%ED%83%9D%EC%A0%81-configuration-%EC%82%AC%EC%9A%A9
 ```
 
 ## ImportSelector
-
 Enable~ 에서 import 할 @Configuration class 자체를 선택 할때 사용한다.
 
 ```java
@@ -14,7 +12,6 @@ public @interface EnableCustomFunc {
   String value();
 }
 ```
-
 ```java
 public class CustomImportSelector implements ImportSelector {
   @Override
@@ -32,7 +29,6 @@ public class CustomImportSelector implements ImportSelector {
   }
 }
 ```
-
 ```java
 @Configuration
 public class CustomConfig {
@@ -43,7 +39,6 @@ public class CustomConfig {
 > **DeferredImportSelector** that runs after all @Configuration beans have been processed
 
 ## ImportAware
-
 Enable~ 에서 import 한 @Configuration class 에서 annotation 의 value 를 가져올 때 사용한다.
 
 ```java
@@ -52,7 +47,6 @@ public @interface EnableCustomFunc {
   String value();
 }
 ```
-
 ```java
 @Configuration
 public class CustomConfig implements ImportAware {
@@ -70,7 +64,6 @@ public class CustomConfig implements ImportAware {
 ```
 
 ## ImportBeanDefinitionRegistrar
-
 Enable~ 에서 import 한 class 에서 register bean programmatically (@Configuration class 가 아니다)
 
 ```java
@@ -79,7 +72,6 @@ public @interface EnableCustomFunc {
   String value();
 }
 ```
-
 ```java
 public class CustomRegistrar implements ImportBeanDefinitionRegistrar {
   private final static String BEAN_NAME = "restTemplate";
