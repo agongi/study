@@ -1,45 +1,44 @@
-## Collections
-
+# Collection
 ```
 https://en.wikipedia.org/wiki/Java_collections_framework
 http://tutorials.jenkov.com/java-collections/index.html
 ```
 
-<img src="images/Screen%20Shot%202016-02-14%20at%2018.31.04.png" width="100%">
+<img src="1.png" width="75%">
 
-### In a Nutshell
-
-#### Read-Only Collections
-
-**java.util.Collections**
-
+## Read-Only Collections
+### java.util.Collections
 - List<E> list = Collections.unmodifiableList(new ArrayList());
 - Set<E> set = Collections.unmodifiableSet(new HashSet());
 - Map<K, V> map = Collections.unmodifiableMap(new HashMap());
 
-**com.google.common.collect**
-
+### com.google.common.collect
 - ImmutableList#of
 - ImmutableSet#of
 - ImmutableMap#of
 
-#### Concurrency
+### java.util
+- Set.of
+- Map.of
+- List.of
+
+## Concurrency
 - List<E> list = Collections.synchronizedList(new ArrayList());
 - Set<E> set = Collections.synchronizedSet(new HashSet());
   - Set<E> set = new ConcurrentHashMap<>().keySet();
 - Map<K,V> map = Collections.synchronizedMap(new HashMap());
   - SortedMap<K, V> m = Collections.synchronizedSortedMap(new TreeMap());
 
-### [List](list)
-Duplicated element is allowed
+## [List](list)
+중복 허용 리스트
 
 - ArrayList
 - LinkedList
   - CursorableLinkedList
 - CopyOnWriteArrayList
 
-### [Set](set)
-Duplicated is not allowed
+## [Set](set)
+중복 미허용 리스트
 
 - HashSet
 - LinkedHashSet
@@ -52,8 +51,8 @@ Duplicated is not allowed
   - SortedSet
   - NavigableSet
 
-### [Map](map)
-key - value pair structure
+## [Map](map)
+키-밸류
 
 - HashMap
 - LinkedHashMap
@@ -71,8 +70,13 @@ key - value pair structure
 
 > Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package
 
-### [Queue](queue)
-FIFO, FILO structure
+## Stack
+FILO
+
+- Stack
+
+## [Queue](queue)
+FIFO
 
 - ArrayBlockingQueue
 - LinkedBlockingQueue
@@ -84,5 +88,15 @@ FIFO, FILO structure
 - PriorityQueue
   - PriorityBlockingQueue
 
-### [Heap](heap)
+## [Deque](deque)
+Queue 의 양방향 enqueue/dequeue
+
+- ArrayDeque
+- ConcurrentLinkedDeque
+- LinkedBlockingDeque
+
+## [Heap](heap)
+최대/최소값을 구하기 위한 우선순위큐
+
+- PriorityQueue
 
