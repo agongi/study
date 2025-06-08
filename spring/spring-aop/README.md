@@ -5,7 +5,6 @@ https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
 https://www.mkyong.com/spring/spring-aop-examples-advice/
 ```
 
-
 ## 기본개념
 **Advice** the **Aspect** to **PointCut** target.
 
@@ -57,12 +56,10 @@ public class DefaultRestAspect {
 }
 ```
 
-## Self Invacation
-
+## Self Invocation
 서비스에서 정말 필요한 경우가 있는데, 아래처럼 사용 가능하다.
 
 ### AopContext
-
 ```java
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class AopConfig {

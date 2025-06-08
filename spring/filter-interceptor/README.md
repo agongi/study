@@ -1,6 +1,4 @@
 # Filter vs Interceptor
-Filter is invoked **before dispatcherServlet** but interceptor handles **after it.**
-
 ```
 http://changpd.blogspot.kr/2013/03/spring.html
 http://dev-eido.tistory.com/entry/Interceptor-filter-AOP%EC%9D%98-%EC%B0%A8%EC%9D%B4
@@ -8,6 +6,8 @@ http://javacan.tistory.com/entry/58
 ```
 
 <img src="1.jpg" width="75%">
+
+Filter is invoked **before dispatcherServlet** but interceptor handles **after it.**
 
 ## Filter
 It is invoked in servlet container(web.xml) managed by WAS regardless spring container `before dispatcher servlet`.

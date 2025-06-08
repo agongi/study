@@ -1,7 +1,5 @@
-## Profile
-
-```
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+# Profile
+```                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 ```
 
 Configuration could be loaded in specific `active-profile` by programmatic:

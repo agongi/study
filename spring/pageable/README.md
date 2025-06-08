@@ -1,13 +1,10 @@
-## @Pageable
-
+# @Pageable
 ```
-
 ```
+## Request
+http://localhost/users?page=2&size=40 으로 요청이 온다면
 
-**Request**
-http://localhost/users?page=2&size=40
-
-Configuration
+### Configuration
 ```xml
 <mvc:argument-resolvers>
     <!-- @Pageable -->
@@ -15,7 +12,7 @@ Configuration
 </mvc:argument-resolvers>
 ```
 
-**PageableRequest**
+### PageableRequest
 ```java
 @RequestMapping(value = "/users", method = RequestMethod.GET)
 public ModelAndView getUsers(@PageableDefault(page = 0, size = 20) Pageable pageable) {
@@ -38,7 +35,8 @@ public List<User> getUsers(Pageable pageable) {
 </select>
 ```
 
-**PageableResponse**
+## Response
+### PageableResponse
 ```java
 public interface UserService <T extends AbstractUser> {
   Page<T> getUsers();
