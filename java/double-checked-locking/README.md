@@ -1,6 +1,6 @@
 # Double-Checked Locking
 ```
-http://javarevisited.blogspot.kr/2014/05/double-checked-locking-on-singleton-in-java.html
+https://javarevisited.blogspot.kr/2014/05/double-checked-locking-on-singleton-in-java.html
 ```
 
 - Thread can **join synchronized block at the same time**

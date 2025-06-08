@@ -5,12 +5,11 @@ https://darksilber.tistory.com/entry/Java-Reference-Object%EC%9D%98-%EC%9D%B4%ED
 https://javarevisited.blogspot.kr/2014/03/difference-between-weakreference-vs-softreference-phantom-strong-reference-java.html
 ```
 
-## References
 Garbage Collector reclaims memory from objects which are eligible for garbage collection, but not many programmer knows that this eligibility is decided based upon **which kind of references are pointing to that object.**
 
-<img src="1.gif" width="75%">
+<img src="1.gif" width="50%">
 
-### Strong Reference
+## Strong Reference
 Strong referenced object never be collected.
 
 ```java
@@ -18,7 +17,7 @@ Strong referenced object never be collected.
 Counter counter = new Counter();
 ```
 
-### Soft Reference
+## Soft Reference
 - referent: It can be a candidate of GC If JVM absolutely needs memory
   - It means heap is running out, soft-reference object will be collected even if there are references
 - reference-queue: optional
@@ -42,7 +41,7 @@ new SoftReference() itself remains	// soft-reference itself
 
 > ttl == JVM-option (-XX:SoftRefLRUPolicyMSPerMB) * (remain-heap-size) after last GC.
 
-### Weak Reference
+## Weak Reference
 - referent: It will be collected in next GC even if there are references
 - reference-queue: optional
   - 생성자를 통해 reference-queue 가 주입되었으면, enqueued
@@ -65,7 +64,7 @@ new SoftReference() itself remains	// weak-reference itself
 
 > It is useful for cache, that is to have reference but may be or not be null.
 
-### Phantom Reference
+## Phantom Reference
 - referent: It will **not** be collected by GC but explicit Reference#clear is invoked
 - reference-queue: mandatory
 

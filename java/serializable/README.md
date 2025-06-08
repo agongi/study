@@ -64,7 +64,7 @@ private byte[] convertToBytes(byte[] bytes) throws IOException {
 The system purely stored/transfer java serialized byte[] are:
 
 - `Cache (Redis, Memcached)`
-- Cession
+- Session
 - RMI (== RPC)
 
 ## Concerns

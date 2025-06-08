@@ -64,9 +64,10 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 - 특징
   - 연속된 영역이 아닌 `개별 Region` 이 필요에 따라 할당 (Region 이 eden/s0-1/old 로 사용됨)
   - eden/s0-1/old 가 young -> old 로 프로모션시 실제 객체를 이동하지 않고, young region 을 old region 으로 사용합니다
-    - 그래서 객체의 이동이 발생하지 않는 만큼 빠릅니다 (에이징없이 s0 -> s1 -> old 로 한번에 프로모션)
-  - 전체 영역이 아닌 `garbage region 만 GC 수행` -> collect 되는 region 에 있는 살아있는 객체는 다른 region 으로 재할당 합니다 (== compact)
-    - 일반적으로 재할당될때의 STW 가 긴 시간입니다
+    - 그래서 `객체의 이동이 발생하지 않는 만큼` 빠릅니다 (에이징없이 s0 -> s1 -> old 로 한번에 프로모션)
+  - 전체 영역이 아닌 `garbage region 만 GC 수행` -> collect 되는 region 에 있는 `살아있는 객체는 다른 region 으로 재할당 합니다 (== compact)`
+    - 일반적으로 재할당에 STW 가 길어집니다
+    - Region 자체가 eden/s0/s1/old 로 변경되므로 객체의 이동을 최소화
   - 주기적으로 OR -XX:InitiatingHeapOccupancyPercent 수치도달시 Young,Old GC 가 같이 수행됩니다
 
 ### ZGC (-XX:+UseZGC)
@@ -82,7 +83,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
   - ... TBD
 
 ## GC 구조
-<img src="5.png" width="75%">
+<img src="5.png" width="50%">
 
 - Young
   - Eden, From (S0), To (S1) 영역으로 구성
@@ -90,8 +91,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 - Old
   - Young 영역에서 살아남은 객체가 존재
 
-**Minor GC**
-
+### Minor GC
 - Eden 영역이 가득 차면 `Minor GC` 발생
   - Minor GC 가 발생하면 New 영역 전체에 Mark-Sweep 이 이뤄진다
   - Reference 가 있는 객체는 현재 사용되는 Survivor 영역으로 이동한다
@@ -104,19 +104,18 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 > Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.
 > 객체의 크기가 Eden 보다 크면, 바로 Old 영역으로 할당된다.
 
-**Major GC**
-
+### Major GC
 - Old 영역이 가득 차면 `Full GC` 발생 (==`STW (stop-the-world)` 발생)
 
 ## GC 알고리즘
 ### Serial GC
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ### Parallel/ParallelOld GC
-<img src="2.png" width="75%">
+<img src="2.png" width="50%">
 
 ### CMS GC
-<img src="3.png" width="75%">
+<img src="3.png" width="50%">
 
 - 장점
   - Major GC 수행시 `STW 가 짧게 2번` 발생한다.
@@ -129,7 +128,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 > Old GC 수행도중 단편화로 인해 메모리가 충분히 확보되지 않으면 즉시 모든 작업을 멈추고, Compaction 을 위해 Parallel Old 를 처음부터 수행한다.
 
 ### G1 GC
-<img src="4.png" width="75%">
+<img src="4.png" width="50%">
 
 모든 영역이 정해져 있지 않고, Region 이라는 작은 단위로 분리되어 있다.
 
@@ -157,7 +156,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 > Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조.
 
 ### ZGC
-<img src="6.png" width="75%">
+<img src="6.png" width="50%">
 
 ## Changes in JDK 8
 - Permanent 사라짐 (MetaSpace 영역 (native memory) 으로 바뀜)
@@ -167,12 +166,13 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 ### Before JDK 8
 `eden / survive0,1 / old / Permanent / native`
 
-<img src="7.png" width="75%">
+<img src="7.png" width="50%">
 
 ### After JDK 8
 `eden / survive0,1 / old / Metaspace (native)`
 
-<img src="8.png" width="75%">
+<img src="8.png" width="50%">
 
-기존 Permanent 에 저장되던 Static/String 변수/상수는 Heap 으로 옮겨져 GC 대상이 되었습니다.
+기존 Permanent 에 저장되던 `Static/String 으로 정의된 변수/상수`는 Heap 으로 옮겨져 GC 대상이 되었습니다.
+
 Platform Thread 가 생성되면 할당되는 1MB 정도의 Stack 영역은 Native Memory 영역에 할당됩니다 -> 이 제약을 극복하는 [Virtual Thread](../virtual-thread) 가 JDK 21 에서 추가되었습니다.

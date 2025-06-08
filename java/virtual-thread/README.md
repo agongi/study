@@ -3,8 +3,6 @@
 https://d2.naver.com/helloworld/1203723
 ```
 
-간단한 정리 https://oss.navercorp.com/ncp/gncp-terra/issues/1165
-
 - 생성/소멸 비용이 `마치 객체 하나 만드는 수준` 으로 매우 적음
     - 기존 스레드는 Stack 1MB 이상 할당 (`Native` 이므로 JVM 이 관리 X) & [OS 스레드와 매핑](https://openjdk.org/jeps/425#Description)되므로 생성/소멸비용이 큼
     - 가상 스레드는 Heap 으로 Stack 대체 (`Heap` 이므로 JVM 이 관리 O) & `OS 스레드와 매핑되지 않은 순수한 POJO` 이므로 생성/소멸비용 적음
