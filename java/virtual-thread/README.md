@@ -1,14 +1,15 @@
 # Virtual Thread
 ```
 https://d2.naver.com/helloworld/1203723
+https://techblog.woowahan.com/15398
 ```
 
 - 생성/소멸 비용이 `마치 객체 하나 만드는 수준` 으로 매우 적음
     - 기존 스레드는 Stack 1MB 이상 할당 (`Native` 이므로 JVM 이 관리 X) & [OS 스레드와 매핑](https://openjdk.org/jeps/425#Description)되므로 생성/소멸비용이 큼
     - 가상 스레드는 Heap 으로 Stack 대체 (`Heap` 이므로 JVM 이 관리 O) & `OS 스레드와 매핑되지 않은 순수한 POJO` 이므로 생성/소멸비용 적음
     - `Context Switch 비용 감소 & 생성/소멸 비용 감소`
-        - Heap 은 동일 Thread 하위 Virtual Threads 는 공유합니다 (== 스위칭 비용이 적음)
-        - 스케쥴링이 OS 레벨이 아닌 JVM 에서 진행하므로 작업도중에 갑자기 OS 에서 스케쥴 전환하여 작업이 멈추는 빈도가 적어집니다 (== 스위칭의 빈도가 적음)
+        - OS 스레드를 생성하지 않으므로 시스템콜 호출이 적음 (생성비용 저렴)
+        - 1MB 이상의 고정된 메모리가 아닌 동적으로 메모리 할당되므로 최초 생성시 작은 메모리 사용 (== 스위칭비용 저렴) 
 - 아래의 사용성은 권장되지 않습니다:
     - `JNI, synchronized 사용`
         - 상위 Platform Thread 의 lock 이 잡히므로 하위 Virtual Threads 전체가 block 됨 -> ReentrantLock 으로 전환
