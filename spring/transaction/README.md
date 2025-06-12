@@ -44,7 +44,7 @@ JPA 를 사용한다면 해당 매니저를 선언합니다.
 N 개의 DataSource 를 이용해서 글로벌(외부시스템)/분산(다른DB) 트랜잭션을 관리하려면 사용합니다. (Composite 의 개념)
 
 ## Propagation
-- **REQUIRED**: join existing, create new if no
+- **(기본값) REQUIRED**: join existing, create new if no
 
 <img src="2.png">
 
