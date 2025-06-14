@@ -1,13 +1,11 @@
-## Smoke Test vs Sanity Test
-
+# Smoke Test vs Sanity Test
 ```
 https://www.guru99.com/smoke-sanity-testing.html
 ```
 
-![1](images/1.png)
+<img src="1.png" width="50%">
 
-### Smoke Test
-
+## Smoke Test
 Verity core (critical) functionalities are stable.
 
 ```java
@@ -22,8 +20,7 @@ public void setApplicationContext(ApplicationContext context) {
 }
 ```
 
-### Sanity Test
-
+## Sanity Test
 Verity new/bugfix functionalities are working well.
 
 Or just confirming that this is intended behavior not insane :)

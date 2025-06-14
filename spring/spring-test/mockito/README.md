@@ -1,17 +1,13 @@
 # Mockito
-
 ```
 https://jojoldu.tistory.com/226
 https://www.baeldung.com/java-spring-mockito-mock-mockbean
 https://cobbybb.tistory.com/16
 https://juneyr.dev/2019-02-08/mockito-repo-save
-
 ```
 
 ## Concepts
-
 `Mockito` is a framework for unit-test in java that mocking tastable fields or variables.
-
 - given
   - **when**(mock#method).thenReturn(T)
 - when
@@ -21,7 +17,6 @@ https://juneyr.dev/2019-02-08/mockito-repo-save
   - **verify**(mock, times(N)).method(?, ?)
 
 `MockitoBDD` (Behavior-driven development) tests in a natural, human-readable language that focuses on the behavior.
-
 - given
   - **given**(mock#method).willReturn(T)
 - when
@@ -31,9 +26,7 @@ https://juneyr.dev/2019-02-08/mockito-repo-save
   - **then**(mock).should(times(N)).method(?, ?)
 
 ## Setup
-
 ### Pure Java
-
 ```java
 // run mockito
 @RunWith(MockitoJUnitRunner.class)
@@ -50,7 +43,6 @@ public class MockitoTestBase {
 ```
 
 ### Spring integration
-
 - bootstrap in init
 
 ```java
@@ -97,9 +89,7 @@ public class ExampleTest {
 ```
 
 ## Annotations
-
 ### @Mock
-
 - `All methods` are stubbed. (Override)
 - invoke method will do nothing unless it is specified
 
@@ -139,7 +129,6 @@ public class TestJunit {
 ```
 
 ### @Spy
-
 - `Only specified methods` are stubbed. (Overload)
 - invoke method will do origin behavior unless it is specified
 
@@ -179,7 +168,6 @@ public class TestJunit {
 ```
 
 ### @InjectMocks
-
 DI @Mock/@Spy instances onto target.
 
 ```java
@@ -192,7 +180,6 @@ private LoginFacade loginFacade=new LoginFacade();
 ```
 
 ### @MockBean/@SpyBean (supported spring-boot)
-
 @Mock/@Spy 는 TestCode 에서 직접 생성한 객체를 @injectMock 을 통해 주입하는 방식이라면,
 
 @MockBean/@SpyBean 은 applicationContext 의 빈을 직접 변경하는 방식이다.
@@ -239,9 +226,7 @@ public class TestJunit {
 ```
 
 ## References
-
 ### Given
-
 - Retures user-defined
 
 ```java
@@ -257,7 +242,6 @@ given(userRepository.save(any(User.class)))
 ```
 
 ### When
-
 - Captor argument
 
 ```java
@@ -298,7 +282,6 @@ PowerMockito.doNothing()
 > 기본적으로 Mock 은 별도 given 으로 지정하지 않으면 method 는 do nothing 이다.
 
 ### Then
-
 - Invocation confirmed
 
 ```java
@@ -309,7 +292,6 @@ then(userService).should().joinSite(anyLong(),anyBoolean()); // invoked
 ```
 
 ### Others
-
 - Any argument
 
 ```java

@@ -115,7 +115,7 @@ for (PropertyDescriptor descriptor : descriptors) {
 
 여러개의 경로에서 Annotation 을 찾는 utils
 
-<img src="images/1.png" width="75%"/>
+<img src="1.png" width="75%"/>
 
 ## TypeUtils
 

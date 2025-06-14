@@ -1,10 +1,9 @@
-## Static Provider
-
+# Static Provider
 ```
 https://stackoverflow.com/questions/21827548/spring-get-current-applicationcontext
 ```
 
-### Static Bean / Property Provider
+## Static Bean / Property Provider
 - Bean Provider
   - Get bean from static applicationContext field implements `ApplicationContextAware`
 - Property Provider
@@ -78,7 +77,7 @@ public class ApplicationTest {
 }
 ```
 
-### [PropertiesLoaderUtils](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/support/PropertiesLoaderUtils.html)
+## [PropertiesLoaderUtils](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/support/PropertiesLoaderUtils.html)
 ```java
 Resource resource = new ClassPathResource("/my.properties");
 Properties props = PropertiesLoaderUtils.loadProperties(resource);
