@@ -10,7 +10,6 @@ http://haviyj.tistory.com/category/Back-End/%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A
 - [Creating Asynchronous Methods](https://spring.io/guides/gs/async-method/)
 - [Using custom arguments in controller](https://sdqali.in/blog/2016/01/29/using-custom-arguments-in-spring-mvc-controllers/)
 - [Field Dependency Injection Considered Harmful](http://vojtechruzicka.com/field-dependency-injection-considered-harmful)
-- [Property Injection Considered Harmful](https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans)
 - [ChainedTransactionManager](http://kwon37xi.egloos.com/4886947)
 - [파일 다운로드 방법](http://yangyag.tistory.com/207)
 - [Inject value into static variables](https://www.mkyong.com/spring/spring-inject-a-value-into-static-variables/)
