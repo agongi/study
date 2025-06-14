@@ -1,4 +1,4 @@
-## Flow
+# Flow
 
 ```
 https://jojoldu.tistory.com/328
@@ -44,10 +44,8 @@ public class TestJobConfig {
 ```
 
 빈 scope 에 대한 동작의 차이점 정리
-
-\https://blog.leocat.kr/notes/2020/06/10/spring-batch-scope-setting-when-using-partition
-
-\https://velog.io/@max9106/Spring-Bean%EC%9D%98-scope-dsk5mf4zbp
+https://blog.leocat.kr/notes/2020/06/10/spring-batch-scope-setting-when-using-partition
+https://velog.io/@max9106/Spring-Bean%EC%9D%98-scope-dsk5mf4zbp
 
 
 

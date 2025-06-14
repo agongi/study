@@ -1,18 +1,13 @@
-## Writer
-
+# Writer
 ```
 https://jojoldu.tistory.com/339?category=635883
 http://www.mybatis.org/spring/batch.html
 ```
 
-### JDBC
-
-#### JdbcBatchItemWriter
-
-CUD query 의 params 을 전달한다:
-
+## JDBC
+### JdbcBatchItemWriter
+CUD query 의 params 을 전달합니다:
 - BeanPropertySqlParameterSource
-  - asObject
 
 ```java
 @Bean
@@ -34,7 +29,6 @@ private static class UserVO {
 ```
 
 - MapSqlParameterSource
-  - asMap
 
 ```java
 @Bean
@@ -50,18 +44,13 @@ public JdbcBatchItemWriter<Map<String, Object>> batchWriter() {
 }
 ```
 
-HibernateItemWriter
+- HibernateItemWriter
+- JpaItemWriter
 
-JpaItemWriter
-
-### File
-
-#### FlatFileItemWriter
-
-File write 의 schema 를 전달한다:
-
+## File
+### FlatFileItemWriter
+File write 의 schema 를 전달합니다:
 - PassThroughLineAggregator
-  - fromType
 
 ```java
 @Bean
@@ -78,7 +67,6 @@ public FlatFileItemWriter<Long> fileWriter() {
 ```
 
 - DelimitedLineAggregator
-  - fromObject
 
 ```java
 @Bean
@@ -108,8 +96,3 @@ private static class UserVO {
   private CountryType country;
 }
 ```
-
-### MyBatis
-
-#### [MyBatisBatchItemWriter](http://www.mybatis.org/spring/batch.html)
-

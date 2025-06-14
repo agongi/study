@@ -1,18 +1,13 @@
-## Reader
-
+# Reader
 ```
 https://jojoldu.tistory.com/336?category=635883
 http://www.mybatis.org/spring/batch.html
 ```
 
-### JDBC
-
-#### JdbcCursorItemReader
-
-조회 query 의 params 을 전달한다:
-
+## JDBC
+## JdbcCursorItemReader
+조회 query 의 params 을 전달합니다:
 - ListPreparedStatementSetter
-  - asList
 
 ```java
 @Bean
@@ -32,7 +27,6 @@ public JdbcCursorItemReader cursorReader() {
 ```
 
 - ArgumentPreparedStatementSetter
-  - asArray
 
 ```java
 @Bean
@@ -50,10 +44,8 @@ public JdbcCursorItemReader cursorReader() {
 }
 ```
 
-조회 결과는 Object/NativeType/Map 으로 반환한다:
-
+조회 결과는 Object/NativeType/Map 으로 반환합니다:
 - BeanPropertyRowMapper
-  - asObject
 
 ```java
 @Bean
@@ -81,10 +73,9 @@ private static class UserVO {
 }
 ```
 
-> Column 과 field 이름이 다르다면, 조회결과 매핑을 위해 `alias 지정`이 필요하다
+> Column 과 field 이름이 다르다면, 조회결과 매핑을 위해 `alias 지정` 필요
 
 - SingleColumnRowMapper
-  - asType
 
 ```java
 @Bean
@@ -107,7 +98,6 @@ public JdbcCursorItemReader<Long> cursorReader() {
 ```
 
 - ColumnMapRowMapper
-  - asMap
 
 ```java
 @Bean
@@ -134,20 +124,11 @@ item.get("ctr_tp_cd")
 item.get("rg_tp_cd")
 ```
 
-HibernateCursorItemReader
-
-StoredProcedureItemReader
-
-### File
-
-#### FlatFileItemReader
-
-읽을 File 의 delimiter 방식을 지정한다:
-
-조회 file 의 구분자를 지정한다:
+## File
+### FlatFileItemReader
+Read 할 File 의 delimiter 방식을 지정합니다:
 
 - DelimitedLineTokenizer
-  - asDelimiter
 
 ```java
 @Bean
@@ -169,20 +150,16 @@ public FlatFileItemReader fileReader() {
 ```
 
 - FixedLengthTokenizer
-  - asFixedLength
+  - 특정 길이로 구분
 - RegexLineTokenizer
-  - asRegex
+  - 정규식으로 구분
 
-조회 결과는 Object/NativeType/Map 으로 반환한다:
-
+조회 결과는 Object/NativeType/Map 으로 반환합니다:
 - BeanWrapperFieldSetMapper
-  - asObject
 - ArrayFieldSetMapper
-  - asArray
 - PassThroughFieldSetMapper
-  - asType
 
-하지만 lambda 직접구현이 제일 심플하다:
+하지만 lambda 직접 구현도 가능합니다:
 
 ```java
 @Bean
@@ -237,10 +214,8 @@ private static class UserVO {
 }
 ```
 
-### Simple
-
-#### ListItemReader
-
+## Simple
+### ListItemReader
 Simple reader of using service#method
 
 ```java
@@ -251,8 +226,7 @@ public ItemReader<User> itemReader() {
 }
 ```
 
-#### RepositoryItemReader
-
+### RepositoryItemReader
 Simple reader of using repository#method
 
 ```java
@@ -273,16 +247,6 @@ public ItemReader<User> itemReader() {
 ```
 
 ### Paging
-
-JdbcPagingItemReader
-
-HibernatePagingItemReader
-
-JpaPagingItemReader
-
-### MyBatis
-
-MyBatisPagingItemReader
-
-MyBatisCursorItemReader
-
+- JdbcPagingItemReader
+- HibernatePagingItemReader
+- JpaPagingItemReader

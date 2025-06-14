@@ -1,5 +1,4 @@
-## Processor
-
+# Processor
 ```
 https://jojoldu.tistory.com/347?category=635883
 ```
@@ -26,12 +25,10 @@ public ItemProcessor<String, String> processor() {
 }
 ```
 
-#### ItemProcessorAdapter/ValidatingItemProcessor
-
+## ItemProcessorAdapter/ValidatingItemProcessor
 Not used nowdays. replaced by lambda
 
-#### CompositeItemProcessor
-
+## CompositeItemProcessor
 ```java
 @Bean("JOB_NAME")
 @JobScope

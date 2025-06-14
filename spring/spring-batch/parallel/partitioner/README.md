@@ -1,5 +1,4 @@
-## Partitioner
-
+# Partitioner
 ```
 https://www.baeldung.com/spring-batch-partitioner
 https://jojoldu.tistory.com/550?category=902551
