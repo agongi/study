@@ -5,8 +5,8 @@ https://jojoldu.tistory.com/550?category=902551
 https://jobjava00.github.io/language/java/framework/spring-batch/partitioner/
 ```
 
-- 하나의 Step 을 gridSize 만큼 각각의 StepExecution 으로 나눠서 수행 (독립적)
-- StepExecution 이 독립적이므로, reader/processor/writer 의 thread-safe 불필요
+- 하나의 Step 을 gridSize 만큼 각각의 StepExecution 으로 나눠서 수행합니다
+- StepExecution 이 독립적이므로, reader/processor/writer 의 thread-safe 불필요 합니다
 
 ```java
 public class TestJobConfig {
