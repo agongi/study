@@ -5,61 +5,46 @@ https://www.baeldung.com/cglib
 https://www.baeldung.com/java-dynamic-proxies
 ```
 
-## JDK dynamic proxy
-JDK proxying uses the java.reflection.proxy
+## Proxy 방식
+`runtime weaving` 으로 동작하며 실제 클래스를 Proxy 로 런타임에 감싸서 aop 처리합니다
 
-- runtime weaving
-- applied in interface
-
+### JDK proxy
+인터페이스에 Proxy 를 적용합니다
 ```java
-// handler
-public class UserServiceInvocationHandler implements InvocationHandler {
-  @Override
-  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-    // do something
-    if (method.getName().equals("getName")) {
-      return "proxied!";
-    } else {
-      throw new UnsupportedOperationException();
-    }
-  }
+@EnableAspectJAutoProxy(proxyTargetClass = false)
+public class ABCConfig {
+    // ...
 }
-
-// create proxy
-Object proxy = Proxy.newProxyInstance(
-  ClassLoader.getSystemClassLoader(), 
-  new Class[] { UserService.class }, 
-  new UserServiceInvocationHandler());
-
-// use
-String name = (String)((UserService)proxy).getName();
 ```
 
-**CGLIB**
-
-CGLIB proxying works by generating a subclass of the target class at runtime
-
-- runtime weaving
-- applied in target-class
-- bytecode instrument
-
+### CGLIB
+실제 클래스에 Proxy 를 적용합니다
 ```java
-// create proxy
-Enhancer enhancer = new Enhancer();
-enhancer.setSuperclass(UserService.class);
-enhancer.setCallback((FixedValue) () -> "foo, bar");
-UserService proxy = (UserService) enhancer.create();
-
-// use
-String res = proxy.sayHello("anyValue");
-assertEquals("foo, bar", res);
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+public class ABCConfig {
+    // ...
+}
 ```
 
-> spring 4.0 부터 AOP 기본구현체가 JDK -> CGLib 로 변경됨 https://github.com/spring-projects/spring-boot/issues/8434
+## bytecode 방식
+`compile weaving` 으로 동작하며 실제 클래스의 코드를 컴파일 시점에 조작해서 aop 처리합니다
 
-## AspectJ
-AspectJ proxying works by instruments code snippet in target class directly in compile time
+### AspectJ
+아래의 설정을 하면 cglib -> aspectj 로 aop 처리할 수 있습니다:
+```
+// src/main/resources/META-INF/aop.xml
+<aspectj>
+  <aspects>
+    <aspect name="com.example.YourAspect"/>
+  </aspects>
+  <weaver options="-verbose">
+    <!-- Optional: 특정 패키지만 weaving -->
+    <include within="com.example..*"/>
+  </weaver>
+</aspectj>
 
-- compile weaving
-- bytecode instrument
+implementation 'org.aspectj:aspectjweaver'
+
+java -javaagent:/path/to/aspectjweaver.jar -jar ROOT.jar
+```
 
