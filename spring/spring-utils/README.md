@@ -6,7 +6,6 @@ https://blog.woniper.net/343
 ```
 
 ## commons.lang3.reflect.MethodUtils
-
 ```java
 Method[] methods = MethodUtils.getMethodsWithAnnotation(Demo.class, CustomTag.class);	// target methods
 
@@ -16,7 +15,6 @@ for (Method method : methods) {
 ```
 
 ## commons.lang3.reflect.FieldUtils
-
 ```java
 List<Field> fields = FieldUtils.getFieldsListWithAnnotation(Demo.class, CustomTag.class);	// target fields
 
@@ -29,7 +27,6 @@ for (Field field : fields) {
 ```
 
 ## ReflectionUtils
-
 특화된 Utils (ex. MethodUtils, FieldUtils) 의 일부 기능을 제공한다.
 
 Exception 처리를 내부에서 해줘서, 심플하게 코드 작성이 필요할 경우 유용하다.
@@ -39,26 +36,14 @@ Method method = null; // target method
 ReflectionUtils.invokeMethod(method, new Demo());
 ```
 
-***
-
 ## commons.lang3.ClassUtils
-
-```
-... TDB
-```
+TDB
 
 ## ClassUtils
-
-```
-... TDB
-```
-
-***
+TDB
 
 ## BeanUtils
-
 Bean instance (POJO 까지 포함해서) 에 대한 PropertyDescriptor 를 가져오는 유틸.
-
 - PropertyDescriptor
   - getReadMethod
   - getWriteMethod
@@ -112,19 +97,20 @@ for (PropertyDescriptor descriptor : descriptors) {
 > null 을 직접 전달하면 NPE 발생
 
 ## AnnotationUtils
-
 여러개의 경로에서 Annotation 을 찾는 utils
 
 <img src="1.png" width="75%"/>
 
 ## TypeUtils
+TDB
 
 ## ResourceUtils
+TDB
 
 ## PropertiesLoaderUtils
+TDB
 
 ## SystemPropertyUtils
-
 @Value 를 대체할 수 있다. placeHolder 가 포함되어 있으면 resolve 가 같이 처리된다.
 
 ```java
@@ -141,5 +127,7 @@ public void systemPropertyUtilsTest() throws Exception {
 ```
 
 ## ServletRequestUtils
+TDB
 
 ## AopUtils
+TDB
