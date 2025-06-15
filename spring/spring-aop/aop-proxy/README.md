@@ -5,6 +5,8 @@ https://www.baeldung.com/cglib
 https://www.baeldung.com/java-dynamic-proxies
 ```
 
+@Aspectj 빈을 선언했을때 및 기타 aop 기능 (ex. @Transactional) 을 어떤 방식으로 처리할지 정의
+
 ## Proxy 방식
 `runtime weaving` 으로 동작하며 실제 클래스를 Proxy 로 런타임에 감싸서 aop 처리합니다
 
