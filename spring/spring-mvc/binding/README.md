@@ -1,12 +1,12 @@
-## Binding & Validation
+# Binding & Validation
 ```
 https://www.baeldung.com/spring-mvc-custom-property-editor
 https://blog.outsider.ne.kr/825
 https://engkimbs.tistory.com/738
 ```
 
-### Cores
-#### Comparison
+## Cores
+### Comparison
 - PropertyEditor
   - scope: Controller
   - stateful
@@ -32,9 +32,8 @@ https://engkimbs.tistory.com/738
 
 하는 과정이 필요하다.
 
-### Controller-scoped
-#### @InitBinder
-
+## Controller-scoped
+### @InitBinder
 Method level `@InitBinder` is used to register property editor that will hook request string to Object.
 
 ```java
@@ -54,8 +53,7 @@ public class TestRestController {
 
 > PropertyEditor affects the rules in the **same @Controller-scope** only.
 
-#### PropertyEditor
-
+### PropertyEditor
 Listener class for actual hooks of request string to controller.
 
 ```java
@@ -100,9 +98,8 @@ Object -> String 의 converting 시
 
 \#setValue 를 하는시점에 stateful 하므로, 동시성 문제가 발생한다.
 
-### Application-scoped
-#### WebBindingInitializer
-
+## Application-scoped
+### WebBindingInitializer
 모든 Controller 에 공통으로 정의할 PropertyEditor 를 등록하려면, WebBindingInitializer 를 사용한다.
 
 3.0 까지는 WebBindingInitializer 에 등록했는데, 3.1 로 올라가면서 `HandlerMethodArgumentResolver` 로 변경되었다.
@@ -134,7 +131,7 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
 }
 ```
 
-#### Converter
+### Converter
 ```java
 public class BaseWebConfig extends WebMvcConfigurerAdapter {
   @Override
@@ -163,7 +160,7 @@ public class UserConverter {
 }
 ```
 
-#### Formatter
+### Formatter
 Converter + locale
 
 ```java
@@ -189,12 +186,10 @@ public class UserFormatter implements Formatter<User> {
 }
 ```
 
-#### ConversionService
-
+### ConversionService
 Converter & Formatters are registered in `ConversionService`.
 
-#### MessageConverter
-
+### MessageConverter
 XML/JSON messages are se/deserialized using messageConverters.
 
 Once added, HTTP body could be accepted in mentioned format using `Accept: application/json`
@@ -206,14 +201,17 @@ public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
 }
 ```
 
-### Annotations
+## Annotations
+### @NumberFormat
+TBD
 
-#### @NumberFormat
+### @DateTimeFormat
+```java
+@DateTimeFormat("yyyy-MM-dd")
+private String dateString;
+```
 
-#### @DateTimeFormat
-
-#### @JsonFormat
-
+### @JsonFormat
 ```java
 @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
 private Date regDate;

@@ -1,25 +1,20 @@
-## Async
-
+# Async
+```
 ```
 
-```
-
-### Response
-
+## Response
 - DeferredResult
 - CompletableFuture
 - ListenableFuture
 
-### ResponseEmitter
-
+## ResponseEmitter
 - ResponseBodyEmitter: send multiple-view at one response
   - Transfer-Encoding: chunked
 - SseEmitter: split response as event-stream
   - Content-Type: text/event-stream
   - Transfer-Encoding: chunked
 
-### WebSocket
-
+## WebSocket
 - TextWebSocketHandler
 - BinaryWebSocketHandler
 
