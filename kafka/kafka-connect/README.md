@@ -39,7 +39,8 @@ OS 프로세스로 구동되어 태스크를 실행하는 단위 입니다. (보
 - (worker) 담당하는 파티션에 할당된 Task 처리
 
 (리더 워커는) Connector 설정을 조회/수정 하는 REST API 를 제공합니다.
-변경된 설정은 `config.refresh.interval.ms: 60s` 의 주기로 변경 감지되어 각 Worker 에 전파됩니다.
+
+> 변경된 설정은 `config.refresh.interval.ms: 60s` 의 주기로 변경 감지되어 각 Worker 에 전파
 
 ### Connector
 Kafka와 외부 시스템 간의 데이터 이동을 정의하는 논리적 단위 입니다.
