@@ -2,6 +2,7 @@
 ```
 https://github.com/redis-study/redis-summary
 https://redis.io/docs/
+https://dev.gmarket.com/113
 ```
 
 ### Blog
@@ -119,6 +120,7 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
   - 유실된 메세지의 replay 불가능
 - 수신단위
   - 개별 subscriber
+  - 각 개별 subscriber 로 동작하므로 중복 메세지 수신됨
 - 정합성
   - 발행된 메세지는 replay 되지 않고 `유실`
 
@@ -132,6 +134,15 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
 - 정합성
   - XACK 를 통해 수신여부 확인
   - 일정기간 동안 XACK 가 오지 않으면 저장하고 있던 마지막 offset 기반으로 재전송
+
+## [자료구조](https://inpa.tistory.com/entry/REDIS-%F0%9F%93%9A-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85Collection-%EC%A2%85%EB%A5%98-%EC%A0%95%EB%A6%AC)
+<img src='6.png' width="50%">
+
+- string
+- list
+- set
+- sorted set
+- hash
 
 ## [Spin-Lock](https://hdbstn3055.tistory.com/271)
 SET command 를 통해 (timeout 설정하면서) 값을 세팅하고, 적절한 interval 로 체크하는 구현방식 입니다.
