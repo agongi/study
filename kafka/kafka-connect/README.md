@@ -8,7 +8,7 @@ Kafka Connct는 반복적인 파이프라인 구축을 간편하게 하고, 직�
 
 > 독립적인 실행 커텍터로 동작합니다 (kafka streams 는 라이브러리 형태로 실제 코드작업 필요)
 
-<img src="1.png" width="75%">
+<img src="1.png" width="50%">
 
 ## 동작 방식
 ### Standalone
@@ -31,12 +31,12 @@ Kafka Connct는 반복적인 파이프라인 구축을 간편하게 하고, 직�
 
 ## 구성요소
 ### Worker
-OS 프로세스로 구동되어 태스크를 실행하는 단위 입니다.
+OS 프로세스로 구동되어 태스크를 실행하는 단위 입니다. (보통 별도의 물리장비 마다 1개의 worker 로 구성)
 
-<img src="2.png" width="75%">
+<img src="2.png" width="50%">
 
-- source 를 적절한 파티션으로 분할하고 (connector)
-- 파티션단위의 작업을 실제 전송 (task)
+- (source-connector) 어떤 파티션으로 레코드를 보낼지 판단하고 (== Producer) 데이터 전송
+- (worker) 담당하는 파티션에 할당된 Task 처리
 
 (리더 워커는) Connector 설정을 조회/수정 하는 REST API 를 제공합니다.
 변경된 설정은 `config.refresh.interval.ms: 60s` 의 주기로 변경 감지되어 각 Worker 에 전파됩니다.
@@ -47,6 +47,9 @@ Kafka와 외부 시스템 간의 데이터 이동을 정의하는 논리적 단�
 - sink connector
 
 ```
+Connector A ("source-db")
+ └── Task 1~3: DB 읽어서 Kafka로 전송
+ 
 Kafka Connect Cluster (Distributed)
  ├── Worker 1
  │    ├── Task 1 (from Connector A)
@@ -55,9 +58,6 @@ Kafka Connect Cluster (Distributed)
  │    └── Task 3 (from Connector A)
  └── Worker 3
       └── Task 4 (from Connector B)
-
-Connector A ("source-db")
- └── Task 1~3: DB 읽어서 Kafka로 전송
 
 Connector B ("sink-es")
  └── Task 4~5: Kafka에서 읽어 ElasticSearch에 전송
