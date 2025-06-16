@@ -10,14 +10,14 @@ https://www.popit.kr/author/peter5236
 https://bysssss.tistory.com/46
 ```
 ### Blog
-- [Consumer – Push vs Pull approach](https://blog.knoldus.com/kafka-consumer-push-vs-pull-approach/)
+- [Consumer – Push vs Pull approach](https://medium.com/codex/asynchronous-communication-why-does-kafka-use-a-pull-based-message-consumer-442c19a70f58)
 - [Kafka에서 파티션 증가 없이 동시 처리량을 늘리는 방법 - Parallel Consumer](https://d2.naver.com/helloworld/7181840)
 - [카프카 컨슈머에 동적 쓰로틀링 적용하기](https://techblog.woowahan.com/20156/)
 
 ***
 ## 기본 개념
 ### Persistence
-- OS는 디스크 성능 개선 위해 `메모리를 적극 활용한 read-ahead와 write-behind 방식으로 페이지 캐시`를 적극적으로 활용 합니다
+- OS는 디스크 성능 개선 위해 `메모리를 적극 활용한 read-ahead 와 write-behind 방식으로 페이지 캐시`를 적극적으로 활용 합니다
 - 페이지 캐시는 OS 가 관리하는 영역이므로 카프카가 재시작 되더라도 유지됩니다
   - 물론 OS 가 재시작되면 페이지 캐시도 초기화 됩니다..
 
@@ -119,35 +119,30 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
 - 그때 min.insync.replicas == replication.factor 라면 -> ISR 를 만족 할 수 없으므로 모든 발행이 실패 (그리고 Producer 의 설정에 따라 무한 retries 가능) 
 ```
 
-- follow failure
-  - (leader) heartbeat or fetch 요청이 오지 않는 follower 를 ISR 에서 제거후 zookeeper 에 metadata 업데이트 합니다
-  - zookeeper 는 metadata 갱신 후 controller 에 통보
-  - controller broker 는 전체 broker 에 변경내역 전파합니다
-- leader failure
-  - leader 의 장애는 zookeeper 가 감지합니다 (zookeeper 와 heartbeat 주기적으로 받고있음)
-  - zookeeper 는 metadata 갱신 후 controller 에 통보
-  - controller 는 리더 재선출후 zookeeper 에 metadata 갱신 & 전체 브로커에 전파합니다
-  - 전파된 정보는 producer/consumer 도 갱신받습니다
-
 ### Controller
 [Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 <img src='2.png' width='75%'>
 
-- 목적: (브로커) 장애시 해당 브로커에 속하던 `파티션 리더 선출`
-  - broker (node) 는 controller 와 session 을 유지해야 합니다
-  - follower 는 `replica.lag.time.max.ms (10000ms)` 수치만큼 주기적으로 fetch 해야 합니다 (not too far behind)
+- 목적: (브로커) 장애시 해당 브로커에 속하던 `파티션 리더/팔로워 선출`
+  - 각 broker 는 controller 와 주기적으로 통신해야 합니다 
+  - `replica.lag.time.max.ms (10000ms)`
 - 플로우
-  - leader 는 follower 를 ISR 에서 제거후 zookeeper 에 상태를 업데이트 합니다
-  - zookeeper 는 controller 에 통보하고
-  - controller broker 는 나머지 broker 에 전파합니다 (각 broker 에서 local-cache 로 metadata 를 저장하고있음)
+  - leader failure
+    - 주키퍼는 leader 장애 감지시, zookeeper 에 상태 업데이트 합니다 (znode 제거)
+    - zookeeper 는 metadata 갱신 > watching 하고 있던 controller 는 znode 변경 감지
+    - controller broker 는 나머지 broker 에 전파합니다
+  - follower failure
+    - 파티션 리더는 heartbeat and/or fetch 요청이 오지 않는 follower 를 zookeeper 에 상태 업데이트 합니다 (znode 제거)
+    - zookeeper 는 metadata 갱신 > watching 하고 있던 controller 는 znode 변경 감지
+    - controller broker 는 나머지 broker 에 전파합니다
 
 ### Coordinator
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 - 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `컨슈머 선정` -> 리밸런싱
-  - 기본적으로 heartbeat 로 체크하고 poll, offset commit 이 오면 heartbeat 를 받았다고 판단합니다
-  - max.poll.interval.ms (default: 5min), heartbeat.interval.ms (default: 3sec)
+  - 개별 컨슈머들은 기본적으로 heartbeat 을 보내고 poll, offset commit 등 주기적으로 통신해야 합니다
+  - `max.poll.interval.ms` (default: 5min), `heartbeat.interval.ms` (default: 3sec)
 - [플로우](https://velog.io/@hyun6ik/Apache-Kafka-Consumer-Rebalance)
   - coordinator broker 는 (컨슈머그룹 리밸런싱때) joinGroup 을 먼저한 consumer 를 group leader 로 선정합니다
   - leader consumer 는 파티션 할당정보를 coordinator 에게 전달 (== `consumer 가 파티션 할당 주체`)
@@ -165,8 +160,11 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
   - `이를 통해 브로커의 연산 부담을 줄임`
 
 ## Zookeeper
-리더선출을 위해 사용합니다 (기존에는 offset 을 기록했지만 `__consumer_offsets` 토픽 사용으로 대체)
-카프카 4.0 부터는 Zookeeper 없이도 동작할 수 있습니다 (KRaft 모드)
+리더선출/컨슈머그룹 관리 등을 위한 메타데이터를 저장/전파 (watching 을 통한 znode 변경 감지) 합니다
+
+> 기존에는 offset 을 기록했지만 `__consumer_offsets` 토픽 사용으로 대체
+
+카프카 4.0 부터는 Zookeeper 없이 동작할 수 있습니다 (KRaft 모드사용 및 메타데이터 토픽으로 직접관리)
 
 ## Producer
 메세지를 전송하는 단위 입니다.
