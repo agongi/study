@@ -149,14 +149,14 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
   - coordinator 는 zookeeper 에 파티션 할당정보 저장후 group leader 에게 ack 합니다 (== confirmed)
   - 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
 
-### 파티션 할당
-- Producer 의 Partition 할당
+### 파티션 판단 주체
+- Producer
   - 카프카 메타데이터를 브로커를 통해 조회 & 저장 (Zookeeper 에 저장)
-  - 레코드를 전송할 때 직접 지정하거나, 파티셔너를 통해 결정
+  - `레코드를 전송할 때 직접 지정`하거나, 파티셔너를 통해 결정
   - `이를 통해 브로커의 연산 부담을 줄임`
-- Consumer Group 의 Partition 할당
+- Consumer Group
   - Consumer Group 중 하나를 Coordinator 로 선정
-  - (리밸런싱 발생시) Coordinator 가 파티션 할당 & 통보후 Acks 받음
+  - (리밸런싱 발생시) `Coordinator 가 파티션 할당 & 통보후 Acks 받음`
   - `이를 통해 브로커의 연산 부담을 줄임`
 
 ## Zookeeper
@@ -167,8 +167,6 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
 카프카 4.0 부터는 Zookeeper 없이 동작할 수 있습니다 (KRaft 모드사용 및 메타데이터 토픽으로 직접관리)
 
 ## Producer
-메세지를 전송하는 단위 입니다.
-
 <img src='3.png' width='75%'>
 
 - kafkaProducer
@@ -222,8 +220,6 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 `enable.idempotence=true` 로 설정한경우 batch 단위로 성공/실패 처리하므로 순서 보장이 가능합니다
 
 ## Consumer
-메세지를 수신하는 단위 입니다.
-
 <img src='4.png' width='75%'>
 
 ### 옵션
@@ -261,9 +257,9 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
   - `enable.idempotence=true`, `transaction.id={ANY_ID}`, `isolation.level=read_committed`
   - Producer: beginTransaction() -> send() -> commitTransaction() 을 통해 트랜잭션을 사용 합니다
   - Consumer: read_committed 로 커밋된 메세지만 가져옵니다
-  - Producer -- Consumer 에서 `메세지 발행 -- __consumer_offsets 토픽에 커밋` 의 전체 과정을 Atomic 하게 처리해서 트랜잭션 (exactly once) 을 보장합니다
+  - Producer -> Consumer 에서 `메세지 발행 > __consumer_offsets 커밋`하는 전체 흐름을 Atomic 하게 처리해서 트랜잭션 (exactly once) 보장합니다
 
-### Automatic Offset Committing
+### Auto Commit
 <img src='4-3.png' width='75%'>
 
 - `enable.auto.commit=true`
@@ -278,7 +274,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 ### 리밸런싱 (Incremental Rebalance)
 컨슈머 그룹 리밸런싱은 아래의 조건에서 발생합니다:
 - 컨슈머 추가/삭제
-- 토픽에 파티션 추가
+- 토픽의 파티션 증설
 
 리밸런싱은 STW 가 발생하므로 `Incremental` 방식으로 영향 파티션 범위를 최소화 할 수 있습니다:
 - 기존 리밸런싱 방식
@@ -308,16 +304,17 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 ## Advanced
 ### @Transactional
 - Producer
-  - @Transaction 미사용 -> ISR (== replication.factor) 을 만족하는 record 는 브로커에서 Committed 으로 마킹
-  - @Transaction 사용 -> Commit 명령을 수동으로 한번 더 호출하는 과정이 추가
+  - @Transaction 미사용 -> ISR (== replication.factor) 만큼 복제된 레코드는 브로커에서 Committed 으로 마킹
+  - @Transaction 사용 -> (Broker) 복제까지 완료후 Producer 에 ACK 를 하면 > (Producer) `Commit 명령을 수동으로 한번 더 호출`하는 과정 존재
+    - Commit 명령을 명시적으로 한번 더 받아야 메세지가 최종 committed 로 변경
+    - `transaction.id={..}` 도 명시적으로 설정해야 합니다
 - Consumer
   - read_committed: 커밋된 메세지만 가져옵니다
   - read_uncommitted: 커밋되지 않은 메세지도 가져옵니다
-- Producer -- Consumer 에서 `메세지 발행 -- __consumer_offsets 토픽에 커밋` 의 전체 과정을 Atomic 하게 처리해서 트랜잭션 (exactly once) 을 보장
+- Producer -> Consumer 에서 `메세지 발행 > __consumer_offsets 커밋`하는 전체 흐름을 Atomic 하게 처리해서 트랜잭션 (exactly once) 보장합니다
 
 ### 가용성 vs 내구성
-`unclean.leader.election.enable` 옵션을 통해 결정됩니다.
-
+`unclean.leader.election.enable` 옵션을 통해 결정됩니다:
 - false: ISR 에서만 leader 를 선출합니다
   - 가용성 낮음
   - 내구성 높음
