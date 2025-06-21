@@ -36,7 +36,7 @@ https://github.com/calofmijuck/kubernetes-in-action/tree/main
   - kube-api 는 etcd 의 변경을 감지하여, controller 에게 통보한다
 
 ### Worker Node
-kube-api 에서 CMD 를 전달받아, container 를 실행하는 단위
+kube-api 에서 command 를 받아 container 실행하는 단위
 
 - **kubelet**
   - kube-api 와 통신
@@ -82,7 +82,7 @@ spec:
 ### Pod
 Container 의 집합으로, Kubernetes 에서 관리하는 가장 작은 단위 입니다.
 - 1개의 Container 는 1개의 Process 만 실행하는 것이 일반적이므로, 여러개의 Container 를 묶어서 배포하는 최소 단위
-  - 동일한 pod 내의 container 는 network/disk 을 공유 하므로 IPC 등에 제약은 없습니다.
+  - 동일한 pod 내의 container 는 `network/disk` 을 공유 하므로 IPC 등에 제약은 없습니다
 
 > Node 는 물리적인 구분/Pod 은 논리적인 구분
 
@@ -119,11 +119,11 @@ spec:
           command:
             - sh
             - -c
-            - "echo 'hook will fail with exit code 15'; sleep 5 ; exit 15"
+            - "echo 'hook will fail with exit code 15'; sleep 5; exit 15"
 ```
 
 ### ReplicaSet
-- 단순히 Pod 을 복제/유지하는 역할 수행
+- 단순히 Pod 을 복제/유지하는 역할만 수행
 - Deployment 를 통해 관리 됩니다
 
 ### Deployment
@@ -162,12 +162,10 @@ Job 은 일회성 작업을 수행합니다. CronJob 은 주기적으로 Job 을
 
 <img src='4.png' width="50%"/>
 
->### Session affinity
-nginx 의 sticky session 과 유사한 기능을 제공하는 옵션입니다
+- Session affinity
+  - nginx 의 sticky session 과 유사한 기능을 제공하는 옵션입니다
+  - TCP 레벨에서의 처리라서 (ClientIP 기반) HTTP 레벨의 쿠키 기반으로는 동작하지 않습니다
 
-> TCP 레벨에서의 처리라서 (ClientIP 기반) HTTP 레벨의 쿠키 기반으로는 동작하지 않습니다
-
->### 외부 연결
 | 방식             | 외부 접속 | 포트 사용                        | 확장성       | 특징                                                           |
 |------------------|-----------|------------------------------|--------------|--------------------------------------------------------------|
 | **ClusterIP**     | ❌        | 클러스터 내부 IP                   | ✅           | 기본값. 클러스터 내부에서만 접근 가능                                        |
@@ -188,27 +186,27 @@ Pod 의 관점에서 PVC 을 생성하면, 쿠버네티스가 적당한 크기�
 
 > 개발자는 물리적 저장소에 대한 정보를 몰라야 한다! 그것은 클러스터 관리자가 할 일이다
 
->### PVC (PersistentVolumeClaim)
+#### PVC (PersistentVolumeClaim)
 필요한 스토리지에 대한 사용 선언
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mongodb 
+  name: mongodb
 spec:
   containers:
-  - image: mongo
-    name: mongodb
-    volumeMounts:
-    - name: mongodb-data
-      mountPath: /data/db
-    ports:
-    - containerPort: 27017
-      protocol: TCP
+    - image: mongo
+      name: mongodb
+      volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db
+      ports:
+        - containerPort: 27017
+          protocol: TCP
   volumes:
-  - name: mongodb-data                # PVC 로 볼륨 참조
-    persistentVolumeClaim:
-      claimName: mongodb-pvc
+    - name: mongodb-data                # PVC 로 볼륨 참조
+      persistentVolumeClaim:
+        claimName: mongodb-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -216,14 +214,14 @@ metadata:
   name: mongodb-pvc
 spec:
   resources:
-    requests:                         # 1GB 스토리지 정의
+    requests: # 1GB 스토리지 정의
       storage: 1Gi
   accessModes:
     - ReadWriteOnce                   # 단일 클라이언트를 지원하는 읽기/쓰기
   storageClassName: "XYZ"
 ```
 
->### PV (PersistentVolume)
+#### PV (PersistentVolume)
 실제 정의된 스토리지 리소스
 ```yaml
 apiVersion: v1
