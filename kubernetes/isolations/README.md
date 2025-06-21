@@ -5,12 +5,7 @@ https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d
 
 container 는 격리된 환경에서 실행되는 `process` 입니다.
 
-동일 Node 에서 실행되는 Pod (Container) 의 적절한 격리/제한을 통해 안정적으로 운영할 수 있습니다.
-
-## chroot
-루트 디렉토리를 변경해서 격리
-
-<img src="1.png" width="50%">
+동일 Node 에서 실행되는 Pod (Container) 의 적절한 격리/제한을 통해 안정적으로 운영할 수 있습니다:
 
 ## cgroup
 (사용할 수 있는) 리소스 격리
@@ -20,12 +15,16 @@ container 는 격리된 환경에서 실행되는 `process` 입니다.
 - disk
 
 ## namespace
-`unshare` cmd 를 통해 system-call 로 namespace 를 격리한다
+(접근할 수 있는) 커널 리소스 격리
+- pid
+- net (네트워크)
+- mnt (파일시스템)
+- user (root 로 보이지만 Node 의 root 는 아님)
 
-```bash
-# mount namespace 를 격리하는 cmd
-$ unshare -m /bin/bash
-```
+## chroot
+루트 디렉토리를 변경해서 격리
+
+<img src="1.png" width="50%">
 
 ### mount namespace + overlayFS
 <img src="2.png" width="50%">

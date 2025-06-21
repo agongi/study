@@ -49,12 +49,12 @@ CMD ["nginx", "-g", "daemon off;"]
 $ docker build --tag nginx:20200320_145400 .
 ```
 
-빌드후 registry 에 push 한 이미지를 pull 하면 현재 engine 에 저장된 이미지 목록을 확인 할 수 있습니다 
+빌드후 registry 에 push 한 이미지를 pull 하면 현재 engine 에 저장된 이미지 목록을 확인 할 수 있습니다:
 ```bash
 suktae@localHost /usr/local/etc/nginx $ docker images
 REPOSITORY                          TAG           IMAGE ID      CREATED        SIZE
-base-nginx											   1.12.2       a8c3d87a58e7   2 days ago      831MB
-nginx											    20200320_145400   65d59f58cbsb   2 days ago      833MB
+base-nginx  					   1.12.2       a8c3d87a58e7   2 days ago      831MB
+nginx						    20200320_145400   65d59f58cbsb   2 days ago      833MB
 ```
 
 Registry 로 부터 pull 한 이미지를 run 커맨드로 컨테이너를 실행 합니다
@@ -99,7 +99,7 @@ Docker Network 는 `컨테이너 간 통신`과 `외부 네트워크 (Host 를 �
 
 ```yaml
     ports:
-      - 80:80 # host#port:container#port
+      - 80:80 # host#port : container#port
       - 443:443
 ```
 
@@ -146,11 +146,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ```
 
 ```dockerfile
-RUN <<EOF
+RUN << EOF
 apt-get update
-apt-get install -y --no-install-recommends \
-    package-bar \
-    package-baz \
+apt-get install -y --no-install-recommends
+    package-bar
+    package-baz
     package-foo
 EOF
 ```
