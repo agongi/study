@@ -16,7 +16,7 @@ metadata:
 spec:
   containers:
     - image: image
-      command: ["/bin"/command"] # ENTRYPOINT 와 동일기능
+      command: ["/bin/command"] # ENTRYPOINT 와 동일기능
       args: ["arg1", "arg2", "arg3"]
 ```
 
@@ -34,7 +34,7 @@ metadata:
 spec:
   containers:
     - image: image
-      command: ["/bin"/command"]
+      command: ["/bin/command"]
       args: ["arg1", "arg2", "arg3"] # CMD 와 동일기능
 ```
 
@@ -64,11 +64,6 @@ EXEC 방식이 PID 1 로 실행되기 때문에 더 안전하다고 하지만 �
 
 ```dockerfile
 ENTRYPOINT /${SCRIPT}/entrypoint.sh
-```
-```bash
-!#!/bin/bash
-
-# do something
 ```
 
 > Dockerfile 은 내부에서 관리하는 형상이므로 안전성에 대해선 걱정하지 않았고, SHELL 의 유연함을 좀 더 활용
