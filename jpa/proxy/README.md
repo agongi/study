@@ -5,7 +5,7 @@
 ***
 <img src="1.png" width="50%">
 
-지연 로딩 기능을 사용하려면 실제 엔티티 객체 대신에 데이터베이스 `조회를 지연할 수 있는 가짜 객체`가 필요한데 이것을 프록시 객체 입니다.
+지연 로딩 기능을 사용하려면 실제 엔티티 객체 대신에 데이터베이스 `조회를 지연할 수 있는 가짜 객체`가 필요한데 이것이 프록시 객체 입니다.
 - fetchType.LAZY 로 설정된 연관관계는 Proxy 를 리턴합니다 (실제 값을 `사용시점에 N+1` 로 DB 조회)
 - Proxy 는 원본 엔티티를 상속받은 객체이므로 타입 체크시 주의해야 합니다
   - 아래와 같이 `HibernateProxy or PersistentCollection` 타입이고 실제 타입은 initialize 후 확인 가능
@@ -46,7 +46,7 @@ public final class Hibernate {
   - 연관관계의 주인이 아니라서 존재유무는 알수 없지만 Fetch.LAZY 가 가능합니다
   - `Collection 은 null 대신 empty 가 가능`하기 때문입니다
 
-### 객체 그래프
+## 객체 그래프
 Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQL 에서 선언 시점에 결정` 이 아닌 지연로딩 방식의 Proxy 를 통해 `사용 시점에 결정` 한다는 의미 입니다
 
 > 물론 Lazy loading 을 사용한다면 N+1 이 발생하므로 fetchJoin 을 통해 미리 로딩하는게 나음
@@ -92,6 +92,6 @@ public class Parent {
 // DELETE FROM CHILD WHERE ID = ?
 ```
 
-### DDD (CASCADE + Orphan Removal)
+## DDD (CASCADE + Orphan Removal)
 Aggregate Root 에서 연관관계를 관리할때 CASCARD, OrphanRemoval 을 모두 사용해서 관리할면 편리합니다
 

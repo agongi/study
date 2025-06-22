@@ -12,8 +12,9 @@ https://sungunjo.github.io/jpa-study/2022/03/01/ch.10-object-oriented-query-lang
   - 조회된 엔티티를 영속성에 저장합니다
 - JPQL (== createQuery)
   - 쿼리를 먼저 실행합니다
-  - 조회된 엔티티가 `이미 영속성에 있는 경우 조회결과를 버리고`, 없으면 저장합니다 (영속성에서 변경된 내용을 유지하기위함)
+  - 조회된 엔티티가 `이미 영속성에 있는 경우 조회결과를 버리고`, 없으면 저장합니다 (영속성에서 변경된 내용을 유지하기위함) 
     - spring-data 및 querydsl 은 모두 JPQL 실행 입니다
+    - 이 과정 불일치를 방지하기 위해, flush 수행이 필요합니다 
 
 ```
 app -> JPQL (flush) -> DB
