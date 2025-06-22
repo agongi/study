@@ -3,10 +3,10 @@
 https://www.baeldung.com/hibernate-inheritance
 ```
 
-## @Entity 상속
-- `InheritanceType.JOINED`
-  - 부모테이블이 존재하고, 자식테이블은 JOIN 으로 상속관계를 구현합니다
-  - 단순조회시 JOIN 이 발생하고, INSERT 시 2번씩 쿼리가 수행됩니다
+## 테이블 상속
+### InheritanceType.JOINED
+- 부모테이블이 존재하고, 자식테이블은 JOIN 으로 상속관계를 구현합니다
+- 단순조회시 JOIN 이 발생하고, INSERT 시 2번씩 쿼리가 수행됩니다
 
 <img src="2.png" width="50%">
 
@@ -25,9 +25,9 @@ public abstract class PersonInfo {
 }
 ```
 
-- `InheritanceType.SINGLE_TABLE`
-  - 1개의 테이블에 부모/자식의 모든 컬럼을 표현합니다
-  - 모든 자식테이블의 컬럼을 nullable 로 정의해야하고, 테이블 사이즈가 커집니다
+### InheritanceType.SINGLE_TABLE
+- 1개의 테이블에 부모/자식의 모든 컬럼을 표현합니다
+- 모든 자식테이블의 컬럼을 nullable 로 정의해야하고, 테이블 사이즈가 커집니다
 
 <img src="3.png" width="50%">
 
@@ -50,9 +50,9 @@ public class KrPersonInfo extends PersonInfo {
 }
 ```
 
-- `InheritanceType.TABLE_PER_CLASS`
-  - 자식테이블 각각에 필요한 컬럼이 (부모에 선언한) 정의되는 형태입니다
-  - 자식테이블을 함께 조회할때 UNION 을 사용해야하므로, `일반적으로 추천하지 않습니다`
+### InheritanceType.TABLE_PER_CLASS
+- 자식테이블 각각에 필요한 컬럼이 (부모에 선언한) 정의되는 형태입니다
+- 자식테이블을 함께 조회할때 UNION 을 사용해야하므로, `일반적으로 추천하지 않습니다`
 
 <img src="4.png" width="50%">
 
@@ -72,10 +72,12 @@ public class Album extends Item { // 자식 테이블이 개별로 생성
 }
 ```
 
-## @MappedSuperClass
-- 별도 테이블이 생성되지 않고 상속만 가능한 형태 입니다
-  - 단순한 공통필드 정의 (등록일자/등록자 등)
-- @Entity 는 @Entity or @MappedSuperClass 가 선언된 클래스만 상속 할 수 있습니다
+## 값 상속
+### @MappedSuperClass
+별도 테이블을 생성하지 않고 상속만 하는 형태입니다
+- 단순한 공통필드 정의 (등록일자/등록자 등)
+
+@Entity 는 `@Entity or @MappedSuperClass 가 선언된 클래스만 상속` 할 수 있습니다
 
 <img src="5.png" width="50%">
 
