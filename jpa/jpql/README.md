@@ -26,12 +26,13 @@ app <- JPQL (clear) <- DB
 ```
 
 - FLUSH
-  - 쿼리 실행전 영속성을 flush 해야 합니다
-  - 현재까지의 영속성 작업내용을 flush 로 반영해야 쿼리값을 신뢰할 수 있습니다 
-  - 대신 jdbcTemplate 을 통해 직접 sql 을 실행하는 경우는 (JPA 에서 인지할 수 없으므로) 명시적으로 em.flush 호출합니다
+  - (조회쿼리) 실행전 영속성을 flush 해야 합니다
+  - 영속성에 저장된 내용이 flush 로 반영해야 DB 직접조회 결과를 신뢰할 수 있습니다 
+    - em#flush
 - CLEAR
-  - 쿼리 실행후 영속성을 clear 해야 합니다
-  - 이미 영속성에 존재하는 엔티티는 JPQL 의 조회결과로 대체되지 않기 때문입니다
+  - (수정쿼리) 실행후 영속성을 clear 해야 합니다
+  - 영속성에 저장된 내용이 DB 결과와 다르게 되므로 클리어해야 불일치를 방지할 수 있습니다
+    - em#clear
 
 ```java
 @Modifying(clearAutomatically = true, flushAutomatically = true)
