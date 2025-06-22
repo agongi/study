@@ -3,7 +3,7 @@
 https://www.baeldung.com/hibernate-inheritance
 ```
 
-## @Entity 상속하
+## @Entity 상속
 - `InheritanceType.JOINED`
   - 부모테이블이 존재하고, 자식테이블은 JOIN 으로 상속관계를 구현합니다
   - 단순조회시 JOIN 이 발생하고, INSERT 시 2번씩 쿼리가 수행됩니다

@@ -27,24 +27,66 @@ https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Common_Problems
 
 `복합키는 조회시 복합키 생성이 필요한 단점`이 있어 F.K 는 그대로 유지하고, 별도의 P.K 를 선언해서 사용하는 방식이 좀 더 낫습니다. (비식별 관계)
 - 식별관계
-  - 부모테이블의 기본키를 `자식테이블의 기본키 + 외래키`로 사용합니다
+  - 부모의 기본키를 `자식에서 기본키 + 외래키`로 사용합니다
 
 <img src="1.png" width="50%">
 
 - 비식별관계
-  - 부모테이블의 기본키를 `자식테이블의 외래키`로만 사용합니다
+  - 부모의 기본키를 `자식에서 외래키`로만 사용합니다
 
 <img src="2.png" width="50%">
 
-### @IdClass vs @EmbeddedId/@Embeddable
-문법적인 차이는 있지만 기능을 동일 합니다 (OOP 관점으로 보면 @EmbeddedId 가 좀더 나음)
-대신 JPQL 로 보면 아래의 차이가 있습니다:
+### @IdClass vs @EmbeddedId
+문법적인 차이는 있지만 기능을 동일 합니다
+
+#### 정의 방법
+```java
+@Entity
+@IdClass(BookId.class) // Class 에 정의
+public class Book {
+    @Id // IdClass 에 정의된 필드명과 동일해야 함
+    private String author;
+    @Id // IdClass 에 정의된 필드명과 동일해야 함
+    private String title;
+}
+
+public class BookId implements Serializable {
+    private String author;
+    private String title;
+}
+```
+```java
+@Entity
+public class Book {
+    @EmbeddedId // 필드에 정의
+    private BookId id;
+}
+
+@Embeddable
+public class BookId implements Serializable {
+    private String author;
+    private String title;
+}
+```
+
+#### JPQL
 ```java
 //@EmbeddedId
 em.createQuery("select p.id.id1, p.id.id2 from Parent p"); 
 
 //@IdClass
 em.createQuery("select p.idl, P.id2 from Parent p");
+```
+
+```
+-- 김영한님
+
+복합키 매핑은 저는 실무에서 거의 사용하지 않습니다.
+복합키 매핑에 대해서는 JPA책 7.3 복합 키와 식별 관계 매핑을 참고하시면 자세한 정보를 얻을 수 있을꺼에요.
+그리고 아마 질문 주신 부분이 @IdClass, @EmbeddedId 둘중에 어떤 것을 선호하는가? 로 생각이 되는데요.
+JPA책 @IdClass vs @EmbeddedId에서도 설명하지만 JPQL이 길어질 수 있어서 저는 개인적으로는 @IdClass를 조금 더 선호하는 편입니다.
+@EmbeddedId: select p.id.id1, p.id.i2 from Parent p
+@IdClass: select p.i1, p.id2 from Parent p
 ```
 
 ## 데이터 타입
@@ -76,14 +118,13 @@ public class Address {
 <img src="7.png" width="50%">
 
 값 클래스를 Collection 으로 정의 가능합니다:
-
 ```java
 @Entity
 public class Member {
     @Id @GeneratedValue
-    private Lzong id;
+    private Long id;
     @Embedded
-    private Adzdress homeAddress;
+    private Address address;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "FAVORITE_FOODS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
@@ -110,15 +151,15 @@ INSERT INTO ADDRESS (MEMBER_ID, CITY, STREET, 2IPCODE) VALUES (1,  '서울', '�
 @OneToMany 과 동일하게 데이터가 추가되지만 (@CollectionTable 으로 별도 테이블 사용) 차이점은 아래와 같습니다:
 
 - @OneToMany
-  - @Entity 와의 관계
+  - `@Entity 와의 관계`
   - P.K 에 대한 제약이 없습니다
   - @Id 식별자가 있습니다 
 - @ElementCollection
-  - @Embedded 와의 관계
-  - `대상 테이블의 모든 컬럼을 P.K 로 잡아야 합니다`
+  - `@Embedded 와의 관계`
+    - 대상 테이블의 모든 컬럼을 P.K 로 잡아야 합니다
   - @Id 식별자가 없습니다
 
-`@ElementCollection 으로 표현되는 관계는 모두 @OneToMany 로 표현 가능` 합니다. 제약이 없는 일대다 관계로 설정하는게 낫습니다
+`@ElementCollection 으로 표현되는 관계는 모두 @OneToMany 로 표현 가능` 합니다. (제약이 없는 일대다 관계로 설정하는게 나음)
 
 ## 부가 기능
 ### @Converter
