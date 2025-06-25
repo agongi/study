@@ -41,7 +41,7 @@ private Rolerype rolerype;
 member.setRolerype(RoleType.ADMIN); // DB에 문자 ADMIN으로 저장됨
 ```
 
-- @Temporal
+- ~~@Temporal~~
   - Date, Time, DateTime, LocalDate, LocalDateTime, Instant 등에 지정
   - AtttributeConverter 를 상속한 `Jsr310JpaConverters` 가 기본 제공되어서 이제 따로 정의 하지 않아도됨
 
@@ -49,19 +49,16 @@ member.setRolerype(RoleType.ADMIN); // DB에 문자 ADMIN으로 저장됨
 public class Jsr310JpaConverters {
     @Converter(autoApply = true)
     public static class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
-        @Nullable
         @Override
         public Date convertToDatabaseColumn(LocalDate date) {
             return date == null ? null : LocalDateToDateConverter.INSTANCE.convert(date);
         }
 
-        @Nullable
         @Override
         public LocalDate convertToEntityAttribute(Date date) {
             return date == null ? null : DateToLocalDateConverter.INSTANCE.convert(date);
         }
     }
-    
     // ...
 }
 ```
