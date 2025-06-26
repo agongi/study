@@ -29,7 +29,7 @@ Same Origin 은 `프로토로://도메인:포트` 가 동일함을 의미합니�
 - img, css 는 Cross Origin 을 허용하고 (ex. CDN 도메인)
 - script (ex. Fetch/XMLHttpRequest 등 js 에서 API 호출) 는 Same Origin 만 허용합니다
 
-해당 제약을 허용할 방식이 CORS 이고 아래와 같이 동작합니다:
+해당 제약을 허용하는 방법이 CORS 이고 아래와 같이 동작합니다:
 - (CLIENT) 요청 > `Origin`
 - (SERVER) 응답 > `Access-Control-Allow-Origin`
 - (CLIENT) 브라우저는 `Origin == Access-Control-Allow-Origin` 비교후 일치하면 성공처리
@@ -87,7 +87,7 @@ add_header Access-Control-Allow-Origin '*' always;
 
 아래의 조치로 방어가 필요합니다:
 - 입력값의 Escape
-  - \<script> -> &lt;script&gt;
+  - \<script> -> `&lt;script&gt;`
 - 리액트는 JSX 를 렌더링 할때 escape 처리 합니다
 
 <img src="4.png" width="50%">
@@ -120,7 +120,7 @@ function sendPostMessage(message: string, targetOrigin: string) {
 }
 ```
 
-* 으로 지정할 수 있지만 `CSRF 취약점`이 발생합니다.
+`*` 으로 지정할 수 있지만 `CSRF 취약점`이 발생합니다.
 
 ### Receiver
 수신에서도 다시한번 targetOrigin 을 검증합니다
@@ -159,12 +159,11 @@ Cross Origin 에서 의도하지 않은 요청을 실행하는 취약점 입니�
   - Site 가 다른경우 쿠키가 전달됨을 막아서 에러처리 하는 방안
 
 ## Cookies
-- secure
-  - https 만 접근가능
-- httpOnly
-  - javascript 에서 접근불가능
-- hostOnly
-  -  window.location.host 가 cookie:domain 과 일치해야함 
-- session
-  - 세션 쿠키는 브라우저가 닫히거나 세션이 종료될 때까지 유효합니다.
-- SameSite
+- Secure
+  - `https://` 에서만 전송
+- HttpOnly
+  - `javascript 에서` Document.cookie 접근 `불가능` (전송만 된다)
+- SameSite `CSRF 보호 방법`
+  - None Cross-Site 도 전송
+  - Lax 링크클릭 등을 통한 이동시 전
+  - Strict Same-Origin 로만 전송
