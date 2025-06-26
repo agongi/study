@@ -62,9 +62,10 @@ With HTTP/1.x, browsers open between 4 and 8 connections per origin. This may im
 One TCP Connection means that client need to negotiate 3-way-handshake once and use it multiply.
 
 ### Multiplexing
-The new binary framing layer in HTTP/2 resolves the head-of-line blocking problem found in HTTP/1.x and eliminates the need for multiple connections to enable parallel processing and delivery of requests and responses.
+The new binary framing layer in HTTP/2 resolves the `head-of-line blocking problem` found in HTTP/1.x and eliminates the need for multiple connections to enable parallel processing and delivery of requests and responses.
 
-<img src="5.png" width="50%">
+<img src="5-1.png" width="50%">
+<img src="5-2.png" width="50%">
 
 The snapshot captures multiple streams in flight within the same connection. The client is transmitting a DATA frame (stream 5) to the server, while the server is transmitting an interleaved sequence of frames to the client for streams 1 and 3. As a result, there are three parallel streams in flight.
 
