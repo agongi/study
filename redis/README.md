@@ -56,7 +56,9 @@ IN-MEMORY DB 이지만 주기적으로 영속화 합니다:
 <img src='5.png' width="50%">
 
 - master 는 1s 단위로 AOF 에 기록된 command 를 replica 에 전달합니다
-  - 일반적인 RDB 쓰기지연 (기본값: 1s) 정도의 수
+  - 일반적인 RDB 쓰기지연: (기본값) 1s
+
+> nbasearc https://d2.naver.com/helloworld/614607
 
 ## [파이프라이닝](https://redis.io/docs/latest/develop/use/pipelining/)
 Redis pipelining is a technique for improving performance by `issuing multiple commands at once` without waiting for the response to each individual command.
@@ -73,6 +75,8 @@ redisTemplate.execute(connection -> {
     }
 });
 ```
+
+<img src='2-1.png' width="50%">
 
 ## [트랜잭션](https://redis.io/docs/interact/transactions/)
 ```
