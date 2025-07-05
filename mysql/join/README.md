@@ -133,43 +133,60 @@ from demo_people,
      demo_property
 ```
 
-### Theta Join
-조인에 참여하는 두 릴레이션의 속성값을 비교하여 조건을 만족하는 투플만 반환
-
-- exists
-  - exists 는 where 절에 조인 조건을 넣으므로, inner join 으로만 동작합니다
-
-```sql
-SELECT p.*
-FROM post p
-WHERE EXISTS (
-    SELECT 1
-    FROM post_comment pc
-    WHERE
-        pc.post_id=p.id AND
-        pc.score > ?
-)
-ORDER BY p.id
-```
-
-- inner
-
-```sql
-SELECT p.*
-FROM post p
-inner join post_comment pc on (pc.post_id = p.id and pc.score > ?) 
-ORDER BY p.id
-```
-
 ### Semi Join
-조인시 두 릴레이션 중 한쪽 릴레이션의 결과만 반환하는 방식
+다른 Join 처럼 두 테이블을 합쳐서 새로운 결과를 만드는 것이 아닌 한 테이블을 기준으로 (Driving) 다른 테이블에 존재유무만 확인하여 필터링하는 역할을 합니다
+
+> 필터링의 역할만 수행하므로 Driven 테이블의 필드가 결과에 포함되지 않음
+
+Inner Join 및 다른 Outer Join 과 비교하면 아래의 차이점이 존재합니다:
+- Inner
+  - 조건에 맞는 Driving 존재
+  - 중복 가능
+- Left
+  - Driving 항상 존재
+  - 중복 가능
+- Semi
+  - 조건에 맞는 Driving 존재
+  - `중복 제거 (일치되는 1개의 ROW 발견시 즉시 리턴)`
+
+아래의 SQL 을 보면 즉시리턴의 의미를 알수 있습니다:
+- Inner
+  - 매칭되는 Driven 테이블의 모든 데이터 조인. 즉 1-N 관계 
+  - Alice - Keyboard
+  - Alice - Mouse
+- Semi
+  - 매칭되는 Driven 테이블의 최초 데이터만 조인. 즉 1-1 관계 
+  - Alice
 
 ```
-SQL의 LEFT JOIN은 왼쪽 테이블의 모든 레코드와 오른쪽 테이블의 일치하는 레코드를 가져오는 것을 의미합니다.
-이 때, 왼쪽 테이블의 모든 레코드에 대해서 오른쪽 테이블과의 일치 여부를 확인하기 위해 오른쪽 테이블의 데이터를 실제로 읽어와야 합니다. (인덱스 컬럼으로 조인해야함)
+"주문을 한 번이라도 한 사용자의 정보를 조회"
+  ┌────┬─────────┐
+  │ id │ name    │
+  ├────┼─────────┤
+  │ 1  │ Alice   │
+  │ 2  │ Bob     │
+  │ 3  │ Charlie │
+  └────┴─────────┘
+  ┌──────────┬─────────┬──────────┐
+  │ order_id │ user_id │ item     │
+  ├──────────┼─────────┼──────────┤
+  │ 101      │ 1       │ Keyboard │
+  │ 102      │ 1       │ Mouse    │
+  │ 103      │ 3       │ Monitor  │
+  └──────────┴─────────┴──────────┘
 
-따라서 LEFT JOIN에서 오른쪽 테이블의 레코드를 보지 않더라도 실제로 디스크에서 데이터를 읽어와야 합니다.
+SELECT u.id, u.name2
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id;
+
+| 1   | Alice   |  <-- Alice가 2번 주문해서 중복 발생
+| 1   | Alice   |
+| 3   | Charlie |
 ```
+
+Inner Join 을 사용하면 중복제거를 위해 distinct 를 사용해야 합니다.
+
+Semi Join 은 문법적으로 키워드는 없지만 In or Exists 를 통해 사용할 수 있습니다 (중복 없음)
 
 ## [Join Methods](http://blog.naver.com/PostView.nhn?blogId=ssayagain&logNo=90036001354)
 ### Nested Loops
@@ -190,7 +207,7 @@ for (var index : indexes) {
 }
 ```
 ```sql
-SELECT /*+ USE_NL(b a) */ a.*
+SELECT /*+ USE_NL(a b) */ a.*
 FROM dept a
 LEFT JOIN emp b ON b.deptno = a.deptno
 WHERE a.loc = 'NEW YORK';
@@ -217,7 +234,7 @@ for (var element : a) {
 ```sql
 SELECT /*+ USE_MERGE(a b) */ a.*
 FROM dept a
-       LEFT JOIN emp b ON b.deptno = a.deptno
+LEFT JOIN emp b ON b.deptno = a.deptno
 WHERE b.sal > 1000;
 ```
 
@@ -232,8 +249,7 @@ WHERE b.sal > 1000;
 
 ```sql
 select /*+ USE_HASH(a b) */ a.dname, b.empno, b.ename
-from dept a,
-     emp b
+from dept a, emp b
 where a.deptno = b.deptno
   and a.deptno between 10 and 20;
 ```
