@@ -42,7 +42,10 @@ MySQL 8.x 부터 binlog 의 포맷은 ROW 가 기본값 입니다:
 
 ## MSR (Multi Source Replication)
 샤딩을 해서 source 가 여러개인 경우를 의미 (N개의 source -> 1개의 replica)
+
 그런데 각각의 샤딩 source 에 각 replication 이 존재하는게 낫지않나?
+
+> A. 여러 프로덕션 샤드 서버의 데이터를 하나의 분석용/백업용 서버로 통합할 때 사용성 필요
 
 ## MMM (Mysql Multi-master replication Manager) & DNS
 - MMM Agent

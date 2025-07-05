@@ -55,7 +55,7 @@ update record [2]
                gap-lock
 ```
 
-> phantom read 를 방지하기 위함
+> REPEATABLE READ 에서 Gap Lock 으로 Phantom Read 를 방지합니다
 
 ## Next-key Locks
 record lock + gap lock 입니다.

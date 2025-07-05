@@ -33,4 +33,4 @@ UPDATE member SET area = "경기" WHERE member_id
   - Redo Log 자체도 버퍼에 저장하고, I/O 를 줄이기 위해 주기적으로 디스크 동기화
  
 ## 잠금 없는 일관된 읽기 (Non-Locking Consistent Read)
-`현재 record lock 이 잡혀있더라도` Undo 를 통해 `대기없이` select 를 수행할 수 있습니다. (Serializable 격리레벨이 아닌경우)
+`현재 record lock 이 잡혀있더라도` Undo 를 통해 `대기없이` 과거 버전의 데이터를 Select 할수 있습니다 (Serializable 격리레벨이 아닌경우)
