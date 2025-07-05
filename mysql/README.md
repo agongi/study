@@ -7,7 +7,6 @@ https://velog.io/@kmw89891/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98
 ### Blog
 - [https://use-the-index-luke.com/sql/preface](https://use-the-index-luke.com/sql/preface)
 - [Index Dive 비용 최적화](https://medium.com/daangn/index-dive-%EB%B9%84%EC%9A%A9-%EC%B5%9C%EC%A0%81%ED%99%94-1a50478f7df8)
-- [EXISTS vs IN](https://velog.io/@emawlrdl/Oracle-IN-vs-EXISTS)
 - [late row lookups](https://explainextended.com/2009/10/23/mysql-order-by-limit-performance-late-row-lookups/)
 
 ***
