@@ -26,7 +26,7 @@ https://rebro.kr/169
   - 즉 `전체 데이터에서 20-25% 이상` 조회할 경우 인덱스 사용은 비효율 입니다
 
 ## 방식
-### B-Tree vs B+Tree vs Hash
+### B-Tree vs B+Tree vs [Hash](https://tech.kakao.com/posts/319)
 B-Tree/B+Tree (Balanced Binary-Search Tree) 형태로 정렬해서 인덱스를 구성합니다.
 
 본질적으로 [Balanced-Tree](https://rebro.kr/169) 이므로 불균형은 발생하지 않습니다:
