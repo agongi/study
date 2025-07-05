@@ -34,3 +34,5 @@ UPDATE member SET area = "경기" WHERE member_id
  
 ## 잠금 없는 일관된 읽기 (Non-Locking Consistent Read)
 `현재 record lock 이 잡혀있더라도` Undo 를 통해 `대기없이` 과거 버전의 데이터를 Select 할수 있습니다 (Serializable 격리레벨이 아닌경우)
+
+다만 `SELECT ... FOR UPDATE 나 SELECT ... FOR SHARE` 는 MVCC 를 사용하지 않고 실제로 잠금 (Shared/Exclusive Lock) 을 획득하여 현재 버전의 데이터만 조회합니다
