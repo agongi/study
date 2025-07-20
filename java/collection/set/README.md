@@ -1,5 +1,4 @@
-## Set
-
+# Set
 ```
 https://docs.oracle.com/javase/tutorial/collections/implementations/set.html
 http://tutorials.jenkov.com/java-collections/set.html
@@ -9,11 +8,10 @@ https://stackoverflow.com/questions/6720396/different-types-of-thread-safe-sets-
 http://minborgsjavapot.blogspot.kr/2014/12/java-8-implementing-concurrenthashset.html
 ```
 
-<img src="images/Screen%20Shot%202017-08-28%20at%2022.03.11.jpg" width="75%">
+<img src="1.jpg" width="75%">
 
-### Set Implementations
-#### HashSet
-No order
+## HashSet
+정렬되지 않음
 
 ```java
 Set set = new HashSet();
@@ -22,8 +20,8 @@ set.add("name");
 set.remove("name");
 ```
 
-#### LinkedHashSet
-Insert-order or access-order
+## LinkedHashSet
+삽입순서 정렬
 
 ```java
 Set set = new LinkedHashSet();
@@ -32,8 +30,8 @@ set.add("name");
 set.remove("name");
 ```
 
-#### TreeSet
-Natural-order
+## TreeSet
+최대/최소 정렬
 
 ```java
 SortedSet set = new TreeSet();
@@ -44,7 +42,6 @@ set.last();
 set.tailSet("from");  // from ........
 set.headSet("to");    // .......... to
 ```
-
 ```java
 // NavigableSet extends SortedSet interface providing more methods
 NavigableSet<Integer> set = new TreeSet();
@@ -62,9 +59,8 @@ set.lower(2);   // less: 1
 
 > General performance for insert/delete is slower than HashSet
 
-#### EnumSet
+## EnumSet
 Special purposed set to contain enums
-
 - Natural-order
 
 ```java
@@ -74,24 +70,23 @@ for(Size size: largeSize) {
 }
 ```
 
-### Concurrent packages
+## Concurrent packages
 Keys in map never be duplicated, Set which being derived from keySet() can be Set
 
-#### CopyOnWriteArraySet
+### CopyOnWriteArraySet
 - Copy entire Set on write
   - Iteration can keep origin snapshot while other thread changes the value of it
 - Suitable as read-only collection whose size is small enough to copy rarely if change happens
 
-#### ConcurrentSkipListSet
+### ConcurrentSkipListSet
 Natural-order
-
 - read no-lock / write lock
 
-#### Collections.synchronizedSet(Set)
+### Collections.synchronizedSet(Set)
 - Simple wrap of origin set with wrap synchronized-block in all methods
 - read lock / write lock (entire table-lock, not row-lock)
 
-#### new ConcurrentHashMap<>().keySet()
+### new ConcurrentHashMap<>().keySet()
 - Set can be derived from Map
   - It could be ConcurrentHashSet
 
