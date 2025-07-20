@@ -22,7 +22,7 @@ LinkedList is used to search from start to end.
 - cons: random access
     - get
 
-### CursorableLinkedList
+## CursorableLinkedList
 subset of linkedList, but capable in iteration at the passed fromIndex
 
 ## Concurrent packages
