@@ -49,7 +49,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 - 특징
   - 알고리즘이 복잡해서 `리소스를 많이` 사용한다
   - (Compat 를 하지않고) STW 를 `짧게 2번 끊어서, 소요시간이 짧다`
-  - (Compact 를 하지않아) STW 가 짧지만, `단편화 발생시 ParallelGC` 가 수행되고 이때는 STW 가 길다
+  - (Compact 를 하지않아) STW 가 짧지만, `단편화 발생시 전체 Old 영역에 ParallelGC` 가 수행되고 이때는 STW 가 길다
 
 ### G1 GC (-XX:+UseG1GC)
 - 알고리즘
@@ -62,13 +62,12 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
   - `major GC: N개`
 - `Compaction 수행`
 - 특징
-  - 연속된 영역이 아닌 `개별 Region` 이 필요에 따라 할당 (Region 이 eden/s0-1/old 로 사용됨)
-  - eden/s0-1/old 가 young -> old 로 프로모션시 실제 객체를 이동하지 않고, young region 을 old region 으로 사용합니다
-    - 그래서 `객체의 이동이 발생하지 않는 만큼` 빠릅니다 (에이징없이 s0 -> s1 -> old 로 한번에 프로모션)
-  - 전체 영역이 아닌 `garbage region 만 GC 수행` -> collect 되는 region 에 있는 `살아있는 객체는 다른 region 으로 재할당 합니다 (== compact)`
-    - 일반적으로 재할당에 STW 가 길어집니다
-    - Region 자체가 eden/s0/s1/old 로 변경되므로 객체의 이동을 최소화
-  - 주기적으로 OR -XX:InitiatingHeapOccupancyPercent 수치도달시 Young,Old GC 가 같이 수행됩니다
+  - 연속된 메모리 공간이 아닌 `개별 Region` 에 할당
+  - Old 영역 전체를 처리하지 않고 가비지가 많은 Region 을 우선 선택 (Garbage First)하여 GC 를 수행합니다
+    - 에이징 및 GC 수행시 `살아있는 객체는 다른 region 으로 재할당 합니다 (== 이동 과정이 Compaction)`
+    - 한 번에 수집하는 Region의 수를 조절하여 STW 시간을 관리 합니다 (== Garbage First)
+      - Parallel/CMS: 전체 메모리 대상
+      - G1: 수거할 대상 선정
 
 ### ZGC (-XX:+UseZGC)
 - 알고리즘
@@ -156,6 +155,8 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 > Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조.
 
 ### ZGC
+TBD
+
 <img src="6.png" width="50%">
 
 ## Changes in JDK 8
