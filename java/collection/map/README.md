@@ -1,5 +1,4 @@
-## Map
-
+# Map
 ```
 https://docs.oracle.com/javase/tutorial/collections/implementations/map.html
 http://stackoverflow.com/questions/40471/differences-between-hashmap-and-hashtable
@@ -8,8 +7,8 @@ http://javarevisited.blogspot.kr/2013/01/difference-between-identityhashmap-and-
 http://javarevisited.blogspot.kr/2016/08/how-to-iterate-through-ConcurrentHashMap-print-all-keys-values-java.html
 ```
 
-### Map Implementations
-#### HashMap
+## Map Implementations
+### HashMap
 No order
 
 ```java
@@ -19,7 +18,7 @@ map.put("no", 1);
 map.remove("no", 1);
 ```
 
-#### LinkedHashMap
+### LinkedHashMap
 Insert-order or access-order
 
 ```java
@@ -29,7 +28,7 @@ map.put("no", 1);
 map.remove("no", 1);
 ```
 
-#### TreeMap
+### TreeMap
 Natural-order
 
 ```java
@@ -64,7 +63,7 @@ navigableMap.lowerEntry("2");   // less: 1
 
 > General performance for insert/delete is slower than HashMap
 
-#### EnumMap
+### EnumMap
 Special purposed map to contain enums
 
 - Natural-order
@@ -80,21 +79,21 @@ stateMap.put(STATE.RUNNING, "Program is running");
 stateMap.put(STATE.WAITING, "Program is waiting");
 ```
 
-#### IdentityHashMap
+### IdentityHashMap
 Use **==** operator to find entry instead of hashCode(), equals()
 
 - Better performance than hash based
 - Check reference equality than logical equality
 
-#### WeakHashMap
+### WeakHashMap
 This wraps keys as WeakReference
 
 - keys are candidates of removal on next GC
 
-### Concurrent packages
-<img src="images/Screen%20Shot%202017-08-19%20at%2002.05.18.png" width="75%">
+## Concurrent packages
+<img src="1.png" width="75%">
 
-#### ConcurrentHashMap
+### ConcurrentHashMap
 - partial row-lock on write
   - better performance than ``Collections.synchronizedMap()``
 
@@ -129,11 +128,11 @@ map.computeIfPresent("1", (k, v) -> v + 3); // 4
 map.computeIfAbsent("4", k -> Integer.valueOf(k));  // key=4, value=4
 ```
 
-#### ConcurrentSkipListMap
+### ConcurrentSkipListMap
 Natural-order
 
 - read no-lock / write lock
 
-#### Collections.synchronizedMap(new HashMap())
+### Collections.synchronizedMap(new HashMap())
 - entire table-lock on read/write
   - low performance
