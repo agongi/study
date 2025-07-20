@@ -1,13 +1,12 @@
-## Queue
-
+# Queue
 ```
 https://docs.oracle.com/javase/tutorial/collections/implementations/queue.html
 ```
 
-### Queue Implementations
+## Queue Implementations
 - PriorityQueue - an unbounded priority queue backed by a heap
 
-### Concurrent packages
+## Concurrent packages
 - ConcurrentLinkedQueue - an unbounded thread-safe FIFO queue based on linked nodes
   - ConcurrentLinkedDeque
 - LinkedBlockingQueue - an optionally bounded FIFO blocking queue backed by linked nodes
