@@ -27,7 +27,7 @@ https://www.baeldung.com/cs/b-trees-vs-btrees
 우선순위 큐는 FIFO 가 아닌, 우선순위에 따라 dequeue 됩니다.
 
 ***
-## 이진트리 (binary tree)
+## 이진트리
 각 노드가 최대 두 개의 자식 노드를 가질 수 있는 트리
 
 균형을 잡지 않으면 아래와 같이 불균형이 발생할 수 있습니다:
@@ -41,19 +41,18 @@ https://www.baeldung.com/cs/b-trees-vs-btrees
 
 <img src="5.png" width="50%">
 
-## 이진탐색트리 (binary search tree)
-- left-child-node <= parent
-- right-child-node >= parent
-- 그리고 이진트리
+## 이진탐색트리
+- 이진트리
+- 전위/중위/후위 탐색
 
 [in-order (중위순회)](https://ratsgo.github.io/data%20structure&algorithm/2017/10/22/bst) 방식으로 탐색하는데, 그때의 효율성은 아래와 같다:
 - search-key K 입력됨
 - 루트노드와 K 비교
   - K 가 더 크다면 left-subtree 는 don't care (데이터의 절반을 보지 않아도 됨)
 - right-node 와 K 비교
-  - … 해당 과정 반복하며 효율적으로 탐색
+  - ... 해당 과정 반복하며 효율적으로 탐색
 
-insert/delete 가 자주 발생할시 트리의 balance 가 무너질수 있고, 그때는 효율적이지 않게됩니다.
+insert/delete 가 자주 발생시 트리의 balance 가 무너질수 있고, 그때는 효율적이지 않게됩니다.
 
 ## 균형이진트리
 이진트리의 불균형을 개선하기 위해 삽입/삭제시 Balancing 해서 Depth 차이가 1이상으로 발생하지 않는 트리
@@ -75,10 +74,11 @@ Red-Black 트리는 다음 다섯 가지 속성을 만족하는 이진탐색트�
 균형탐색트리 (2개 이상의 노드를 가질수 있으므로 이진이 아님)
 
 - B-Tree
+  - leaf node 가 연결되지 않음
 
 <img src="6.png" width="50%">
 
 - B+Tree
-  - B-Tree 에서 left node 가 Linked 된 트리
+  - B-Tree 에서 leaf node 가 연결된 트리
 
 <img src="7.png" width="50%">
