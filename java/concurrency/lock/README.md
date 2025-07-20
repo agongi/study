@@ -82,9 +82,9 @@ private static class Counter {
   public void write() {
     lock.writeLock().lock();
     try {
-			count++;
+        count++;
     } finally {
-    lock.writeLock().unlock();
+        lock.writeLock().unlock();
     }
   }
   
@@ -100,7 +100,7 @@ private static class Counter {
 }
 ```
 
-### double-check locking
+### double-checked locking
 ```java
 /**
  * 싱글톤
