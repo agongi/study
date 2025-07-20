@@ -7,9 +7,8 @@ http://javarevisited.blogspot.kr/2013/01/difference-between-identityhashmap-and-
 http://javarevisited.blogspot.kr/2016/08/how-to-iterate-through-ConcurrentHashMap-print-all-keys-values-java.html
 ```
 
-## Map Implementations
-### HashMap
-No order
+## HashMap
+정렬되지 않음
 
 ```java
 Map<String, Integer> map = new HashMap();
@@ -18,8 +17,8 @@ map.put("no", 1);
 map.remove("no", 1);
 ```
 
-### LinkedHashMap
-Insert-order or access-order
+## LinkedHashMap
+삽입순서 정렬
 
 ```java
 Map<String, Integer> map = new LinkedHashMap();
@@ -28,8 +27,8 @@ map.put("no", 1);
 map.remove("no", 1);
 ```
 
-### TreeMap
-Natural-order
+## TreeMap
+최대/최소 정렬
 
 ```java
 SortedMap<String, Integer> sortedMap = new TreeMap<>();
@@ -63,9 +62,8 @@ navigableMap.lowerEntry("2");   // less: 1
 
 > General performance for insert/delete is slower than HashMap
 
-### EnumMap
+## EnumMap
 Special purposed map to contain enums
-
 - Natural-order
 
 ```java
@@ -73,21 +71,19 @@ public enum STATE {
     NEW, RUNNING, WAITING, FINISHED;
 }
 
-EnumMap<STATE, String> stateMap = new EnumMap<STATE, String>(STATE.class);
+EnumMap<STATE, String> stateMap = new EnumMap<>(STATE.class);
 
 stateMap.put(STATE.RUNNING, "Program is running");
 stateMap.put(STATE.WAITING, "Program is waiting");
 ```
 
-### IdentityHashMap
+## IdentityHashMap
 Use **==** operator to find entry instead of hashCode(), equals()
-
 - Better performance than hash based
 - Check reference equality than logical equality
 
-### WeakHashMap
+## WeakHashMap
 This wraps keys as WeakReference
-
 - keys are candidates of removal on next GC
 
 ## Concurrent packages
@@ -95,7 +91,7 @@ This wraps keys as WeakReference
 
 ### ConcurrentHashMap
 - partial row-lock on write
-  - better performance than ``Collections.synchronizedMap()``
+  - better performance than `Collections.synchronizedMap()`
 
 ```java
 Integer value = map.get("no2");
@@ -106,7 +102,6 @@ if (value == null) {
 // equals to
 map.putIfAbsent("no2", 2);
 ```
-
 ```java
 Integer value = map.get("1");
 if (value == null) {
@@ -115,7 +110,6 @@ if (value == null) {
 // equals to (key, defaultValue)
 map.getOrDefault("1", 1);
 ```
-
 ```java
 ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
 
@@ -130,7 +124,6 @@ map.computeIfAbsent("4", k -> Integer.valueOf(k));  // key=4, value=4
 
 ### ConcurrentSkipListMap
 Natural-order
-
 - read no-lock / write lock
 
 ### Collections.synchronizedMap(new HashMap())
