@@ -17,7 +17,7 @@ https://kotlinworld.com/307?category=914495
 
 - 초기에 인터프리터를 사용해서 최적화 없이 코드를 실행
 - 메서드의 호출 횟수를 추적하여 C1 and/or C2 컴파일러로 컴파일후 코드캐시에 저장
-  - C1 compiler (== -client)
+  - C1 compiler
     - `-client` 컴파일러
     - 코드 최적화는 덜하지만 즉시 시작되는 속도는 빠름
   - C2 compiler
@@ -43,5 +43,6 @@ JIT 컴파일러와 반대되는 개념으로 빌드 시점에 미리 컴파일�
 | **사용 예시**             | 서버 백엔드, 웹 애플리케이션                          | CLI 앱, 서버리스 함수, 빠른 시작이 필요한 서비스         |
 
 ## GraalVM
-Hotspot VM 의 C2-Compiler (C/C++ 로 작성됨) 를 Java 로 작성된 Graal-Compiler 로 대체한 것입니다.
+GraalVM is a Java Development Kit (JDK) written in Java. (기존 JDK 는 C/C++ 로 작성)
+
 > That simplifies maintenance and helps us develop and deliver new optimizations much faster
