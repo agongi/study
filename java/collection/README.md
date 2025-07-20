@@ -6,7 +6,7 @@ http://tutorials.jenkov.com/java-collections/index.html
 
 <img src="1.png" width="75%">
 
-## Read-Only Collections
+## 읽기 전용
 ### java.util.Collections
 - List<E> list = Collections.unmodifiableList(new ArrayList());
 - Set<E> set = Collections.unmodifiableSet(new HashSet());
@@ -18,11 +18,11 @@ http://tutorials.jenkov.com/java-collections/index.html
 - ImmutableMap#of
 
 ### java.util
+- List.of
 - Set.of
 - Map.of
-- List.of
 
-## Concurrency
+### 동시성 제어
 - List<E> list = Collections.synchronizedList(new ArrayList());
 - Set<E> set = Collections.synchronizedSet(new HashSet());
   - Set<E> set = new ConcurrentHashMap<>().keySet();
@@ -34,7 +34,6 @@ http://tutorials.jenkov.com/java-collections/index.html
 
 - ArrayList
 - LinkedList
-  - CursorableLinkedList
 - CopyOnWriteArrayList
 
 ## [Set](set)
@@ -71,7 +70,7 @@ http://tutorials.jenkov.com/java-collections/index.html
 > Do not use Vector or HashTable those are introduced in early JDK and internally synchronized instead of concurrent package
 
 ## Stack
-FILO
+LIFO
 
 - Stack
 
