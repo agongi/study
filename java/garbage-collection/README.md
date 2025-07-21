@@ -165,15 +165,20 @@ TBD
   - PermGen영역을 스캔 하기 위해 소모되었던 시간이 감소되어 GC 성능이 향상 되었다.
 
 ### Before JDK 8
-`eden / survive0,1 / old / Permanent / native`
+`young(eden/survive0,1) / old / Permanent (native)`
 
 <img src="7.png" width="50%">
 
 ### After JDK 8
-`eden / survive0,1 / old / Metaspace (native)`
+`young(eden/survive0,1) / old / Metaspace (native)`
 
 <img src="8.png" width="50%">
 
-기존 Permanent 에 저장되던 `Static/String 으로 정의된 변수/상수`는 Heap 으로 옮겨져 GC 대상이 되었습니다.
-
-Platform Thread 가 생성되면 할당되는 1MB 정도의 Stack 영역은 Native Memory 영역에 할당됩니다 -> 이 제약을 극복하는 [Virtual Thread](../virtual-thread) 가 JDK 21 에서 추가되었습니다.
+- Native Memory
+  - 운영체제(OS)가 java 라는 프로세스에 할당한 전체 메모리 공간
+  - Heap, JIT CodeCache, Direct buffer, Metaspace ...
+  - OS 가 프로세스에 메모리 할당시 malloc 을 사용하지만, 한번 할당후 적극적으로 회수하지 않아 단편화가 발생합니다. 그로인해 RSS 가 지속적으로 증가하는 현상이 있어 [jemalloc](../jemalloc) 을 지정할 수 있습니다
+  - Platform Thread 생성시 할당되는 1MB 정도의 Stack 영역은 Native Memory 에 고정사이즈로 할당됩니다. 해당 비효율을 극복하는 [Virtual Thread](../virtual-thread) 가 JDK 21 에서 추가되었습니다.
+- Metaspace
+  - OS 가 할당한 Native Memory 에서 클래스 메타데이터를 저장하는 공간
+  - 직접적인 GC 의 대상이 아닙니다 (클래스가 언로드되면 회수)
