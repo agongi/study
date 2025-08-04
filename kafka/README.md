@@ -21,7 +21,7 @@ https://bysssss.tistory.com/46
 - 페이지 캐시는 OS 가 관리하는 영역이므로 카프카가 재시작 되더라도 유지됩니다
   - 물론 OS 가 재시작되면 페이지 캐시도 초기화 됩니다..
 
-### Page cache
+### (읽기/쓰기) Page cache
 카프카는 모든 I/O 에 OS 레벨의 page cache 를 활용합니다. (별도로 카프카 내부에서의 캐싱 없음)
 
 <img src='1-1.png' width='75%'>
@@ -33,7 +33,7 @@ https://docs.confluent.io/platform/current/kafka/deployment.html#memory 의 가�
 
 해야합니다.
 
-### Zero copy (== Direct memory or DMA)
+### (전송) Zero copy (== Direct memory or DMA)
 `디스크 -> 커널 버퍼 -> NIC`로 바로 전달해서 네트워 구간을 최적화 합니다.
 
 >### 기존 (Non-Zero Copy) 방식
@@ -154,7 +154,7 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
   - 카프카 메타데이터를 브로커를 통해 조회 & 저장 (Zookeeper 에 저장)
   - `레코드를 전송할 때 직접 지정`하거나, 파티셔너를 통해 결정
   - `이를 통해 브로커의 연산 부담을 줄임`
-- Consumer Group
+- Consumer
   - Consumer Group 중 하나를 Coordinator 로 선정
   - (리밸런싱 발생시) `Coordinator 가 파티션 할당 & 통보후 Acks 받음`
   - `이를 통해 브로커의 연산 부담을 줄임`
@@ -311,7 +311,48 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 - Consumer
   - read_committed: 커밋된 메세지만 가져옵니다
   - read_uncommitted: 커밋되지 않은 메세지도 가져옵니다
-- Producer -> Consumer 에서 `메세지 발행 > __consumer_offsets 커밋`하는 전체 흐름을 Atomic 하게 처리해서 트랜잭션 (exactly once) 보장합니다
+  - 그후 Consumer 에서 Producer#sendOffsetsToTransaction 를 호출합니다 (Consumer#commitSync 가 아님)
+  - 그후 Consumer 에서 Producer#commitTransaction 을 호출합니다
+    - 메세지를 발행하는 주체인 Producer 를 통해서만 send, commit 을 일원화해서 Atomic 보장 
+- Producer -> Consumer 에서 `메세지 발행 > __consumer_offsets 커밋`하는 전체 흐름을 `Producer 만을 이용해서` Atomic 하게 처리해서 트랜잭션을 보장합니다
+
+```java
+/**
+ * Producer
+ */
+// 1. (Producer) 트랜잭션 초기화
+producer.initTransactions();
+// 2. 트랜잭션 시작
+producer.beginTransaction();
+
+/**
+ * Consumer
+ * Consumer 의 로직에서 Producer 를 DI 받아 직접 offset 관련 동작을 제어
+ */
+while (true) {
+    // 3. (Consumer) 메시지 가져오기 
+    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(Long.MAX_VALUE));
+
+    try {
+        // 4. 메시지 처리
+        for (ConsumerRecord<String, String> record : records) {
+            System.out.printf("Consumed message: key = %s, value = %s, partition = %d, offset = %d%n",
+                record.key(), record.value(), record.partition(), record.offset());
+        }
+
+        // 6. 오프셋 커밋 정보 전송 (가장 중요)
+        producer.sendOffsetsToTransaction(getOffsetsToCommit(consumer), consumer.groupMetadata());
+        // 7. 트랜잭션 최종 커밋
+        producer.commitTransaction();
+
+    } catch (Exception e) {
+        // 8. 예외 발생 시 트랜잭션 롤백
+        producer.abortTransaction();
+    }
+}
+```
+
+> 단 Consumer 에서 Producer 를 가져올수 있을때만 유효합니다. nifi 처럼 이기종 kafka 를 relay 할때는 좀더 까다로움 (그럴때는 트랜잭션을 안쓰는게 낫다고 봄)
 
 ### 가용성 vs 내구성
 `unclean.leader.election.enable` 옵션을 통해 결정됩니다:
