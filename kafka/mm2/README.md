@@ -56,4 +56,3 @@ source 와 target cluster 의 `__consumer_offsets` 은 다릅니다. (source-off
   - Active - Active (양반향) 모드
   - 장애시 producer: 50% 실패
   - 장애시 consumer: 50% 실패
-
