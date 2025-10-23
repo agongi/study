@@ -5,7 +5,7 @@ https://mangkyu.tistory.com/308
 ```
 
 # JDK 18
-# [Deprecate Finalization for Removal 그리고 finally](https://junhkang.com/posts/80/)
+## [Deprecate Finalization for Removal 그리고 finally](https://junhkang.com/posts/80/)
 https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html#jls-12.6 의 명세를 보면
 - Before the storage for an object is `reclaimed by the garbage collector`, the `Java Virtual Machine will invoke the finalizer` of that object.
   - The Java programming language `does not specify how soon a finalizer will be invoked`, except to say that it will happen before the storage for the object is reused. (호출되는 타이밍을 보장할 수 없음)
