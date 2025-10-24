@@ -49,7 +49,7 @@ Native Memory 에 JIT 영역이 있으니 [JIT Compiler 이슈](https://velog.io
 ## JIT Compiler
 ```
 nterpreter → C1(no profiling) → C1(with profiling) → C2
-    0               1                    2-3            4
+    0               1                    2-3         4
 ```
 ```
 # C1 Compiler 사용선언 (C2 는 -XX:TieredStopAtLevel=4 사용)
