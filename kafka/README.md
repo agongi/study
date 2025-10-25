@@ -124,30 +124,53 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
 
 <img src='2.png' width='75%'>
 
-- 목적: (브로커) 장애시 해당 브로커에 속하던 `파티션 리더/팔로워 선출`
-  - 각 broker 는 controller 와 주기적으로 통신해야 합니다 
-  - `replica.lag.time.max.ms (10000ms)`
-- 플로우
-  - leader failure
-    - 주키퍼는 leader 장애 감지시, zookeeper 에 상태 업데이트 합니다 (znode 제거)
-    - zookeeper 는 metadata 갱신 > watching 하고 있던 controller 는 znode 변경 감지
-    - controller broker 는 나머지 broker 에 전파합니다
-  - follower failure
-    - 파티션 리더는 heartbeat and/or fetch 요청이 오지 않는 follower 를 zookeeper 에 상태 업데이트 합니다 (znode 제거)
-    - zookeeper 는 metadata 갱신 > watching 하고 있던 controller 는 znode 변경 감지
-    - controller broker 는 나머지 broker 에 전파합니다
+목적: `(브로커) 장애시` 해당 브로커에 속하던 `파티션 리더/팔로워 선출`
+- 모든 브로커는 zookeeper 와 heartbeat 을 주고받습니다 (혹은 kraft 를 사용함으로써 브로커끼리 직접 통신) 
+- `replica.lag.time.max.ms (10000ms)`
+
+흐름은 아래와 같습니다:
+- leader failure
+  - 주키퍼는 leader 장애 감지시, zookeeper 에 상태 업데이트 합니다 (znode 제거)
+  - zookeeper 는 metadata 갱신 > watching 하고 있던 controller 는 znode 변경 감지
+  - controller broker 는 나머지 broker 에 전파합니다
+    - kraft 를 사용한다면 zookeeper 과정이 생략되고, controller 가 각 브로커와 kraft 로 직접 heartbeat 통신하며 감지
+- follower failure
+  - 파티션 리더는 heartbeat and/or fetch 요청이 오지 않는 follower 를 zookeeper 에 상태 업데이트 합니다 (znode 제거)
+  - zookeeper 는 metadata 갱신 > watching 하고 있던 controller 는 znode 변경 감지
+  - controller broker 는 나머지 broker 에 전파합니다
+    - kraft 를 사용한다면 zookeeper 과정이 생략되고, controller 가 각 브로커와 kraft 로 직접 heartbeat 통신하며 감지
+
+### [Cruise Control](https://github.com/linkedin/cruise-control)
+Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 (Broker Skew)` 상태에 빠지게 됩니다.
+
+- 상황: 장애가 발생한 브로커 A가 가지고 있던 리더 파티션이, ISR에 있던 다른 브로커(B, C) 에게 몰리게 됩니다.
+- 결과: 브로커 B, C는 갑자기 늘어난 리더 역할 때문에 네트워크 트래픽, CPU 사용량이 급증하여 과부하가 됩니다. 반면 다른 브로커들은 상대적으로 한가한 상태가 됩니다.
+
+이때부터 Cruise Control 이 동작 합니다.
+
+1. 불균형 상태 인지
+   - Cruise Control은 주기적으로 클러스터의 상태(브로커별 리더 수, 파티션 수, 네트워크 I/O, CPU 사용량 등)를 모니터링합니다
+   - 장애 복구 후 특정 브로커에 리더가 몰려있는 불균형 상태가 사용자가 설정한 '최적화 목표(Optimization Goals)'를 위반했음을 감지합니다
+2. 최적화 계획 생성
+   - Cruise Control의 Analyzer는 현재의 불균형 상태를 해결하고, 모든 브로커가 다시 균일한 부하를 갖도록 파티션을 재배치하는 실행계획을 세웁니다
+   - 이 계획에는 "A 파티션의 리더를 브로커 B에서 D로 옮겨라", "B 파티션의 복제본을 브로커 C에서 E로 옮겨라" 와 같은 구체적인 액션들이 포함됩니다
+3. 계획 실행 (Rebalancing Execution)
+   - 자동 실행: `self.healing.enabled` 모드로 설정하면, 위에서 생성된 계획을 자동으로 실행하여 클러스터를 지속적으로 균형 잡힌 상태로 되돌립니다
+     - 하지만 지속적인 리밸런싱 부하가 발생하므로 보통 수동실행 합니다
+   - 수동 실행: 일반적으로는 관리자가 Cruise Control이 제안한 계획을 검토하고, 안전하다고 판단되면 API를 통해 실행 명령을 내립니다
 
 ### Coordinator
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
-- 목적: (컨슈머) 장애시 해당 파티션을 처리하는 `컨슈머 선정` -> 리밸런싱
-  - 개별 컨슈머들은 기본적으로 heartbeat 을 보내고 poll, offset commit 등 주기적으로 통신해야 합니다
-  - `max.poll.interval.ms` (default: 5min), `heartbeat.interval.ms` (default: 3sec)
-- [플로우](https://velog.io/@hyun6ik/Apache-Kafka-Consumer-Rebalance)
-  - coordinator broker 는 (컨슈머그룹 리밸런싱때) joinGroup 을 먼저한 consumer 를 group leader 로 선정합니다
-  - leader consumer 는 파티션 할당정보를 coordinator 에게 전달 (== `consumer 가 파티션 할당 주체`)
-  - coordinator 는 zookeeper 에 파티션 할당정보 저장후 group leader 에게 ack 합니다 (== confirmed)
-  - 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
+목적: `(컨슈머) 장애시` 해당 파티션을 처리하는 `컨슈머 선정/리밸런싱` 
+- 개별 컨슈머들은 기본적으로 heartbeat 을 보내고 poll, offset commit 등 주기적으로 통신해야 합니다
+- `max.poll.interval.ms` (default: 5min), `heartbeat.interval.ms` (default: 3sec)
+
+[흐름](https://velog.io/@hyun6ik/Apache-Kafka-Consumer-Rebalance)은 아래와 같습니다:
+- coordinator broker 는 (컨슈머그룹 리밸런싱때) joinGroup 을 먼저한 consumer 를 group leader 로 선정합니다
+- leader consumer 는 파티션 할당정보를 coordinator 에게 전달 (== `consumer 가 파티션 할당 주체`)
+- coordinator 는 zookeeper 에 파티션 할당정보 저장후 group leader 에게 ack 합니다 (== confirmed)
+- 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
 
 ### 파티션 판단 주체
 - Producer
