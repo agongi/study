@@ -77,8 +77,9 @@ The free() call marks a chunk of memory as "free to be reused" by the applicatio
 but from the operating system's point of view, the memory still "belongs" to the application.
 ```
 
-Logstash 처럼 filebeat 를 통해 모든 서버의 access.log 를 수신/호출 (opensearch) 하는 인프라는 필연적으로 높은 트래픽을 처리합니다.
-특히 Native Memory 를 적극적으로 사용하는 Netty 는 내부적으로 성능을 위해 ByteBuffer.allocateDirect(); 를 사용하므로 DirectBuffer 가 누적됩니다. 
+Logstash 처럼 filebeat 를 통해 모든 서버의 access.log 를 수신/호출 (opensearch) 하는 인프라는 필연적으로 높은 트래픽을 처리합니다. (Logstash 는 내부적으로 Netty 사용)
+
+특히 Native Memory 를 적극적으로 사용하는 Netty 는 성능을 위해 ByteBuffer.allocateDirect(); 를 사용하므로 DirectBuffer 가 누적됩니다. 
 
 > -Dio.netty.noPreferDirect=true 로도 해결되지 않음
 
@@ -101,7 +102,7 @@ Native Memory 파편화를 해결하는 방법은 크게 2가지 입니다:
   - tcmalloc
   - ptmalloc
 
-수동 evict VM Options 을 주기보다 `회수로 마킹만 하지않고 즉시 회수하는 메모리 할당자`를 사용하는 방향을 선택했고, 그중에서 redis 및 사내 mysql 에서 선택한 jemalloc 을 적용했습니다:
+주기적으로 메모리를 정리하는 VM Options 을 설정하기 보다 `회수로 마킹만 하지않고 즉시 회수하는 메모리 할당자`를 사용하는 방향을 선택했고, 그중에서 redis 및 사내 mysql 에서 선택한 jemalloc 을 적용했습니다:
 ```dockerfile
 yum install -y jemalloc
 
