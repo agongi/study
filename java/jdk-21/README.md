@@ -64,7 +64,3 @@ private String getAnimalSound(Animal animal) {
 
 - LinkedHashMap (맵의 KEY 가 입력순서)
 <img width="75%" alt="image" src="6.png">
-
-# JDK 22 ~ (or JDK 21 Preview)
-[Unnamed Patterns and Variables (Preview)](https://www.freeblog-web.info/post/74?blogId=1)
-[Unnamed Classes and Instance Main Methods (Preview)](https://www.freeblog-web.info/post/74?blogId=1)
