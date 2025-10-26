@@ -254,7 +254,7 @@ kubectl get events --sort-by=.metadata.creationTimestamp
 kubectl describe pod ${POD_NAME}
 
 # stdout, stderr 로그 확인 
-kubectl logs ${POD_NAME}
+kubectl logs ${POD_NAME} -p
 
 # pod 접속
 kubectl exec -it ${POD_NAME} bash
