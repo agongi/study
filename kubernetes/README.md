@@ -238,3 +238,24 @@ spec:
   hostPath:                                                     # ohstPath 볼륨 (minikube)
     path: /tmp/mongodb
 ```
+
+#### [StorageClass](https://velog.io/@rockwellvinca/kubernetes-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80%ED%81%B4%EB%9E%98%EC%8A%A4StorageClass%EC%99%80-PV%EC%99%80-PVC%EC%9D%98-%EC%83%9D%EB%AA%85%EC%A3%BC%EA%B8%B0)
+StorageClass 를 사용하면 PVC 로 사용자가 요청할때, StorageClass 을 통해 PV 를 생성할 수 있습니다. (기존에는 PV 를 미리 만들어 놔야함)
+
+<img src='5.png' width="75%"/>
+
+## 트러블 슈팅
+### Pod이 CrashLoopBackOff 상태일 때 분석하는 방법
+```bash
+# 이벤트 시간순서대로 확인
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+# pod 상세상태 확인
+kubectl describe pod ${POD_NAME}
+
+# stdout, stderr 로그 확인 
+kubectl logs ${POD_NAME}
+
+# pod 접속
+kubectl exec -it ${POD_NAME} bash
+```
