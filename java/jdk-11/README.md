@@ -1,5 +1,4 @@
-## JDK 11
-
+# [JDK 8 -> 11](https://codingdreamtree.tistory.com/97)
 ```
 https://futurecreator.github.io/2018/09/29/java-11-released/
 https://meetup.toast.com/posts/171
@@ -9,12 +8,7 @@ https://www.baeldung.com/java-reflection-change-annotation-params
 https://www.baeldung.com/jvm-epsilon-gc-garbage-collector
 ```
 
-JDK 11 http://openjdk.java.net/projects/jdk/11/
-
-***
-
 ## [Local-Variable Syntax for Lambda Parameters](https://openjdk.java.net/jeps/323)
-
 lambda 표현식에서도 var 사용이 가능해짐. 
 
 원래 lambda 에서는 타입추론이 되었는데, var 를 통해 명시적으로 선언도 가능해진것
@@ -42,7 +36,6 @@ Stream 에서 타입지정을 잘안하지만, 스펙이 들어간 목적은:
 정리하면 람다에서도 표준스펙에 맞춰서 var 사용 가능하도록 지원한것.
 
 ## [HTTP Client (Standard)](https://openjdk.java.net/jeps/321)
-
 JDK 9 에서 추가된 HTTP 패키지가 정식으로 올라가고, 약간의 사용법이 변경되었습니다.
 
 - java.incubator.http -> `java.net.http`
@@ -90,7 +83,6 @@ this.response = new HttpResponseImpl<>(r.request(), r, this.response, body, exch
 ```
 
 ## [Launch Single-File Source-Code Programs](http://openjdk.java.net/jeps/330)
-
 1개의 파일에서 main 이 있다면 빠르게 실행가능한 모드를 제공. 즉 기존의
 
 - compile (java -> class)
@@ -119,7 +111,6 @@ Hello, World! 1 2 3
 ```
 
 ### [Nest-Based Access Control](https://openjdk.java.net/jeps/181)
-
 Nested-Class 관계에서 아래는 동작합니다.
 
 ```java
@@ -177,7 +168,6 @@ public class Outer {
 브릿지메서드로 우회한 것으로 원칙적으론 private field, method 에 대한 접근은 **본인만 가능합니다.**
 
 [JVMS 5.4.4 - JDK 8](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.4.4)
-
 ```java
 A field or method R is accessible to a class or interface D if and only if any of the following is true:
 
@@ -187,7 +177,6 @@ R is private and is declared in D. // R 을 선언한 D 만 접근이 가능
 Nest-Based Access Control 은 스펙적으로 `nested 관계는 private 접근이 가능`하다고 정의한 것입니다.
 
 [JVMS 5.4.4 - JDK 11](https://docs.oracle.com/javase/specs/jvms/se11/html/jvms-5.html#jvms-5.4.4)
-
 ```java
 A field or method R is accessible to a class or interface D if and only if any of the following is true:
 
@@ -249,9 +238,9 @@ public void nestmateTest() {
 ## 더 이상의 자세한 설명은 생략한다.
 
 ### [Dynamic Class-File Constants](http://openjdk.java.net/jeps/309)
+TBD
 
 ### [Epsilon: A No-Op Garbage Collector](http://openjdk.java.net/jeps/318)
-
 Garbage 를 수집하지않는 No-Op GC 를 사용가능
 
 > -XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC
@@ -264,13 +253,11 @@ Garbage 를 수집하지않는 No-Op GC 를 사용가능
 - 그래서 명시적으로 (아무런 동작을 하지 않는) No-Op GC 를 사용하도록 선언
 
 ### [Unicode 10](http://openjdk.java.net/jeps/327)
-
 Unicode API [10.0.0 스펙](http://www.unicode.org/standard/standard.html) 적용
 
 http://unicode.org/versions/Unicode10.0.0/
 
 ### [Flight Recorder](http://openjdk.java.net/jeps/328)
-
 JVM metrics 수집하는 tool 이고, 유료 -> 무료로 전환됨.
 
 ```bash
@@ -284,9 +271,7 @@ $ jcmd <pid> JFR.stop
 ```
 
 ### [Transport Layer Security (TLS) 1.3](http://openjdk.java.net/jeps/332)
-
 TLS 1.3 지원
 
 ### [A Scalable Low-Latency Garbage Collector (Experimental)](https://openjdk.java.net/jeps/333)
-
 새로운 ZGC 가 탄생함. 동작원리는 ... 나중에 좀 어느정도 궤도에 올라가면 알아보자
