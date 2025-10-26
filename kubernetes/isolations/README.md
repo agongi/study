@@ -3,22 +3,38 @@
 https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d
 ```
 
-container 는 격리된 환경에서 실행되는 `process` 입니다.
+## Docker vs VM
+Docker 는 `container engine` 을 통해 동일 OS 위에서 격리된 환경으로 (cgroup, namespace) 실행됩니다.
 
-동일 Node 에서 실행되는 Pod (Container) 의 적절한 격리/제한을 통해 안정적으로 운영할 수 있습니다:
+> rancher desktop 등으로 생각하면 됨
+
+VM 은 `hypervisor`를 통해 하드웨어 레벨에서부터 구분되어 개별 OS 를 실행됩니다. (os)
+
+> 기존 virtualbox 생각하면 됨
+
+| 항목 | VM (Virtual Machine) | Docker (Container) |
+| :--- | :--- | :--- |
+| **구조** | 하드웨어 위에 **Hypervisor** 실행, 그 위에 **Guest OS** 설치 | Host OS 위에 **Container Engine** 실행, **OS 커널 공유** |
+| **격리 수준** | **완전한 격리** (OS 레벨) | **프로세스 수준 격리** (Namespaces, Cgroups) |
+| **오버헤드** | **높음** (각 VM마다 OS 전체 포함) | **낮음** (App 실행에 필요한 라이브러리/바이너리만 포함) |
+| **부팅 속도** | **느림** (수 분) | **빠름** (수 초) |
+| **리소스 사용량** | **많음** (GB 단위) | **적음** (MB 단위) |
+| **배포** | OS를 포함한 이미지 전체를 배포 | App만 이미지로 만들어 배포 |
+
+격리수준은 VM 이 높지만, OS 를 개별로 포함하므로 빠르고/가볍게 실행되지 않습니다. 그래서 Docker 을 MSA 에서 사용합니다.
 
 ## cgroup
-(사용할 수 있는) 리소스 격리
+`사용할 수 있는` 리소스 격리
 - cpu
 - memory
-- netowrk
+- network
 - disk
 
 ## namespace
-(접근할 수 있는) 커널 리소스 격리
+`접근할 수 있는` 리소스 격리
 - pid
 - net (네트워크)
-- mnt (파일시스템)
+- mount (파일시스템)
 - user (root 로 보이지만 Node 의 root 는 아님)
 
 ## chroot
