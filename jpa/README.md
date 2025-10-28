@@ -198,11 +198,35 @@ public abstract class AuditEntity<ID extends Serializable> {
 ```
 
 ### 엔티티 그래프
-.. 복잡해서 안써봄
+N+1 을 해결하기 위해선 fetch join 이 필요합니다.
+
+JPQL 을 직접 작성하거나 `어노테이션 방식의 @EntityGraph` 로 해결합니다
+
+```java
+// XYZRepository
+public interface XYZRepository {
+    // spring-data-jpa method 에서 fetch join 대상을 @EntityGraph 지정 
+    @EntityGraph(attributePaths = {"team"})
+    Collection<Person> findByName(String name);
+
+    // @Query JPQL 작성
+    @Query("SELECT p FROM Person p JOIN FETCH p.team WHERE p.name = :name")
+    Collection<Person> findByName(@Param("name") String name);
+    
+    // 직접 JPQL 작성
+    default Collection<Person> findByTeamName(String teamName) {
+        return Optional.ofNullable(selectFrom())
+            .leftJoin(q.team, QTeam.team).fetchJoin()
+            .where(q.teamName.eq(teamName))
+            .distinct()
+            .fetch();
+    }
+}
+```
 
 ## 성능 최적화
 ### N+1
-지연로딩 + (필요한 경우에만) 페치조인으로
+지연로딩 + (필요한 경우) fetch join 사용
 
 ### Read-Only Transactional
 - 메모리 최적화 `(스냅샷 미저장)`
