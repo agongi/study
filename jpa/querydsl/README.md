@@ -23,7 +23,7 @@ https://www.baeldung.com/intro-to-querydsl
   - JPAQueryFactory
   - HibernateQueryFactory
 
-## Factory 를 사용한 방식
+## CRUD
 ### R (Select)
 ```java
 JPAQueryFactory query = new JPAQueryFactory(em);
@@ -49,31 +49,6 @@ queryFactory.update(user)
 queryFactory.delete(user)
   .where(user.login.eq("David"))
   .execute();
-```
-
-## Factory 를 사용하지 않는 방식
-### R (Select)
-```java
-JPAQuery query = new JPAQuery(em);
-QCustomer customer = QCustomer.customer;
-
-Customer bob = query.from(customer)
-  .where(customer.firstName.eq("Bob"))
-  .uniqueResult(customer);
-```
-
-### CUD
-```java
-// update
-new JPAUpdateClause(em, QMember.member)
-  .set(QMember.member.name, "newName")
-  .where(QMember.member.id.eq(id));
-```
-
-```java
-// delete
-new JPADeleteClause(em, QMember.member)
-  .where(QMember.member.id.eq(id));
 ```
 
 ## [Projections](https://icarus8050.tistory.com/5)
@@ -180,41 +155,36 @@ BooleanExpression 이용해서 Criteria -> toArray expressions 패턴
 Hibernate 5.1 이상부터 가능
 
 ## CUD Bulk
-1. spring-data 를 사용할 것인가?
-   1. @Modifying(clearAutomatically = true) @Query("update ... ") 
-   2. 끝
-2. 아니요.
-   1. 그렇다면 영속성이 필요한가?
-      1. QueryFactory and/or JPAUpdateClause
-   2. 아니요.
-      1. JDBCTemplate 직접사용
+### spring data JPA
+```java
+@Modifying(clearAutomatically = true)
+@Query("UPDATE user SET name = :name WHERE id = :id")
+@Transactional
+void update(@Param("id") String id);
 
-## Dirty Check
-
-영속성에서 최초조회의 스냅샷을 flush 시점에 확인하고, 변경이 있다면 entity (모든 필드) update 쿼리가 날아감
-
-> 스냅샷 비교과정은 Objects#equals 로 비교하므로 무거운 작업이다.
+@Modifying(clearAutomatically = true)
+@Transactional
+default update(@Param("id") String id) {
+    queryFactory.update(user)
+        .set(user.name, "newName")
+        .where(user.id.eq(id))
+        .execute();
+}
+```
 
 ### @DynamicUpdate
 전체필드를 update query 에 실어서 보냄. payload 가 크므로 부하가큼
 
 이런 경우변경 필드만 업데이트 되도록, 어노테이션을 타입에 선언하면됨
 
-### @Transactional(ReadOnly)
-readOnly tx 로 마킹되었다면, em.flush 가 발생하지않음
-
-- em#flush 시 수행하는 dirty-check 생략
-- 그에 따른 성능향상
-
 ## [동작원리 (영속성)](https://github.com/cheese10yun/blog-sample/blob/master/query-dsl/docs/jpa-persistence-context.md)
-
-### EntityManager 직접사용 or Spring Data
+### EntityManager
 - 영속성 컨텍스트 조회
   - 없으면, DB 조회
   - 영속성 컨텍스트에 저장
 - 결과 리턴
 
-### JPQL (즉 JQPL 을 생성하는 QueryDSL)
+### JPQL (JQPL 을 생성하는 QueryDSL 및 spring data jpa)
 - DB 조회
 - 영속성 컨텍스트에 저장
   - 이미 동일한 식별자 (@Id) 가 있다면 DB 조회 결과는 Discard

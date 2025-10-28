@@ -2,9 +2,10 @@
 ```
 https://www.baeldung.com/jpa-hibernate-persistence-context
 ```
-
 ### Blog
+- [JPA 영속성 컨텍스트 주의 점](https://github.com/cheese10yun/blog-sample/blob/master/query-dsl/docs/jpa-persistence-context.md)
 - [Open_Session_In_View_Pattern.pdf](Open_Session_In_View_Pattern.pdf)
+
 ***
 | Hibernate       | JPA                 |
 |-----------------|---------------------|
