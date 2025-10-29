@@ -34,6 +34,7 @@ default update(@Param("id") String id) {
   - clearAutomatically: JPQL (or SQL) 실행후 영속성 clear 유무
 
 ## R (== 조회)
+조회시 같이 사용할수 있는 @Lock, @QueryHint 를 설명합니다:
 ```java
 @Lock(LockModeType.PESSIMISTIC_WRITE)
 @Query("SELECT m.id FROM Member m WHERE m.id = :id")
@@ -45,7 +46,7 @@ default update(@Param("id") String id) {
 public Long findById(Long id);
 ```
 
-## @Lock
+### @Lock
 - (낙관적락) **NONE**
   - 엔티티 수정시 버전을 체크합니다 (@Version 사용시 기본적으로 적용되므로 명시하지 않아도 됨)
   - (목적) 수정시 다른 트랜잭션에 의해 변경되지 않음을 보장
@@ -62,7 +63,7 @@ public Long findById(Long id);
 - (비관적락) PESSIMISTIC_FORCE_INCREMENT
   - (동작) select .. for update + version++
 
-## QueryHint
+### QueryHint
 @Lock 사용시 timeout 을 지정해야 합니다. (select .. for share/update `nowait` 처럼 nowait 쿼리가 아니므로 무한히 대기함)
 
 - @QueryHint(name = "javax.persistence.lock.timeout", value = "5000")
