@@ -31,8 +31,8 @@ EntityManager 는 현재의 DB 커넥션에 유효합니다. 즉 현재 실행�
 
 ### 변경감지
 JPA는 엔티티를 영속성 컨텍스트에 보관할 때, 최초 상태 `스냅샷` 을 저장하고 플러시 시점에 스냅샷과 비교해서 변경된 엔티티를 감지 합니다:
-- 현재 엔티티와 스냅샷을 비교해서 변경된 엔티티를 찾은후
-- Dirty Check 된 엔티티의 Update SQL 를 생성합니다
+- 현재 엔티티와 스냅샷을 비교해서 변경된 필드 선별후
+- Update SQL 를 생성합니다
   - 기본적으로 Update SQL 은 모든 필드를 업데이트 하는 동일 SQL 을 사용합니다 (쿼리 재사용하여 DB 성능 향상)
   - 변경된 필드만 포함하는 SQL 을 동적으로 생성하려면 `@DynamicUpdate/@DynamicInsert` 을 Entity 에 선언
 - Flush (DB 에 SQL 전달해서 반영) & Commit
@@ -40,11 +40,10 @@ JPA는 엔티티를 영속성 컨텍스트에 보관할 때, 최초 상태 `스�
 ### Flush
 - em#flush 직접 호출
 - 트랜잭션 커밋 시 자동 호출
-- `JPQL 쿼리 실행 시` 자동 호출
-  - JPQL 쿼리를 생성하는 `QueryDSL 사용`해도 자동 호출 됩니다
-  - JPQL 은 DB 를 직접 조회하므로 현재 영속성의 값과 다른 데이터를 조회 할 수 있습니다 (영속성의 1차캐시로 인한 쓰기지연)
-  - 그래서 `현재까지의 영속성 내용이 JPQL DB 직접 조회에 반영 하기 위해` 쿼리 수행전 flush 를 수행합니다 (flushAutomatically=true)
-  - 만약 JPQL 로 DB 를 직접 수정하는 내용이 있다면 -> 영속성에는 해당 내용이 반영 전 입니다. 그래서 clearAutomatically=true 를 설정해서 이후 영속성에 재조회해서 반영 되도록 선언 합니다
+- `JPQL 쿼리 실행 시` 자동 호출 (querydsl 포함)
+  - JPQL 은 영속성이 아닌 DB 를 직접 조회하므로 현재 영속성의 값과 다른 데이터가 조회될 수 있습니다 (영속성은 쓰기지연으로 1차캐싱)
+  - `현재까지의 영속성 내용을 JPQL 쿼리결과에 반영 하기 위해` 쿼리 수행전 flush 를 수행합니다 (flushAutomatically=true)
+  - 만약 JPQL 로 수정된 내용이 있다면 -> JPQL 의 결과는 영속성에 반영되지 않으므로 데이터 일관성이 깨집니다. 그래서 명시적으로 clearAutomatically=true 를 설언해서 영속성을 clear 해야 합니다. (그러면 다시 재조회 발생해서 갱신된 내용이 반영됨)
   
 ```java
 @Modifying(clearAutomatically = true, flushAutomatically = true)
@@ -67,10 +66,10 @@ OSIV 는 Session (== Entity Manager) 의 범위를 View 까지 확대하여 지�
 
 ### 스프링 OSIV
 - 트랜잭션 범위
-  - [FROM/TO] @Transactional
+  - [FROM] @Transactional -> [FROM] @Transactional  
   - DBCP 커넥션을 획득/반환은 트랜잭션 시작/종료 시점 입니다
 - 영속성 범위
-  - [FROM] @Transactional [TO] Filter/Interceptor
+  - [FROM] @Transactional -> [TO] Filter/Interceptor
     - `트래픽 진입 -> Filter/Interceptor` 시점부터 
     - `Filter/Interceptor -> 트래픽 아웃` 시점까지 영속성 존재
     - 영속성이 유지되면서 Controller 에서 객체 그래프 탐색시 > 지연로딩을 통한 조회가 가능해 집니다 (nontransactional read 사용)
