@@ -11,13 +11,15 @@ https://joont92.github.io/jpa/QueryDSL
 ***
 ## `entityManager vs JPQL`
 - entityManager#find
-  - 영속성을 먼저 검색합니다
+  - `영속성을 먼저` 검색합니다
   - (미발견시) 쿼리를 실행합니다
   - 조회된 엔티티를 영속성에 저장합니다
 - JPQL (== createQuery or querydsl)
-  - DB 를 먼저 조회합니다. (== 쿼리 직접실행)
+  - `DB 를 먼저` 조회합니다. (== 쿼리 직접실행)
+  - DB 를 직접 조회하므로 `현재까지 영속성에서 변경된 내용이 반영되지 않습니다.`
   - 조회된 엔티티가 `이미 영속성에 있는 경우 조회결과를 버리고`, 없으면 저장합니다 (영속성에서 변경된 내용을 유지하기위함) 
-    - spring-data 및 querydsl 은 모두 JPQL 실행 입니다
+
+> spring-data 및 querydsl 은 모두 JPQL 실행
 
 ```
 app -> JPQL (flush) -> DB
@@ -29,7 +31,7 @@ app -> JPQL (flush) -> DB
 app <- JPQL (clear) <- DB
 ```
 
-JPQL 사용시 영속성과의 불일치를 해소하기 위해 2가지 처리가 필요합니다:
+JPQL 사용시 영속성과의 불일치를 해소하기 위해 2가지 검토가 필요합니다:
 - entityManager#flush
   - (조회쿼리) 실행전 영속성을 flush 해야 합니다
   - 영속성에 저장된 내용이 flush 로 반영해야 DB 직접조회 결과를 신뢰할 수 있습니다 
@@ -90,7 +92,7 @@ em.createQuery("UPDATE Member m SET m.name = 'DUMMY' WHERE m.id = :id", Member.c
     .executeUpdate();
 
     // JPQL (or HQL) - DELETE
-    em.createQuery("DELETE FROM Member m WHERE m.id = :id", Member.class)
+em.createQuery("DELETE FROM Member m WHERE m.id = :id", Member.class)
     .setParameter("id","243")
     .executeUpdate();
 ```
@@ -103,11 +105,10 @@ em.createQuery("UPDATE Member m SET m.name = 'DUMMY' WHERE m.id = :id", Member.c
   - SELECT 절의 조회 대상이 하나면 Object, 여러개면 Object[]
 
 ## Projection
-- 엔티티 (@Entity)
-  - @Id 가 있으므로 영속성에 관리됩니다
-- 엠베디드 (@Embeddable) 
-- 스칼라 (숫자, 문자 등 기본 데이터)
-  - (단순한 값이므로) 영속성에 관리되지 않습니다
+- @Entity
+  - 영속성에서 식별자로 사용할 @Id 가 있으므로 entityManager 에서 관리됩니다
+- @Embeddable, 스칼라 (숫자, 문자 등 기본 데이터)
+    - 영속성에서 식별자로 사용할 @Id 가 있으므로 entityManager 에서 관리되지 않습니다
 
 ## Join
 - inner
