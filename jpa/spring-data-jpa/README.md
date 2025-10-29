@@ -5,10 +5,27 @@ https://docs.spring.io/spring-data/jpa/reference/index.html
 
 ## CUD
 ```java
+// native sql
 @Query("UPDATE ABC_MEMBER SET MBR_STAT_TP = 'USED' WHERE MBR_NO = :id", nativeQuery = true)
 @Modifying(clearAutomatically = true, flushAutomatically = true)
 @Transactional
 public Long update(Long id);
+
+// jpql
+@Query("UPDATE user SET name = :name WHERE id = :id")
+@Modifying(clearAutomatically = true, flushAutomatically = true)
+@Transactional
+void update(@Param("id") String id);
+
+// querydsl
+@Modifying(clearAutomatically = true, flushAutomatically = true)
+@Transactional
+default update(@Param("id") String id) {
+    queryFactory.update(user)
+        .set(user.name, "newName")
+        .where(user.id.eq(id))
+        .execute();
+}
 ```
 
 - @Query 에서 `nativeQuery = true` 설정으로 native-query 사용도 가능합니다
@@ -16,7 +33,7 @@ public Long update(Long id);
   - flushAutomatically: JPQL (or SQL) 실행전 영속성 flush 유무
   - clearAutomatically: JPQL (or SQL) 실행후 영속성 clear 유무
 
-## SELECT
+## R (== 조회)
 ```java
 @Lock(LockModeType.PESSIMISTIC_WRITE)
 @Query("SELECT m.id FROM Member m WHERE m.id = :id")
@@ -28,7 +45,7 @@ public Long update(Long id);
 public Long findById(Long id);
 ```
 
-### @Lock
+## @Lock
 - (낙관적락) **NONE**
   - 엔티티 수정시 버전을 체크합니다 (@Version 사용시 기본적으로 적용되므로 명시하지 않아도 됨)
   - (목적) 수정시 다른 트랜잭션에 의해 변경되지 않음을 보장
@@ -45,7 +62,7 @@ public Long findById(Long id);
 - (비관적락) PESSIMISTIC_FORCE_INCREMENT
   - (동작) select .. for update + version++
 
-### QueryHint
+## QueryHint
 @Lock 사용시 timeout 을 지정해야 합니다. (select .. for share/update `nowait` 처럼 nowait 쿼리가 아니므로 무한히 대기함)
 
 - @QueryHint(name = "javax.persistence.lock.timeout", value = "5000")

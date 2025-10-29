@@ -1,20 +1,23 @@
 # JPQL
 ```
 https://sungunjo.github.io/jpa-study/2022/03/01/ch.10-object-oriented-query-language.html
+https://joont92.github.io/jpa/QueryDSL
 ```
 
-영속성의 변경감지를 통한 persist/merge/delete 가 아닌 `createQuery/createNativeQuery` 을 명시적으로 사용하는 것을 의미합니다.
+### Blog
+- [JPASubQuery vs JPAExpressions](https://jojoldu.tistory.com/379?category=637935)
+- [연관관계 없이 Join 조회하기](https://jojoldu.tistory.com/396)
 
-## `find vs JPQL`
-- find
+***
+## `entityManager vs JPQL`
+- entityManager#find
   - 영속성을 먼저 검색합니다
   - (미발견시) 쿼리를 실행합니다
   - 조회된 엔티티를 영속성에 저장합니다
-- JPQL (== createQuery)
-  - 쿼리를 먼저 실행합니다
+- JPQL (== createQuery or querydsl)
+  - DB 를 먼저 조회합니다. (== 쿼리 직접실행)
   - 조회된 엔티티가 `이미 영속성에 있는 경우 조회결과를 버리고`, 없으면 저장합니다 (영속성에서 변경된 내용을 유지하기위함) 
     - spring-data 및 querydsl 은 모두 JPQL 실행 입니다
-    - 이 과정 불일치를 방지하기 위해, flush 수행이 필요합니다 
 
 ```
 app -> JPQL (flush) -> DB
@@ -26,21 +29,21 @@ app -> JPQL (flush) -> DB
 app <- JPQL (clear) <- DB
 ```
 
-- FLUSH
+JPQL 사용시 영속성과의 불일치를 해소하기 위해 2가지 처리가 필요합니다:
+- entityManager#flush
   - (조회쿼리) 실행전 영속성을 flush 해야 합니다
   - 영속성에 저장된 내용이 flush 로 반영해야 DB 직접조회 결과를 신뢰할 수 있습니다 
-    - em#flush
-- CLEAR
+- entityManager#clear
   - (수정쿼리) 실행후 영속성을 clear 해야 합니다
   - 영속성에 저장된 내용이 DB 결과와 다르게 되므로 클리어해야 불일치를 방지할 수 있습니다
-    - em#clear
 
 ```java
+// spring data jpa 사용시 annotation 으로 선언가능
 @Modifying(clearAutomatically = true, flushAutomatically = true)
 public void modifyUser();
 ```
 
-## 조회
+## R (== 조회)
 ```java
 // find - JPQL 이 아닌 em.find 사용
 em.find(Member.class, 234L);
@@ -157,3 +160,107 @@ List<String> topics = entityManager.createQuery("""
     """, String.class)
 .getResultList();
 ```
+
+## Querydsl
+<img src="1.png" width="50%">
+
+기본적으로 JPQL 을 정적 QClass 를 통해 작성한다. 라는 개념입니다.
+
+쿼리는 JPAQuery or HibernateQuery 를 통해 생성하고, XYZQuery 를 만들기위한 빌더인 XYZQueryFactory 의 사용이 권장됩니다.
+
+- JPQLQuery
+    - JPAQuery
+    - HibernateQuery
+- QueryBuilder
+    - `JPAQueryFactory`
+    - `HibernateQueryFactory`
+
+### R (== 조회)
+```java
+JPAQueryFactory query = new JPAQueryFactory(em);
+QCustomer customer = QCustomer.customer;
+
+Customer bob = query.from(customer)
+  .where(customer.firstName.eq("Bob"))
+  .uniqueResult(customer);
+```
+
+### CUD
+```java
+// update
+queryFactory.update(user)
+  .where(user.login.eq("Ash"))
+  .set(user.login, "Ash2")
+  .set(user.disabled, true)
+  .execute();
+```
+
+```java
+// delete
+queryFactory.delete(user)
+  .where(user.login.eq("David"))
+  .execute();
+```
+
+### [Projections](https://icarus8050.tistory.com/5)
+**Entity binding**
+```java
+@Entity
+class Employee {
+
+  @QueryProjection
+  public Employee(long id, String name) {
+    // ...
+  }
+}
+```
+
+```java
+QEmployee employee = Employee.employee;
+JPQLQuery query = new HibernateQuery(session);
+
+List<Customer> dtos = query.select(QEmployee.create(employee.firstName, employee.lastName))
+  .from(employee).fetch();
+```
+
+> 생성되는 create method 는 Projections.constructor 를 사용합니다. 즉 직접사용도 가능
+
+**DTO binding**
+```java
+List<UserDTO> dtos = query.select(
+  Projections.constructor(UserDTO.class, user.firstName, user.lastName)).fetch();
+```
+
+아니면 생성자 생성인 경우에는 QClass 를 생성해서, compile-error 로 잘못된 타입지정을 막을 수 도 있습니다:
+```java
+class EmployeeDTO {
+
+  @QueryProjection
+  public EmployeeDTO(long id, String name) {
+    // ...
+  }
+}
+```
+
+```java
+QEmployee employee = Employee.employee;
+JPQLQuery query = new HibernateQuery(session);
+
+// Entity 와 생성법이 다르다. #create 를 사용하지않고 직접 생성
+List<Customer> dtos = query.select(new QCustomerDTO(customer.id, customer.name))
+  .from(employee).fetch();
+```
+
+setter 를 통해 처리하거나:
+```java
+List<UserDTO> dtos = query.select(
+  Projections.bean(UserDTO.class, user.firstName, user.lastName)).fetch();
+```
+
+Reflection 을 통해 직접접근도 가능합니다:
+```java
+List<UserDTO> dtos = query.select(
+  Projections.fields(UserDTO.class, user.firstName, user.lastName)).fetch();
+```
+
+Expression\<?\>... 를 넘기는 방식이라 필드명 불일치/생성자 불일치 등의 에러는 Runtime 시점에만 확인 가능합니다.
