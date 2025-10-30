@@ -104,4 +104,6 @@ public class Person extends BaseEntity<String> {
 }
 ```
 
-> 자식 Entity 는 @MappedSuperClass 에 정의된 모든 컬럼을 직접 소유하므로 `InheritanceType.TABLE_PER_CLASS` 와 동일한 형태로 구성됩니다.
+자식 Entity 는 @MappedSuperClass 에 정의된 모든 컬럼을 직접 소유하므로 Entity 관점으로는 `InheritanceType.TABLE_PER_CLASS` 와 동일한 형태입니다.
+
+다만 실제 테이블의 생성이 되지 않는 차이점이 있습니다.
