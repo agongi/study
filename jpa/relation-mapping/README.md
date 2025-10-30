@@ -30,6 +30,7 @@ IDENTITY/SEQUENCE/TABLE 전략은 DB에서 PK를 생성하므로 persist() 시�
   - 모든 컬럼에 정의
 - @JoinColumn
   - 연관관계 매핑시 사용할 `상대방의 F.K`
+  - @JoinColumn 을 관리하는 엔티티가 (즉 F.K 를 컬럼으로 관리) 연관관계의 주인
 - @Enumerated
   - ENUM 저장 방식 (STRING/ORDINAL)
 
@@ -108,7 +109,7 @@ public class Order {
 - `@OneToMany(mappedBy = "user")`
   - 연관관계 대상
   - mappedBy 으로 연관관계 주인의 필드명 지정
-- 단방향 @OneToMany 사용
+- 단방향
   - `mappedBy = ?` 으로 지정할 대상이 없으므로 (양방향 이므로) 저장시 INSERT 가 아닌 `INSERT-UPDATE 쿼리가 발생` 합니다
   - 따라서 단방향 @OneToMany 은 권장되지 않습니다 (양방향 권장)
 
@@ -133,9 +134,9 @@ UPDATE member SET team_id = 1 WHERE id = ?;
 - `@ManyToOne; @JoinColumn(name = "USER_ID")`
   - 연관관계 주인
   - `스스로 연관관계를 결정 할수 있는 F.K 를 저장`하고 있어서 주인이라는 개념을 사용합니다 (@JoinColumn 으로 F.K 지정)
-- 양방향 @ManyToOne 사용
-  - JPA 는 연관관계의 주인이 F.K 를 관리하므로 한쪽에만 저장해도 문제 없습니다
-  - 하지만 POJO 의 관점으로 보면 양쪽 모두에 적용되야 올바르게 동작 합니다
+- 양방향
+  - JPA 는 연관관계의 주인이 cascade 로 같이 저장합니다
+  - 하지만 POJO 의 관점으로 보면 양쪽 모두에 save 하는걸 권장합니다
 
 ```java
 // https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Object_corruption,_one_side_of_the_relationship_is_not_updated_after_updating_the_other_side
@@ -153,7 +154,7 @@ public class Member {
 - Proxy 객체는 `존재함이 보장되는 객체를` 아직 로딩하지 않은 가짜 객체 입니다
   - Proxy 객체가 있다면 null 이 아님을 보장한다는 의미입니다. (JPA 는 null or proxy 로 객체를 표현)
   - 따라서 Proxy 아니면 null 을 세팅하기 위해 존재함을 확인해야 하는 N+1 문제가 발생 할 수 있습니다 
-- 양방향 @OneToOne 사용
+- 양방향:
 
 ```java
 public class User {
@@ -170,7 +171,7 @@ public class Order {
 }
 ```
 
-- 단방향 @OneToOne 사용
+- 단방향:
 
 ```java
 public class Order {
