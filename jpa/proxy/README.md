@@ -30,7 +30,7 @@ public final class Hibernate {
 `프록시는 null 값을 가질 수 없습니다`. 그래서 연관관계 엔티티 (즉 instance) 를 가져올때 3가지 중 1개의 값을 리턴합니다:
 
 - (값이 없는 경우) null
-- (LAZY 의 경우) Proxy 객체
+- (LAZY 의 경우) Proxy 객체/Empty 객체 (ex. Collection)
 - (EAGER 의 경우) 실제 객체
 
 연관관계 매핑에 따라 아래와 같이 동작합니다:
@@ -38,15 +38,15 @@ public final class Hibernate {
 - @OneToOne
   - 프록시는 null 을 가질수 없으므로 OneToOne 연관관계 엔티티의 존재유무를 알아야 합니다
   - 그래서 존재함을 확인하기 위해 N+1 쿼리가 발생합니다
-  - @JoinColumn 으로 대상의 기본키를 외래키로 가지고 있으면 존재유무를 알수 있으므로 Fetch.LAZY 가 가능합니다
+  - `@JoinColumn 으로 대상의 기본키를 외래키로` 가지고 있으면 존재유무를 알수 있으므로 Fetch.LAZY 가 가능합니다
 - @ManyToOne
-  - 연관관계의 주인이고, @JoinColumn 을 통해 연관관계의 존재유무를 알수 있습니다
+  - 연관관계의 주인이고, `@JoinColumn 을 통해 연관관계의 존재유무`를 알수 있습니다
   - 그러므로 FetchType.LAZY 가 가능합니다
 - @OneToMany
   - 연관관계의 주인이 아니라서 존재유무는 알수 없지만 Fetch.LAZY 가 가능합니다
   - `Collection 은 null 대신 empty 가 가능`하기 때문입니다
 
-## 객체 그래프
+## 엔티티 그래프
 Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQL 에서 선언 시점에 결정` 이 아닌 지연로딩 방식의 Proxy 를 통해 `사용 시점에 결정` 한다는 의미 입니다
 
 > 물론 Lazy loading 을 사용한다면 N+1 이 발생하므로 fetchJoin 을 통해 미리 로딩하는게 나음
@@ -63,7 +63,7 @@ Proxy 를 이용해서 `어떤 연관관계의 객체`까지 탐색할지를 `SQ
 ### LAZY
 엔티티 조회시 연관관계를 같이 가져오지 않고 Proxy 로 대체합니다. (그후 실제로 데이트를 사용하는 시점에 N+1 발생)
 
-기본적으로 모든 매핑은 LAZY 로 설정하고 필요시 JPQL (querydsl or jooq) 로 FetchJoin 하는 방식이 낫습니다
+기본적으로 모든 매핑은 LAZY 로 설정하고 필요시 JPQL (querydsl or jooq) 로 fetch join 하는 방식이 낫습니다
 
 ### CASCADE
 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속 상태로 만들수 있습니다.
