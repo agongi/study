@@ -54,7 +54,7 @@ $ docker build --tag nginx:20200320_145400 .
 suktae@localHost /usr/local/etc/nginx $ docker images
 REPOSITORY                          TAG           IMAGE ID      CREATED        SIZE
 base-nginx  					   1.12.2       a8c3d87a58e7   2 days ago      831MB
-nginx						    20200320_145400   65d59f58cbsb   2 days ago      833MB
+nginx				              20200320_145400   65d59f58cbsb   2 days ago      833MB
 ```
 
 Registry 로 부터 pull 한 이미지를 run 커맨드로 컨테이너를 실행 합니다
