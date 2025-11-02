@@ -4,7 +4,7 @@ https://stackoverflow.com/questions/40902445/using-variable-interpolation-in-str
 ```
 
 ## ENTRYPOINT 
-기본적으로 실행할 명령을 정의 합니다:
+기본적으로 `실행할 명령`을 정의 합니다:
 ```bash
 $ docker run --entrypoint="echo hello" app
 ```
@@ -21,7 +21,7 @@ spec:
 ```
 
 ## CMD
-ENTRYPOINT에 전달할 인자를 정의, CMD 자체에 실행할 명령을 정의할 수도 있습니다:
+ENTRYPOINT에 `전달할 인자`를 정의, CMD 자체에 실행할 명령을 정의할 수도 있습니다:
 ```bash
 # 각각 $1, $2 로 바인딩
 $ docker run app foo bar
