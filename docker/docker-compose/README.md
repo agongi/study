@@ -7,7 +7,7 @@ https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker
     - 1개의 이미지 생성 정의
 - docker-compose.yml
     - N개의 이미지 생성 정의
-    - 컨테이너 간 실행순서나 의존성을 관리하며 여러개의 컨테이너를 동시에 실행
+    - 컨테이너 간 실행순서나 의존성을 관리하며 여러 컨테이너로 구성된 애플리케이션을 정의하고 실행
 
 ```yaml
 # docker-compose.yml
@@ -26,6 +26,10 @@ services:
       - /docker/nginx/conf:/usr/local/etc/nginx/conf
 ```
 ```bash
-$ docker-compose up
+# 실행
+$ docker compose up
+
+# 종료
+$ docker compose down
 ```
 
