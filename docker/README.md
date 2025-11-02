@@ -1,214 +1,141 @@
-# Docker
+# Docker Interview for Senior Engineer
 ```
 https://docs.docker.com/reference/
 https://pyrasis.com/jHLsAlwaysUpToDateDocker
 https://velog.io/@choidongkuen/%EC%84%9C%EB%B2%84-Docker-Network-%EC%97%90-%EB%8C%80%ED%95%B4
 ```
 
-## 개념
-Docker 는 Host 와 동일한 커널영역을 사용하지만 
-- 격리: `cgroup, namespace` 등을 활용해 컨테이너 격리 (내부적으로 system_call 호출)
-- 공유: `Network, Storage` 등을 같이 같이 사용
+## 1. 핵심 개념
+Docker는 애플리케이션을 신속하게 구축, 테스트 및 배포할 수 있는 컨테이너 기반의 오픈소스 가상화 플랫폼입니다. OS 수준의 가상화 기술을 사용하여 호스트 시스템의 커널을 공유하면서도, 프로세스, 네트워크, 파일 시스템 등은 독립적으로 격리된 환경에서 애플리케이션을 실행합니다.
 
-격리된 환경 에서 호스트 자원을 공유하며 애플리케이션을 실행하는 경량 가상화 기술입니다.
+- **격리 (Isolation)**: Linux의 `namespaces`와 `cgroups` 기술을 사용하여 격리된 환경을 제공합니다.
+  - **`namespaces`**: 하나의 시스템에서 프로세스를 분리하는 커널 기능입니다. Docker는 다음 `namespaces`를 사용하여 컨테이너를 격리합니다.
+    - `pid`: 프로세스 격리
+    - `net`: 네트워크 인터페이스, IP 주소 테이블, 라우팅 테이블 등 네트워크 관리
+    - `ipc`: 프로세스 간 통신(IPC) 객체에 대한 접근 격리
+    - `mnt`: 파일 시스템 마운트 포인트 격리
+    - `uts`: 커널 및 버전 식별자 격리
+  - **`cgroups` (Control Groups)**: 컨테이너가 사용할 수 있는 하드웨어 리소스(CPU, 메모리, 스토리지 I/O 등)를 제한하고 관리합니다.
+- **공유 (Sharing)**: 호스트 OS의 커널을 모든 컨테이너가 공유합니다. 이로 인해 VM(가상 머신) 방식보다 훨씬 가볍고 빠르게 동작합니다.
 
 <img src="1.png" width="50%">
 
-## 구성요소
-Docker 는 크게 3가지로 구성되어 있습니다.
-- **Server (== Engine)**
-  - Docker Daemon 이라고도 불리며, Host OS 의 커널을 공유하여 컨테이너를 실행합니다
-- **Client (== CLI)**
-  - Docker Daemon 과 API 통신하는 CLI
+## 2. 구성요소
+- **Docker Engine (Server)**
+  - `dockerd`라는 데몬 프로세스를 통해 관리됩니다.
+  - 이미지, 컨테이너, 네트워크, 볼륨 등 Docker 객체를 생성하고 관리하는 핵심 구성요소입니다.
+- **Docker CLI (Client)**
+  - 사용자가 Docker와 상호작용하기 위해 사용하는 커맨드 라인 인터페이스입니다.
+  - `docker build`, `docker run` 등의 명령어를 입력하면, Docker CLI는 Docker 데몬에게 API 요청을 보내 작업을 수행합니다.
 - **Docker Compose**
-  - N개의 Dockerfile 을 동시에 실행해주는 도구 입니다
+  - **여러 컨테이너로 구성된 애플리케이션을 정의하고 실행**하는 도구입니다.
+  - `docker-compose.yml` YAML 파일을 통해 다중 컨테이너 애플리케이션의 서비스, 네트워크, 볼륨을 선언적으로 구성하고, 단일 명령어로 전체 애플리케이션 스택을 시작하거나 중지할 수 있습니다.
 
-## Dockerfile
-이미지를 생성할 명세를 정의합니다.
+## 3. Dockerfile과 이미지 최적화
+이미지를 생성하기 위한 명세를 정의하는 파일입니다. Dockerfile을 통해 애플리케이션 환경을 코드로 관리(Infrastructure as Code)할 수 있습니다.
 
 ```dockerfile
 # Dockerfile
-# pull base image
-FROM registry.docker.com/nginx/base-nginx:1.12.2
+# 1. Base Image: 구체적인 버전의 공식 이미지를 사용한다.
+FROM nginx:1.21.6-alpine
 
-# export env
-ENV NGINX_HOME /usr/local/etc/nginx
-ENV CONF_HOME $NGINX_HOME/conf
+# 2. Build Context 최소화: .dockerignore 파일을 사용하여 불필요한 파일이 빌드 컨텍스트에 포함되지 않도록 한다.
 
-# copy
-WORKDIR $CONF_HOME
-ADD /docker/nginx/conf .
+# 3. Non-Root User 사용: 보안을 위해 root가 아닌 별도의 사용자를 생성하고 전환한다.
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
 
-# run
+# 4. Layer 최소화: RUN, COPY, ADD 명령어는 각각 레이어를 생성하므로, 연관된 명령어는 '&&'를 사용해 묶어준다.
+WORKDIR /usr/local/etc/nginx/conf
+COPY --chown=appuser:appgroup /docker/nginx/conf .
+
+# 5. Multi-stage Build 활용: 빌드 환경과 런타임 환경을 분리하여 최종 이미지 크기를 줄이고 보안을 강화한다.
+# (아래 Advanced 섹션 참고)
+
 EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-기술한 Dockerfile 을 아래 명령어로 image 로 만들 수 있습니다.
-```bash
-$ docker build --tag nginx:20200320_145400 .
-```
-
-빌드후 registry 에 push 한 이미지를 pull 하면 현재 engine 에 저장된 이미지 목록을 확인 할 수 있습니다:
-```bash
-suktae@localHost /usr/local/etc/nginx $ docker images
-REPOSITORY                          TAG           IMAGE ID      CREATED        SIZE
-base-nginx  					   1.12.2       a8c3d87a58e7   2 days ago      831MB
-nginx				              20200320_145400   65d59f58cbsb   2 days ago      833MB
-```
-
-Registry 로 부터 pull 한 이미지를 run 커맨드로 컨테이너를 실행 합니다
+- **이미지 빌드 및 실행**
 
 ```bash
-$ docker run -it --rm -d -p 80:80 -p 443:443 nginx:20200320_145400
+# 이미지 빌드 (태그 지정)
+$ docker build --tag my-nginx:1.0 .
+
+# 컨테이너 실행
+$ docker run -d -p 80:80 --name webserver my-nginx:1.0
 ```
 
-- -it: input & tty
-  - 입출력을 CLI 와 연결한다는 의미
-- --rm
-  - 미사용시 생성된 container 삭제
-- -d
-  - daemon mode 로 실행. [옵션이 필요한 이유](https://roseline124.github.io/kuberdocker/2019/07/24/docker-study05.html)
-- -p {external}:{internal}
-  - 포트포워딩. 기본적으로 container 는 외부와 통신이 불가능하고, 노출할 외부/내부 포트 지정필요
+## 4. 데이터 영속성 (Volumes)
+컨테이너는 삭제될 때 내부의 데이터도 함께 사라지는 비영속적인(stateless) 특징을 가집니다. 데이터를 영구적으로 저장하기 위해 Volume을 사용합니다.
 
-## Volume
-Docker volume 은 `호스트 OS의 특정 경로에 저장`되고, 컨테이너는 이를 `마운트`해서 사용합니다.
-
-> /var/lib/docker/volumes/xxx
+- **Volume**: Docker가 관리하는 호스트의 특정 영역(`_data`)에 데이터를 저장합니다. 컨테이너와 독립적인 생명주기를 가지며, 여러 컨테이너 간에 안전하게 데이터를 공유할 수 있습니다. 가장 권장되는 방식입니다.
+  - `docker volume create my-volume`
+  - `docker run -v my-volume:/app/data ...`
+- **Bind Mount**: 호스트 머신의 파일이나 디렉토리를 컨테이너에 직접 마운트합니다. 호스트의 파일 시스템에 의존하므로 경로 관리에 주의가 필요합니다.
+  - `docker run -v /path/on/host:/app/data ...`
 
 <img src="2.png" width="50%">
 
-cgroup 으로 사이즈를 제한할 수 있고, 호스트에 저장되므로 `컨테이너끼리 공유` 할 수 있습니다. 
-- --volumn {HOST_경로}:{컨테이너_경로}
+## 5. 네트워크
+컨테이너가 외부 및 다른 컨테이너와 통신할 수 있도록 네트워크 환경을 제공합니다.
 
-<img src="2-1.png" width="50%">
-
-## Network
-Docker Network 는 `컨테이너 간 통신`과 `외부 네트워크 (Host 를 통해) 연결`을 제공합니다
-
-- Docker containers 는 아무런 설정을 하지 않으면 외부에서 접근할 수 없으며 호스트만 접근 가능합니다
-- 외부 통신을 위해서 (컨테이너)의 eth0 IP:PORT 를 (호스트)의 IP:PORT 에 바인딩 해야 합니다
-  - `호스트에 veth*` 이름의 가상 인터페이스 <--> `컨테이너의 eth0` 인터페이스
-- veth 와 eth0 는 `Docker network` 를 통해 연결 됩니다:
-  - `(기본값) bridge`
-    - Host#{PORT} 와 Container#{PORT} 바인딩
-    - 동일 호스트 내의 컨테이너끼리 통신 가능
+- **`bridge` (기본값)**:
+  - 컨테이너는 Docker가 생성한 가상 브릿지(`docker0`)에 연결됩니다.
+  - 동일한 호스트 내의 컨테이너들은 서로 통신할 수 있지만, 외부와 통신하려면 포트 포워딩(`-p` 옵션)이 필요합니다.
+  - `호스트의 veth* <--> 컨테이너의 eth0` 인터페이스가 페어로 연결됩니다.
+- **`host`**:
+  - 컨테이너가 호스트의 네트워크 스택을 그대로 사용합니다.
+  - 별도의 네트워크 격리 없이 호스트와 동일한 IP를 가지므로 네트워크 성능은 가장 좋지만, 보안적으로는 취약할 수 있습니다.
+- **`overlay`**:
+  - 여러 Docker 호스트에 걸쳐 분산된 컨테이너들 간의 통신을 가능하게 하는 오버레이 네트워크를 생성합니다.
+  - Docker Swarm이나 Kubernetes와 같은 컨테이너 오케스트레이션 환경에서 주로 사용됩니다.
+- **`none`**:
+  - 컨테이너에 네트워크 인터페이스를 할당하지 않습니다. 외부와 통신이 불가능한 격리된 환경이 필요할 때 사용됩니다.
 
 <img src="2-2.png" width="50%">
 
-```yaml
-    ports:
-      - 80:80 # host#port : container#port
-      - 443:443
+## 6. 컨테이너 오케스트레이션 (Container Orchestration)
+수십, 수백 개의 컨테이너를 프로덕션 환경에서 안정적으로 관리하고 운영하기 위해 컨테이너 오케스트레이션 도구가 필요합니다.
+
+- **필요성**:
+  - **고가용성(High Availability)**: 특정 컨테이너나 노드에 장애가 발생했을 때 자동으로 복구하고 서비스를 유지합니다.
+  - **확장성(Scalability)**: 트래픽 부하에 따라 컨테이너 수를 동적으로 조절(Auto-scaling)합니다.
+  - **서비스 디스커버리 및 로드 밸런싱**: 여러 컨테이너에 걸쳐 네트워크 트래픽을 분산하고, 컨테이너가 서로를 찾을 수 있도록 지원합니다.
+- **대표적인 도구**:
+  - **Kubernetes (K8s)**: 현재 컨테이너 오케스트레이션의 사실상 표준(De facto standard)입니다.
+  - **Docker Swarm**: Docker에서 자체적으로 제공하는 오케스트레이션 도구로, 사용법이 비교적 간단합니다.
+
+## 7. 고급 주제 및 모범 사례 (Advanced)
+### Multi-stage builds
+빌드 단계와 런타임 단계를 분리하여 최종 이미지의 크기를 최적화하고, 빌드에만 필요했던 의존성이나 도구를 최종 이미지에서 제외하여 보안을 강화하는 기법입니다.
+
+```dockerfile
+# 1. Build Stage
+FROM golang:1.17 AS builder
+WORKDIR /go/src/app
+COPY . .
+RUN go build -o myapp
+
+# 2. Runtime Stage
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=builder /go/src/app/myapp .
+CMD ["./myapp"]
 ```
-
-  - host
-    - Host 의 Network 를 그대로 사용
-  - overlay
-    - 멀티 호스트간 통신
-
-<img src="2-3.png" width="50%">
-
-  - none
-    - 외부 네트워크와 연결하지 않음
-
-## [Advanced](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
-### [Multi-stage builds](https://docs.docker.com/build/building/multi-stage/)
-Multi-stage builds let you reduce the size of your final image, by creating a cleaner separation between the building of your image and the final output
-
 <img src="3.png" width="50%">
 
-### Pin base image versions
-FROM 구문에서 이미지 버전을 지정해서 항상 동일한 버전을 가져 올 수 있도록 합니다.
+### RUN 명령어 최적화
+`RUN` 명령어는 실행될 때마다 새로운 이미지 레이어를 생성하고 캐시합니다. 패키지 설치 시 `update`와 `install`을 하나의 `RUN` 명령어로 묶어야 캐시 문제를 피하고 최신 버전의 패키지를 설치할 수 있습니다.
 
-```dockerfile
-FROM alpine:3.21
-
-## cache 가 있다면 동일한/다른 이미지가 사용 될 수 있음
-# FROM alpine:latest
-```
-
-만약 latest 를 사용한다면 digest 를 명시해서 같은 이미지를 지정 할 수 있습니다:
-```dockerfile
-FROM alpine:latest@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c
-```
-
-### RUN
-> Here documents
-
-&& 을 이용해서 체이닝 하는 부분을 here documents 로 작성할 수 있습니다.
-```dockerfile
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    package-bar \
-    package-baz \
-    package-foo
-```
-
-```dockerfile
-RUN << EOF
-apt-get update
-apt-get install -y --no-install-recommends
-    package-bar
-    package-baz
-    package-foo
-EOF
-```
-
-> yum update -y && yum install ....
-
-패키지 업데이트 구문과 설치 구문은 동일 라인에서 작성해야 합니다
-
-- 기존
-```dockerfile
-FROM rhel:8.10
-RUN yum update -y
-RUN yum install -y curl
-```
-
-- 추가
-```dockerfile
-FROM rhel:8.10
-RUN yum update -y
-RUN yum install -y curl htop # htop 추가
-```
-
-각각의 RUN 구문은 새로운 layer 를 생성/캐싱 하므로 htop 은 outdated 로 설치 될 수 있습니다.
-
-아래와 같이 하나의 RUN 구문으로 작성하면 변경 감지되어 캐싱값이 아니라 실제 실행된 결과를 사용합니다: 
-```dockerfile
-FROM rhel:8.10
-RUN yum update -y && yum install -y curl htop
-```
-
-### Build Context
-```bash
-/home/usr1/workspace $ ls -l
-total 8
--rw-r--r--  1 suktae  staff  1729 Mar 18 16:15 Dockerfile
-drwxr-xr-x  5 suktae  staff   160 Mar 17 13:22 scripts
-```
-
-Dockerfile 이 `/home/usr1/workspace` 경로에 위치하면, 빌드시점에 /home/usr1/workspace 가 build context 가 됩니다. (상위 경로 접근 불가능)
-
-만약 상위 Path 의 파일을 참조하고 싶으면 아래의 방법이 있습니다.
-
-- argument 로 직접 전달
-```bash
-$ docker build --tag nginx:20200320 --build-arg ssl_perm=/{PATH}/ssl.pub
-
-# Dockerfile
-ARG ssl_perm	# define argument to use
-ADD $ssl_perm . 
-```
-
-- volume mount
-```bash
-$ docker run --volume /{PATH}/ssl.pub:/container/some/where .
-
-# Dockerfile
-ADD /docker/nginx/conf .
-```
-
-
-
+- **잘못된 예**: `update`가 캐시되어 `htop`이 이전 패키지 목록에서 설치될 수 있음
+  ```dockerfile
+  FROM rhel:8.10
+  RUN yum update -y
+  RUN yum install -y curl htop
+  ```
+- **올바른 예**: `RUN` 명령어를 하나로 묶어 항상 `update`와 `install`이 함께 실행되도록 함
+  ```dockerfile
+  FROM rhel:8.10
+  RUN yum update -y && yum install -y curl htop
+  ```
