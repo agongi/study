@@ -178,7 +178,7 @@ RUN yum install -y curl htop # htop 추가
 아래와 같이 하나의 RUN 구문으로 작성하면 변경 감지되어 캐싱값이 아니라 실제 실행된 결과를 사용합니다: 
 ```dockerfile
 FROM rhel:8.10
-RUN yum update -y && RUN yum install -y curl htop
+RUN yum update -y && yum install -y curl htop
 ```
 
 ### Build Context
