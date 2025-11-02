@@ -113,7 +113,7 @@ Cross-Origin 페이지 끼리 메세지를 주고 받는 방법 입니다.
 - iframe
 
 ### Sender
-메세지와 `targetOrigin` 을 같이 보냅니다. (Same-Origin 으로 열려있는 페이지에만 메세지 전달)
+메세지와 `targetOrigin` 을 같이 보냅니다.
 ```tsx
 function sendPostMessage(message: string, targetOrigin: string) {
   window.parent.postMessage(message, targetOrigin)
