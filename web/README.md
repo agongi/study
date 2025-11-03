@@ -69,6 +69,39 @@ if ($request_method = 'OPTIONS') {
 add_header Access-Control-Allow-Origin '*' always;
 ```
 
+Spring Framework (Spring Boot) 에서는 아래와 같이 설정할 수 있습니다:
+**1. Controller/Method 레벨에서 `@CrossOrigin` 사용**
+```java
+@RestController
+@RequestMapping("/api")
+public class MyController {
+
+    @CrossOrigin(origins = "https://trusted.com")
+    @GetMapping("/data")
+    public String getData() {
+        return "some data";
+    }
+}
+```
+
+**2. 전역 설정 (Global Configuration)**
+`WebMvcConfigurer` 를 구현하여 애플리케이션 전체에 CORS 설정을 적용할 수 있습니다. 이 방식이 더 유연하고 중앙에서 관리하기 좋습니다.
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // 모든 경로에 대해
+                .allowedOrigins("https://trusted.com", "https://another-trusted.com") // 허용할 Origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // 허용할 HTTP Method
+                .allowedHeaders("*") // 허용할 Header
+                .allowCredentials(true) // 쿠키 전송 허용 여부
+                .maxAge(3600); // Preflight 요청 캐시 시간 (초)
+    }
+}
+```
+
 ## [XSS (Cross-Site Scripting)](https://dj-min43.medium.com/xss-%EA%B3%B5%EA%B2%A9%EC%9D%84-%EC%A7%81%EC%A0%91-%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-c2c1d9baf7ec)
 공격자가 화면에 실행할 수 있는 \<script> 를 삽입/실행할 수 있는 취약점 입니다.
 - form
@@ -152,11 +185,17 @@ Cross Origin 에서 의도하지 않은 요청을 실행하는 취약점 입니�
 </script>
 ```
 
-의 `가상 페이지에서 의도되지 않은 요청`을 하게 됩니다. 아래의 조치로 어느정도 방어 할 수 있습니다: 
+의 `가상 페이지에서 의도되지 않은 요청`을 하게 됩니다. 아래의 조치로 방어 할 수 있습니다: 
+- `CSRF 토큰 사용 (일반적)`
+  - (서버) 사용자의 세션에 고유한 CSRF 토큰을 생성하고 쿠키에 저장
+  - (서버) 클라이언트(주로 웹페이지)에게 해당 토큰을 전달 (ex. meta tag, hidden field)
+  - (클라이언트) 상태를 변경하는 모든 요청(POST, PUT, DELETE 등)에 해당 토큰을 특정 HTTP 헤더(ex. `X-CSRF-TOKEN`)에 담아 서버로 전송
+  - (서버) 요청 헤더의 토큰과 세션 쿠키의 토큰을 비교하여 일치하면 요청을 허용
+  - Spring Security 는 기본적으로 CSRF 보호 기능을 활성화하며, 이 패턴을 자동으로 구현해줍니다.
+- `SameSite 쿠키 사용`
+  - Site 가 다른경우 쿠키 전달을 막아서 방어하는 방안. CSRF 토큰 방식의 보조 수단으로 사용하면 좋습니다.
 - `Referrer 체크`
-  - 최소한의 안전장치
-- SameSite 쿠키 사용
-  - Site 가 다른경우 쿠키가 전달됨을 막아서 에러처리 하는 방안
+  - 요청의 Referrer 헤더를 확인하여 동일한 도메인에서 온 요청인지 확인합니다 (우회가능)
 
 ## Cookies
 - Secure
