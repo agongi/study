@@ -8,14 +8,39 @@ https://docs.oracle.com/en/java/javase/11/gctuning/garbage-first-g1-garbage-coll
 https://catsbi.oopy.io/56acd9f4-4331-4887-8bc3-e3e50b2f3ea5
 ```
 
-## GC 유형
+## 동작원리
+<img src="5.png" width="50%">
+
+- Young
+    - Eden, From (S0), To (S1) 영역으로 구성
+    - 새로 생성한 객체는 Eden 영역에 할당
+- Old
+    - Young 영역에서 살아남은 객체가 존재
+
+### Minor GC
+- Eden 영역이 가득 차면 `Minor GC` 발생
+    - Minor GC 가 발생하면 New 영역 전체에 Mark-Sweep 이 이뤄진다
+    - Reference 가 있는 객체는 현재 사용되는 Survivor 영역으로 이동한다
+- 다시 Minor GC 가 발생하면
+- 살아남은 객체는 다른 Survivor 영역으로 이동한다 - `Aging`
+    - Eden 에서 Survivor 로 이동할 객체도, 이동할 Survivor 로 할당된다
+- 이 과정을 반복
+- Threshold 이상의 Age 객체는 Old 영역으로 이동하게 된다 - `Promotion`
+
+> Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.
+> 객체의 크기가 Eden 보다 크면, 바로 Old 영역으로 할당된다.
+
+### Major GC
+- Old 영역이 가득 차면 `Full GC` 발생 (==`STW (stop-the-world)` 발생)
+ 
+## 유형
 ### Serial GC (-XX:+UseSerialGC)
 - 알고리즘
   - Mark-Sweep-Compact
 - GC Thread
   - minor GC: 1개
   - major GC: 1개
-- `Compaction 수행`
+  - `Compaction 수행`
 
 ### Parallel GC (-XX:+UseParallelGC)
 - 알고리즘
@@ -23,7 +48,7 @@ https://catsbi.oopy.io/56acd9f4-4331-4887-8bc3-e3e50b2f3ea5
 - GC Thread
   - `minor GC: N개`
   - major GC: 1개
-- `Compaction 수행`
+  - `Compaction 수행`
 
 ### Parallel Old GC (-XX:+UseParallelOldGC)
 - 알고리즘
@@ -32,7 +57,7 @@ https://catsbi.oopy.io/56acd9f4-4331-4887-8bc3-e3e50b2f3ea5
 - GC Thread
   - `minor GC: N개`
   - `major GC: N개`
-- `Compaction 수행`
+  - `Compaction 수행`
 
 ### CMS GC (-XX:+UseConcMarkSweepGC)
 GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 파편화시 ParallelGC 로 compact 수행)
@@ -45,10 +70,10 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 - GC Thread
   - `minor GC: N개`
   - `major GC: N개`
-- `Compaction 미수행`
+  - `Compaction 미수행`
 - 특징
   - 알고리즘이 복잡해서 `리소스를 많이` 사용한다
-  - (Compat 를 하지않고) STW 를 `짧게 2번 끊어서, 소요시간이 짧다`
+  - (Compact 를 하지않고) STW 를 `짧게 2번 끊어서, 소요시간이 짧다`
   - (Compact 를 하지않아) STW 가 짧지만, `단편화 발생시 전체 Old 영역에 ParallelGC` 가 수행되고 이때는 STW 가 길다
 
 ### G1 GC (-XX:+UseG1GC)
@@ -58,55 +83,29 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
   - Cleanup (STW): empty region 제거
   - Compact: 각 region 에 있는 객체를 적절히 재배치 후, empty region 제거
 - GC Thread
-  - `minor GC: N개`
-  - `major GC: N개`
-- `Compaction 수행`
+  - `minor/major (== mixed) GC: N개`
+  - `Compaction 수행`
 - 특징
-  - 연속된 메모리 공간이 아닌 `개별 Region` 에 할당
-  - Old 영역 전체를 처리하지 않고 가비지가 많은 Region 을 우선 선택 (Garbage First)하여 GC 를 수행합니다
+  - 메모리 전체가 아닌 `개별 Region` 으로 관리
+    - 개별 Region 에 eden/s0,1/old 역할 부여
+  - 메모리 전체가 아닌 가비지가 많은 Region 을 `선별적으로 우선적으로 (== Garbage First)` GC 수행합니다
     - 에이징 및 GC 수행시 `살아있는 객체는 다른 region 으로 재할당 합니다 (== 이동 과정이 Compaction)`
-    - 한 번에 수집하는 Region의 수를 조절하여 STW 시간을 관리 합니다 (== Garbage First)
-      - Parallel/CMS: 전체 메모리 대상
-      - G1: 수거할 대상 선정
+    - `Parallel/CMS: 전체 메모리 대상`
+    - `G1: 수거할 리전중 일부 선정`
 
-### ZGC (-XX:+UseZGC)
+### Z GC (-XX:+UseZGC)
 - 알고리즘
   - Colored pointers (STW): Mark 단계
   - Load barriers: ...
 - GC Thread
   - `minor GC: N개`
   - `major GC: N개`
-- `Compaction 수행`
+  - `Compaction 수행`
 - 특징
   - 연속된 영역이 아닌 `개별 ZPage` 가 필요에 따라 할당 (Region 과 다르게 small/medium/large 로 각각 사이즈가 다름)
   - ... TBD
 
-## GC 구조
-<img src="5.png" width="50%">
-
-- Young
-  - Eden, From (S0), To (S1) 영역으로 구성
-  - 새로 생성한 객체는 Eden 영역에 할당
-- Old
-  - Young 영역에서 살아남은 객체가 존재
-
-### Minor GC
-- Eden 영역이 가득 차면 `Minor GC` 발생
-  - Minor GC 가 발생하면 New 영역 전체에 Mark-Sweep 이 이뤄진다
-  - Reference 가 있는 객체는 현재 사용되는 Survivor 영역으로 이동한다
-- 다시 Minor GC 가 발생하면
-- 살아남은 객체는 다른 Survivor 영역으로 이동한다 - `Aging`
-  - Eden 에서 Survivor 로 이동할 객체도, 이동할 Survivor 로 할당된다
-- 이 과정을 반복
-- Threshold 이상의 Age 객체는 Old 영역으로 이동하게 된다 - `Promotion`
-
-> Survivor 영역 중 하나는 반드시 비어 있는 상태로 남아 있어야 한다.
-> 객체의 크기가 Eden 보다 크면, 바로 Old 영역으로 할당된다.
-
-### Major GC
-- Old 영역이 가득 차면 `Full GC` 발생 (==`STW (stop-the-world)` 발생)
-
-## GC 알고리즘
+## 알고리즘
 ### Serial GC
 <img src="1.png" width="50%">
 
@@ -141,7 +140,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 
 주기적으로 or `-XX:InitiatingHeapOccupancyPercent` 에서 정한 수치가 넘어가면 동작한다. 
 
-> minor/major GC 는 같이 수행된다. 조금씩 Young GC 때 Old region 이 같이 정리되는 개념이다
+> minor/major (== mixed) GC 는 조금씩 Young GC 때 Old region 이 같이 정리합니다
 
 - Initial mark
   - Initial marking of live object along with Young GC
@@ -152,7 +151,7 @@ GC 때 compact 를 하지 않음 (그래서 평소 GC 가 short-time 이지만, 
 - Compact
   - cleanup 에서 정리된 region 에 있던 object 를 별도의 region 으로 모으는 작업
 
-> Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조.
+> Young GC 가 발생할때 병렬적으로 Old region 에 대해 미리 mark 해놓고, Next GC에 liveness (빨리 처리가능한) 한 region 이 같이 정리되는 구조
 
 ### ZGC
 TBD
