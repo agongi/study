@@ -12,8 +12,8 @@ https://techblog.woowahan.com/15398
       - Heap 으로 Stack 대체 (`Heap` 이므로 JVM 관리)
       - `OS 스레드와 매핑되지 않은 순수한 POJO` 이므로 생성/소멸비용 적음
     - `Context Switch 비용 감소 & 생성/소멸 비용 감소`
-      - OS 스레드를 생성하지 않으므로 시스템콜 호출이 적음 (생성비용 저렴)
-      - 1MB 이상의 고정된 Stack 할당이 아닌 동적으로 Heap 이 생성되어 최초에 작은 메모리 사용 
+      - OS 스레드를 생성하지 않으므로 시스템콜 호출이 적음 => `생성비용 저렴`
+      - 1MB 이상의 고정된 Stack 할당이 아닌 동적으로 Heap 을 사용 => `메모리 사용량 적음`
 - 아래의 사용성은 권장되지 않습니다:
     - `JNI, synchronized 사용`
       - 상위 Platform Thread 의 lock 이 잡히므로 하위 Virtual Threads 전체가 block 됨 -> ReentrantLock 으로 전환
