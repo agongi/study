@@ -8,10 +8,9 @@ https://blog.naver.com/kkson50/220564273220
 
 <img src="1.png" width="75%">
 
-## Overview
 An object can be represented as a `sequence of bytes` that includes the object's data as well as `information about the object's type and the types of data stored` in the object to **transfer to other JVM or be stored as file**.
 
-### Serialization
+## Serialization
 Object to array of bytes.
 
  - required: `implements java.io.Serializable`
@@ -33,7 +32,7 @@ private byte[] convertToBytes(Object object) throws IOException {
 }
 ```
 
-### Deserialization
+## Deserialization
 Array of byte[] to object.
 
 - required: has the same `serialVersionUID`
@@ -54,36 +53,25 @@ private byte[] convertToBytes(byte[] bytes) throws IOException {
 }
 ```
 
-### Other serial/deserialization
-- JSON
-- XML
-- CSV
-- ...
-
-### When to use it
+## 사용처
 The system purely stored/transfer java serialized byte[] are:
-
 - `Cache (Redis, Memcached)`
 - Session
 - RMI (== RPC)
 
-## Concerns
-### Add and/or Delete fields
-no problem
+## 고려사항
+### 필드 추가/삭제
+문제없음
 
-## Modify field (type)
-will throw exception
+### 필드 수정
+캐스팅 에러 발생
 
-```java
-java.lang.ClassCastException: cannot assign instance of java.lang.String to field ...
-```
-
-### Why declare serialVersionUDI explicitly
+### 명시적으로 serialVersionUID 선언 필요한 이유
 serialVersionUID is checked while deserialization in store in file system or transfer to network. JVM automatically generate UID value based on its algorithm and might be vary each JVM's version.
 
 It causes unexpected `InvalidClassException` once It tries to read stored data after upgrading JVM version or different client with its own JVM's.
 
-### Size
+### 사이즈
 Serialized values contains class meta (ex. size, field names), that means size of value is bigger than any other ways like JSON.
 
 ```java
