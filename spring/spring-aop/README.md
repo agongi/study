@@ -5,9 +5,6 @@ https://www.mkyong.com/spring3/spring-aop-aspectj-annotation-example/
 https://www.mkyong.com/spring/spring-aop-examples-advice/
 ```
 
-## 기본개념
-**Advice** the **Aspect** to **PointCut** target.
-
 - Advice - **when**
   - @Before - Before the method execution
   - @AfterReturning - After the method returned a result, intercept the returned result as well.
@@ -28,7 +25,7 @@ https://www.mkyong.com/spring/spring-aop-examples-advice/
  * enable aspectJ
  */
 @Configuration
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class AspectJConfiguration {
   // ...
 }
@@ -36,63 +33,53 @@ public class AspectJConfiguration {
 @AspectJ
 @Component
 public class DefaultRestAspect {
-  @Before(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))")
-  public void before() {
-    // aspect executed before controller
-  }
-
-  @AfterReturning(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))", returning = "returnVal")
-  public void afterReturning(JoinPoint joinPoint, Object returnVal) {
-    // aspect executed after controller's response is successfully returned
-  }
-
   @Around(value = "@annotation(repayable) && execution(* com.toy.controller.*.*(..))")
-  public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
-    // @Before
-    Object returnVal = pjp.proceed();
-    // @AfterReturning
-    return returnVal;
+  public Object doBasicProfiling(ProceedingJoinPoint joinPoint) throws Throwable {
+    Object response = joinPoint.proceed();
+    // do something
+    
+    return response;
   }
 }
 ```
 
-## Self Invocation
-서비스에서 정말 필요한 경우가 있는데, 아래처럼 사용 가능하다.
+## Proxy 방식
+`runtime weaving` 으로 동작하며 실제 클래스를 Proxy 로 런타임에 감싸서 aop 처리합니다
 
-### AopContext
+### JDK
+인터페이스에 Proxy 를 적용합니다:
 ```java
-@EnableAspectJAutoProxy(exposeProxy = true)
+// proxyTargetClass=true → JDK 기반 프록시
+@EnableAspectJAutoProxy(proxyTargetClass = false)
 public class AopConfig {
-  // ...
-}
-
-public static void main(String[] args) {
-	Object proxy = AopContext.currentProxy();
+    // ...
 }
 ```
 
-exposeProxy=true 가 설정되면 ThreadLocal 에 현재 proxy 가 저장되서, context 를 통해 가져올 수 있다.
-
-### Self inject
+### CGLIB
+실제 클래스에 Proxy 를 적용합니다:
 ```java
-@Service
-public class UserService {
-  @Autowire
-  private UserService userService;
-  
-  public String getName() {
-  	return userService.selectNameById(1L);
-  }
-  
-  @Transactional
-  public String selectNameById(Long id) {
-    return "test-name"; // select
-  }
+// proxyTargetClass=true → CGLIB 기반 프록시
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+public class AopConfig {
+    // ...
 }
 ```
 
-[spring 4.3 부터](https://github.com/spring-projects/spring-framework/commit/4a0fa69ce469cae2e8c8a1a45f0b43f74a74481d) self inject 가 지원되므로, 사용가능하다
+## bytecode 방식
+`compile weaving` 으로 동작하며 실제 클래스의 코드를 컴파일 시점에 조작해서 aop 처리합니다
 
 ### AspectJ
-compile 단계에서 bytecode instrument 로 코드주입이 되므로, 별다른 처리 없이 self invocation 이 사용 가능하다.
-
+classpath 에 `aspectjweaver` 의존이 있다면 사용할 수 있습니다:
+```java
+// proxyTargetClass=true -> CGLIB 기반 프록시 강제
+// exposeProxy=true -> 내부 self-invocation 시 AOP 적용 가능
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
+public class AopConfig {
+    // ...
+}
+```
+```gradle
+implementation 'org.springframework.boot:spring-boot-starter-aop'
+implementation 'org.aspectj:aspectjweaver'
+```

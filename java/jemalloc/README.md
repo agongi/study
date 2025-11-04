@@ -92,7 +92,7 @@ Logstash 처럼 filebeat 를 통해 모든 서버의 access.log 를 수신/호�
 
 OS 에서 사용하는 malloc 을 대체하는 다른 대안을 선택했습니다.
 
-## Jemalloc
+## jemalloc
 Native Memory 파편화를 해결하는 방법은 크게 2가지 입니다:
 - `-XX:TrimNativeHeapInterval` 옵션을 통해 주기적으로 Native 정리
 - 메모리 할당자 변경
