@@ -20,7 +20,7 @@ PHANTOM READ 발생가능
 모든 select 가 select ... for share 로 변경됩니다 (모든 증상이 발생하지 않음)
 
 > 즉 select 실행시 DML 은 대기함
-> 
+
 ## 증상
 ### DIRTY READ
 커밋되지 않은 내용까지 조회되는 현상 입니다.
