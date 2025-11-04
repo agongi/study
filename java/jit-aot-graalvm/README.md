@@ -17,10 +17,10 @@ https://kotlinworld.com/307?category=914495
 
 - 초기에 인터프리터를 사용해서 최적화 없이 코드를 실행
 - 메서드의 호출 횟수를 추적하여 C1 and/or C2 컴파일러로 컴파일후 코드캐시에 저장
-  - C1 compiler
+  - C1 compiler (-XX:TieredStopAtLevel=1)
     - `-client` 컴파일러
     - 코드 최적화는 덜하지만 즉시 시작되는 속도는 빠름
-  - C2 compiler
+  - C2 compiler (-XX:TieredStopAtLevel=4)
     - `-server` 컴파일러
     - 즉시 시작되는 속도는 느리지만 최적화는 많이 되어 warm-up 후에는 빠름
 - 그후 C1/C2 컴파일러로 컴파일된 코드를 사용하여 성능을 최적화
@@ -29,6 +29,7 @@ https://kotlinworld.com/307?category=914495
 
 ## [AOT (Ahead-Of-Time) Compiler](https://docs.spring.io/spring-boot/maven-plugin/aot.html)
 JIT 컴파일러와 반대되는 개념으로 빌드 시점에 미리 컴파일하는 방식입니다.
+
 | 항목                      | JIT (Just-In-Time) 컴파일러                            | AOT (Ahead-Of-Time) 컴파일러                            |
 |---------------------------|--------------------------------------------------------|---------------------------------------------------------|
 | **컴파일 시점**            | 프로그램 **실행 중(runtime)**에 컴파일됨               | 프로그램 **빌드 시(build-time)**에 미리 컴파일됨         |
