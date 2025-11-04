@@ -18,10 +18,8 @@ Counter counter = new Counter();
 ```
 
 ## Soft Reference
-- referent: It can be a candidate of GC If JVM absolutely needs memory
-  - It means heap is running out, soft-reference object will be collected even if there are references
-- reference-queue: optional
-  - 생성자를 통해 reference-queue 가 주입되었으면, enqueued
+- It can be a candidate of GC If JVM absolutely needs memory
+  - It means `heap is running out, soft-reference object will be collected` even if there are references
 
 ```java
 // soft reference
@@ -42,9 +40,7 @@ new SoftReference() itself remains	// soft-reference itself
 > ttl == JVM-option (-XX:SoftRefLRUPolicyMSPerMB) * (remain-heap-size) after last GC.
 
 ## Weak Reference
-- referent: It will be collected in next GC even if there are references
-- reference-queue: optional
-  - 생성자를 통해 reference-queue 가 주입되었으면, enqueued
+- It `will be collected in next GC` even if there are references
 
 ```java
 // weak reference
