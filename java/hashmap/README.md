@@ -1,6 +1,4 @@
 # HashMap
-It is a `{key - value}` data structure which insert and/or select values based on **hashCode of key**
-
 ```
 https://en.wikipedia.org/wiki/Hash_table
 http://d2.naver.com/helloworld/831311
@@ -9,7 +7,7 @@ http://starplatina.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%BB%AC%EB%A0%89%EC%85
 http://egloos.zum.com/iilii/v/4457500
 ```
 
-## get() and/or put() operation
+## get() and/or put()
 <img src="1.png">
 
 - call map.get(key)
@@ -71,53 +69,44 @@ for (Data value : map.values()) {
 }
 ```
 
-## Collision
+## 해시 충돌
 <img src="2.png" width="50%">
 
-HashCode collision could happen because a number of object can be defined is larger than 2^32 and the same hash can be generated in each different key.
-
-Take a look at this formulation :
+HashMap 의 키는 아래의 공식에 따라 버킷이 결정되고, hashing 충돌이 발생할 수 있습니다:
 ```
-index = hashCode(KEY) % SIZE_OF_ARRAY;
+index = hashCode(KEY) % BUCKET_SIZE;
 ```
-If size is 10 and keys are 1 or 11 or 21, index (hash) is equal to 1.
 
-> o1.equals(o2) means o1.hashCode() == o2.hashCode() <br>
-> o1.hashCode() == o2.hashCode() **DOES NOT MEAN** o1.equals(o2)
+- hashcode == 1 % 10 => `1`
+- hashcode == 11 % 10 => `1`
+- hashcode == 21 % 10 => `1`
+  - 모두 1번 bucket 으로 저장됨
 
-Here is the way how to avoid collision.
+동일 bucket 에 저장된 데이터들은 LinkedList or RedBlack-tree 에 저장되고, 순회하면서 `equals` 가 일치하는 KEY 를 검색합니다
 
-### 1. Separate chaining
-LinkedList<br>
-Additional heap is required in each insert<br>
-Dynamic array
-
+### 자료구조
 <img src="3.png" width="50%">
 
- - insert : index[x] is conflicted, easily add next node using LinkedList
- - select : get index from hash of key, directly access index[x] and linearly search list until key is equal to
- - delete : easily delete link of nodes
+- `TREEIFY_THRESHOLD = 8`
+- 한 버킷에 8개 이상의 element 가 있으면, `LinkedList -> Red-Black Tree` 로 자료구조를 변환합니다. (탐색속도 위함)
+  - 초기에는 LinkedList 를 사용
 
-> 동일한 Bucket (Hash Collision) 에 element 가 8개 이상 들어가면, LinkedList 대신 Red-Black Tree 를 사용 합니다
+### 버킷 사이즈
+전체 element 의 개수가 capacity 를 증가하면 버킷은 리사이징 됩니다:
+- `DEFAULT_INITIAL_CAPACITY = 16`
+- LoadFactor: 0.75
+  - 16 * 0.75 == 12
 
-### 2. Open addressing
-Use empty space<br>
-No more additional heap is required<br>
-Fixed array<br>
-Refreshing is required - to clear dummy value<br>
-Resizing is required - to create new array when origin is about to be full
+버킷의 사이즈를 2배로 증가하면서 리밸런싱 합니다
 
- - insert : 11을 키로 하는 데이타를 그림과 같이 넣으면 1이 키인 데이타와 충돌이 발생한다. (이미 index가 1인 버킷에는 데이타가 들어가 있다.) Linear Probing에서는 아래 그림과 같이 충돌이 발생한 index (1) 뒤의 버킷에 빈 버킷이 있는지를 검색한다. 2번 버킷은 이미 index가 2인 값이 들어가 있고, 3번 버킷이 비어있기 3번에 값을 넣으면 된다.
+> 최대한 해시충돌 확률을 줄이기 위함
 
-<img src="4.png" width="50%">
+### 사이즈? 자료구조
+- HashMap의 전체 버킷 배열의 크기(Capacity)가 64 미만일때
+- 한 버킷에 8개 이상의 요소가 있어도 바로 트리로 변환하지 않고, 먼저 HashMap의 전체 크기를 2배로 늘리는 리사이징을 시도합니다.
+- `MIN_TREEIFY_CAPACITY: 64 사이즈 까지는 리사이징을 Tree 변환보다 우선으로 수행합니다`
 
- - select : key 11에 대해서 검색을 하면, index가 1이기 때문에, array[1]에서 검색을 하는데, key가 일치하지 않기 때문에 뒤의 index를 검색해서 같은 키가 나오거나 또는 Key가 없을때 까지 검색을 진행한다.
-
- - delete : 삭제를 했을 경우 충돌에 의해서 뒤로 저장된 데이타는 검색이 안될 수 있다. 아래에서 좌측 그림을 보자,  2번 index를 삭제했을때, key 11에 대해서 검색하면, index가 1이기 때문에 1부터 검색을 시작하지만 앞에서 2번 index가 삭제되었기 때문에, 2번 index까지만 검색이 진행되고 정작 데이타가 들어 있는 3번 index까지 검색이 진행되지 않는다.<br>
- 그래서 이런 문제를 방지하기 위해서 우측과 같이 데이타를 삭제한 후에, Dummy node를 삽입한다. 이 Dummy node는 실제 값을 가지지 않지만, 검색할때 다음 Index까지 검색을 연결해주는 역할을 한다.
-
-<img src="5.png" width="50%">
-
-**Performance**
-
-<img src="6.png" width="50%">
+따라서 HashMap 의 최종동작은 아래와 같습니다:
+- 전체 element 가 증가하여 CAPACITY: 16 -> 32 -> 64 까지 리밸런싱
+- 그후 한 버킷의 element 가 8개 이상일 경우
+- 자료구조를 LinkedList -> Red-Black Tree 으로 변환
