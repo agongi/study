@@ -1,3 +1,4 @@
+# 20191203
 용어정리
 dirty page (memory 와 실제 DB의 data 가 다른 그 diff)
 checkpoint (메모리값와 DB 를 동기화해주는 행위)

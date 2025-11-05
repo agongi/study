@@ -108,7 +108,6 @@ log.cleanup.policy=compact
   - 대기하던 producer 는 이제 다음 작업 진행
   - ISR 이 모두 복사된 메세지는 Committed 로 상태가 변경되고 (Tx 미사용시) > 아직 복사 진행중이라 Uncommitted 상태인 메세지는 consumer#poll 에서 제외됩니다 (브로커가 전달하지 않음)
 
-> 주의사항
 ```
 안정적인 카프카 운영을 위해 min.insync.replicas 는 반드시 replication.factor 보다 작아야 합니다 
 min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
@@ -228,7 +227,7 @@ Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 
   - batch 에서 message 를 보내기까지의 size, timeout
 
 ### Acks
-acks=all 은 `fellow partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
+acks=all 은 `follower partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
 
 <img src='3-2.png' width='75%'>
 
