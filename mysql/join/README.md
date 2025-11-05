@@ -195,9 +195,7 @@ Semi Join 은 문법적으로 키워드는 없지만 In or Exists 를 통해 사
 - 선행 테이블 `먼저 조회`후, 후행 테이블을 `랜덤 액세스` 하며 조인
   - 선행 (Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
   - 후행 (Driven) 테이블 `랜덤 액세스`
-- OLTP 에서 적합한 방식의 조인 (서비스는 일부의 조인결과를 사용하므로)
-
-> 조회된 Driving 을 기준으로 B+Tree 탐색을 통해 건별로 가져옴 (조인키로 인덱스 탐색하므로 인덱스가 잡혀있어야함)
+- `조인키가 index 일 경우 적합 (대부분 조인은 NL 로 실행됨)`
 
 ```java
 // 드라이빙 테이블
@@ -217,8 +215,9 @@ WHERE a.loc = 'NEW YORK';
 <img src="4.png" width="50%">
 
 - 선/후행 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
-- 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (skew 발생)
-- NL 은 driven 을 랜덤조회 해야 하는데, 그 대상이 많은 경우 (범위 탐색 같은) sort-merge 가 나을수 있다
+  - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (skew 발생)
+  - NL 은 driven 을 랜덤조회 해야 하는데, 그 대상이 많은 경우 (범위 탐색 같은) sort-merge 가 나을수 있다
+- `조인키가 클러스터링 인덱스일 경우 적합 (데이터가 정렬된 상태이므로)`
 
 ```java
 List<String> a=new ArrayList<>();
@@ -245,7 +244,7 @@ WHERE b.sal > 1000;
   - 큰 테이블은 조인키의 hash 값으로 검색
   - `해시충돌`시, 순차탐색이 필요하므로 최대한 unique 가 보장되는 키의 선택필요
 - OLAP 에서 적합 (전체 테이블이 대상이면, random access 할 필요 없음)
-- 조인키가 index 가 아닐 경우 적합 (NL 을 쓰면 안됨)
+- `조인키가 index 가 아닐 경우 적합 (NL 을 쓰면 안됨)`
 
 ```sql
 select /*+ USE_HASH(a b) */ a.dname, b.empno, b.ename
@@ -262,7 +261,8 @@ Table1
     (3, 4, 5, 6)
 ```
 
-- Union
+- union
+  - 중복 제거
 
 ```sql
 Table1 UNION Table2
@@ -278,6 +278,7 @@ id
 ```
 
 - Union all
+  - 중복 존재
 
 ```sql
 Table1 UNION ALL Table2
