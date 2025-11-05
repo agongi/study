@@ -70,7 +70,7 @@ update record [2]
 ```
 
 DML 쿼리가 어떤 인덱스를 사용하냐에 따라 사용되는 lock 의 종류도 달라집니다
-- P.K or unique index
+- P.K or U.K
   - 중복이 없으므로 record lock
 - secondary index
   - 중복 가능하므로 phantom 문제 방지위해 gap lock or next-key lock
