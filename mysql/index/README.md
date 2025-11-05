@@ -73,7 +73,7 @@ Hash 인덱스는 Key 의 해싱값으로 인덱스를 구성합니다.
 Mysql 은 데이터를 `페이지단위 (기본: 16KB)` 로 관리하고, RID (== ROWID) 는 페이지의 주소입니다
 
 - clustered-index
-  - leaf node 는 `페이지 주소를 가짐`
+  - leaf node 는 `페이지 그 자체를 가짐 (페이지는 N개의 ROW 가 정렬된 상태로 저장)`
 - secondary-index
   - leaf node 는 `clustered index 를 가짐`
 
@@ -81,8 +81,6 @@ Mysql 은 데이터를 `페이지단위 (기본: 16KB)` 로 관리하고, RID (=
 기본적으로 P.K 가 clustered index 입니다. (P.K 가 없으면 unique-index or 묵시적 생성키)
 
 Clustered index 의 `리프노드에 실제 데이터가 정렬되어 페이지 단위 (16KB)로 저장`됩니다.
-
-> Clustered Index의 리프 노드가 바로 데이터가 저장된 데이터 페이지 그 자체
 
 - 인덱스 변경이 발생한 경우
   - 인덱스 트리 갱신 발생
