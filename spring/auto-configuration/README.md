@@ -31,7 +31,6 @@ public static ImportCandidates load(Class<?> annotation, ClassLoader classLoader
 ```
 
 - `/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`
-  - LOCATION 에 정의된 파일중 AutoConfiguration.imports 은 아래의 형식으로 사용할 클래스가 정의되어 있습니다
 
 ```
 org.springframework.boot.actuate.autoconfigure.amqp.RabbitHealthContributorAutoConfiguration
