@@ -23,11 +23,11 @@ https://www.youtube.com/watch?v=14BwYGaohhI
 
 ## majority
 과반수 이상의 replicaSet 이 응답한 데이터를 반환합니다.
-현재 w:majority 작업이 있는경우, 대기하지 않고 바로 반환합니다.
+- primary/secondary 상관없이 과반이상 데이터 조회
 
 ## linearizable
 과반수 이상의 replicaSet 이 응답한 데이터를 반홥합니다.
-현재 w:majority 작업이 있는경우, 완료까지 대기후 응답에 포함해서 반환합니다.
+- primary 를 통해서만 과반이상 데이터 조회
 
 ## snapshot
 RDB 의 repeatable-read 와 동일함
