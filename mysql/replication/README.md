@@ -13,9 +13,9 @@ https://velog.io/@dangdang/MySQL-%EB%B3%B5%EC%A0%9C
 <img src="2.png" width="50%">
 
 ### Binlog:offset
-ROW 기반 바이너리 로그 포맷을 사요한다면 데이터 자체가 복제되므로 해당 방식도 이슈없지만 아래의 단점이 존재합니다:
+ROW 기반 바이너리 로그 포맷을 사용시 데이터 자체가 복제되므로 해당 방식도 이슈없지만 아래의 단점이 존재합니다:
 - 각 서버마다 binlog:offset 기반은 file rotation 정책 등에 따라 다를 수 있는데 source 의 값을 replica 에서 그대로 사용 할 수 없음
-  - 따라서 어느 트랜잭션까지 수행되었는지는 알기 어려움 (MM2 처럼 각자의 offset 은 다를수 있으므로 그 GAP 을 관리하는 별도의 토픽(관리)가 필요함)
+- 따라서 어느 트랜잭션까지 수행되었는지는 알기 어려움 (MM2 처럼 각자의 offset 은 다를수 있으므로 그 GAP 을 관리하는 별도의 토픽(관리)가 필요함)
 
 ### GTID (== Global Transaction ID)
 GTID 활성화 전, binlog_format = ROW 추천
@@ -23,12 +23,12 @@ GTID 활성화 전, binlog_format = ROW 추천
 ## 바이너리 로그 포맷
 ### Statement 기반
 실행된 SQL 이 Binlog 에 저장되어 복제됩니다. 대신 복제DB 와 값이 불일치 할수 있습니다 (ex. P.K 가 다르게 생성되거나 NOW() 의 결과 등이 다름)
+- insert into select ... 처럼 동적인 결과로 insert 쿼리가 발생하면 (그리고 NOW() 문구도 포함해서)
+- master/replicas 의 결과가 100% 동일하다고 보장할 수 없으므로
 
 ### Row 기반
 데이터 자체가 복제되어 불일치가 발새하지 않습니다.
-MySQL 8.x 부터 binlog 의 포맷은 ROW 가 기본값 입니다:
-- insert into select ... 처럼 동적인 결과로 insert 쿼리가 발생하면 (그리고 NOW() 문구도 포함해서)
-- master/replicas 의 결과가 100% 동일하다고 보장할 수 없으므로
+MySQL 8.x 부터 `binlog 의 포맷은 ROW 가 기본값` 입니다:
 
 ## 동기화 방식
 ### Asynchronous
