@@ -1,5 +1,4 @@
 # Aggregation
-
 ```
 https://docs.mongodb.com/manual/aggregation/
 https://www.practical-mongodb-aggregations.com/guides/sharding.html
