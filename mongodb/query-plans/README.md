@@ -1,10 +1,18 @@
 # Query Plans
-
 ```
-https://www.mongodb.com/docs/manual/core/query-plans/
+https://www.mongodb.com/docs/manual/core/query-plans
+https://docs.mongodb.com/manual/reference/explain-results
 ```
 
-검색이 Index 를 타는지는 https://docs.mongodb.com/manual/reference/explain-results/을 확인한다.
+- 캐싱된 Execution plan 조회
+    - 매칭 -> 해당 plan 사용
+- 캐싱된 결과가 없다면, 모든 플랜으로 경쟁
+    - `최초 101개의 document` 를 가장 빠르게 가져오는 실행계획을 winning plan 으로 설정
+    - 동점이라면, in-memory-sort 가 발생하지 않는 플랜을 선택
+        - **32MB 를 넘는 결과는 memory-sort 불가능**
+- 실행계획 캐시 저장
+- (이후 동일 쿼리형태일 경우) 캐싱된 결과로 플랜사용
+    - mongo 재시작 or collection drop | index CUD 가 발생하면 플랜캐시는 초기화 된다
 
 ```json
 db.user.find({}).explain();
@@ -55,17 +63,7 @@ db.user.find({}).explain();
 }
 ```
 
-- 캐싱된 Execution plan 조회
-  - 매칭 -> 해당 plan 사용
-- 캐싱된 결과가 없다면, 모든 플랜으로 racing
-  - `첫 101` 를 가장 빠르게 가져오는 결과를 winning plan 으로 설정
-  - 동점이라면, in-memory-sort 가 발생하지 않는 플랜을 선택
-    - **32MB 를 넘는 결과는 memory-sort 불가능**
-- 실행계획 캐시 저장
-- (이후 동일 쿼리형태일 경우) 캐싱된 결과로 플랜사용
-  - mongo 재시작 or collection drop | index CUD 가 발생하면 플랜캐시는 초기화 된다
-
-## 잘못된 실행계획이 winnind plan 으로 판정되는 경우
+## 잘못된 실행계획이 winning plan 으로 판정되는 경우
 ```json
 db.user.find({});
 -- 해당 쿼리수행시, key-examined: 878976 정도이고, 첫 101 응답이 늦음
@@ -77,8 +75,7 @@ db.user.find({}).limit(101);
 이런케이스가 나온다면 엉뚱한 인덱스가 winning 할 수 있음
 
 ## Hint
-RDB 와 동일하게 인덱스 지정이 가능하다.
-
+RDB 와 동일하게 인덱스 지정이 가능하다:
 ```json
 db.user.find({}).hint({name: 1, age: 1})
 ```
