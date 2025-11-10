@@ -1,23 +1,24 @@
 # Read Concern
-
 ```
 https://docs.mongodb.com/manual/reference/read-concern/
 https://www.youtube.com/watch?v=14BwYGaohhI
 ```
 
 ## local
-해당 node 기준으로 up-to-date 인 data 를 반환한다
+1개의 노드에서 응답한 데이터를 반환한다
 - majority 가 보장되지 않는 데이터 반환 가능
-- available `in current node`
-- (shard cluster) config server 와 통신해서 route info 확인 O
+  - (replica set) 요청을 받은 primary/secondary 의 데이터 그대로 리턴
+  - (sharded cluster) mongos <-> `config server 통신후` 최신 메타정보로 라우팅 > 요청을 받은 shard 의 데이터 그대로 리턴  
 
 > orphan document 가 발생하지 않음
 
-## available (shard cluster only)
-최소 1개의 노드에서 응답한 데이터까지 반환한다
+## available (sharded cluster only affected)
+1개의 노드에서 응답한 데이터를 반환한다
 - majority 가 보장되지 않는 데이터 반환 가능
-- available `at-most one node`
-- (shard cluster) config server 와 통신해서 route info 확인 X
+  - (replica set) 요청을 받은 primary/secondary 의 데이터 그대로 리턴
+  - (sharded cluster) mongos <-> `config server 통신하지 않고` 캐싱된 정보로 라우팅 > 요청을 받은 shard 의 데이터 그대로 리턴
+
+> orphan document 조회가능
 
 ## majority
 과반수 이상의 replicaSet 이 응답한 데이터를 반환합니다.
