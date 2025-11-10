@@ -1,5 +1,4 @@
 # ObjectId
-
 ```
 https://docs.spring.io/spring-data/mongodb/docs/current/reference/html
 https://www.mongodb.com/docs/manual/reference/method/ObjectId/
@@ -19,3 +18,5 @@ spring-data-mongo 에서 id 로 사용하는 필드의 선택은 아래의 기�
 - 4-byte timestamp
 - 5-byte random value
 - 3-byte incrementer count
+
+해당 구조는 UUIDv7 과 동일합니다
