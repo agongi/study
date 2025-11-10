@@ -7,12 +7,6 @@ https://docs.mongodb.com/manual
 ### Blog
 - [Optimistic Locking](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template.optimistic-locking)
 
-### Versions
-- MongoDB 4.2
-- MongoDB 4.4
-- MongoDB 5.0
-- MongoDB 6.0
-
 ***
 | RDBMS       | Mongo                                                   |
 | ----------- |---------------------------------------------------------|
@@ -22,12 +16,6 @@ https://docs.mongodb.com/manual
 | Tuple/Row   | Document                                                |
 | Column      | Field                                                   |
 | Table Join  | Embedded Documents (or using $lookup to join)           |
-
-## Collection
-Table 과 동일한 개념
-
-## Document
-Row 와 동일한 개념
 
 ```json
 {
