@@ -17,51 +17,28 @@ https://docs.mongodb.com/manual
 | Column      | Field                                                   |
 | Table Join  | Embedded Documents (or using $lookup to join)           |
 
-```json
-{
-   _id: ObjectId(7df78ad8902c)
-   title: 'MongoDB Overview',
-   description: 'MongoDB is no sql database',
-   by: 'tutorials point',
-   url: 'http://www.tutorialspoint.com',
-   tags: ['mongodb', 'database', 'NoSQL'],
-   likes: 100,
-   comments: [ 
-      {
-         user:'user1',
-         message: 'My first comment',
-         dateCreated: new Date(2011,1,20,2,15),
-         like: 0
-      },
-      {
-         user:'user2',
-         message: 'My second comments',
-         dateCreated: new Date(2011,1,25,7,45),
-         like: 5
-      }
-   ]
-}
-```
+## Lock
+TBD
 
 ## Write
-- write in buffer (memory, b-tree/raw)
-- write in journal (disk, sequential)
-- write done!
-- (later) write in db (disk, random/compressed)
-  - checkpoint (60s) 시점에 dirtyPage flush 수행
+### 1. Retryable Write
+Retryable writes allow MongoDB drivers to automatically retry certain write operations `a single time` in driver level regardless of whether retryWrites option is set to **false.**
 
-## Read
-- read from buffer (memory)
-- read from DB (disk) & store in buffer
-  - cache is over than 80% of physical memory, eviction started
-  - cache is over than 95% of physical memory, eviction started forcefully
-  - if deleted memory is dirty, store in `*.LAS` file
-  - LAS will be written in DB in future
+> Operations in transactions are not individually retryable but `whole are` on it.
+
+### 2. Multi-Document
+1개의 document 를 수정하는 명령어만 bulk 처리가 가능합니다. (updateMany 처럼 multi-document 는 bulk operation 미지원)
+
+| Methods     | Descriptions      |
+| ----------- | ----------------- |
+| #insertOne  | Supported         |
+| #updateOne  | Supported         |
+| #deleteOne  | Supported         |
+| #replaceOne | Supported         |
+| #updateMany | **Not supported** |
 
 ## BSON
-
-몽고는 내부적으로 BSON 으로 document 를 저장합니다.
-
+몽고는 내부적으로 BSON 으로 document 를 저장합니다
 - binary format 이므로 사이즈가 작고
 - 필드의 type 을 지정가능
 
