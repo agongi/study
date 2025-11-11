@@ -1,5 +1,4 @@
 # Zone Sharding
-
 ```
 https://www.mongodb.com/docs/manual/core/zone-sharding/
 ```

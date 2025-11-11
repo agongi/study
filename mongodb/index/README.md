@@ -1,5 +1,4 @@
 # Index
-
 ```
 https://docs.mongodb.com/manual/indexes/
 https://www.mongodb.com/docs/manual/core/index-creation/

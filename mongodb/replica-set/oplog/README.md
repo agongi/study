@@ -1,5 +1,4 @@
 # Oplog
-
 ```
 https://atharva-inamdar.medium.com/understanding-mongodb-oplog-249f3996f528
 https://hevodata.com/learn/working-with-mongodb-oplog/
