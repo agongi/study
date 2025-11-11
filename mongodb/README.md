@@ -54,8 +54,6 @@ Sharded Cluster 환경에서 청크 마이그레이션시 발생합니다:
 - binary format 이므로 사이즈가 작고
 - 필드의 type 을 지정가능
 
-<img src="images/1.png" width="75%">
-
 ```json
 {"hello": "world"} ->
 \x16\x00\x00\x00           // total document size
