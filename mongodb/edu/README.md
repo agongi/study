@@ -1,16 +1,10 @@
 # 20191203
-용어정리
-dirty page (memory 와 실제 DB의 data 가 다른 그 diff)
-checkpoint (메모리값와 DB 를 동기화해주는 행위)
-
 Engine (wired tiger)
-
 - == innoDB
 - document-scope lock
-- b-tree index
+- b+ tree index
 
 메모리
-
 - 물리메모리의 절반 (50%) 사용 (ex. 128GB -> 64GB)
 - document 별 가변 page
 - (데이터) 원본저장, DB 에는 압축 (IO 사이즈가 줄겠지, 50% 정도)
@@ -18,11 +12,10 @@ Engine (wired tiger)
 
 압축알고리즘
 zlib 압축효율좋고, 느림
-snappy 약간의효율, 빠른 (현재표준)
 zstd (4.2 표준)
+snappy 약간의효율, 빠른 (현재표준)
 
 쓰기
-
 - buffer write (memory)
 - journal log write (disk, sequential)
 - write done!
@@ -36,7 +29,6 @@ zstd (4.2 표준)
   : OS 에 부하에 따라 DB linear 성능에 영향을받음
 
 읽기
-
 - 버퍼에 있으면 바로 cache hit
 - os 캐시에 (blockManager) 있으면 cache hit
 - 80% 이상, 사용시 evict 시작 (LRU)
@@ -44,12 +36,10 @@ zstd (4.2 표준)
   : 추후 여유가 생기면 LAS 를 DB 에 반영
 
 ReplicaSet
-
 - oplog 를 생성하고, secondary 에서 그 파일을 반영
 - read 는 부하분산 가능/write 는 primary 만 가능함
 
 롤백
-
 - primary 가 죽음
 - oplog 마저 유실
 - (다른 누군가가 primary 선출되고) 복구되어, secondary 로 재진입
@@ -60,18 +50,15 @@ ReplicaSet
   : 반영은 개발에서 판단
 
 Replica (실시간 복제, based on oplog)
-
 - (3.6) global write lock 을 걸고, 복제시작 (정합성 보장을 위해)
 - (4.0)lock 없어진 대신, 스냅샷을 찍고 그 데이터로 secondary read 바로 지원
   : 20-30ms 차이로 찍음, 그정도의 gap 이 존재
 
 샤딩
-
 - getMore (100 document 요청시, N 개씩 짤라서 요청/응답함)
   : 몽고앞에 L4 를 두면 문제발생
 
 샤드키 (중요함)
-
 - 해시샤드
   : 1-1 로 해시값 생성 (meta 의 사이즈가 증가)
   : in 검색은 broadcast (N random-access)
@@ -87,7 +74,6 @@ Replica (실시간 복제, based on oplog)
   : shard-join 안됨
 
 인덱스
-
 - 클러스터인덱스 미지원
 - 16KB 사이즈 고정
 - 최대 64개 설정가능 (collection-scope)
@@ -119,7 +105,6 @@ aggregation 은 pipeline 으로 순차 a|b|c 로 수행됨. 즉 $match 로 맨�
   : $out, $lookup 가 포함되었으면 one-of-shard-primary 가 부하담당
 
 Read conern
-
 - local
   : 요청받은 내가 응답
   : 중복은 제거함 (shard, secondary 에서는 이거?쓰자)
@@ -134,9 +119,7 @@ Read conern
 
 청크마이그레이션 > 샤드불균형 일때, 데이터의 리밸런싱 (청크단위로 떼어서 다른샤드로 옮기는 과정)
 
-
 Write concern
-
 - w
   : 1 2 3 4 5 ... 메모리에 몇대까지
 - majority
@@ -147,11 +130,10 @@ Write concern
   : r/w majority 이상, casual consistency session ON 해야함
 
 Lock
-
 - document lock 까지 지원 (wiredTiger)
 - sub-document CUD 라고해도, document-level lock 이므로 전체가 걸림
-- shardlock rw x
-- exclusivelock w x
+- shardlock read ok, write no
+- exclusivelock read/write no
 - intentlock collectionlock 대신 document 는 못지우게
 - yield
   : slow-query 라면, IO 작업동안 리소스양보 (CPU)
@@ -162,7 +144,6 @@ Lock
   : write 를 계속 수행함 until timeout (rdb 는 block 되어서, 대기) -> 오버헤드
 
 Consistency
-
 - tx 는 클러스터 내부의 logicalTime(ms) 로 관리하면서, ms 가 다른것까지만 tx 보장됨
 - getMore() 는 sse 처럼..
 
@@ -179,7 +160,6 @@ Consistency
 
 
 트러블슈팅
-
 - mongos -- mongod 커넥션 이슈
   : core * 10 개의 커넥션 맺음 (각 샤드의 node 마다 각각)
 
@@ -187,9 +167,6 @@ Consistency
   : 
 
 16MB 가 1개의 document max size
-
-
-
 
 [mongo]
 readConcern - rdb 의 isolation_level 정도로 이해하면됨 (read_committed)
