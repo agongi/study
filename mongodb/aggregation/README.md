@@ -1,6 +1,7 @@
 # Aggregation
 ```
 https://docs.mongodb.com/manual/aggregation/
+https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/
 https://www.practical-mongodb-aggregations.com/guides/sharding.html
 ```
 
@@ -29,7 +30,8 @@ https://www.practical-mongodb-aggregations.com/guides/sharding.html
 | join     | $lookup              |
 | flatten  | $unwind              |
 
-- 일반적인 사용
+## 사용법
+### 1. $match, $group
 ```json
 {
   "_id": "10280",
@@ -47,33 +49,3 @@ db.zipcodes.aggregate([
   {$group: {_id: "$state", totalPop: {$sum: "$pop"}}},
 ])
 ```
-
-- $unwind
-```json
-{
-  _id : "jane",
-  joined : ISODate("2011-03-02"),
-  likes : ["golf", "racquetball"]
-}
-
-db.users.aggregate([
-  {"$unwind": "$likes"},
-  {"$group": {"_id": "$likes","number": {"$sum":1}}},
-  {"$sort": {"number": -1}},
-  {"$limit": 5}
-])
-```
-
-```json
-{
-  _id : "jane",
-  joined : ISODate("2011-03-02"),
-  likes : "golf"
-}
-{
-  _id : "jane",
-  joined : ISODate("2011-03-02"),
-  likes : "racquetball"
-}
-```
-
