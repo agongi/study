@@ -193,9 +193,11 @@ Semi Join 은 문법적으로 키워드는 없지만 In or Exists 를 통해 사
 <img src="3.png" width="50%">
 
 - 선행 테이블 `먼저 조회`후, 후행 테이블을 `랜덤 액세스` 하며 조인
-  - 선행 (Driving) 테이블의 크기가 작거나, Where 절 통해 결과 집합을 작게해야함
+  - 선행 (Driving) 테이블을 where 조건으로 결과 집합을 작게 해야함
   - 후행 (Driven) 테이블 `랜덤 액세스`
-- `조인키가 index 일 경우 적합 (대부분 조인은 NL 로 실행됨)`
+- 특징
+  - `후행 테이블의 랜덤 엑세스 부담이 있음`
+  - 선행테이블의 사이즈가 작아서 -> 랜덤 엑세스가 (후행 테이블의 인덱스 조회) 효율적이라면 적합 (== 대부분 조인은 NL 로 실행됨)
 
 ```java
 // 드라이빙 테이블
@@ -215,9 +217,10 @@ WHERE a.loc = 'NEW YORK';
 <img src="4.png" width="50%">
 
 - 선/후행 테이블을 조인키에 따라 정렬하고, 순차검색 하면서 같은 값 머지
-  - 결과집합의 크기가 차이가 많이 나는 경우에는 비효율 (skew 발생)
-  - NL 은 driven 을 랜덤조회 해야 하는데, 그 대상이 많은 경우 (범위 탐색 같은) sort-merge 가 나을수 있다
-- `조인키가 클러스터링 인덱스일 경우 적합 (데이터가 정렬된 상태이므로)`
+  - 선행/후행 테이블을 동시 정렬
+- 특징
+  - `양쪽 테이블을 모두 정렬하는 부담이 있음`
+  - 선행테이블의 크기가 커서 -> 랜덤 엑세스가 비효율일 경우 적합 (== 보통 전체 사이즈 대비 20-25% 이상일 경우) 
 
 ```java
 List<String> a=new ArrayList<>();
@@ -240,83 +243,16 @@ WHERE b.sal > 1000;
 ### Hash Join
 <img src="5.jpg" width="50%">
 
-- 작은 테이블 기준으로, 조인키의 hash bucket 생성
+- 선행 테이블 기준으로, 조인키의 hash bucket 생성
   - 큰 테이블은 조인키의 hash 값으로 검색
   - `해시충돌`시, 순차탐색이 필요하므로 최대한 unique 가 보장되는 키의 선택필요
-- OLAP 에서 적합 (전체 테이블이 대상이면, random access 할 필요 없음)
-- `조인키가 index 가 아닐 경우 적합 (NL 을 쓰면 안됨)`
+- 특징
+  - `해시 테이블을 만드는 부담이 있음`
+  - 인덱스를 사용하지 못하면 해시테이블을 만들어서 처리가능 -> B+Tree 인덱스 탐색인 O(log n) 이 아닌 해시 O(1) 으로 처리 
 
 ```sql
 select /*+ USE_HASH(a b) */ a.dname, b.empno, b.ename
 from dept a, emp b
 where a.deptno = b.deptno
   and a.deptno between 10 and 20;
-```
-
-### Union vs Join
-```sql
-Table1
-    (1, 2, 3, 4)
-    Table2
-    (3, 4, 5, 6)
-```
-
-- union
-  - 중복 제거
-
-```sql
-Table1 UNION Table2
-
-id
----
-1
-2
-3
-4
-5
-6
-```
-
-- Union all
-  - 중복 존재
-
-```sql
-Table1 UNION ALL Table2
-
-id
----
-1
-2
-3
-4
-3
-4
-5
-6
-```
-
-- Outer Join
-
-```sql
-Table1 t1 OUTER JOIN Table2 t2 ON t1.id = t2.id
-
-id    id
----------
-1    NULL
-2    NULL
-3     3
-4     4
-NULL  5
-NULL  6
-```
-
-- Inner Join
-
-```sql
-Table1 t1 INNER JOIN Table2 t2 ON t1.id = t2.id
-
-id    id
----------
-3     3
-4     4
 ```
