@@ -36,17 +36,22 @@ https://docs.confluent.io/platform/current/kafka/deployment.html#memory 의 가�
 ### (전송) Zero copy (== Direct memory or DMA)
 `디스크 -> 커널 버퍼 -> NIC`로 바로 전달해서 네트워 구간을 최적화 합니다.
 
->### 기존 (Non-Zero Copy) 방식
+### 1. 기존 (Non-Zero Copy) 방식
 - 디스크에서 데이터를 커널 버퍼로 읽음
 - 커널 버퍼의 데이터를 사용자 공간(User Space) 버퍼로 복사
 - 사용자 공간 버퍼에서 다시 소켓 커널 버퍼로 복사
 - 소켓 버퍼에서 네트워크 카드로 전송
 
->### Zero Copy (sendfile) 방식
+### 2. Zero Copy (sendfile) 방식
 - 커널이 직접 디스크 파일을 소켓으로 전송 (sendfile() 호출).
 - 사용자 공간을 거치지 않고, 디스크 → 커널 버퍼 → 네트워크 카드로 바로 전달.
 
 <img src='1-3.png' width='75%'>
+
+더 개선된 zero copy 는 NIC 버퍼가 Read 버퍼를 참조할 수 있는 주소정보를 획득하여 직접 접근합니다.
+- 소켓 버퍼 복사과정 생략
+
+<img src='1-4.png' width='75%'>
 
 ### Segment (== file)
 브로커에 저장되는 레코드의 (물리적인) 로그파일 입니다
@@ -85,7 +90,7 @@ log.cleanup.policy=compact
 <img src='1-2.png' width='50%'>
 
 ## 토픽/파티션
-브로커는 1개의 토픽의 메세지를 N-개의 파티션으로 분산해서 Record 저장 합니다.
+브로커는 `1개의 토픽의 메세지를 N-개의 파티션으로 분산`해서 Record 저장 합니다.
 
 파티션은 로그파일로 (== sengment) 메세지를 저장하고, `파티션 리더를 통해서만 CRUD 가 발생`합니다. (즉 Producer, Consumer 는 파티션 리더와 통신)
 
@@ -96,7 +101,7 @@ log.cleanup.policy=compact
 <img src='1.png' width='75%'>
 
 ## Broker
-### [Replication](https://docs.confluent.io/kafka/design/replication.html)
+### 1. [Replication](https://docs.confluent.io/kafka/design/replication.html)
 카프카는 파티션 리더가 모든 CRUD 를 담당하므로, 팔로어는 주기적으로 segment 을 fetch 해서 replication 을 수행합니다.
 
 <img src='3-2.png' width='75%'>
@@ -118,10 +123,10 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
 - 그때 min.insync.replicas == replication.factor 라면 -> ISR 를 만족 할 수 없으므로 모든 발행이 실패 (그리고 Producer 의 설정에 따라 무한 retries 가능) 
 ```
 
-### Controller
-[Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
-
+### 2. Controller
 <img src='2.png' width='75%'>
+
+[Controller Broker](https://www.slideshare.net/ConfluentInc/a-deep-dive-into-kafka-controller) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 목적: `(브로커) 장애시` 해당 브로커에 속하던 `파티션 리더/팔로워 선출`
 - 모든 브로커는 zookeeper 와 heartbeat 을 주고받습니다 (혹은 kraft 를 사용함으로써 브로커끼리 직접 통신) 
@@ -139,7 +144,7 @@ min.insync.replicas < replication.factor = 3 or 5 ... (quorum 숫자)
   - controller broker 는 나머지 broker 에 전파합니다
     - kraft 를 사용한다면 zookeeper 과정이 생략되고, controller 가 각 브로커와 kraft 로 직접 heartbeat 통신하며 감지
 
-### [Cruise Control](https://github.com/linkedin/cruise-control)
+### 3. [Cruise Control](https://github.com/linkedin/cruise-control)
 Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 (Broker Skew)` 상태에 빠지게 됩니다.
 
 - 상황: 장애가 발생한 브로커 A가 가지고 있던 리더 파티션이, ISR에 있던 다른 브로커(B, C) 에게 몰리게 됩니다.
@@ -158,7 +163,7 @@ Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 
      - 하지만 지속적인 리밸런싱 부하가 발생하므로 보통 수동실행 합니다
    - 수동 실행: 일반적으로는 관리자가 Cruise Control이 제안한 계획을 검토하고, 안전하다고 판단되면 API를 통해 실행 명령을 내립니다
 
-### Coordinator
+### 4. Coordinator
 [Coordinator Broker](https://kafka.apache.org/documentation/#impl_offsettracking) 는 브로커 중 하나가 임의로 선정 됩니다.
 
 목적: `(컨슈머) 장애시` 해당 파티션을 처리하는 `컨슈머 선정/리밸런싱` 
@@ -171,7 +176,7 @@ Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 
 - coordinator 는 zookeeper 에 파티션 할당정보 저장후 group leader 에게 ack 합니다 (== confirmed)
 - 이제 consumer 는 할당된 파티션을 fetch 하며 consume 합니다
 
-### 파티션 판단 주체
+### 5. 파티션 판단 주체
 - Producer
   - 카프카 메타데이터를 브로커를 통해 조회 & 저장 (Zookeeper 에 저장)
   - `레코드를 전송할 때 직접 지정`하거나, 파티셔너를 통해 결정
@@ -203,7 +208,7 @@ Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 
 - Sender
   - (비동기) Accumulator 에 저장된 record 를 broker 에 전송합니다
 
-### 옵션
+### 1. 옵션
 <img src='3-1.png' width='75%'>
 
 - acks
@@ -226,17 +231,17 @@ Controller 에 의해 브로커 장애가 복구된 후 클러스터는 `스큐 
 - batch.size(64kb)/linger.ms(10ms)
   - batch 에서 message 를 보내기까지의 size, timeout
 
-### Acks
+### 2. Acks
 acks=all 은 `follower partition` 이 모두 ack 를 리더파티션에 보내면 -> 리더 파티션이 producer 에 OK 를 응답합니다
 
 <img src='3-2.png' width='75%'>
 
-### Delivery timeout
+### 3. Delivery timeout
 max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다 
 
 <img src='3-3.png' width='75%'>
 
-### 순서 보장  
+### 4. 순서 보장  
 `max.in.flight.requests.per.connection (default: 5)` 의 설정에 따라 batch 로 보내진 메세지중 1개가 실패한 경우 retry 하지만 그로인해 메세지의 순서가 변경 될 수 있습니다.
 
 `enable.idempotence=true` 로 설정한경우 batch 단위로 성공/실패 처리하므로 순서 보장이 가능합니다
@@ -244,7 +249,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 ## Consumer
 <img src='4.png' width='75%'>
 
-### 옵션
+### 5. 옵션
 - group.id
   - consumer group 의 식별자 입니다. 동일 그룹내의 정보는 공유됩니다
 - enable.auto.commit
@@ -253,7 +258,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
   - read_uncommitted, read_committed
   - read_committed 은 (producer 에서) 트랜잭션 commit 된 메세지만 가져갑니다
 
-### Consumer Group
+## Consumer Group
 - consumer 는 특정 consumer-group 에 속하고 그룹은 group-id 로 구분됩니다
 - 컨슈머그룹은 subscribe 하는 파티션의 offsets 을 `__consumer_offsets` 토픽으로 관리합니다.
 - 컨슈머그룹에 속한 컨슈머의 추가/삭제시 리밸런싱이 발생하고 그 동안은 STW 입니다
@@ -262,7 +267,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 <img src='4-7.png' width='75%'>
 
-### [전송 방식](https://learn.conduktor.io/kafka/delivery-semantics-for-kafka-consumers/)
+### 1. [전송 방식](https://learn.conduktor.io/kafka/delivery-semantics-for-kafka-consumers/)
 - at most once
   - 메세지를 가져온 시점에 __consumer_offsets 토픽에 커밋 합니다
   - 그에 따라 메세지 유실이 가능 합니다 
@@ -281,7 +286,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
   - Consumer: read_committed 로 커밋된 메세지만 가져옵니다
   - Producer -> Consumer 에서 `메세지 발행 > __consumer_offsets 커밋`하는 전체 흐름을 Atomic 하게 처리해서 트랜잭션 (exactly once) 보장합니다
 
-### Auto Commit
+### 2. Auto Commit
 <img src='4-3.png' width='75%'>
 
 - `enable.auto.commit=true`
@@ -293,7 +298,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 > 아직 처리 되지 않은 메세지가 커밋되므로 at most once 를 지킬 수 없게 됩니다
 
-### 리밸런싱 (Incremental Rebalance)
+### 3. 리밸런싱 (Incremental Rebalance)
 컨슈머 그룹 리밸런싱은 아래의 조건에서 발생합니다:
 - 컨슈머 추가/삭제
 - 토픽의 파티션 증설
@@ -312,7 +317,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 
 <img src='4-5.png' width='75%'>
 
-### Static Group Membership
+### 4. Static Group Membership
 - 컨슈머 join group 시 매번 새로운 `member.id` 생성
 - 컨슈머그룹은 새로운 멤버로 인지하고 리밸런싱 수행
 - 만약 짧은 시간내 join/leave 한다면 리밸런싱을 최소화 할 수 있습니다
@@ -324,7 +329,7 @@ max.block.ms 이후 구간부터 `develiry.timeout.ms` 구간 입니다
 <img src='4-6.png' width='75%'>
 
 ## Advanced
-### @Transactional
+### 1. @Transactional
 - Producer
   - @Transaction 미사용 -> ISR (== replication.factor) 만큼 복제된 레코드는 브로커에서 Committed 으로 마킹
   - @Transaction 사용 -> (Broker) 복제까지 완료후 Producer 에 ACK 를 하면 > (Producer) `Commit 명령을 수동으로 한번 더 호출`하는 과정 존재
@@ -376,16 +381,16 @@ while (true) {
 
 > 단 Consumer 에서 Producer 를 가져올수 있을때만 유효합니다. nifi 처럼 이기종 kafka 를 relay 할때는 좀더 까다로움 (그럴때는 트랜잭션을 안쓰는게 낫다고 봄)
 
-### 가용성 vs 내구성
+### 2. 가용성 vs 정합성 (or 내구성)
 `unclean.leader.election.enable` 옵션을 통해 결정됩니다:
 - false: ISR 에서만 leader 를 선출합니다
-  - 가용성 낮음
-  - 내구성 높음
+  - 가용성 ⬇️
+  - 내구성 ⬆️
 - true: ISR 가 없다면 (== out-of-sync) replicas 중에서 리더를 선출한다.
-  - 가용성 높음
-  - 내구성 낮음
+  - 가용성 ⬆️
+  - 내구성 ⬇️
 
-### 발행 보장
+### 3. 발행 보장
 `@TransactionalEventListener` 을 이용해서 트랜잭션 커밋 후 ApplicationContext 에서 이벤트를 발행 할 수 있습니다:
 ```java
 @RequiredArgsConstructor
