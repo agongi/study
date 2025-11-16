@@ -33,20 +33,20 @@ Kafka가 Zookeeper를 제거한 이유는 단순한 의존성 제거가 아니�
 Kafka는 Zookeeper를 대체하기 위해 자체 합의 프로토콜인 KRaft를 도입했습니다.
 
 ### 2.1 컨트롤러 쿼럼 (Controller Quorum)
-- Kafka 브로커 일부가 process.roles=controller 로 동작.
-- 컨트롤러들이 Raft 합의를 수행하며 클러스터 메타데이터를 관리.
+- Kafka 브로커 일부가 `process.roles=controller` 로 동작
+- 컨트롤러들이 Raft 합의를 수행하며 클러스터 메타데이터를 관리
 
 ### 2.2 이벤트 소싱 기반 메타데이터 저장
-- 기존: Zookeeper ZNode에 메타데이터 저장
-- 변경: __cluster_metadata 내부 토픽에 이벤트 로그로 저장
+- (기존) Zookeeper ZNode에 메타데이터 저장
+- (변경) `__cluster_metadata` 내부 토픽에 이벤트 로그로 저장
 
 ### 2.3 로컬 상태 저장
-- 각 컨트롤러는 메타데이터 로그를 로컬 디스크에도 유지.
-- 이벤트 replay로 빠르게 상태 복구 가능.
+- 각 컨트롤러는 메타데이터 로그를 로컬 디스크에도 유지
+- 이벤트 replay로 빠르게 상태 복구 가능
 
 ### 2.4 빠른 리더 선출(Failover)
-- Zookeeper 기반의 “전체 상태 재조회” 과정 제거
-→ failover 시간이 수십 초 → 밀리초로 단축.
+- Zookeeper 기반의 `전체 상태 재조회` 과정 제거
+  - → failover 시간이 수십 초 → 밀리초로 단축
 
 ### 3. 배포 모델: Combined vs Isolated
 KRaft 모드는 두 가지 배포 모델을 제공합니다.
