@@ -80,19 +80,21 @@ spec:
 ```
 
 ### Pod
-Container 의 집합으로, Kubernetes 에서 관리하는 가장 작은 단위 입니다.
+Container 의 집합으로, Kubernetes 에서 관리하는 가장 작은 논리적인 단위 입니다
 - 1개의 Container 는 1개의 Process 만 실행하는 것이 일반적이므로, 여러개의 Container 를 묶어서 배포하는 최소 단위
-  - 동일한 pod 내의 container 는 `network/disk` 을 공유 하므로 IPC 등에 제약은 없습니다
+- 동일한 pod 내의 container 는 `network/disk` 을 공유 하므로 IPC 등에 제약은 없습니다
 
-> Node 는 물리적인 구분/Pod 은 논리적인 구분
+### 1. Probes
+| 항목              | **Liveness Probe**  | **Readiness Probe**                               | **Startup Probe**                         |
+|-------------------|---------------------|----------------------------------------------------|-------------------------------------------|
+| 실패 시 동작      | 컨테이너 재시작            | 서비스에서 제외 (트래픽 안 받음)               | 컨테이너 재시작                                  |
+| 수행 시점         | startup probe 이후 실행 | startup probe 이후 실행                             | 최우선 실행 (startup 이 완료된후 -> live, ready 실행) |
 
-| 항목              | Liveness Probe                              | Readiness Probe                               |
-|-------------------|----------------------------------------------|------------------------------------------------|
-| 목적              | 컨테이너가 살아있는지 확인                   | 컨테이너가 트래픽 받을 준비가 되었는지 확인    |
-| 실패 시 동작      | 컨테이너를 재시작                            | 서비스에서 제외 (트래픽 안 받음)               |
-| 재시작 여부       | 예                                           | 아니오                                         |
+JVM 처럼 실행지연이 큰 경우 liveness 가 너무 빠르게 실행되면 재시작이 발생할 수 있습니다.
 
->### 라이프 사이클
+이를 방지하기 위해 initialDelay 를 지정해야하는데 programmatical 하게 인지할 수 있는 startup probe 가 추가 되었습니다 
+
+### 2. Life Cycle
 - preStop
   - 컨테이너 종료 전에 실행
 - postStart
@@ -186,7 +188,7 @@ Pod 의 관점에서 PVC 을 생성하면, 쿠버네티스가 적당한 크기�
 
 > 개발자는 물리적 저장소에 대한 정보를 몰라야 한다! 그것은 클러스터 관리자가 할 일이다
 
-#### PVC (PersistentVolumeClaim)
+### 1. PVC (PersistentVolumeClaim)
 필요한 스토리지에 대한 사용 선언
 ```yaml
 apiVersion: v1
@@ -221,7 +223,7 @@ spec:
   storageClassName: "XYZ"
 ```
 
-#### PV (PersistentVolume)
+### 2. PV (PersistentVolume)
 실제 정의된 스토리지 리소스
 ```yaml
 apiVersion: v1
@@ -239,7 +241,7 @@ spec:
     path: /tmp/mongodb
 ```
 
-#### [StorageClass](https://velog.io/@rockwellvinca/kubernetes-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80%ED%81%B4%EB%9E%98%EC%8A%A4StorageClass%EC%99%80-PV%EC%99%80-PVC%EC%9D%98-%EC%83%9D%EB%AA%85%EC%A3%BC%EA%B8%B0)
+### 3. [StorageClass](https://velog.io/@rockwellvinca/kubernetes-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80%ED%81%B4%EB%9E%98%EC%8A%A4StorageClass%EC%99%80-PV%EC%99%80-PVC%EC%9D%98-%EC%83%9D%EB%AA%85%EC%A3%BC%EA%B8%B0)
 StorageClass 를 사용하면 PVC 로 사용자가 요청할때, StorageClass 을 통해 PV 를 생성할 수 있습니다. (기존에는 PV 를 미리 만들어 놔야함)
 
 <img src='5.png' width="75%"/>
