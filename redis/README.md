@@ -200,9 +200,9 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
 
    2. `XPENDING`으로 모니터링하기: 주기적으로 XPENDING 명령어를 사용해 각 컨슈머 그룹의 대기 중인 메시지(PEL)가 얼마나 쌓여있는지 확인해야 합니다.
 
-   1     # mystream의 group-A에 얼마나 많은 메시지가 대기중인지 확인
-   2     XPENDING mystream group-A
-      만약 특정 그룹의 대기 메시지 수가 비정상적으로 많다면 즉시 조치해야 합니다.
+     2-1 mystream의 group-A에 얼마나 많은 메시지가 대기중인지 확인
+     2-2 XPENDING mystream group-A
+         만약 특정 그룹의 대기 메시지 수가 비정상적으로 많다면 즉시 조치해야 합니다.
 
    3. 장애 처리 (`XCLAIM`): 특정 컨슈머가 오랫동안 XACK 없이 멈춰있다면, 다른 활성 컨슈머가 XCLAIM 명령어로 해당 메시지의 소유권을 가져와 대신 처리하고 XACK 할 수
       있습니다.
@@ -210,18 +210,26 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
    4. 불필요한 컨슈머 그룹 제거 (`XGROUP DESTROY`): 더 이상 사용하지 않는 컨슈머 그룹은 반드시 `XGROUP DESTROY` 명령어로 명시적으로 삭제해야 합니다. 이 명령은 해당
       그룹과 관련된 모든 상태 정보(PEL 포함)를 깨끗하게 제거합니다.
 
-   1     # mystream에서 더 이상 사용하지 않는 old-group을 완전히 삭제
-   2     XGROUP DESTROY mystream old-group
+     4-1 mystream에서 더 이상 사용하지 않는 old-group을 완전히 삭제
+     4-2 XGROUP DESTROY mystream old-group
 ```
 
 ## [자료구조](https://inpa.tistory.com/entry/REDIS-%F0%9F%93%9A-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85Collection-%EC%A2%85%EB%A5%98-%EC%A0%95%EB%A6%AC)
 <img src='6.png' width="50%">
 
 - string
+  - 단순한 get/set
 - list
+  - 중복허용
+  - 순서보장
 - set
+  - 중복제거
+  - 순서미보장
 - sorted set
+  - 중복제거
+  - score 기반 순서보장
 - hash
+  - hashMap 의 구조
 
 ## [Spin-Lock](https://hdbstn3055.tistory.com/271)
 SET command 를 통해 (timeout 설정하면서) 값을 세팅하고, 적절한 interval 로 체크하는 구현방식 입니다.
