@@ -6,11 +6,7 @@ https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d
 ## Container vs Virtual Machine
 Docker 는 `container engine` 을 통해 동일 OS 위에서 격리된 환경으로 (cgroup, namespace) 실행됩니다.
 
-> rancher desktop
-
 VM 은 `hypervisor`를 통해 하드웨어 레벨에서부터 구분되어 개별 OS 를 실행됩니다. (os)
-
-> virtualbox
 
 | 항목 | VM (Virtual Machine) | Container |
 | :--- | :--- | :--- |
@@ -20,7 +16,7 @@ VM 은 `hypervisor`를 통해 하드웨어 레벨에서부터 구분되어 개�
 격리수준은 VM 이 높지만, OS 를 개별로 포함하므로 빠르고/가볍게 실행되지 않습니다. 그래서 Docker 을 MSA 에서 사용합니다.
 
 ## `cgroup`
-`물리적인 리소스` 격리
+`물리적인 리소스` 제한
 - cpu
 - memory
 - network

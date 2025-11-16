@@ -1,4 +1,4 @@
-# Docker Interview for Senior Engineer
+# Docker
 ```
 https://docs.docker.com/reference/
 https://pyrasis.com/jHLsAlwaysUpToDateDocker
@@ -8,14 +8,15 @@ https://velog.io/@choidongkuen/%EC%84%9C%EB%B2%84-Docker-Network-%EC%97%90-%EB%8
 ## 1. 핵심 개념
 Docker는 애플리케이션을 신속하게 구축, 테스트 및 배포할 수 있는 컨테이너 기반의 오픈소스 가상화 플랫폼입니다. OS 수준의 가상화 기술을 사용하여 호스트 시스템의 커널을 공유하면서도, 프로세스, 네트워크, 파일 시스템 등은 독립적으로 격리된 환경에서 애플리케이션을 실행합니다.
 
-- **격리 (Isolation)**: Linux의 `namespaces`와 `cgroups` 기술을 사용하여 격리된 환경을 제공합니다.
-  - **`namespaces`**: 하나의 시스템에서 프로세스를 분리하는 커널 기능입니다. Docker는 다음 `namespaces`를 사용하여 컨테이너를 격리합니다.
-    - `pid`: 프로세스 격리
-    - `net`: 네트워크 인터페이스, IP 주소 테이블, 라우팅 테이블 등 네트워크 관리
-    - `ipc`: 프로세스 간 통신(IPC) 객체에 대한 접근 격리
-    - `mnt`: 파일 시스템 마운트 포인트 격리
-    - `uts`: 커널 및 버전 식별자 격리
-  - **`cgroups` (Control Groups)**: 컨테이너가 사용할 수 있는 하드웨어 리소스(CPU, 메모리, 스토리지 I/O 등)를 제한하고 관리합니다.
+- **격리 (Isolation)**: Linux OS 의 `namespaces`, `cgroups` 커널기능을 사용해 격리된 환경을 제공합니다.
+  - **`namespaces`**: 컨테이너가 접근할 수 있는 `논리적인 리소스를 격리`합니다:
+    - pid: 프로세스 격리
+    - net: 네트워크 인터페이스, IP 주소 테이블, 라우팅 테이블 등 네트워크 관리
+    - ipc: 프로세스 간 통신(IPC) 객체에 대한 접근 격리
+    - mnt: 파일 시스템 마운트 포인트 격리
+  - **`cgroups` (Control Groups)**: 컨테이너가 사용할 수 있는 `물리적인 리소스를 제한`합니다:
+    - cpu
+    - memory
 - **공유 (Sharing)**: 호스트 OS의 커널을 모든 컨테이너가 공유합니다. 이로 인해 VM(가상 머신) 방식보다 훨씬 가볍고 빠르게 동작합니다.
 
 <img src="1.png" width="50%">
@@ -99,7 +100,7 @@ $ docker run -d -p 80:80 --name webserver my-nginx:1.0
 수십, 수백 개의 컨테이너를 프로덕션 환경에서 안정적으로 관리하고 운영하기 위해 컨테이너 오케스트레이션 도구가 필요합니다.
 
 - **필요성**:
-  - **고가용성(High Availability)**: 특정 컨테이너나 노드에 장애가 발생했을 때 자동으로 복구하고 서비스를 유지합니다.
+  - **가용성(High Availability)**: 특정 컨테이너나 노드에 장애가 발생했을 때 자동으로 복구하고 서비스를 유지합니다.
   - **확장성(Scalability)**: 트래픽 부하에 따라 컨테이너 수를 동적으로 조절(Auto-scaling)합니다.
   - **서비스 디스커버리 및 로드 밸런싱**: 여러 컨테이너에 걸쳐 네트워크 트래픽을 분산하고, 컨테이너가 서로를 찾을 수 있도록 지원합니다.
 - **대표적인 도구**:
