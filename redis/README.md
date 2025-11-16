@@ -230,6 +230,38 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
   - score 기반 순서보장
 - hash
   - hashMap 의 구조
+- timeseries
+  - 시계열 구조
+
+```mongodb
+// 시계열 생성
+db.createCollection("sensor_readings", {
+  timeseries: {
+    timeField: "timestamp",  // 시간필드 (필수)
+    metaField: "deviceId"    // 메타필드 (유니크식별자)
+  }
+});
+
+// 추가
+db.sensor_readings.insertOne({
+    deviceId: "sensor-001",
+    timestamp: ISODate("2025-02-03T10:00:00Z"),
+    temperature: 24.5,
+    humidity: 40
+});
+
+// 조회
+db.sensor_readings.find({
+    deviceId: "sensor-001",
+    timestamp: {
+        $gte: ISODate("2025-02-03T10:00:00Z"),
+        $lte: ISODate("2025-02-03T10:30:00Z")
+    }
+});
+```
+
+
+
 
 ## [Spin-Lock](https://hdbstn3055.tistory.com/271)
 SET command 를 통해 (timeout 설정하면서) 값을 세팅하고, 적절한 interval 로 체크하는 구현방식 입니다.

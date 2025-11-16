@@ -21,9 +21,10 @@ https://kimseunghyun76.tistory.com/464?category=757035
 - `라이브러리 형태` (Spring Boot, Java 애플리케이션에 통합 가능)
 - Kafka Consumer/Producer API 기반으로 동작
 - 상태 저장이 가능 (stateful processing: window, aggregation, join 등)
-- 로컬 상태 저장소(rocksdb) + Kafka changelog 토픽으로 복구 가능
+- `로컬 상태 저장소(rocksdb)` + Kafka 토픽으로 복구 가능
+  - KTable 은 토픽의 모든 데이터를 Materiazlied View 생성 (RocksDB 에 저장)
+  - 이후 실시간 데이터처리는 KTable 기반으로 동작 (불필요한 카프카 질의 없음)
 - 분산 처리를 위해 Kafka의 파티션을 기반으로 scale-out
-- fault-tolerant, exactly once 지원
 
 ✅ 주요 기능
 - KStream, KTable, GlobalKTable 추상화
