@@ -69,39 +69,6 @@ if ($request_method = 'OPTIONS') {
 add_header Access-Control-Allow-Origin '*' always;
 ```
 
-Spring Framework (Spring Boot) 에서는 아래와 같이 설정할 수 있습니다:
-**1. Controller/Method 레벨에서 `@CrossOrigin` 사용**
-```java
-@RestController
-@RequestMapping("/api")
-public class MyController {
-
-    @CrossOrigin(origins = "https://trusted.com")
-    @GetMapping("/data")
-    public String getData() {
-        return "some data";
-    }
-}
-```
-
-**2. 전역 설정 (Global Configuration)**
-`WebMvcConfigurer` 를 구현하여 애플리케이션 전체에 CORS 설정을 적용할 수 있습니다. 이 방식이 더 유연하고 중앙에서 관리하기 좋습니다.
-
-```java
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // 모든 경로에 대해
-                .allowedOrigins("https://trusted.com", "https://another-trusted.com") // 허용할 Origin
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // 허용할 HTTP Method
-                .allowedHeaders("*") // 허용할 Header
-                .allowCredentials(true) // 쿠키 전송 허용 여부
-                .maxAge(3600); // Preflight 요청 캐시 시간 (초)
-    }
-}
-```
-
 ## [XSS (Cross-Site Scripting)](https://dj-min43.medium.com/xss-%EA%B3%B5%EA%B2%A9%EC%9D%84-%EC%A7%81%EC%A0%91-%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-c2c1d9baf7ec)
 공격자가 화면에 실행할 수 있는 \<script> 를 삽입/실행할 수 있는 취약점 입니다.
 - form
