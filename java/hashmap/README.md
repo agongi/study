@@ -7,37 +7,10 @@ http://starplatina.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%BB%AC%EB%A0%89%EC%85
 http://egloos.zum.com/iilii/v/4457500
 ```
 
-## get() and/or put()
 <img src="1.png">
 
-- call map.get(key)
-- invoked key.hashCode()
-- calculate index = HASH_METHOD_IMPL(key.hashCode()) & buckets.length
-- goto index of buckets
-- iteration -> key.hashCode == next.hashCode() && key.equals(next) until matched
- - if matched, get() will return corresponding Map.Entry<K, V>
- - if matched, put() will override following Entry or add it
-
-> map.get(key) put(key) are **heavy** operation
-
-## containsKey() vs get()
-```java
-// anti-pattern
-if (map.containsKey(key)) {
-    map.get(key);
-    // ... do something
-}
-
-// common use case
-Object value = map.get(key);
-if (value != null) {
-    // ... do something
-}
-```
-`.containsKey()` and `.get()` use **the same method** that looks up the whole buckets to find corresponding entry. Using .containsKey() before calling .get() is redundant.
-
-## entrySet() vs keySet()
-Most common use of iteration of Map<> is to use entrySet(). It would cover all cases whether extract key or value. **map.get()** is a heavy-operation to look up all buckets to pick up specific value.
+## entrySet() vs keySet() vs values()
+Most common use of iteration of Map<> is to use entrySet().
 
 ```java
 @Getter
@@ -49,23 +22,19 @@ private static class Data {
     String c;
     String d;
 }
-// full-iteration, get entries
+// full-iteration, get Entry<Key, Value>
 for (Map.Entry<String, Data> entry : map.entrySet()) {
-    // Map stored data in a form of ENTRY in buckets. It retrieves each of entries.
-    String key = entry.getKey();
-    Data values = entry.getValue();
+    // ...
 }
 
-// full-iteration, extract key only from entries
+// full-iteration, get Key
 for (String key : map.keySet()) {
-    // anti-pattern
-    // get() method will use hashCode() and equals() method again to search value in buckets
-    Data values = map.get(key);
+    // ...
 }
 
-// full-iteration, extract value only from entries
-for (Data value : map.values()) {    
-    value ...
+// full-iteration, get Value
+for (Data value : map.values()) {
+    // ...
 }
 ```
 
@@ -91,16 +60,14 @@ index = hashCode(KEY) % BUCKET_SIZE;
 - equals
   - 동일 버킷에 저장된 모든 필드를 equals 비교하고 실제 값비교이므로 느림
 
-<img src="4.png" width="75%">
-
-### 자료구조
+## 자료구조
 <img src="3.png" width="50%">
 
 - `TREEIFY_THRESHOLD = 8`
 - 한 버킷에 8개 이상의 element 가 있으면, `LinkedList -> Red-Black Tree` 로 자료구조를 변환합니다. (탐색속도 위함)
   - 초기에는 LinkedList 를 사용
 
-### 버킷 사이즈
+## 버킷 사이즈
 전체 element 의 개수가 capacity 를 증가하면 버킷은 리사이징 됩니다:
 - `DEFAULT_INITIAL_CAPACITY = 16`
 - LoadFactor: 0.75
