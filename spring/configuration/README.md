@@ -162,3 +162,31 @@ public class DemoCycleConfigurer implements SmartLifecycle {
 }
 ```
 
+## @Profile
+Configuration could be loaded in specific `active-profile` by programmatic:
+```java
+@Profile("dev")
+@Configuration
+public class DatabaseConfiguration {
+  @Bean
+  public DataSource dataSource() {
+    // ...
+  }
+}
+```
+
+You can preset profile in context-load phase:
+```java
+public class ActiveProfileEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
+    @Override
+    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        // -DENV={} 을 먼저 확인 -> 환경변수 ENV 확인
+        environment.addActiveProfile(Objects.toString(System.getProperty('ENV'), System.getenv('ENV')));
+    }
+
+    @Override
+    public int getOrder() {
+        return ConfigDataEnvironmentPostProcessor.ORDER - 1;
+    }
+}
+```
