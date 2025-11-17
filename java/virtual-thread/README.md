@@ -14,6 +14,7 @@ https://techblog.woowahan.com/15398
     - `Context Switch 비용 감소 & 생성/소멸 비용 감소`
       - OS 스레드를 생성하지 않으므로 시스템콜 호출이 적음 => `생성비용 저렴`
       - 1MB 이상의 고정된 Stack 할당이 아닌 동적으로 Heap 을 사용 => `메모리 사용량 적음`
+      - Context Switch 의 대상인 Thread 가 늘어나지 않으므로 => `스위칭 비용이 추가되지 않음`
 - 아래의 사용성은 권장되지 않습니다:
     - `JNI, synchronized 사용`
       - 상위 Platform Thread 의 lock 이 잡히므로 하위 Virtual Threads 전체가 block 됨 -> ReentrantLock 으로 전환
