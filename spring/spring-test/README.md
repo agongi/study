@@ -10,15 +10,23 @@
 트랜잭션을 커밋하고 싶다면 @TransactionConfiguration와 @Rollback 어노테이션으로 트랜잭션을 롤백하는 대신에 @Commit 을 통해 커밋하도록 TestContext 프레임워크에 지시할 수 있다.
 
 ## Dependency
-TestContext 프레임워크는 테스트 인스턴스를 instantiate 하지 않습니다. (== 객체 생성하지 않음)
+- JUnit 이 기본 생성자를 이용해 테스트 객체를 생성 (JUnit 은 POJO 이므로 스프링관련 의존성 알수없음)
+- 그 이후 TestContext 에서 `@Autowired/Setter` 를 이용해서 빈을 주입합니다
 
-그러므로 생성자 주입방식은 동작하지 않으므로 @Autowired 를 사용해야 합나다
-
-> Field injection or setter is working
+그러므로 생성자 주입방식은 동작하지 않으므로 아래와 같이 의존을 주입해야합니다:
+```java
+@RequiredArgsConstructor
+public class AbcTest {
+    @Autowired
+    private AbcService abcService;
+    private final XyzService xyzService; // 생성자주입은 되지않음 (JUnit 은 기본생성자로만 객체생성)
+    
+    // ...
+}
+```
 
 ## Annotation
-**@ContextConfiguration**
-
+### @ContextConfiguration
 TestContext 프레임워크를 사용하는 테스트 클래스들은 어플리케이션 컨텍스트를 설정하기 위해 어떤 클래스도 상속받을 필요가 없고 특정 인터페이스를 구현할 필요도 없다.
 
 대신 클래스 수준의 @ContextConfiguration 어노테이션을 선언함으로써 설정이 이뤄진다.
@@ -40,26 +48,6 @@ JUnit에 기반한 유닛테스트와 통합테스트를 구현할 수 있고 �
 @ContextConfiguration(classes=MyConfig.class)
 public class MyTest {
 	// methods..
-}
-```
-
-### @ActiveProfiles
-Phase 정의
-
-```java
-@ActiveProfiles("alpha")
-@ContextConfiguration(classes=MyConfig.class)
-public class MyTest {
-	// methods..
-}
-
-@Profile("alpha")
-@Configuration
-public class ListenerConfig {
-  @Bean
-  public TestExecutionListener listener() {
-    return new CustomTestExecutionListener("alpha");
-  }
 }
 ```
 
@@ -156,38 +144,5 @@ void beforeTransaction() {
 @AfterTransaction 
 void afterTransaction() {
   // logic to be executed after a transaction has ended
-}
-```
-
-### @Sql
-`@Sql` is used to annotate a test class or test method to configure SQL scripts to be run against a given database during integration tests. The following example shows how to use it:
-
-```java
-@Test
-@Sql({"/test-schema.sql", "/test-user-data.sql"}) 
-public void userTest {
-  // execute code that relies on the test schema and test data
-}
-```
-
-### @Timed
-It indicates that this annotated method must finish execution in a specific period (milliseconds).
-
-```java
-@Test
-@Timed(millis = 1000)
-public void timeOutTest() {
-  // should not take longer than 1 sec
-}
-```
-
-### @Repeat
-Annotated method repeatly being executed.
-
-```java
-@Test
-@Repeat(10) 
-public void testProcessRepeatedly() {
-  // 10 times executed
 }
 ```
