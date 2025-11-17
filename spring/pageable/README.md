@@ -1,18 +1,8 @@
 # @Pageable
-```
-```
 ## Request
 http://localhost/users?page=2&size=40 으로 요청이 온다면
 
-### Configuration
-```xml
-<mvc:argument-resolvers>
-    <!-- @Pageable -->
-    <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
-</mvc:argument-resolvers>
-```
-
-### PageableRequest
+## PageableRequest
 ```java
 @RequestMapping(value = "/users", method = RequestMethod.GET)
 public ModelAndView getUsers(@PageableDefault(page = 0, size = 20) Pageable pageable) {
@@ -35,8 +25,7 @@ public List<User> getUsers(Pageable pageable) {
 </select>
 ```
 
-## Response
-### PageableResponse
+## PageableResponse
 ```java
 public interface UserService <T extends AbstractUser> {
   Page<T> getUsers();
