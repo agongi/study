@@ -14,7 +14,7 @@ A resource is an object that must be closed after the program is finished with i
 ### java.io.Closeable
 ```java
 public interface Closeable extends AutoCloseable {
-    public void close() throws IOException;
+    void close() throws IOException;
 }
 ```
 
