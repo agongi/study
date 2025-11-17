@@ -46,7 +46,7 @@ Sharded Cluster 환경에서 청크 마이그레이션시 발생합니다:
 - 실제 Config Server 에는 마이그레이션 완료이므로, B 에 존재한다고 메타정보 업데이트
   - `이후 cleanup 이 진행되기 전까지 그 순간 A 에는 orphan document 존재`
   - `readConcern: available 사용`시 A 에서 데이터 조회가능 (config server 를 거치지 않음)
-  - local|majority 를 사용하면 config server 를 통해 B 를 통해 조회하므로 이슈없음
+  - local,majority 를 사용하면 config server 를 통해 B 를 통해 조회하므로 이슈없음
 - 그후 cleanup 을 통해 A 제거
 
 ## BSON
