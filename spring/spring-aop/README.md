@@ -12,7 +12,7 @@ https://www.mkyong.com/spring/spring-aop-examples-advice/
   - @After (== finally) - After the method is invoked (a.k.a after the afterReturning and/or afterThrowing)
   - @Around - Run around the method execution, combine all three advices above.
 - Aspect - **what**
-- PointCut - **who**
+- PointCut - **where**
   - execution
   - within
   - this

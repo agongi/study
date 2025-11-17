@@ -1,7 +1,4 @@
 # Async
-```
-```
-
 ## Response
 - DeferredResult
 - CompletableFuture
