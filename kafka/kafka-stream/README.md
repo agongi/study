@@ -33,24 +33,27 @@ https://kimseunghyun76.tistory.com/464?category=757035
 
 💻 코드 예시 (Java)
 ```java
-@Component
-public class WordCountStream {
-    public void buildTopology(StreamsBuilder builder) {
-        KStream<String, String> stream = builder.stream("input-topic");
+@Bean
+public KStream<String, PageViewEvent> pvStream(StreamsBuilder builder) {
+    var source = builder.stream("pv-events",
+        Consumed.with(Serdes.String(), JsonSerdes.of(PageViewEvent.class))
+    );
 
-        stream.flatMapValues(value -> Arrays.asList(value.toLowerCase().split(" ")))
-            .groupBy((key, word) -> word)
-            .count(Materialized.as("word-count-store"))
-            .toStream()
-            // 별도 토픽을 재가공해서 전달 (MaterializedView)
-            .to("output-topic", Produced.with(Serdes.String(), Serdes.Long()));
-    }
+    var aggregated = source
+        .groupByKey() // 카프카키 기준으로
+        .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(1)))   // 최근 1분동안
+        .aggregate(
+            () -> 0L,
+            (key, event, agg) -> agg + event.getPageViewCount(),  // 누적 카운트
+            Materialized.with(Serdes.String(), Serdes.Long())
+        );
+
+    aggregated
+        .toStream()
+        .filter((windowedKey, totalCount) -> totalCount >= THRESHOLD) // 특정 THRESHOLD 이상이라면
+        .map((windowedKey, totalCount) -> KeyValue.pair(windowedKey.key(), totalCount))
+        .to("hot-products", Produced.with(Serdes.String(), Serdes.Long())); // 별도 가공된 값을 신규토픽으로 전파
+
+    return source;
 }
-```
-```
-echo "hello kafka streams"
-
-hello 1
-kafka 1
-streams 1
 ```
