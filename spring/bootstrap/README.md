@@ -1,155 +1,66 @@
-# Bootstrap
+# Life Cycle
 ```
-http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-beanfactory
-http://www.jcombat.com/spring/spring-container-basics-dispatcher-servlet-and-servlet-listener
-http://stackoverflow.com/questions/18578143/about-multiple-containers-in-spring-framework
-https://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/
-http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/SpringServletContainerInitializer.html
+http://duckranger.com/2012/04/spring-mvc-dispatcherservlet
+https://blog.outsider.ne.kr/902
+http://devbox.tistory.com/entry/Spring-webxml-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95
+http://www.javajigi.net/display/JAVA/Servlet+Life+Cycle
 ```
 
-## By-ServletContainer
-**ServletContainerInitializer** class will be loaded, instantiated and have its onStartup() method invoked `by any Servlet 3.0+ container` in bootstrap.
+<img src="1.png">
+
+### Cores
+#### Servlet
+The instance that Handles request from client to respond
+
+#### Servlet Context
+The simple Map<String, ServletContext> that manages all servlet instances
 
 ```java
-ServletContainerInitializer (javax) 
--> @HandlesTypes(WebApplicationInitializer.class) SpringServletContainerInitializer (spring)
--> WebApplicationInitializer
-	-> AbstractDispatcherServletInitializer ->
-	-> AbstractAnnotationConfigDispatcherServletInitializer	 // spring-framework
-	
-	and/or
-	
-  -> SpringBootServletInitializer // spring-boot
+public void contextInitialized(ServletContextEvent event) {
+   context = event.getServletContext();
+
+   BookDB bookDB = new BookDB();
+
+   // this servlet context is accessible from all logics
+   context.setAttribute("bookDB", bookDB);
+ }
 ```
 
-`ServletContainerInitializer` needs `WEB-INF/services/javax.servlet.ServletContainerInitializer` file which contains entry-point class name:
+#### Servlet Container
+The Servlet-Container (tomcat, jetty) that handles servlet's life-cycle in servletContext
 
-```properties
-com.toy.org.config.BaseInitializer
-```
+#### Application Context
+The simple Map<String, Object> that manages all spring bean instances
 
-> This is the servlet 3.0+ spec to being looking for a file to start.
+#### Spring IoC Container
+The Spring-Container is the Dispatcher Servlet that handles all spring-bean's life-cycle in applicationContext
 
-Class that inherits `SerlvetContainerInitializer` may be annotated `@HandleTypes` to point out next chains of initialize.
+***
 
-```java
-/**
- * <p>Implementations of this interface may be annotated with
- * {@link javax.servlet.annotation.HandlesTypes HandlesTypes}, in order to
- * receive (at their {@link #onStartup} method) the Set of application
- * classes that implement, extend, or have been annotated with the class
- * types specified by the annotation.
- */
-@HandlesTypes(WebApplicationInitializer.class)
-public class SpringServletContainerInitializer implements ServletContainerInitializer {
-	// ..
-}
-```
-
-Now Servlet 3.0+ containers will automatically scan the classpath for implementations of Spring's `WebApplicationInitializer` interface.
-
-### Servlet
-```xml
-<listener>
-     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-</listener>
-
-<context-param>
-     <param-name>contextConfigLocation</param-name>
-     <param-value>classpath:applicationContext.xml</param-value>
-</context-param>
-
-<servlet>
-      <servlet-name>api-servlet</servlet-name>
-      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-      <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:servlet/api-servlet.xml</param-value>
-      </init-param>
-      <load-on-startup>1</load-on-startup>
-</servlet>
-<servlet-mapping>
-	    <servlet-name>api-servlet</servlet-name>
-	    <url-pattern>/</url-pattern>
-</servlet-mapping>
-```
-
-```java
-public class BaseInitializer implements WebApplicationInitializer {
-  @Override
-  public void onStartup(ServletContext container) {
-    // context
-    AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-    context.register(AppConfig.class);
-		
-    // dispatcher
-    DispatcherServlet dispatcherServlet = new DispatcherServlet(context);     
-    ServletRegistration.Dynamic registrar = container.addServlet("dispatcher", dispatcherServlet);
-    registrar.setLoadOnStartup(1);
-    registrar.addMapping("/");
-  }	
-}
-```
-
-### Spring-Framework
-```java
-public class BaseInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-  @Override
-  protected Class<?>[] getRootConfigClasses() {
-    return new Class<?>[] {BaseConfig.class};
-  }
-
-  @Override
-  protected Class<?>[] getServletConfigClasses() {
-    return new Class<?>[] {AppConfig.class};
-  }
-
-  @Override
-  protected String[] getServletMappings() {
-    return new String[] {"/"};
-  }
-}
-```
-
-### Spring-Boot
-WebApplicationInitializer is raw-level interface to bootstrap, and It is not enough to initialize spring-boot features. Now boot supports its wrapper class to enable all spring-boot functions also.
-
-```java
-public class BaseInitializer extends SpringBootServletInitializer {
-  @Override
-  public void onStartup(ServletContext servletContext) throws ServletException {
-    super.onStartup(servletContext);
-  }
-
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-    return builder.sources(ToyConfig.class);	// @SpringBootApplication class
-  }
-}
-```
-
-## By-CLI
-### Spring-Framework
-```java
-public class Application {
-  public static void main(String args[]) {
-    AbstractApplicationContext container = new ClassPathXmlApplicationContext("...");
-
-    // ... some configuration
-    container.registerShutdownHook();
-  }
-```
-
-### Spring-Boot
-```java
-@Import(ToyConfig.class)
-@SpringBootApplication
-public class ToyApplication {
-  /**
-	 * application main
-	 */
-  public static void main(String[] args) {
-    SpringApplication.run(ToyApplication.class, args);
-  }
-}
-```
+### Life Cycle
+- Tomcat **Coyote** is listening port 80 or 443 for any incoming packets.
+- Coyote delegates incomings to **Catalina** Engine. (== Servlet Container)
+- **Servlet Container** bootstraps itself and reads `web.xml`.
+  - ServletContext is created
+  - If listener is defined, create listener instance and put in servletContext.
+    - **ContextLoaderListener class** implements ServletContextListener that receives event servletContext lifecycle changes
+    - contextInitialized() is invoked and initializes **ApplicationContext** by default in `classpath:applicationContext.xml`
+    - All bean are instantiated and stored in applicationContext
+  - If servlet is defined, create servlet instance and put in servletContext.
+    - **DispatcherServlet class** implements ApplicationContextAware that is notified applicationContext when it runs
+    - It injects applicationContext in instance field
+    - It creates **WebApplicationContext** by default `{servlet-name}-servlet.xml`
+    - All Spring related configuration are loading
+  - If filter is defined, create instance and managed in servletContext
+- Packets are sent to **filter-chaining** for updating contents such as encoding converter or authentication logics in order.
+- After completion of filter-chaining, Packets reach servlet, in spring **DispatcherServlet**.
+- DispatcherServlet delegates method finding to **HandlerMapping**. HandlerMapping will find matching URL-pattern over `@Controller` and `@RequestMapping` annotation. It sent back to DispatcherServlet the method name.
+- DispatcherServlet delegates interceptor finding to **HandlerExecutionChain**.
+- If it gets interceptors that is matched in given URL pattern, DispatcherServlet sends HTTP Request to interceptor-chain and invokes **preHandle()** method.
+- DispatcherServlet delegates execution of method to **HandlerAdapter**.
+- HandlerAdapter invokes @Controller.
+- `@Controller - @Service - @Repository - RDB` are our boilerplate web application flow.
+- If interceptors are given, then DispatcherServlet invokes user-defined interceptor implementations's **postHandle()** method.
+- If `@ResponseBody` is not defined in return type in `@Controller`, then DispatcherServlet delegates view finding to **ViewResolver** and renders **view**.
+- If `@ResponseBody` is defined in return type in `@Controller`, then DispatcherServlet serializes POJO object to JSON or XML based response
+- DispatcherServlet responds to client.
