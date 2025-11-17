@@ -7,7 +7,6 @@ https://blog.outsider.ne.kr/794
 
 ## Resource
 Resource is a physical file that stores key=pair values. Spring provides abstraction interface for better accessing as following:
-
 - UrlResource http:
 - ClassPathResource - classpath:
 - FileSystemResource - file:
@@ -49,7 +48,6 @@ dev
 # JVM arguments (-D means define)
 $ java -jar -DserverName='api-server-1' ROOT.jar
 ```
-
 ```java
 @Test
 public void systemPropertiesTest() {
@@ -81,7 +79,7 @@ The table describes some of the system properties provided as default.
 ### Resource
 ResourceUtils 를 통해 가져올때는 prefix 가 필요하지만, 구현클래스를 직접 지정할때는 없어도 된다.
 
->특정 구현 클래스를 사용했다는 의미가 이미 prefix 를 명시한것이나 다름없음
+> 특정 구현 클래스를 사용했다는 의미가 이미 prefix 를 명시한것이나 다름없음
 
 - Resource
   - \#getFile
