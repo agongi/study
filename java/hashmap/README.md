@@ -84,6 +84,15 @@ index = hashCode(KEY) % BUCKET_SIZE;
 
 동일 bucket 에 저장된 데이터들은 LinkedList or RedBlack-tree 에 저장되고, 순회하면서 `equals` 가 일치하는 KEY 를 검색합니다
 
+### Equals and Hashcode
+동일 Bucket 에 저장된 (== Hash Collision) element 들은 `Object#equals` 의 결과를 이용해서 동등성 확인을 합니다
+- hashcode
+  - KEY 의 단순 해시값을 계산하므로 빠름
+- equals
+  - 동일 버킷에 저장된 모든 필드를 equals 비교하고 실제 값비교이므로 느림
+
+<img src="4.png" width="75%">
+
 ### 자료구조
 <img src="3.png" width="50%">
 
