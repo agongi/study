@@ -327,7 +327,6 @@ Redis TimeSeries는 시계열 데이터를 위한 완벽한 솔루션을 Redis �
     * 생태계 통합: Grafana, Prometheus 등 널리 사용되는 모니터링 및 시각화 도구와 쉽게 연동할 수 있습니다.
 ```
 
-
 ## [Spin-Lock](https://hdbstn3055.tistory.com/271)
 SET command 를 통해 (timeout 설정하면서) 값을 세팅하고, 적절한 interval 로 체크하는 구현방식 입니다.
 
