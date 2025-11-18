@@ -233,34 +233,99 @@ https://backtony.github.io/redis/2021-09-02-redis-2/
 - timeseries
   - 시계열 구조
 
-```mongodb
-// 시계열 생성
-db.createCollection("sensor_readings", {
-  timeseries: {
-    timeField: "timestamp",  // 시간필드 (필수)
-    metaField: "deviceId"    // 메타필드 (유니크식별자)
-  }
-});
+```java
+1. 시계열 데이터란 무엇인가?
 
-// 추가
-db.sensor_readings.insertOne({
-    deviceId: "sensor-001",
-    timestamp: ISODate("2025-02-03T10:00:00Z"),
-    temperature: 24.5,
-    humidity: 40
-});
+시계열(Time-Series) 데이터는 시간을 인덱스로 사용하는 데이터의 모음입니다. 특정 시간에 기록된 하나 이상의 값으로 구성됩니다.
 
-// 조회
-db.sensor_readings.find({
-    deviceId: "sensor-001",
-    timestamp: {
-        $gte: ISODate("2025-02-03T10:00:00Z"),
-        $lte: ISODate("2025-02-03T10:30:00Z")
-    }
-});
+   * 주요 특징:
+    * 데이터가 시간 순서대로 쌓인다 (Append-only)
+     * 최근 데이터에 대한 접근이 많다
+     * 일정 기간의 트렌드·패턴·요약 분석에 사용된다
+
+   * 대표적인 예:
+    * 주식 가격 변동
+     * 서버 CPU·메모리 등 시스템 메트릭
+     * IoT 센서의 온도, 습도 등
+     * 웹사이트 시간대별 사용자 접속수
+
+
+2. 왜 시계열 데이터에 Redis를 사용하는가?
+
+Redis는 인메모리 DB로 매우 빠른 데이터 입력/조회가 가능해 시계열 데이터 처리에 적합합니다.
+
+기존 Sorted Set 기반 방식의 한계:
+    * 동일 타임스탬프 저장 불가
+   * 집계(Aggregation) 기능 없음
+   * 문자열 저장에 따른 메모리 비효율
+
+이런 한계를 해결하기 위해 RedisTimeSeries 모듈이 개발되었습니다.
+    
+3. Redis TimeSeries 모듈의 핵심 기능
+
+Redis TimeSeries는 시계열 데이터를 위한 완벽한 솔루션을 Redis 내에 구축하는 모듈입니다. 주요 기능은 다음과 같습니다.
+
+가. 고성능 데이터 입력 및 쿼리
+
+   * `TS.ADD`: 시계열에 새로운 데이터 포인트를 추가합니다. 타임스탬프를 직접 지정하거나 *를 사용해 Redis가 현재 서버 시간을 자동으로 기록하게 할 수 있습니다.
+   1     # cpu:1 이라는 시계열에 현재 시간과 87이라는 값을 추가
+   2     TS.ADD cpu:1 * 87
+   * `TS.RANGE` / `TS.REVRANGE`: 지정된 시간 범위 내의 데이터를 조회합니다.
+
+   1     # cpu:1 시계열의 특정 시간 범위(ms) 데이터를 조회
+   2     TS.RANGE cpu:1 1668754880000 1668754890000
+
+나. 다운샘플링 (Downsampling) 및 집계 (Aggregation)
+
+시계열 데이터의 가장 강력하고 필수적인 기능입니다. 원본(raw) 데이터를 그대로 보관하면 용량이 커지고, 긴 기간의 트렌드를 분석할 때 성능이 저하됩니다. 다운샘플링은 원본
+데이터를 일정 시간 간격으로 요약하여 새로운 시계열을 만드는 것을 의미합니다.
+
+    * 집계 함수: avg(평균), sum(합계), min(최소), max(최대), count(개수) 등 다양한 집계 함수를 지원합니다.
+    * `TS.CREATERULE`: 다운샘플링 규칙을 만듭니다. 원본 시계열에 데이터가 추가될 때마다, 지정된 규칙에 따라 집계된 데이터가 다른 시계열에 자동으로 추가됩니다.
+
+   1     # 원본 시계열 cpu:1 생성
+   2     TS.CREATE cpu:1
+   3
+   4     # 10분(600000ms) 평균값을 저장할 시계열 cpu:1:avg_10m 생성
+   5     TS.CREATE cpu:1:avg_10m
+   6
+   7     # cpu:1에 데이터가 들어오면 10분 단위로 평균을 내어 cpu:1:avg_10m에 자동 저장하는 규칙 생성
+   8     TS.CREATERULE cpu:1 cpu:1:avg_10m AGGREGATION avg 600000
+
+이제 cpu:1에 데이터가 쌓이면, cpu:1:avg_10m에는 10분 평균값이 자동으로 계산되어 저장됩니다. 덕분에 "최근 1년간의 일별 평균 CPU 사용량" 같은 쿼리를 매우 빠르게 처리할 수
+있습니다.
+
+다. 레이블 (Labels)을 이용한 효율적인 쿼리
+
+각 시계열에 LABELS라는 메타데이터(키-값 쌍)를 추가할 수 있습니다. 이는 마치 RDBMS의 인덱스와 유사한 역할을 합니다.
+
+   * `TS.CREATE` 시 레이블 지정:
+   
+    1     # metric=cpu, sensor_id=2 라는 레이블을 가진 시계열 생성                                                                                                             
+    2     TS.CREATE cpu:2 LABELS metric cpu sensor_id 2                                                                                                                        
+    * `TS.MRANGE` / `TS.MGET`: 레이블을 이용해 여러 시계열의 데이터를 한 번에 조회합니다.                                                                                      
+    
+    1     # metric이 cpu인 모든 시계열의 최근 데이터를 가져오기                                                                                                                
+    2     TS.MGET FILTER metric=cpu                                                                                                                                            
+    3                                                                                                                                                                          
+    4     # sensor_id가 2 또는 3인 모든 시계열의 특정 시간 범위 데이터 조회                                                                                                    
+    5     TS.MRANGE - + FILTER sensor_id=(2,3)                                                                                                                                 
+이 기능을 사용하면 "A 데이터센터에 있는 모든 CPU 센서의 지난 1시간 데이터" 같은 복잡한 조건의 쿼리를 효율적으로 수행할 수 있습니다.                                     
+    
+라. 데이터 보관 주기 (Retention Policy)                                                                                                                                     
+    
+오래된 데이터를 자동으로 삭제하여 메모리를 효율적으로 관리할 수 있습니다. TS.CREATE 시 RETENTION 옵션으로 데이터 보관 기간(ms)을 설정합니다.                                
+    
+    1 # 데이터를 30일 동안만 보관                                                                                                                                              
+    2 TS.CREATE my_sensor RETENTION 2592000000                                                                                                                                 
+    
+4. 결론: Redis TimeSeries의 이점
+
+    * 고성능: 대량의 시계열 데이터를 실시간으로 수집하고 쿼리하는 데 최적화되어 있습니다.                                                                                      
+    * 메모리 효율성: 데이터를 청크(chunk) 단위로 묶고 델타 인코딩 같은 압축 알고리즘을 사용해 메모리를 매우 효율적으로 사용합니다.                                             
+    * 유연한 쿼리: 레이블과 집계 기능을 통해 다차원적인 데이터 분석이 가능합니다.                                                                                              
+    * 생태계 통합: Grafana, Prometheus 등 널리 사용되는 모니터링 및 시각화 도구와 쉽게 연동할 수 있습니다.
 ```
-
-
 
 
 ## [Spin-Lock](https://hdbstn3055.tistory.com/271)

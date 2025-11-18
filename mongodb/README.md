@@ -49,7 +49,8 @@ Sharded Cluster 환경에서 청크 마이그레이션시 발생합니다:
   - local,majority 를 사용하면 config server 를 통해 B 를 통해 조회하므로 이슈없음
 - 그후 cleanup 을 통해 A 제거
 
-## BSON
+## 데이터 구조
+### BSON
 몽고는 내부적으로 BSON 으로 document 를 저장합니다
 - binary format 이므로 사이즈가 작고
 - 필드의 type 을 지정가능
@@ -71,4 +72,32 @@ hello\x00                  // field name
  \x10\x32\x00\xc2\x07\x00\x00
  \x00
  \x00
+```
+
+### Timeseries
+```mongodb
+// 시계열 생성
+db.createCollection("sensor_readings", {
+  timeseries: {
+    timeField: "timestamp",  // 시간필드 (필수)
+    metaField: "deviceId"    // 메타필드 (유니크식별자)
+  }
+});
+
+// 추가
+db.sensor_readings.insertOne({
+    deviceId: "sensor-001",
+    timestamp: ISODate("2025-02-03T10:00:00Z"),
+    temperature: 24.5,
+    humidity: 40
+});
+
+// 조회
+db.sensor_readings.find({
+    deviceId: "sensor-001",
+    timestamp: {
+        $gte: ISODate("2025-02-03T10:00:00Z"),
+        $lte: ISODate("2025-02-03T10:30:00Z")
+    }
+});
 ```
