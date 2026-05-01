@@ -66,10 +66,10 @@ OSIV 는 Session (== Entity Manager) 의 범위를 View 까지 확대하여 지�
 
 ### 스프링 OSIV
 - 트랜잭션 범위
-  - [FROM] `@Transactional -> [FROM] @Transactional`  
+  - `[FROM] @Transactional -> [TO] @Transactional`  
     - DBCP 커넥션을 획득/반환은 트랜잭션 시작/종료 시점 입니다
 - 영속성 범위
-  - [FROM] `Filter/Interceptor -> [TO] Filter/Interceptor`
+  - `[FROM] Filter/Interceptor -> [TO] Filter/Interceptor`
     - 영속성이 유지되면서 Controller 에서 객체 그래프 탐색시 > 지연로딩을 통한 조회가 가능해 집니다 (nontransactional read 사용)
 
 <img src="2.png" width="50%">
