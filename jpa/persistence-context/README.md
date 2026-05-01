@@ -68,9 +68,12 @@ OSIV 는 Session (== Entity Manager) 의 범위를 View 까지 확대하여 지�
 - 트랜잭션 범위
   - `[FROM] @Transactional -> [TO] @Transactional`  
     - DBCP 커넥션을 획득/반환은 트랜잭션 시작/종료 시점 입니다
+    - OSIV 를 사용중이라도 CUD 는 트랜잭션 구간에서만 가능합니다 (그 이외구간은 조회만 가능)
 - 영속성 범위
   - `[FROM] Filter/Interceptor -> [TO] Filter/Interceptor`
-    - 영속성이 유지되면서 Controller 에서 객체 그래프 탐색시 > 지연로딩을 통한 조회가 가능해 집니다 (nontransactional read 사용)
+    - 영속성이 유지되면서 Controller/View 에서 객체 그래프 탐색시 > 지연로딩을 통한 조회가 가능해 집니다 (nontransactional read 사용)
+
+실제 DBCP 커넥션을 점유하는 시점은 `[FROM] @Transactional -> [TO] Filter/Interceptor` 입니다. (영속성이 생성되었다고 해서 실제 물리적인 커넥션을 점유하진 않음. 다만 한번 점유했다면 View 까지 반환하지 않음)
 
 <img src="2.png" width="50%">
 
