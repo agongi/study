@@ -59,12 +59,11 @@ public void updateUser(String id);
 
 <img src="4.png" width="50%">
 
-## OSIV
+### 스프링 OSIV
 Transaction 의 범위가 아닌 Controller (== View) 에서 준영속 상태의 객체 그래프 탐색시 `org.hibernate.LazyInitializationException` 이 발생합니다.
 
 OSIV 는 Session (== Entity Manager) 의 범위를 View 까지 확대하여 지연로딩 (== N+1 방식으로) 을 지원합니다.
 
-### 스프링 OSIV
 - 트랜잭션 범위
   - `[FROM] @Transactional -> [TO] @Transactional`  
     - DBCP 커넥션을 획득/반환은 트랜잭션 시작/종료 시점 입니다
@@ -74,6 +73,17 @@ OSIV 는 Session (== Entity Manager) 의 범위를 View 까지 확대하여 지�
     - 영속성이 유지되면서 Controller/View 에서 객체 그래프 탐색시 > 지연로딩을 통한 조회가 가능해 집니다 (nontransactional read 사용)
 
 실제 DBCP 커넥션을 점유하는 시점은 `[FROM] @Transactional -> [TO] Filter/Interceptor` 입니다. (영속성이 생성되었다고 해서 실제 물리적인 커넥션을 점유하진 않음. 다만 한번 점유했다면 View 까지 반환하지 않음)
+
+### Physical Connection 점유유무
+https://the0.tistory.com/91
+
+- hibernate.connection.handling_mode: DELAYED_ACQUISITION_AND_RELEASE_AFTER_TRANSACTION 으로 되어 있어서 Transaction 이 종료되면 Connection 은 반환되야 합니다
+- 하지만 HibernateJpaVendorAdapter 설정에 의해 실질적으로 `DELAYED_ACQUISITION_AND_HOLD` 으로 동작합니다
+  - release until session is closed
+- 따라서 session 이 close 되는 시점에 따라 커넥션 반환유무가 결정됩니다
+- open-in-view
+  - false: 트랜잭션 종료시점에 session closed 되므로 즉시 반환
+  - true: view 렌더링까지 완료후 Interceptor 통과시 session closed 되므로 지연 반환  
 
 <img src="2.png" width="50%">
 
