@@ -37,18 +37,20 @@ JPA는 엔티티를 영속성 컨텍스트에 보관할 때, 최초 상태 `스�
   - 변경된 필드만 포함하는 SQL 을 동적으로 생성하려면 `@DynamicUpdate/@DynamicInsert` 을 Entity 에 선언
 - Flush (DB 에 SQL 전달해서 반영) & Commit
 
-### Flush
+### [Flush](https://docs.hibernate.org/orm/6.6/introduction/html_single/#flush)
 - em#flush 직접 호출
 - 트랜잭션 커밋 시 자동 호출
-- `JPQL 쿼리 실행 시` 자동 호출 (querydsl 포함)
-  - JPQL 은 영속성이 아닌 DB 를 직접 조회하므로 현재 영속성의 값과 다른 데이터가 조회될 수 있습니다 (영속성은 쓰기지연으로 1차캐싱)
-  - `현재까지의 영속성 내용을 JPQL 쿼리결과에 반영 하기 위해` 쿼리 수행전 flush 를 수행합니다 (flushAutomatically=true)
-  - 만약 JPQL 로 수정된 내용이 있다면 -> JPQL 의 결과는 영속성에 반영되지 않으므로 데이터 일관성이 깨집니다. 그래서 명시적으로 clearAutomatically=true 를 설언해서 영속성을 clear 해야 합니다. (그러면 다시 재조회 발생해서 갱신된 내용이 반영됨)
+- `JPQL (ex. @Query or querydsl) 쿼리 실행 시` dirty 상태에 있는 Entity 싱크 위해 자동 호출
+  - JPQL 은 영속성이 아닌 DB 를 직접 조회하므로 현재 영속성의 값과 다른 데이터가 조회될 수 있습니다
+  - `현재까지의 (변경된) 영속성 내용을 JPQL 쿼리결과에 반영` 하기 위해 flush 를 수행합니다
+  - 만약 JPQL 수행으로 DB 가 변경되었다면 -> 영속성과의 일관성이 깨집니다. 그래서 명시적으로 clearAutomatically=true 를 설언해서 영속성을 clear 해야 합니다. (그러면 다시 재조회 발생해서 갱신된 내용이 반영됨)
   
 ```java
 @Modifying(clearAutomatically = true, flushAutomatically = true)
 public void updateUser(String id);
 ```
+
+다만 위에 명시했듯이 `dirty 상태에 있는 Entity` 만 flush 대상이 되므로 @Modifying 에서 flushAutomatically =true 를 명시하지 않으면 `영속성의 모든 내용이 Flush 되지 않습니다.` 그에 따라 [partial 불일치](https://jun-codinghistory.tistory.com/708)가 가능하므로 패턴적으로 명시하는것을 권장합니다.
 
 ### [트랜잭션의 범위와 영속성](https://colevelup.tistory.com/21)
 트랜잭션이 같으면 같은 영속성 컨텍스트를 사용합니다
